@@ -257,6 +257,12 @@ button {
   background: var(--red-dark);
 }
 
+.primary-action:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  transform: none;
+}
+
 .secondary-action {
   display: inline-flex;
   align-items: center;
@@ -474,6 +480,25 @@ button {
 .line-input:focus {
   border-color: rgba(215, 25, 32, 0.45);
   box-shadow: 0 0 0 4px rgba(215, 25, 32, 0.08);
+}
+
+.line-input-danger {
+  border-color: rgba(215, 25, 32, 0.72);
+  color: var(--red-dark);
+  background: #fff6f6;
+}
+
+.sales-items-table {
+  min-width: 1160px;
+}
+
+.error-message {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 8px;
+  color: var(--red-dark);
+  background: #fdecee;
+  font-weight: 800;
 }
 
 .purchase-totals {
