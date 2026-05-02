@@ -545,6 +545,47 @@ button {
   min-width: 980px;
 }
 
+.collection-table {
+  min-width: 1040px;
+}
+
+.collection-form .customer-balance-info,
+.collection-form .notes-field {
+  grid-column: 1 / -1;
+}
+
+.customer-balance-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px;
+  border: 1px solid rgba(215, 25, 32, 0.18);
+  border-radius: 8px;
+  color: var(--red-dark);
+  background: #fdecee;
+}
+
+.customer-balance-info span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.customer-balance-info strong {
+  font-size: 1.2rem;
+}
+
+.receipt-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--red-dark);
+  font-weight: 800;
+  text-decoration: none;
+}
+
 .slip-detail {
   margin-top: 18px;
   padding-top: 16px;

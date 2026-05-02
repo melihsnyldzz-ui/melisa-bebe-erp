@@ -1,5 +1,6 @@
 import { useState } from "react";
 import AppLayout from "./components/Layout/AppLayout.jsx";
+import Collections from "./pages/Collections.jsx";
 import Customers from "./pages/Customers.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Products from "./pages/Products.jsx";
@@ -16,6 +17,7 @@ export default function App() {
   const isSuppliers = activeModule === "suppliers";
   const isPurchaseSlips = activeModule === "purchase-slips";
   const isSalesSlips = activeModule === "sales-slips";
+  const isCollections = activeModule === "collections";
 
   return (
     <AppLayout activeModule={activeModule} onModuleChange={setActiveModule}>
@@ -25,7 +27,8 @@ export default function App() {
       {isSuppliers && <Suppliers />}
       {isPurchaseSlips && <PurchaseSlips />}
       {isSalesSlips && <SalesSlips />}
-      {!isDashboard && !isProducts && !isCustomers && !isSuppliers && !isPurchaseSlips && !isSalesSlips && <ModulePlaceholder />}
+      {isCollections && <Collections />}
+      {!isDashboard && !isProducts && !isCustomers && !isSuppliers && !isPurchaseSlips && !isSalesSlips && !isCollections && <ModulePlaceholder />}
     </AppLayout>
   );
 }

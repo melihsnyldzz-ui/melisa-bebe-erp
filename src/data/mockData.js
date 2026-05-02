@@ -579,3 +579,42 @@ export const salesSlips = [
     createdAt: "2026-05-01T16:45:00",
   },
 ];
+
+export const collections = [
+  {
+    id: 1,
+    collectionNo: "TH-0001",
+    date: "2026-05-02",
+    customerId: 1,
+    customerName: "Ayşe Kids Boutique",
+    paymentType: "Havale",
+    amount: 8500,
+    description: "Kısmi ödeme",
+    receiptImageUrl: "",
+    createdAt: "2026-05-02T12:10:00",
+  },
+  {
+    id: 2,
+    collectionNo: "TH-0002",
+    date: "2026-05-01",
+    customerId: 2,
+    customerName: "Mira Baby Store",
+    paymentType: "Nakit",
+    amount: 9200,
+    description: "Tam ödeme",
+    receiptImageUrl: "",
+    createdAt: "2026-05-01T17:30:00",
+  },
+  {
+    id: 3,
+    collectionNo: "TH-0003",
+    date: "2026-05-01",
+    customerId: 3,
+    customerName: "Lina Çocuk Giyim",
+    paymentType: "EFT",
+    amount: 15000,
+    description: "Cari tahsilat",
+    receiptImageUrl: "",
+    createdAt: "2026-05-01T18:05:00",
+  },
+];
