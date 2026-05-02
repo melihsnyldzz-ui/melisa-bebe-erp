@@ -1,15 +1,19 @@
 import { useState } from "react";
 import AppLayout from "./components/Layout/AppLayout.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
+import Products from "./pages/Products.jsx";
 
 export default function App() {
   const [activeModule, setActiveModule] = useState("dashboard");
 
   const isDashboard = activeModule === "dashboard";
+  const isProducts = activeModule === "products";
 
   return (
     <AppLayout activeModule={activeModule} onModuleChange={setActiveModule}>
-      {isDashboard ? <Dashboard /> : <ModulePlaceholder />}
+      {isDashboard && <Dashboard />}
+      {isProducts && <Products />}
+      {!isDashboard && !isProducts && <ModulePlaceholder />}
     </AppLayout>
   );
 }
