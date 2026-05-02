@@ -434,9 +434,9 @@ button {
 }
 
 .filter-field input,
-.filter-field select {
+.filter-field select,
+.filter-field textarea {
   width: 100%;
-  height: 42px;
   padding: 0 12px;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -447,8 +447,20 @@ button {
   transition: border-color 180ms ease, box-shadow 180ms ease;
 }
 
+.filter-field input,
+.filter-field select {
+  height: 42px;
+}
+
+.filter-field textarea {
+  min-height: 86px;
+  padding-top: 10px;
+  resize: vertical;
+}
+
 .filter-field input:focus,
-.filter-field select:focus {
+.filter-field select:focus,
+.filter-field textarea:focus {
   border-color: rgba(215, 25, 32, 0.45);
   box-shadow: 0 0 0 4px rgba(215, 25, 32, 0.08);
 }
@@ -463,6 +475,10 @@ button {
 
 .product-table {
   min-width: 1180px;
+}
+
+.customer-table {
+  min-width: 1420px;
 }
 
 .strong-cell {
@@ -501,6 +517,10 @@ button {
   background: #fdecee;
   font-size: 0.74rem;
   font-weight: 900;
+}
+
+.balance-due {
+  color: var(--red-dark);
 }
 
 .status-active {
@@ -587,6 +607,7 @@ button {
 }
 
 .product-form .filter-field:first-child,
+.product-form .notes-field,
 .product-form .form-note,
 .product-form .modal-actions {
   grid-column: 1 / -1;
