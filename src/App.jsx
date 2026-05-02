@@ -7,6 +7,7 @@ import Payments from "./pages/Payments.jsx";
 import Products from "./pages/Products.jsx";
 import PurchaseSlips from "./pages/PurchaseSlips.jsx";
 import SalesSlips from "./pages/SalesSlips.jsx";
+import StockMovements from "./pages/StockMovements.jsx";
 import Suppliers from "./pages/Suppliers.jsx";
 
 export default function App() {
@@ -20,6 +21,7 @@ export default function App() {
   const isSalesSlips = activeModule === "sales-slips";
   const isCollections = activeModule === "collections";
   const isPayments = activeModule === "payments";
+  const isStockMovements = activeModule === "stock-movements";
 
   return (
     <AppLayout activeModule={activeModule} onModuleChange={setActiveModule}>
@@ -31,9 +33,16 @@ export default function App() {
       {isSalesSlips && <SalesSlips />}
       {isCollections && <Collections />}
       {isPayments && <Payments />}
-      {!isDashboard && !isProducts && !isCustomers && !isSuppliers && !isPurchaseSlips && !isSalesSlips && !isCollections && !isPayments && (
-        <ModulePlaceholder />
-      )}
+      {isStockMovements && <StockMovements />}
+      {!isDashboard &&
+        !isProducts &&
+        !isCustomers &&
+        !isSuppliers &&
+        !isPurchaseSlips &&
+        !isSalesSlips &&
+        !isCollections &&
+        !isPayments &&
+        !isStockMovements && <ModulePlaceholder />}
     </AppLayout>
   );
 }
