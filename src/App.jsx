@@ -3,6 +3,7 @@ import AppLayout from "./components/Layout/AppLayout.jsx";
 import Customers from "./pages/Customers.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Products from "./pages/Products.jsx";
+import Suppliers from "./pages/Suppliers.jsx";
 
 export default function App() {
   const [activeModule, setActiveModule] = useState("dashboard");
@@ -10,13 +11,15 @@ export default function App() {
   const isDashboard = activeModule === "dashboard";
   const isProducts = activeModule === "products";
   const isCustomers = activeModule === "customers";
+  const isSuppliers = activeModule === "suppliers";
 
   return (
     <AppLayout activeModule={activeModule} onModuleChange={setActiveModule}>
       {isDashboard && <Dashboard />}
       {isProducts && <Products />}
       {isCustomers && <Customers />}
-      {!isDashboard && !isProducts && !isCustomers && <ModulePlaceholder />}
+      {isSuppliers && <Suppliers />}
+      {!isDashboard && !isProducts && !isCustomers && !isSuppliers && <ModulePlaceholder />}
     </AppLayout>
   );
 }
