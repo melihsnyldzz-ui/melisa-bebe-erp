@@ -289,6 +289,11 @@ button {
   gap: 14px;
 }
 
+.reports-summary-grid {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  margin-bottom: 14px;
+}
+
 .kpi-card,
 .chart-panel,
 .table-panel {
@@ -440,6 +445,102 @@ button {
 
 .stock-movement-note {
   margin: 0 0 14px;
+}
+
+.reports-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(340px, 0.65fr);
+  gap: 14px;
+}
+
+.reports-chart-panel {
+  min-width: 0;
+}
+
+.report-panel {
+  min-width: 0;
+}
+
+.report-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.report-list-row {
+  display: grid;
+  grid-template-columns: 34px minmax(140px, 1fr) minmax(90px, 0.5fr) auto;
+  gap: 10px;
+  align-items: center;
+  padding: 12px;
+  border-radius: 8px;
+  background: #fbfbfc;
+}
+
+.report-list-row span {
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  color: var(--white);
+  background: var(--red);
+  font-weight: 900;
+}
+
+.report-list-row small {
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.receivable-payable-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.receivable-payable-grid div {
+  display: grid;
+  gap: 8px;
+  padding: 16px;
+  border-radius: 8px;
+  background: #fbfbfc;
+}
+
+.receivable-payable-grid span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.receivable-payable-grid strong {
+  font-size: 1.35rem;
+  color: var(--red-dark);
+}
+
+.critical-stock-panel,
+.profitability-note {
+  grid-column: 1 / -1;
+}
+
+.reports-critical-table {
+  min-width: 760px;
+}
+
+.profitability-note {
+  margin-top: 14px;
+}
+
+.profitability-note h2 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+}
+
+.profitability-note p {
+  margin: 0;
+  color: var(--muted);
 }
 
 .success-message {
@@ -931,7 +1032,9 @@ tr:last-child td {
 
   .charts-grid,
   .tables-grid,
-  .filters-grid {
+  .filters-grid,
+  .reports-summary-grid,
+  .reports-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1007,7 +1110,9 @@ tr:last-child td {
 
   .purchase-slip-form,
   .purchase-totals,
-  .slip-detail-line {
+  .slip-detail-line,
+  .report-list-row,
+  .receivable-payable-grid {
     grid-template-columns: 1fr;
   }
 
