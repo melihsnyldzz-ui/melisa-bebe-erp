@@ -587,8 +587,18 @@ button {
 }
 
 .product-form .filter-field:first-child,
+.product-form .form-note,
 .product-form .modal-actions {
   grid-column: 1 / -1;
+}
+
+.form-note {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 8px;
+  color: #6b4c00;
+  background: #fff7e6;
+  font-size: 0.9rem;
 }
 
 .modal-actions {

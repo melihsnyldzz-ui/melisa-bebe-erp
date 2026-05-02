@@ -79,7 +79,7 @@ export default function Products() {
         currentProducts.map((product) => (product.id === editingProduct.id ? { ...product, ...productPayload } : product)),
       );
     } else {
-      setProducts((currentProducts) => [{ ...productPayload, id: Date.now(), imageUrl: "", isActive: true }, ...currentProducts]);
+      setProducts((currentProducts) => [{ ...productPayload, id: Date.now(), isActive: true }, ...currentProducts]);
     }
 
     setIsModalOpen(false);

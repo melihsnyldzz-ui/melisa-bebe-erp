@@ -13,6 +13,7 @@ const initialForm = {
   stockQuantity: "",
   criticalStockLevel: "",
   supplier: "",
+  imageUrl: "",
 };
 
 export default function ProductFormModal({ isOpen, product, onClose, onSave }) {
@@ -35,6 +36,7 @@ export default function ProductFormModal({ isOpen, product, onClose, onSave }) {
             stockQuantity: product.stockQuantity,
             criticalStockLevel: product.criticalStockLevel,
             supplier: product.supplier,
+            imageUrl: product.imageUrl || "",
           }
         : initialForm,
     );
@@ -60,6 +62,7 @@ export default function ProductFormModal({ isOpen, product, onClose, onSave }) {
       stockQuantity: Number(form.stockQuantity),
       criticalStockLevel: Number(form.criticalStockLevel),
       supplier: form.supplier,
+      imageUrl: form.imageUrl.trim(),
     });
   }
 
@@ -83,17 +86,19 @@ export default function ProductFormModal({ isOpen, product, onClose, onSave }) {
           <TextField label="Kategori" value={form.category} onChange={(value) => updateField("category", value)} required />
           <TextField label="Beden" value={form.size} onChange={(value) => updateField("size", value)} required />
           <TextField label="Renk" value={form.color} onChange={(value) => updateField("color", value)} required />
+          <TextField label="Ürün Görsel URL" value={form.imageUrl} onChange={(value) => updateField("imageUrl", value)} />
           <TextField label="Alış Fiyatı" type="number" value={form.purchasePrice} onChange={(value) => updateField("purchasePrice", value)} required />
           <TextField label="Satış Fiyatı" type="number" value={form.salePrice} onChange={(value) => updateField("salePrice", value)} required />
-          <TextField label="Stok" type="number" value={form.stockQuantity} onChange={(value) => updateField("stockQuantity", value)} required />
+          <TextField label="Başlangıç Stok" type="number" value={form.stockQuantity} onChange={(value) => updateField("stockQuantity", value)} required />
           <TextField
-            label="Kritik Stok"
+            label="Kritik Stok Seviyesi"
             type="number"
             value={form.criticalStockLevel}
             onChange={(value) => updateField("criticalStockLevel", value)}
             required
           />
           <TextField label="Tedarikçi" value={form.supplier} onChange={(value) => updateField("supplier", value)} required />
+          <p className="form-note">Not: Stok miktarı ileride alış fişi, satış fişi ve sayım fişi üzerinden yönetilecektir.</p>
 
           <div className="modal-actions">
             <button className="secondary-action" type="button" onClick={onClose}>
