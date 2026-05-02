@@ -1,10 +1,5 @@
 import { Boxes } from "lucide-react";
-
-const dateFormatter = new Intl.DateTimeFormat("tr-TR", {
-  day: "2-digit",
-  month: "2-digit",
-  year: "numeric",
-});
+import { formatDateTR } from "../../utils/dateUtils.js";
 
 export default function StockMovementTable({ movements }) {
   return (
@@ -35,7 +30,7 @@ export default function StockMovementTable({ movements }) {
           <tbody>
             {movements.map((movement) => (
               <tr key={movement.id}>
-                <td>{formatDate(movement.date)}</td>
+                <td>{formatDateTR(movement.date)}</td>
                 <td className="strong-cell">{movement.productCode}</td>
                 <td>{movement.barcode}</td>
                 <td>{movement.productName}</td>
@@ -63,11 +58,6 @@ export default function StockMovementTable({ movements }) {
       {movements.length === 0 && <p className="empty-table-text">Filtrelere uygun stok hareketi bulunamadı.</p>}
     </section>
   );
-}
-
-function formatDate(value) {
-  if (!value) return "-";
-  return dateFormatter.format(new Date(value));
 }
 
 function getMovementClass(type) {

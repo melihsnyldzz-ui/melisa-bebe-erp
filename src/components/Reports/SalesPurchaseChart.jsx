@@ -1,5 +1,6 @@
 import { BarChart3 } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { formatCurrency } from "../../utils/formatters.js";
 
 export default function SalesPurchaseChart({ data }) {
   return (
@@ -14,7 +15,7 @@ export default function SalesPurchaseChart({ data }) {
             <CartesianGrid strokeDasharray="4 4" vertical={false} stroke="#e5e7eb" />
             <XAxis dataKey="label" axisLine={false} tickLine={false} />
             <YAxis axisLine={false} tickLine={false} tickFormatter={(value) => `${value / 1000}K`} />
-            <Tooltip formatter={(value) => `${Number(value).toLocaleString("tr-TR")} TL`} />
+            <Tooltip formatter={(value) => formatCurrency(value)} />
             <Legend />
             <Bar dataKey="sales" name="Satış" fill="#d71920" radius={[8, 8, 0, 0]} />
             <Bar dataKey="purchases" name="Alış" fill="#2d2f34" radius={[8, 8, 0, 0]} />

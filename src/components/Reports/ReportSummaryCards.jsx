@@ -1,19 +1,14 @@
 import { AlertTriangle, Banknote, CreditCard, ShoppingBag, Truck, WalletCards } from "lucide-react";
 import KpiCard from "../Dashboard/KpiCard.jsx";
-
-const currencyFormatter = new Intl.NumberFormat("tr-TR", {
-  style: "currency",
-  currency: "TRY",
-  maximumFractionDigits: 0,
-});
+import { formatCurrency } from "../../utils/formatters.js";
 
 export default function ReportSummaryCards({ summary }) {
   const cards = [
-    { label: "Toplam Satış", value: currencyFormatter.format(summary.totalSales), icon: ShoppingBag, tone: "green" },
-    { label: "Toplam Alış", value: currencyFormatter.format(summary.totalPurchases), icon: Truck, tone: "dark" },
-    { label: "Net Nakit Girişi", value: currencyFormatter.format(summary.netCashIn), icon: Banknote, tone: "red" },
-    { label: "Müşteri Alacağı", value: currencyFormatter.format(summary.customerReceivable), icon: WalletCards, tone: "red" },
-    { label: "Tedarikçi Borcu", value: currencyFormatter.format(summary.supplierDebt), icon: CreditCard, tone: "amber" },
+    { label: "Toplam Satış", value: formatCurrency(summary.totalSales), icon: ShoppingBag, tone: "green" },
+    { label: "Toplam Alış", value: formatCurrency(summary.totalPurchases), icon: Truck, tone: "dark" },
+    { label: "Net Nakit Girişi", value: formatCurrency(summary.netCashIn), icon: Banknote, tone: "red" },
+    { label: "Müşteri Alacağı", value: formatCurrency(summary.customerReceivable), icon: WalletCards, tone: "red" },
+    { label: "Tedarikçi Borcu", value: formatCurrency(summary.supplierDebt), icon: CreditCard, tone: "amber" },
     { label: "Kritik Stok Ürünü", value: summary.criticalProductCount.toString(), icon: AlertTriangle, tone: "amber" },
   ];
 

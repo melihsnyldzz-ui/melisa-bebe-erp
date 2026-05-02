@@ -3,7 +3,8 @@ import { AlertTriangle, ArrowDownLeft, ArrowUpRight, Boxes, Repeat2 } from "luci
 import KpiCard from "../components/Dashboard/KpiCard.jsx";
 import StockMovementFilters from "../components/StockMovements/StockMovementFilters.jsx";
 import StockMovementTable from "../components/StockMovements/StockMovementTable.jsx";
-import { products, stockMovements as initialStockMovements } from "../data/mockData.js";
+import { useErpData } from "../context/ErpDataContext.jsx";
+import { formatNumber } from "../utils/formatters.js";
 
 const emptyFilters = {
   search: "",
@@ -13,8 +14,8 @@ const emptyFilters = {
 };
 
 export default function StockMovements() {
+  const { products, stockMovements } = useErpData();
   const [filters, setFilters] = useState(emptyFilters);
-  const [stockMovements] = useState(initialStockMovements);
 
   const filteredMovements = useMemo(() => {
     const query = filters.search.trim().toLocaleLowerCase("tr-TR");
@@ -42,8 +43,8 @@ export default function StockMovements() {
 
     return [
       { label: "Toplam Hareket", value: filteredMovements.length.toString(), icon: Repeat2, tone: "dark" },
-      { label: "Toplam Giriş", value: totalIn.toLocaleString("tr-TR"), icon: ArrowDownLeft, tone: "green" },
-      { label: "Toplam Çıkış", value: totalOut.toLocaleString("tr-TR"), icon: ArrowUpRight, tone: "red" },
+      { label: "Toplam Giriş", value: formatNumber(totalIn), icon: ArrowDownLeft, tone: "green" },
+      { label: "Toplam Çıkış", value: formatNumber(totalOut), icon: ArrowUpRight, tone: "red" },
       { label: "Kritik Seviyeye Yaklaşan Ürün", value: lowStockCount.toString(), icon: AlertTriangle, tone: "amber" },
     ];
   }, [filteredMovements]);

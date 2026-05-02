@@ -4,7 +4,8 @@ import KpiCard from "../components/Dashboard/KpiCard.jsx";
 import CustomerFilters from "../components/Customers/CustomerFilters.jsx";
 import CustomerFormModal from "../components/Customers/CustomerFormModal.jsx";
 import CustomerTable from "../components/Customers/CustomerTable.jsx";
-import { customers as initialCustomers } from "../data/mockData.js";
+import { useErpData } from "../context/ErpDataContext.jsx";
+import { formatCurrency } from "../utils/formatters.js";
 
 const emptyFilters = {
   search: "",
@@ -15,14 +16,8 @@ const emptyFilters = {
   status: "all",
 };
 
-const currencyFormatter = new Intl.NumberFormat("tr-TR", {
-  style: "currency",
-  currency: "TRY",
-  maximumFractionDigits: 0,
-});
-
 export default function Customers() {
-  const [customers, setCustomers] = useState(initialCustomers);
+  const { customers, addCustomer, updateCustomer, toggleCustomerStatus } = useErpData();
   const [filters, setFilters] = useState(emptyFilters);
   const [editingCustomer, setEditingCustomer] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -66,7 +61,7 @@ export default function Customers() {
     return [
       { label: "Toplam Müşteri", value: customers.length.toString(), icon: UsersRound, tone: "dark" },
       { label: "Aktif Müşteri", value: activeCount.toString(), icon: HandCoins, tone: "green" },
-      { label: "Toplam Müşteri Alacağı", value: currencyFormatter.format(totalReceivable), icon: WalletCards, tone: "red" },
+      { label: "Toplam Müşteri Alacağı", value: formatCurrency(totalReceivable), icon: WalletCards, tone: "red" },
       { label: "Risk Limitini Aşan Müşteri", value: overRiskCount.toString(), icon: CircleAlert, tone: "amber" },
     ];
   }, [customers]);
@@ -83,20 +78,12 @@ export default function Customers() {
 
   function handleSaveCustomer(customerPayload) {
     if (editingCustomer) {
-      setCustomers((currentCustomers) =>
-        currentCustomers.map((customer) => (customer.id === editingCustomer.id ? { ...customer, ...customerPayload } : customer)),
-      );
+      updateCustomer({ ...editingCustomer, ...customerPayload });
     } else {
-      setCustomers((currentCustomers) => [{ ...customerPayload, id: Date.now(), isActive: true }, ...currentCustomers]);
+      addCustomer(customerPayload);
     }
 
     setIsModalOpen(false);
-  }
-
-  function toggleCustomerStatus(customerId) {
-    setCustomers((currentCustomers) =>
-      currentCustomers.map((customer) => (customer.id === customerId ? { ...customer, isActive: !customer.isActive } : customer)),
-    );
   }
 
   return (

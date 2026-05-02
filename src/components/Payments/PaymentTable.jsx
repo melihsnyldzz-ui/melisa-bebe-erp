@@ -1,16 +1,6 @@
 import { Eye, Image, ReceiptText } from "lucide-react";
-
-const currencyFormatter = new Intl.NumberFormat("tr-TR", {
-  style: "currency",
-  currency: "TRY",
-  maximumFractionDigits: 0,
-});
-
-const dateFormatter = new Intl.DateTimeFormat("tr-TR", {
-  day: "2-digit",
-  month: "2-digit",
-  year: "numeric",
-});
+import { formatDateTR } from "../../utils/dateUtils.js";
+import { formatCurrency } from "../../utils/formatters.js";
 
 export default function PaymentTable({ payments, selectedPayment, onViewDetail }) {
   return (
@@ -37,10 +27,10 @@ export default function PaymentTable({ payments, selectedPayment, onViewDetail }
             {payments.map((payment) => (
               <tr key={payment.id}>
                 <td className="strong-cell">{payment.paymentNo}</td>
-                <td>{formatDate(payment.date)}</td>
+                <td>{formatDateTR(payment.date)}</td>
                 <td>{payment.supplierName}</td>
                 <td>{payment.paymentType}</td>
-                <td className="strong-cell">{currencyFormatter.format(payment.amount)}</td>
+                <td className="strong-cell">{formatCurrency(payment.amount)}</td>
                 <td>{payment.description || "-"}</td>
                 <td>
                   {payment.receiptImageUrl ? (
@@ -72,18 +62,13 @@ export default function PaymentTable({ payments, selectedPayment, onViewDetail }
             <div className="slip-detail-line">
               <strong>{selectedPayment.supplierName}</strong>
               <span>
-                {formatDate(selectedPayment.date)} - {selectedPayment.paymentType}
+                {formatDateTR(selectedPayment.date)} - {selectedPayment.paymentType}
               </span>
-              <b>{currencyFormatter.format(selectedPayment.amount)}</b>
+              <b>{formatCurrency(selectedPayment.amount)}</b>
             </div>
           </div>
         </div>
       )}
     </section>
   );
-}
-
-function formatDate(value) {
-  if (!value) return "-";
-  return dateFormatter.format(new Date(value));
 }

@@ -1,21 +1,17 @@
 import { useMemo, useState } from "react";
 import { Plus, RotateCcw, Save } from "lucide-react";
 import PurchaseSlipItemsTable from "./PurchaseSlipItemsTable.jsx";
+import { getTodayISO } from "../../utils/dateUtils.js";
+import { formatCurrency } from "../../utils/formatters.js";
 
 const initialForm = {
-  date: "2026-05-02",
+  date: getTodayISO(),
   supplierId: "",
   warehouse: "Merkez Depo",
   productId: "",
   search: "",
   description: "",
 };
-
-const currencyFormatter = new Intl.NumberFormat("tr-TR", {
-  style: "currency",
-  currency: "TRY",
-  maximumFractionDigits: 0,
-});
 
 export default function PurchaseSlipForm({ nextSlipNo, products, suppliers, onSave }) {
   const [form, setForm] = useState(initialForm);
@@ -167,19 +163,19 @@ export default function PurchaseSlipForm({ nextSlipNo, products, suppliers, onSa
         <div className="purchase-totals">
           <div>
             <span>Ara Toplam</span>
-            <strong>{currencyFormatter.format(totals.subtotal)}</strong>
+            <strong>{formatCurrency(totals.subtotal)}</strong>
           </div>
           <div>
             <span>İskonto Toplamı</span>
-            <strong>{currencyFormatter.format(totals.discountTotal)}</strong>
+            <strong>{formatCurrency(totals.discountTotal)}</strong>
           </div>
           <div>
             <span>KDV Toplamı</span>
-            <strong>{currencyFormatter.format(totals.taxTotal)}</strong>
+            <strong>{formatCurrency(totals.taxTotal)}</strong>
           </div>
           <div className="grand-total">
             <span>Genel Toplam</span>
-            <strong>{currencyFormatter.format(totals.grandTotal)}</strong>
+            <strong>{formatCurrency(totals.grandTotal)}</strong>
           </div>
         </div>
 

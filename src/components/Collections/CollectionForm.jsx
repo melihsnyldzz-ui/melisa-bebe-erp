@@ -1,8 +1,10 @@
 import { useMemo, useState } from "react";
 import { RotateCcw, Save } from "lucide-react";
+import { getTodayISO } from "../../utils/dateUtils.js";
+import { formatCurrency } from "../../utils/formatters.js";
 
 const initialForm = {
-  date: "2026-05-02",
+  date: getTodayISO(),
   customerId: "",
   paymentType: "Nakit",
   amount: "",
@@ -11,12 +13,6 @@ const initialForm = {
 };
 
 const paymentTypes = ["Nakit", "Havale", "EFT", "Kredi Kartı", "Çek / Senet"];
-
-const currencyFormatter = new Intl.NumberFormat("tr-TR", {
-  style: "currency",
-  currency: "TRY",
-  maximumFractionDigits: 0,
-});
 
 export default function CollectionForm({ nextCollectionNo, customers, onSave }) {
   const [form, setForm] = useState(initialForm);
@@ -93,7 +89,7 @@ export default function CollectionForm({ nextCollectionNo, customers, onSave }) 
         {selectedCustomer && (
           <div className="customer-balance-info">
             <span>Seçilen Müşteri Cari Bakiyesi</span>
-            <strong>{currencyFormatter.format(selectedCustomer.currentBalance)}</strong>
+            <strong>{formatCurrency(selectedCustomer.currentBalance)}</strong>
           </div>
         )}
 

@@ -1,16 +1,6 @@
 import { Eye, ReceiptText } from "lucide-react";
-
-const currencyFormatter = new Intl.NumberFormat("tr-TR", {
-  style: "currency",
-  currency: "TRY",
-  maximumFractionDigits: 0,
-});
-
-const dateFormatter = new Intl.DateTimeFormat("tr-TR", {
-  day: "2-digit",
-  month: "2-digit",
-  year: "numeric",
-});
+import { formatDateTR } from "../../utils/dateUtils.js";
+import { formatCurrency } from "../../utils/formatters.js";
 
 export default function SalesSlipTable({ slips, selectedSlip, onViewDetail }) {
   return (
@@ -37,11 +27,11 @@ export default function SalesSlipTable({ slips, selectedSlip, onViewDetail }) {
             {slips.map((slip) => (
               <tr key={slip.id}>
                 <td className="strong-cell">{slip.slipNo}</td>
-                <td>{formatDate(slip.date)}</td>
+                <td>{formatDateTR(slip.date)}</td>
                 <td>{slip.customerName}</td>
                 <td>{slip.saleType}</td>
                 <td>{slip.items.length}</td>
-                <td className="strong-cell">{currencyFormatter.format(slip.grandTotal)}</td>
+                <td className="strong-cell">{formatCurrency(slip.grandTotal)}</td>
                 <td>
                   <span className="status status-active">{slip.status}</span>
                 </td>
@@ -66,9 +56,9 @@ export default function SalesSlipTable({ slips, selectedSlip, onViewDetail }) {
               <div className="slip-detail-line" key={item.id}>
                 <strong>{item.productName}</strong>
                 <span>
-                  {item.size} / {item.color} - {item.quantity} adet x {currencyFormatter.format(item.unitPrice)}
+                  {item.size} / {item.color} - {item.quantity} adet x {formatCurrency(item.unitPrice)}
                 </span>
-                <b>{currencyFormatter.format(item.lineTotal)}</b>
+                <b>{formatCurrency(item.lineTotal)}</b>
               </div>
             ))}
           </div>
@@ -76,9 +66,4 @@ export default function SalesSlipTable({ slips, selectedSlip, onViewDetail }) {
       )}
     </section>
   );
-}
-
-function formatDate(value) {
-  if (!value) return "-";
-  return dateFormatter.format(new Date(value));
 }

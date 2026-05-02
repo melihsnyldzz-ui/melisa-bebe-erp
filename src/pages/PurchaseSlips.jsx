@@ -1,18 +1,14 @@
 import { useMemo, useState } from "react";
-import { Clock3, FilePlus2, ReceiptText, ShoppingCart, WalletCards } from "lucide-react";
+import { Clock3, ReceiptText, ShoppingCart, WalletCards } from "lucide-react";
 import KpiCard from "../components/Dashboard/KpiCard.jsx";
 import PurchaseSlipForm from "../components/PurchaseSlips/PurchaseSlipForm.jsx";
 import PurchaseSlipTable from "../components/PurchaseSlips/PurchaseSlipTable.jsx";
-import { products, purchaseSlips as initialPurchaseSlips, suppliers } from "../data/mockData.js";
-
-const currencyFormatter = new Intl.NumberFormat("tr-TR", {
-  style: "currency",
-  currency: "TRY",
-  maximumFractionDigits: 0,
-});
+import { useErpData } from "../context/ErpDataContext.jsx";
+import { getTodayISO } from "../utils/dateUtils.js";
+import { formatCurrency } from "../utils/formatters.js";
 
 export default function PurchaseSlips() {
-  const [purchaseSlips, setPurchaseSlips] = useState(initialPurchaseSlips);
+  const { products, purchaseSlips, savePurchaseSlip, suppliers } = useErpData();
   const [successMessage, setSuccessMessage] = useState("");
   const [selectedSlip, setSelectedSlip] = useState(null);
 
@@ -22,7 +18,7 @@ export default function PurchaseSlips() {
   }, [purchaseSlips.length]);
 
   const summaryCards = useMemo(() => {
-    const today = "2026-05-02";
+    const today = getTodayISO();
     const todayTotal = purchaseSlips
       .filter((slip) => slip.date === today)
       .reduce((total, slip) => total + slip.grandTotal, 0);
@@ -31,21 +27,15 @@ export default function PurchaseSlips() {
 
     return [
       { label: "Toplam Alış Fişi", value: purchaseSlips.length.toString(), icon: ReceiptText, tone: "dark" },
-      { label: "Bugünkü Alış", value: currencyFormatter.format(todayTotal), icon: ShoppingCart, tone: "green" },
-      { label: "Toplam Alış Tutarı", value: currencyFormatter.format(grandTotal), icon: WalletCards, tone: "red" },
+      { label: "Bugünkü Alış", value: formatCurrency(todayTotal), icon: ShoppingCart, tone: "green" },
+      { label: "Toplam Alış Tutarı", value: formatCurrency(grandTotal), icon: WalletCards, tone: "red" },
       { label: "Bekleyen / Taslak Fiş", value: draftCount.toString(), icon: Clock3, tone: "amber" },
     ];
   }, [purchaseSlips]);
 
   function handleSaveSlip(slipPayload) {
-    const newSlip = {
-      ...slipPayload,
-      id: Date.now(),
-      status: "Kayıtlı",
-      createdAt: new Date().toISOString(),
-    };
-
-    setPurchaseSlips((currentSlips) => [newSlip, ...currentSlips]);
+    const result = savePurchaseSlip(slipPayload);
+    const newSlip = result.data;
     setSuccessMessage(`${newSlip.slipNo} numaralı alış fişi kaydedildi.`);
     setSelectedSlip(newSlip);
   }

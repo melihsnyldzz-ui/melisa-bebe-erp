@@ -1,16 +1,6 @@
 import { Eye, Image, ReceiptText } from "lucide-react";
-
-const currencyFormatter = new Intl.NumberFormat("tr-TR", {
-  style: "currency",
-  currency: "TRY",
-  maximumFractionDigits: 0,
-});
-
-const dateFormatter = new Intl.DateTimeFormat("tr-TR", {
-  day: "2-digit",
-  month: "2-digit",
-  year: "numeric",
-});
+import { formatDateTR } from "../../utils/dateUtils.js";
+import { formatCurrency } from "../../utils/formatters.js";
 
 export default function CollectionTable({ collections, selectedCollection, onViewDetail }) {
   return (
@@ -37,10 +27,10 @@ export default function CollectionTable({ collections, selectedCollection, onVie
             {collections.map((collection) => (
               <tr key={collection.id}>
                 <td className="strong-cell">{collection.collectionNo}</td>
-                <td>{formatDate(collection.date)}</td>
+                <td>{formatDateTR(collection.date)}</td>
                 <td>{collection.customerName}</td>
                 <td>{collection.paymentType}</td>
-                <td className="strong-cell">{currencyFormatter.format(collection.amount)}</td>
+                <td className="strong-cell">{formatCurrency(collection.amount)}</td>
                 <td>{collection.description || "-"}</td>
                 <td>
                   {collection.receiptImageUrl ? (
@@ -72,18 +62,13 @@ export default function CollectionTable({ collections, selectedCollection, onVie
             <div className="slip-detail-line">
               <strong>{selectedCollection.customerName}</strong>
               <span>
-                {formatDate(selectedCollection.date)} - {selectedCollection.paymentType}
+                {formatDateTR(selectedCollection.date)} - {selectedCollection.paymentType}
               </span>
-              <b>{currencyFormatter.format(selectedCollection.amount)}</b>
+              <b>{formatCurrency(selectedCollection.amount)}</b>
             </div>
           </div>
         </div>
       )}
     </section>
   );
-}
-
-function formatDate(value) {
-  if (!value) return "-";
-  return dateFormatter.format(new Date(value));
 }

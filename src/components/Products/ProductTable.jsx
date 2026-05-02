@@ -1,10 +1,5 @@
 import { Edit3, PackageSearch, Power } from "lucide-react";
-
-const currencyFormatter = new Intl.NumberFormat("tr-TR", {
-  style: "currency",
-  currency: "TRY",
-  maximumFractionDigits: 0,
-});
+import { formatCurrency } from "../../utils/formatters.js";
 
 export default function ProductTable({ products, onEdit, onToggleStatus }) {
   return (
@@ -53,8 +48,8 @@ export default function ProductTable({ products, onEdit, onToggleStatus }) {
                       {isCritical && <span className="warning-badge">Kritik</span>}
                     </div>
                   </td>
-                  <td>{currencyFormatter.format(product.purchasePrice)}</td>
-                  <td>{currencyFormatter.format(product.salePrice)}</td>
+                  <td>{formatCurrency(product.purchasePrice)}</td>
+                  <td>{formatCurrency(product.salePrice)}</td>
                   <td>{product.supplier}</td>
                   <td>
                     <span className={`status ${product.isActive ? "status-active" : "status-passive"}`}>

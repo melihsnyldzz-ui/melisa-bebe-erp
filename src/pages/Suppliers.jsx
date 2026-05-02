@@ -4,7 +4,9 @@ import KpiCard from "../components/Dashboard/KpiCard.jsx";
 import SupplierFilters from "../components/Suppliers/SupplierFilters.jsx";
 import SupplierFormModal from "../components/Suppliers/SupplierFormModal.jsx";
 import SupplierTable from "../components/Suppliers/SupplierTable.jsx";
-import { suppliers as initialSuppliers } from "../data/mockData.js";
+import { useErpData } from "../context/ErpDataContext.jsx";
+import { formatCurrency } from "../utils/formatters.js";
+import { isWithinLastDays } from "../utils/dateUtils.js";
 
 const emptyFilters = {
   search: "",
@@ -13,14 +15,8 @@ const emptyFilters = {
   status: "all",
 };
 
-const currencyFormatter = new Intl.NumberFormat("tr-TR", {
-  style: "currency",
-  currency: "TRY",
-  maximumFractionDigits: 0,
-});
-
 export default function Suppliers() {
-  const [suppliers, setSuppliers] = useState(initialSuppliers);
+  const { suppliers, addSupplier, updateSupplier, toggleSupplierStatus } = useErpData();
   const [filters, setFilters] = useState(emptyFilters);
   const [editingSupplier, setEditingSupplier] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -55,12 +51,12 @@ export default function Suppliers() {
   const summaryCards = useMemo(() => {
     const activeCount = suppliers.filter((supplier) => supplier.isActive).length;
     const totalDebt = suppliers.reduce((total, supplier) => total + supplier.currentBalance, 0);
-    const recentCount = suppliers.filter((supplier) => isWithinLastThirtyDays(supplier.lastTransactionDate)).length;
+    const recentCount = suppliers.filter((supplier) => isWithinLastDays(supplier.lastTransactionDate, 30)).length;
 
     return [
       { label: "Toplam Tedarikçi", value: suppliers.length.toString(), icon: Truck, tone: "dark" },
       { label: "Aktif Tedarikçi", value: activeCount.toString(), icon: HandCoins, tone: "green" },
-      { label: "Toplam Tedarikçi Borcu", value: currencyFormatter.format(totalDebt), icon: WalletCards, tone: "red" },
+      { label: "Toplam Tedarikçi Borcu", value: formatCurrency(totalDebt), icon: WalletCards, tone: "red" },
       { label: "Son 30 Gün İşlem Gören Tedarikçi", value: recentCount.toString(), icon: CalendarClock, tone: "amber" },
     ];
   }, [suppliers]);
@@ -77,20 +73,12 @@ export default function Suppliers() {
 
   function handleSaveSupplier(supplierPayload) {
     if (editingSupplier) {
-      setSuppliers((currentSuppliers) =>
-        currentSuppliers.map((supplier) => (supplier.id === editingSupplier.id ? { ...supplier, ...supplierPayload } : supplier)),
-      );
+      updateSupplier({ ...editingSupplier, ...supplierPayload });
     } else {
-      setSuppliers((currentSuppliers) => [{ ...supplierPayload, id: Date.now(), isActive: true }, ...currentSuppliers]);
+      addSupplier(supplierPayload);
     }
 
     setIsModalOpen(false);
-  }
-
-  function toggleSupplierStatus(supplierId) {
-    setSuppliers((currentSuppliers) =>
-      currentSuppliers.map((supplier) => (supplier.id === supplierId ? { ...supplier, isActive: !supplier.isActive } : supplier)),
-    );
   }
 
   return (
@@ -128,12 +116,4 @@ export default function Suppliers() {
 
 function uniqueValues(items, key) {
   return [...new Set(items.map((item) => item[key]))].sort((a, b) => a.localeCompare(b, "tr"));
-}
-
-function isWithinLastThirtyDays(value) {
-  if (!value) return false;
-  const transactionDate = new Date(value);
-  const today = new Date("2026-05-02");
-  const diffInDays = (today - transactionDate) / (1000 * 60 * 60 * 24);
-  return diffInDays >= 0 && diffInDays <= 30;
 }

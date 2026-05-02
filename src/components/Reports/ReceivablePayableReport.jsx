@@ -1,10 +1,5 @@
 import { WalletCards } from "lucide-react";
-
-const currencyFormatter = new Intl.NumberFormat("tr-TR", {
-  style: "currency",
-  currency: "TRY",
-  maximumFractionDigits: 0,
-});
+import { formatCurrency } from "../../utils/formatters.js";
 
 export default function ReceivablePayableReport({ receivable, payable }) {
   return (
@@ -16,11 +11,11 @@ export default function ReceivablePayableReport({ receivable, payable }) {
       <div className="receivable-payable-grid">
         <div>
           <span>Müşteri Alacağı</span>
-          <strong>{currencyFormatter.format(receivable)}</strong>
+          <strong>{formatCurrency(receivable)}</strong>
         </div>
         <div>
           <span>Tedarikçi Borcu</span>
-          <strong>{currencyFormatter.format(payable)}</strong>
+          <strong>{formatCurrency(payable)}</strong>
         </div>
       </div>
     </section>

@@ -3,16 +3,12 @@ import { CircleDollarSign, CreditCard, ReceiptText, Trophy } from "lucide-react"
 import KpiCard from "../components/Dashboard/KpiCard.jsx";
 import PaymentForm from "../components/Payments/PaymentForm.jsx";
 import PaymentTable from "../components/Payments/PaymentTable.jsx";
-import { payments as initialPayments, suppliers } from "../data/mockData.js";
-
-const currencyFormatter = new Intl.NumberFormat("tr-TR", {
-  style: "currency",
-  currency: "TRY",
-  maximumFractionDigits: 0,
-});
+import { useErpData } from "../context/ErpDataContext.jsx";
+import { getTodayISO } from "../utils/dateUtils.js";
+import { formatCurrency } from "../utils/formatters.js";
 
 export default function Payments() {
-  const [payments, setPayments] = useState(initialPayments);
+  const { payments, suppliers, savePayment } = useErpData();
   const [successMessage, setSuccessMessage] = useState("");
   const [selectedPayment, setSelectedPayment] = useState(null);
 
@@ -22,27 +18,21 @@ export default function Payments() {
   }, [payments.length]);
 
   const summaryCards = useMemo(() => {
-    const today = "2026-05-02";
+    const today = getTodayISO();
     const todayTotal = payments.filter((payment) => payment.date === today).reduce((total, payment) => total + payment.amount, 0);
     const totalAmount = payments.reduce((total, payment) => total + payment.amount, 0);
     const highestAmount = payments.reduce((highest, payment) => Math.max(highest, payment.amount), 0);
 
     return [
       { label: "Toplam Ödeme Kaydı", value: payments.length.toString(), icon: ReceiptText, tone: "dark" },
-      { label: "Bugünkü Ödeme", value: currencyFormatter.format(todayTotal), icon: CreditCard, tone: "green" },
-      { label: "Toplam Ödeme Tutarı", value: currencyFormatter.format(totalAmount), icon: CircleDollarSign, tone: "red" },
-      { label: "En Yüksek Ödeme", value: currencyFormatter.format(highestAmount), icon: Trophy, tone: "amber" },
+      { label: "Bugünkü Ödeme", value: formatCurrency(todayTotal), icon: CreditCard, tone: "green" },
+      { label: "Toplam Ödeme Tutarı", value: formatCurrency(totalAmount), icon: CircleDollarSign, tone: "red" },
+      { label: "En Yüksek Ödeme", value: formatCurrency(highestAmount), icon: Trophy, tone: "amber" },
     ];
   }, [payments]);
 
   function handleSavePayment(paymentPayload) {
-    const newPayment = {
-      ...paymentPayload,
-      id: Date.now(),
-      createdAt: new Date().toISOString(),
-    };
-
-    setPayments((currentPayments) => [newPayment, ...currentPayments]);
+    const { data: newPayment } = savePayment(paymentPayload);
     setSuccessMessage(`${newPayment.paymentNo} numaralı ödeme kaydedildi.`);
     setSelectedPayment(newPayment);
   }

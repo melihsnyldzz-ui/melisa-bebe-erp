@@ -1,21 +1,14 @@
-import {
-  collections,
-  customers,
-  payments,
-  products,
-  purchaseSlips,
-  salesSlips,
-  stockMovements,
-  suppliers,
-} from "../data/mockData.js";
 import CriticalStockReport from "../components/Reports/CriticalStockReport.jsx";
 import ReceivablePayableReport from "../components/Reports/ReceivablePayableReport.jsx";
 import ReportSummaryCards from "../components/Reports/ReportSummaryCards.jsx";
 import SalesPurchaseChart from "../components/Reports/SalesPurchaseChart.jsx";
 import TopProductsReport from "../components/Reports/TopProductsReport.jsx";
+import { useErpData } from "../context/ErpDataContext.jsx";
+import { formatDateTR, getTodayISO } from "../utils/dateUtils.js";
 
 export default function Reports() {
-  const reportData = buildReportData();
+  const erpData = useErpData();
+  const reportData = buildReportData(erpData);
 
   return (
     <>
@@ -44,7 +37,7 @@ export default function Reports() {
   );
 }
 
-function buildReportData() {
+function buildReportData({ collections, customers, payments, products, purchaseSlips, salesSlips, suppliers }) {
   const totalSales = salesSlips.reduce((total, slip) => total + slip.grandTotal, 0);
   const totalPurchases = purchaseSlips.reduce((total, slip) => total + slip.grandTotal, 0);
   const totalCollections = collections.reduce((total, item) => total + item.amount, 0);
@@ -62,14 +55,14 @@ function buildReportData() {
       supplierDebt,
       criticalProductCount: criticalProducts.length,
     },
-    salesPurchaseChart: buildSalesPurchaseChart(),
-    topProducts: buildTopProducts(),
+    salesPurchaseChart: buildSalesPurchaseChart(salesSlips, purchaseSlips),
+    topProducts: buildTopProducts(salesSlips),
     criticalProducts,
   };
 }
 
-function buildSalesPurchaseChart() {
-  const days = ["2026-04-26", "2026-04-27", "2026-04-28", "2026-04-29", "2026-04-30", "2026-05-01", "2026-05-02"];
+function buildSalesPurchaseChart(salesSlips, purchaseSlips) {
+  const days = buildLastDays(7);
 
   return days.map((date) => ({
     date,
@@ -79,7 +72,7 @@ function buildSalesPurchaseChart() {
   }));
 }
 
-function buildTopProducts() {
+function buildTopProducts(salesSlips) {
   const productMap = new Map();
 
   salesSlips.forEach((slip) => {
@@ -101,8 +94,15 @@ function buildTopProducts() {
 }
 
 function formatShortDate(value) {
-  return new Intl.DateTimeFormat("tr-TR", {
-    day: "2-digit",
-    month: "2-digit",
-  }).format(new Date(value));
+  return formatDateTR(value).slice(0, 5);
+}
+
+function buildLastDays(dayCount) {
+  const today = new Date(getTodayISO());
+
+  return Array.from({ length: dayCount }, (_, index) => {
+    const date = new Date(today);
+    date.setDate(today.getDate() - (dayCount - 1 - index));
+    return date.toISOString().slice(0, 10);
+  });
 }

@@ -3,16 +3,12 @@ import { Banknote, CircleDollarSign, ReceiptText, Trophy } from "lucide-react";
 import KpiCard from "../components/Dashboard/KpiCard.jsx";
 import CollectionForm from "../components/Collections/CollectionForm.jsx";
 import CollectionTable from "../components/Collections/CollectionTable.jsx";
-import { collections as initialCollections, customers } from "../data/mockData.js";
-
-const currencyFormatter = new Intl.NumberFormat("tr-TR", {
-  style: "currency",
-  currency: "TRY",
-  maximumFractionDigits: 0,
-});
+import { useErpData } from "../context/ErpDataContext.jsx";
+import { getTodayISO } from "../utils/dateUtils.js";
+import { formatCurrency } from "../utils/formatters.js";
 
 export default function Collections() {
-  const [collections, setCollections] = useState(initialCollections);
+  const { collections, customers, saveCollection } = useErpData();
   const [successMessage, setSuccessMessage] = useState("");
   const [selectedCollection, setSelectedCollection] = useState(null);
 
@@ -22,7 +18,7 @@ export default function Collections() {
   }, [collections.length]);
 
   const summaryCards = useMemo(() => {
-    const today = "2026-05-02";
+    const today = getTodayISO();
     const todayTotal = collections
       .filter((collection) => collection.date === today)
       .reduce((total, collection) => total + collection.amount, 0);
@@ -31,20 +27,14 @@ export default function Collections() {
 
     return [
       { label: "Toplam Tahsilat Kaydı", value: collections.length.toString(), icon: ReceiptText, tone: "dark" },
-      { label: "Bugünkü Tahsilat", value: currencyFormatter.format(todayTotal), icon: Banknote, tone: "green" },
-      { label: "Toplam Tahsilat Tutarı", value: currencyFormatter.format(totalAmount), icon: CircleDollarSign, tone: "red" },
-      { label: "En Yüksek Tahsilat", value: currencyFormatter.format(highestAmount), icon: Trophy, tone: "amber" },
+      { label: "Bugünkü Tahsilat", value: formatCurrency(todayTotal), icon: Banknote, tone: "green" },
+      { label: "Toplam Tahsilat Tutarı", value: formatCurrency(totalAmount), icon: CircleDollarSign, tone: "red" },
+      { label: "En Yüksek Tahsilat", value: formatCurrency(highestAmount), icon: Trophy, tone: "amber" },
     ];
   }, [collections]);
 
   function handleSaveCollection(collectionPayload) {
-    const newCollection = {
-      ...collectionPayload,
-      id: Date.now(),
-      createdAt: new Date().toISOString(),
-    };
-
-    setCollections((currentCollections) => [newCollection, ...currentCollections]);
+    const { data: newCollection } = saveCollection(collectionPayload);
     setSuccessMessage(`${newCollection.collectionNo} numaralı tahsilat kaydedildi.`);
     setSelectedCollection(newCollection);
   }

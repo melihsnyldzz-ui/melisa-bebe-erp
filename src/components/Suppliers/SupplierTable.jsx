@@ -1,16 +1,6 @@
 import { Edit3, Power, Truck } from "lucide-react";
-
-const currencyFormatter = new Intl.NumberFormat("tr-TR", {
-  style: "currency",
-  currency: "TRY",
-  maximumFractionDigits: 0,
-});
-
-const dateFormatter = new Intl.DateTimeFormat("tr-TR", {
-  day: "2-digit",
-  month: "2-digit",
-  year: "numeric",
-});
+import { formatDateTR } from "../../utils/dateUtils.js";
+import { formatCurrency } from "../../utils/formatters.js";
 
 export default function SupplierTable({ suppliers, onEdit, onToggleStatus }) {
   return (
@@ -49,12 +39,12 @@ export default function SupplierTable({ suppliers, onEdit, onToggleStatus }) {
                   <td>{supplier.phone}</td>
                   <td>{supplier.whatsapp}</td>
                   <td>{`${supplier.city} / ${supplier.country}`}</td>
-                  <td>{currencyFormatter.format(supplier.totalPurchases)}</td>
-                  <td>{currencyFormatter.format(supplier.totalPayments)}</td>
+                  <td>{formatCurrency(supplier.totalPurchases)}</td>
+                  <td>{formatCurrency(supplier.totalPayments)}</td>
                   <td>
-                    <strong className={hasDebt ? "balance-due" : ""}>{currencyFormatter.format(supplier.currentBalance)}</strong>
+                    <strong className={hasDebt ? "balance-due" : ""}>{formatCurrency(supplier.currentBalance)}</strong>
                   </td>
-                  <td>{formatDate(supplier.lastTransactionDate)}</td>
+                  <td>{formatDateTR(supplier.lastTransactionDate)}</td>
                   <td>
                     <span className={`status ${supplier.isActive ? "status-active" : "status-passive"}`}>
                       {supplier.isActive ? "Aktif" : "Pasif"}
@@ -79,9 +69,4 @@ export default function SupplierTable({ suppliers, onEdit, onToggleStatus }) {
       {suppliers.length === 0 && <p className="empty-table-text">Filtrelere uygun tedarikçi bulunamadı.</p>}
     </section>
   );
-}
-
-function formatDate(value) {
-  if (!value) return "-";
-  return dateFormatter.format(new Date(value));
 }

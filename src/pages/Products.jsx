@@ -4,7 +4,8 @@ import KpiCard from "../components/Dashboard/KpiCard.jsx";
 import ProductFilters from "../components/Products/ProductFilters.jsx";
 import ProductFormModal from "../components/Products/ProductFormModal.jsx";
 import ProductTable from "../components/Products/ProductTable.jsx";
-import { products as initialProducts } from "../data/mockData.js";
+import { useErpData } from "../context/ErpDataContext.jsx";
+import { formatNumber } from "../utils/formatters.js";
 
 const emptyFilters = {
   search: "",
@@ -16,7 +17,7 @@ const emptyFilters = {
 };
 
 export default function Products() {
-  const [products, setProducts] = useState(initialProducts);
+  const { products, addProduct, updateProduct, toggleProductStatus } = useErpData();
   const [filters, setFilters] = useState(emptyFilters);
   const [editingProduct, setEditingProduct] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -59,7 +60,7 @@ export default function Products() {
       { label: "Toplam Ürün", value: products.length.toString(), icon: PackageSearch, tone: "dark" },
       { label: "Aktif Ürün", value: activeCount.toString(), icon: ToggleRight, tone: "green" },
       { label: "Kritik Stokta Ürün", value: criticalCount.toString(), icon: ShieldAlert, tone: "red" },
-      { label: "Toplam Stok Adedi", value: totalStock.toLocaleString("tr-TR"), icon: Boxes, tone: "amber" },
+      { label: "Toplam Stok Adedi", value: formatNumber(totalStock), icon: Boxes, tone: "amber" },
     ];
   }, [products]);
 
@@ -75,20 +76,12 @@ export default function Products() {
 
   function handleSaveProduct(productPayload) {
     if (editingProduct) {
-      setProducts((currentProducts) =>
-        currentProducts.map((product) => (product.id === editingProduct.id ? { ...product, ...productPayload } : product)),
-      );
+      updateProduct({ ...editingProduct, ...productPayload });
     } else {
-      setProducts((currentProducts) => [{ ...productPayload, id: Date.now(), isActive: true }, ...currentProducts]);
+      addProduct(productPayload);
     }
 
     setIsModalOpen(false);
-  }
-
-  function toggleProductStatus(productId) {
-    setProducts((currentProducts) =>
-      currentProducts.map((product) => (product.id === productId ? { ...product, isActive: !product.isActive } : product)),
-    );
   }
 
   return (

@@ -1,10 +1,5 @@
 import { Trash2 } from "lucide-react";
-
-const currencyFormatter = new Intl.NumberFormat("tr-TR", {
-  style: "currency",
-  currency: "TRY",
-  maximumFractionDigits: 0,
-});
+import { formatCurrency } from "../../utils/formatters.js";
 
 export default function PurchaseSlipItemsTable({ items, onUpdateItem, onRemoveItem }) {
   return (
@@ -69,7 +64,7 @@ export default function PurchaseSlipItemsTable({ items, onUpdateItem, onRemoveIt
                   onChange={(event) => onUpdateItem(item.id, "taxRate", event.target.value)}
                 />
               </td>
-              <td className="strong-cell">{currencyFormatter.format(item.lineTotal)}</td>
+              <td className="strong-cell">{formatCurrency(item.lineTotal)}</td>
               <td>
                 <button className="icon-button small" aria-label="Satırı kaldır" onClick={() => onRemoveItem(item.id)}>
                   <Trash2 size={16} />

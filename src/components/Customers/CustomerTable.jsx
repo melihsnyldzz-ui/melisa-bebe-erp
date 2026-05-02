@@ -1,16 +1,6 @@
 import { Edit3, Power, UsersRound } from "lucide-react";
-
-const currencyFormatter = new Intl.NumberFormat("tr-TR", {
-  style: "currency",
-  currency: "TRY",
-  maximumFractionDigits: 0,
-});
-
-const dateFormatter = new Intl.DateTimeFormat("tr-TR", {
-  day: "2-digit",
-  month: "2-digit",
-  year: "numeric",
-});
+import { formatDateTR } from "../../utils/dateUtils.js";
+import { formatCurrency } from "../../utils/formatters.js";
 
 export default function CustomerTable({ customers, onEdit, onToggleStatus }) {
   return (
@@ -51,16 +41,16 @@ export default function CustomerTable({ customers, onEdit, onToggleStatus }) {
                   <td>{customer.whatsapp}</td>
                   <td>{`${customer.city} / ${customer.country}`}</td>
                   <td>{customer.customerType}</td>
-                  <td>{currencyFormatter.format(customer.totalSales)}</td>
-                  <td>{currencyFormatter.format(customer.totalPayments)}</td>
+                  <td>{formatCurrency(customer.totalSales)}</td>
+                  <td>{formatCurrency(customer.totalPayments)}</td>
                   <td>
                     <div className="stock-cell">
-                      <strong className={hasDebt ? "balance-due" : ""}>{currencyFormatter.format(customer.currentBalance)}</strong>
+                      <strong className={hasDebt ? "balance-due" : ""}>{formatCurrency(customer.currentBalance)}</strong>
                       {overRisk && <span className="warning-badge">Risk</span>}
                     </div>
                   </td>
-                  <td>{currencyFormatter.format(customer.riskLimit)}</td>
-                  <td>{formatDate(customer.lastPurchaseDate)}</td>
+                  <td>{formatCurrency(customer.riskLimit)}</td>
+                  <td>{formatDateTR(customer.lastPurchaseDate)}</td>
                   <td>
                     <span className={`status ${customer.isActive ? "status-active" : "status-passive"}`}>
                       {customer.isActive ? "Aktif" : "Pasif"}
@@ -85,9 +75,4 @@ export default function CustomerTable({ customers, onEdit, onToggleStatus }) {
       {customers.length === 0 && <p className="empty-table-text">Filtrelere uygun müşteri bulunamadı.</p>}
     </section>
   );
-}
-
-function formatDate(value) {
-  if (!value) return "-";
-  return dateFormatter.format(new Date(value));
 }
