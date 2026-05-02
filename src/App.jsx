@@ -3,6 +3,7 @@ import AppLayout from "./components/Layout/AppLayout.jsx";
 import Customers from "./pages/Customers.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Products from "./pages/Products.jsx";
+import PurchaseSlips from "./pages/PurchaseSlips.jsx";
 import Suppliers from "./pages/Suppliers.jsx";
 
 export default function App() {
@@ -12,6 +13,7 @@ export default function App() {
   const isProducts = activeModule === "products";
   const isCustomers = activeModule === "customers";
   const isSuppliers = activeModule === "suppliers";
+  const isPurchaseSlips = activeModule === "purchase-slips";
 
   return (
     <AppLayout activeModule={activeModule} onModuleChange={setActiveModule}>
@@ -19,7 +21,8 @@ export default function App() {
       {isProducts && <Products />}
       {isCustomers && <Customers />}
       {isSuppliers && <Suppliers />}
-      {!isDashboard && !isProducts && !isCustomers && !isSuppliers && <ModulePlaceholder />}
+      {isPurchaseSlips && <PurchaseSlips />}
+      {!isDashboard && !isProducts && !isCustomers && !isSuppliers && !isPurchaseSlips && <ModulePlaceholder />}
     </AppLayout>
   );
 }

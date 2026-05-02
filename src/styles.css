@@ -428,6 +428,124 @@ button {
   grid-template-columns: minmax(300px, 1.4fr) repeat(3, minmax(150px, 1fr)) auto;
 }
 
+.success-message {
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  color: #0f6e52;
+  background: #e8f7f1;
+  font-weight: 800;
+}
+
+.purchase-form-panel {
+  margin-bottom: 14px;
+}
+
+.purchase-slip-form {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.purchase-search-field,
+.purchase-items-area,
+.purchase-totals,
+.purchase-note,
+.purchase-actions {
+  grid-column: 1 / -1;
+}
+
+.purchase-items-table {
+  min-width: 1080px;
+}
+
+.line-input {
+  width: 84px;
+  height: 34px;
+  padding: 0 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  outline: 0;
+  color: var(--ink);
+  background: #fbfbfc;
+}
+
+.line-input:focus {
+  border-color: rgba(215, 25, 32, 0.45);
+  box-shadow: 0 0 0 4px rgba(215, 25, 32, 0.08);
+}
+
+.purchase-totals {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.purchase-totals div {
+  display: grid;
+  gap: 6px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfbfc;
+}
+
+.purchase-totals span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.purchase-totals strong {
+  font-size: 1.15rem;
+}
+
+.purchase-totals .grand-total {
+  color: var(--white);
+  border-color: transparent;
+  background: var(--anthracite);
+}
+
+.purchase-totals .grand-total span {
+  color: #c9ccd3;
+}
+
+.purchase-list-panel {
+  margin-top: 14px;
+}
+
+.purchase-slip-table {
+  min-width: 980px;
+}
+
+.slip-detail {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.slip-detail-grid {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.slip-detail-line {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) minmax(220px, 1.2fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  border-radius: 8px;
+  background: #fbfbfc;
+}
+
+.slip-detail-line span {
+  color: var(--muted);
+}
+
 .filter-field {
   display: grid;
   gap: 7px;
@@ -767,6 +885,12 @@ tr:last-child td {
 
   .filters-grid {
     align-items: stretch;
+  }
+
+  .purchase-slip-form,
+  .purchase-totals,
+  .slip-detail-line {
+    grid-template-columns: 1fr;
   }
 
   .product-form {
