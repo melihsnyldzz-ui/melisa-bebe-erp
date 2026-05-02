@@ -618,3 +618,42 @@ export const collections = [
     createdAt: "2026-05-01T18:05:00",
   },
 ];
+
+export const payments = [
+  {
+    id: 1,
+    paymentNo: "OD-0001",
+    date: "2026-05-02",
+    supplierId: 1,
+    supplierName: "ABC Tekstil",
+    paymentType: "Havale",
+    amount: 10000,
+    description: "Kısmi ödeme",
+    receiptImageUrl: "",
+    createdAt: "2026-05-02T13:10:00",
+  },
+  {
+    id: 2,
+    paymentNo: "OD-0002",
+    date: "2026-05-01",
+    supplierId: 2,
+    supplierName: "Yıldız Bebe Üretim",
+    paymentType: "EFT",
+    amount: 5000,
+    description: "Cari ödeme",
+    receiptImageUrl: "",
+    createdAt: "2026-05-01T15:40:00",
+  },
+  {
+    id: 3,
+    paymentNo: "OD-0003",
+    date: "2026-05-01",
+    supplierId: 3,
+    supplierName: "Minik Moda Tekstil",
+    paymentType: "Nakit",
+    amount: 18000,
+    description: "Alış ödemesi",
+    receiptImageUrl: "",
+    createdAt: "2026-05-01T16:20:00",
+  },
+];
