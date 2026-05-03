@@ -14,10 +14,17 @@
   "build": {
     "appId": "com.melisabebe.erp",
     "productName": "Melisa Bebe ERP",
+    "npmRebuild": false,
     "files": [
       "dist/**/*",
       "electron/**/*",
+      "node_modules/better-sqlite3/**/*",
+      "node_modules/bindings/**/*",
+      "node_modules/file-uri-to-path/**/*",
       "package.json"
+    ],
+    "asarUnpack": [
+      "node_modules/better-sqlite3/**/*"
     ],
     "directories": {
       "buildResources": "buildResources"
@@ -29,6 +36,7 @@
   },
   "dependencies": {
     "@vitejs/plugin-react": "^5.1.0",
+    "better-sqlite3": "^12.9.0",
     "lucide-react": "^0.561.0",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",

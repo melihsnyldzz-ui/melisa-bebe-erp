@@ -11,8 +11,9 @@ export default function PurchaseSlipWindow() {
     return `AF-${String(nextNumber).padStart(4, "0")}`;
   }, [purchaseSlips.length]);
 
-  function handleSaveSlip(slipPayload) {
-    const result = savePurchaseSlip(slipPayload);
+  async function handleSaveSlip(slipPayload) {
+    const result = await savePurchaseSlip(slipPayload);
+    if (!result.ok) return;
     const newSlip = result.data;
     setSuccessMessage(`${newSlip.slipNo} numaralı alış fişi kaydedildi.`);
   }

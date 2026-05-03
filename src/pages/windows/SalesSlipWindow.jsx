@@ -12,8 +12,8 @@ export default function SalesSlipWindow() {
     return `SF-${String(nextNumber).padStart(4, "0")}`;
   }, [salesSlips.length]);
 
-  function handleSaveSlip(slipPayload) {
-    const result = saveSalesSlip(slipPayload);
+  async function handleSaveSlip(slipPayload) {
+    const result = await saveSalesSlip(slipPayload);
 
     if (!result.ok) {
       setSuccessMessage("");

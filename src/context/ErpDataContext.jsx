@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import {
   collections as initialCollections,
   customers as initialCustomers,
@@ -22,7 +22,25 @@ export function ErpDataProvider({ children }) {
   const [payments, setPayments] = useState(initialPayments);
   const [stockMovements, setStockMovements] = useState(initialStockMovements);
 
-  function savePurchaseSlip(slipPayload) {
+  useEffect(() => {
+    const erp = getDesktopErp();
+    if (!erp) return;
+
+    erp
+      .getInitialData()
+      .then((data) => applyInitialData(data))
+      .catch((error) => console.error("SQLite başlangıç verisi alınamadı:", error));
+  }, []);
+
+  async function savePurchaseSlip(slipPayload) {
+    const erp = getDesktopErp();
+    if (erp) {
+      const result = await erp.savePurchaseSlip(slipPayload);
+      if (!result.ok) return result;
+      applyInitialData(result.data);
+      return { ok: true, data: result.data.purchaseSlips.find((slip) => slip.slipNo === slipPayload.slipNo) };
+    }
+
     const newSlip = createRecord(slipPayload, { status: "Kayıtlı" });
     const stockRows = buildPurchaseStockMovements(newSlip, products);
 
@@ -45,7 +63,15 @@ export function ErpDataProvider({ children }) {
     return { ok: true, data: newSlip };
   }
 
-  function saveSalesSlip(slipPayload) {
+  async function saveSalesSlip(slipPayload) {
+    const erp = getDesktopErp();
+    if (erp) {
+      const result = await erp.saveSalesSlip(slipPayload);
+      if (!result.ok) return result;
+      applyInitialData(result.data);
+      return { ok: true, data: result.data.salesSlips.find((slip) => slip.slipNo === slipPayload.slipNo) };
+    }
+
     const shortage = findStockShortage(slipPayload.items, products);
     if (shortage) {
       return { ok: false, error: `${shortage.productName} için stok yetersiz. Mevcut stok: ${shortage.availableStock}` };
@@ -73,7 +99,15 @@ export function ErpDataProvider({ children }) {
     return { ok: true, data: newSlip };
   }
 
-  function saveCollection(collectionPayload) {
+  async function saveCollection(collectionPayload) {
+    const erp = getDesktopErp();
+    if (erp) {
+      const result = await erp.saveCollection(collectionPayload);
+      if (!result.ok) return result;
+      applyInitialData(result.data);
+      return { ok: true, data: result.data.collections.find((collection) => collection.collectionNo === collectionPayload.collectionNo) };
+    }
+
     const newCollection = createRecord(collectionPayload);
 
     setCollections((currentCollections) => [newCollection, ...currentCollections]);
@@ -92,7 +126,15 @@ export function ErpDataProvider({ children }) {
     return { ok: true, data: newCollection };
   }
 
-  function savePayment(paymentPayload) {
+  async function savePayment(paymentPayload) {
+    const erp = getDesktopErp();
+    if (erp) {
+      const result = await erp.savePayment(paymentPayload);
+      if (!result.ok) return result;
+      applyInitialData(result.data);
+      return { ok: true, data: result.data.payments.find((payment) => payment.paymentNo === paymentPayload.paymentNo) };
+    }
+
     const newPayment = createRecord(paymentPayload);
 
     setPayments((currentPayments) => [newPayment, ...currentPayments]);
@@ -112,49 +154,112 @@ export function ErpDataProvider({ children }) {
     return { ok: true, data: newPayment };
   }
 
-  function addProduct(product) {
+  async function addProduct(product) {
+    const erp = getDesktopErp();
+    if (erp) {
+      const result = await erp.addProduct(product);
+      if (result.ok) applyInitialData(result.data);
+      return result;
+    }
+
     setProducts((currentProducts) => [{ ...product, id: Date.now(), isActive: true }, ...currentProducts]);
   }
 
-  function updateProduct(productPayload) {
+  async function updateProduct(productPayload) {
+    const erp = getDesktopErp();
+    if (erp) {
+      const result = await erp.updateProduct(productPayload);
+      if (result.ok) applyInitialData(result.data);
+      return result;
+    }
+
     setProducts((currentProducts) =>
       currentProducts.map((product) => (product.id === productPayload.id ? { ...product, ...productPayload } : product)),
     );
   }
 
-  function toggleProductStatus(productId) {
+  async function toggleProductStatus(productId) {
+    const erp = getDesktopErp();
+    if (erp) {
+      const result = await erp.toggleProductStatus(productId);
+      if (result.ok) applyInitialData(result.data);
+      return result;
+    }
+
     setProducts((currentProducts) =>
       currentProducts.map((product) => (product.id === productId ? { ...product, isActive: !product.isActive } : product)),
     );
   }
 
-  function addCustomer(customer) {
+  async function addCustomer(customer) {
+    const erp = getDesktopErp();
+    if (erp) {
+      const result = await erp.addCustomer(customer);
+      if (result.ok) applyInitialData(result.data);
+      return result;
+    }
+
     setCustomers((currentCustomers) => [{ ...customer, id: Date.now(), isActive: true }, ...currentCustomers]);
   }
 
-  function updateCustomer(customerPayload) {
+  async function updateCustomer(customerPayload) {
+    const erp = getDesktopErp();
+    if (erp) {
+      const result = await erp.updateCustomer(customerPayload);
+      if (result.ok) applyInitialData(result.data);
+      return result;
+    }
+
     setCustomers((currentCustomers) =>
       currentCustomers.map((customer) => (customer.id === customerPayload.id ? { ...customer, ...customerPayload } : customer)),
     );
   }
 
-  function toggleCustomerStatus(customerId) {
+  async function toggleCustomerStatus(customerId) {
+    const erp = getDesktopErp();
+    if (erp) {
+      const result = await erp.toggleCustomerStatus(customerId);
+      if (result.ok) applyInitialData(result.data);
+      return result;
+    }
+
     setCustomers((currentCustomers) =>
       currentCustomers.map((customer) => (customer.id === customerId ? { ...customer, isActive: !customer.isActive } : customer)),
     );
   }
 
-  function addSupplier(supplier) {
+  async function addSupplier(supplier) {
+    const erp = getDesktopErp();
+    if (erp) {
+      const result = await erp.addSupplier(supplier);
+      if (result.ok) applyInitialData(result.data);
+      return result;
+    }
+
     setSuppliers((currentSuppliers) => [{ ...supplier, id: Date.now(), isActive: true }, ...currentSuppliers]);
   }
 
-  function updateSupplier(supplierPayload) {
+  async function updateSupplier(supplierPayload) {
+    const erp = getDesktopErp();
+    if (erp) {
+      const result = await erp.updateSupplier(supplierPayload);
+      if (result.ok) applyInitialData(result.data);
+      return result;
+    }
+
     setSuppliers((currentSuppliers) =>
       currentSuppliers.map((supplier) => (supplier.id === supplierPayload.id ? { ...supplier, ...supplierPayload } : supplier)),
     );
   }
 
-  function toggleSupplierStatus(supplierId) {
+  async function toggleSupplierStatus(supplierId) {
+    const erp = getDesktopErp();
+    if (erp) {
+      const result = await erp.toggleSupplierStatus(supplierId);
+      if (result.ok) applyInitialData(result.data);
+      return result;
+    }
+
     setSuppliers((currentSuppliers) =>
       currentSuppliers.map((supplier) => (supplier.id === supplierId ? { ...supplier, isActive: !supplier.isActive } : supplier)),
     );
@@ -188,6 +293,17 @@ export function ErpDataProvider({ children }) {
   );
 
   return <ErpDataContext.Provider value={value}>{children}</ErpDataContext.Provider>;
+
+  function applyInitialData(data) {
+    setProducts(data.products || []);
+    setCustomers(data.customers || []);
+    setSuppliers(data.suppliers || []);
+    setPurchaseSlips(data.purchaseSlips || []);
+    setSalesSlips(data.salesSlips || []);
+    setCollections(data.collections || []);
+    setPayments(data.payments || []);
+    setStockMovements(data.stockMovements || []);
+  }
 }
 
 export function useErpData() {
@@ -205,6 +321,11 @@ function createRecord(payload, extraFields = {}) {
     id: Date.now(),
     createdAt: new Date().toISOString(),
   };
+}
+
+function getDesktopErp() {
+  if (typeof window === "undefined") return null;
+  return window.electronAPI?.erp || null;
 }
 
 function sumQuantitiesByProduct(items) {

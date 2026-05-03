@@ -31,8 +31,8 @@ export default function Payments() {
     ];
   }, [payments]);
 
-  function handleSavePayment(paymentPayload) {
-    const { data: newPayment } = savePayment(paymentPayload);
+  async function handleSavePayment(paymentPayload) {
+    const { data: newPayment } = await savePayment(paymentPayload);
     setSuccessMessage(`${newPayment.paymentNo} numaralı ödeme kaydedildi.`);
     setSelectedPayment(newPayment);
   }

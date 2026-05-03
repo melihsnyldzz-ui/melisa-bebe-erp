@@ -33,8 +33,8 @@ export default function Collections() {
     ];
   }, [collections]);
 
-  function handleSaveCollection(collectionPayload) {
-    const { data: newCollection } = saveCollection(collectionPayload);
+  async function handleSaveCollection(collectionPayload) {
+    const { data: newCollection } = await saveCollection(collectionPayload);
     setSuccessMessage(`${newCollection.collectionNo} numaralı tahsilat kaydedildi.`);
     setSelectedCollection(newCollection);
   }

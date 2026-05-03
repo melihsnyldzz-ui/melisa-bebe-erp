@@ -3,4 +3,20 @@ const { contextBridge, ipcRenderer } = require("electron");
 contextBridge.exposeInMainWorld("electronAPI", {
   openPurchaseSlipWindow: () => ipcRenderer.invoke("purchase-slip-window:open"),
   openSalesSlipWindow: () => ipcRenderer.invoke("sales-slip-window:open"),
+  erp: {
+    getInitialData: () => ipcRenderer.invoke("erp:get-initial-data"),
+    savePurchaseSlip: (payload) => ipcRenderer.invoke("erp:save-purchase-slip", payload),
+    saveSalesSlip: (payload) => ipcRenderer.invoke("erp:save-sales-slip", payload),
+    saveCollection: (payload) => ipcRenderer.invoke("erp:save-collection", payload),
+    savePayment: (payload) => ipcRenderer.invoke("erp:save-payment", payload),
+    addProduct: (payload) => ipcRenderer.invoke("erp:add-product", payload),
+    updateProduct: (payload) => ipcRenderer.invoke("erp:update-product", payload),
+    toggleProductStatus: (id) => ipcRenderer.invoke("erp:toggle-product-status", id),
+    addCustomer: (payload) => ipcRenderer.invoke("erp:add-customer", payload),
+    updateCustomer: (payload) => ipcRenderer.invoke("erp:update-customer", payload),
+    toggleCustomerStatus: (id) => ipcRenderer.invoke("erp:toggle-customer-status", id),
+    addSupplier: (payload) => ipcRenderer.invoke("erp:add-supplier", payload),
+    updateSupplier: (payload) => ipcRenderer.invoke("erp:update-supplier", payload),
+    toggleSupplierStatus: (id) => ipcRenderer.invoke("erp:toggle-supplier-status", id),
+  },
 });

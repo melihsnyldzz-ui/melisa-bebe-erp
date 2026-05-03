@@ -33,8 +33,8 @@ export default function SalesSlips() {
     ];
   }, [salesSlips]);
 
-  function handleSaveSlip(slipPayload) {
-    const result = saveSalesSlip(slipPayload);
+  async function handleSaveSlip(slipPayload) {
+    const result = await saveSalesSlip(slipPayload);
     if (!result.ok) {
       setSuccessMessage("");
       setErrorMessage(result.error);

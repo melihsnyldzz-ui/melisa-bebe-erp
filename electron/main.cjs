@@ -1,8 +1,11 @@
 const path = require("node:path");
 const { app, BrowserWindow, ipcMain, Menu } = require("electron");
+const { initializeDatabase } = require("./database/db.cjs");
+const { createRepositories } = require("./database/repositories.cjs");
 
 const isDev = !app.isPackaged;
 const devServerUrl = process.env.VITE_DEV_SERVER_URL || "http://127.0.0.1:5173";
+let repositories;
 
 function createMainWindow() {
   const mainWindow = new BrowserWindow({
@@ -65,6 +68,8 @@ function createSlipWindow(type) {
 
 app.whenReady().then(() => {
   Menu.setApplicationMenu(null);
+  repositories = createRepositories(initializeDatabase(app));
+  registerErpHandlers();
   createMainWindow();
 
   ipcMain.handle("purchase-slip-window:open", () => {
@@ -83,6 +88,23 @@ app.whenReady().then(() => {
     }
   });
 });
+
+function registerErpHandlers() {
+  ipcMain.handle("erp:get-initial-data", () => repositories.getInitialErpData());
+  ipcMain.handle("erp:save-purchase-slip", (_event, payload) => repositories.savePurchaseSlip(payload));
+  ipcMain.handle("erp:save-sales-slip", (_event, payload) => repositories.saveSalesSlip(payload));
+  ipcMain.handle("erp:save-collection", (_event, payload) => repositories.saveCollection(payload));
+  ipcMain.handle("erp:save-payment", (_event, payload) => repositories.savePayment(payload));
+  ipcMain.handle("erp:add-product", (_event, payload) => repositories.addProduct(payload));
+  ipcMain.handle("erp:update-product", (_event, payload) => repositories.updateProduct(payload));
+  ipcMain.handle("erp:toggle-product-status", (_event, id) => repositories.toggleProductStatus(id));
+  ipcMain.handle("erp:add-customer", (_event, payload) => repositories.addCustomer(payload));
+  ipcMain.handle("erp:update-customer", (_event, payload) => repositories.updateCustomer(payload));
+  ipcMain.handle("erp:toggle-customer-status", (_event, id) => repositories.toggleCustomerStatus(id));
+  ipcMain.handle("erp:add-supplier", (_event, payload) => repositories.addSupplier(payload));
+  ipcMain.handle("erp:update-supplier", (_event, payload) => repositories.updateSupplier(payload));
+  ipcMain.handle("erp:toggle-supplier-status", (_event, id) => repositories.toggleSupplierStatus(id));
+}
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
