@@ -1,0 +1,49 @@
+import { useMemo, useState } from "react";
+import SalesSlipForm from "../../components/SalesSlips/SalesSlipForm.jsx";
+import { useErpData } from "../../context/ErpDataContext.jsx";
+
+export default function SalesSlipWindow() {
+  const { customers, products, salesSlips, saveSalesSlip } = useErpData();
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const nextSlipNo = useMemo(() => {
+    const nextNumber = salesSlips.length + 1;
+    return `SF-${String(nextNumber).padStart(4, "0")}`;
+  }, [salesSlips.length]);
+
+  function handleSaveSlip(slipPayload) {
+    const result = saveSalesSlip(slipPayload);
+
+    if (!result.ok) {
+      setSuccessMessage("");
+      setErrorMessage(result.error);
+      return;
+    }
+
+    const newSlip = result.data;
+    setErrorMessage("");
+    setSuccessMessage(`${newSlip.slipNo} numaralı satış fişi kaydedildi.`);
+  }
+
+  return (
+    <main className="desktop-window-page">
+      <section className="desktop-window-title">
+        <div>
+          <p>Melisa Bebe ERP</p>
+          <h1>Yeni Satış Fişi</h1>
+          <span>Satış fişini masaüstü penceresi içinde hızlıca oluşturun.</span>
+        </div>
+      </section>
+
+      <p className="form-note desktop-window-note">
+        Not: Masaüstü pencereler gerçek veritabanı bağlantısı aktif olduğunda ana ekranla eş zamanlı çalışacaktır.
+      </p>
+
+      {successMessage && <p className="success-message">{successMessage}</p>}
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
+
+      <SalesSlipForm nextSlipNo={nextSlipNo} products={products} customers={customers} onSave={handleSaveSlip} />
+    </main>
+  );
+}

@@ -1025,6 +1025,47 @@ button {
   grid-column: 1 / -1;
 }
 
+.desktop-window-page {
+  min-height: 100vh;
+  padding: 28px;
+  background:
+    linear-gradient(135deg, rgba(215, 25, 32, 0.07), transparent 32%),
+    var(--light);
+}
+
+.desktop-window-title {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.desktop-window-title p {
+  margin: 0 0 7px;
+  color: var(--red);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.desktop-window-title h1 {
+  margin: 0;
+  color: var(--anthracite);
+  font-size: 2rem;
+  letter-spacing: 0;
+}
+
+.desktop-window-title span {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted);
+}
+
+.desktop-window-note {
+  margin-bottom: 14px;
+}
+
 table {
   width: 100%;
   margin-top: 14px;

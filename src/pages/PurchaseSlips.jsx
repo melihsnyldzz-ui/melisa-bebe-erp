@@ -1,10 +1,11 @@
 import { useMemo, useState } from "react";
-import { Clock3, ReceiptText, ShoppingCart, WalletCards } from "lucide-react";
+import { Clock3, FilePlus2, ReceiptText, ShoppingCart, WalletCards } from "lucide-react";
 import KpiCard from "../components/Dashboard/KpiCard.jsx";
 import PurchaseSlipForm from "../components/PurchaseSlips/PurchaseSlipForm.jsx";
 import PurchaseSlipTable from "../components/PurchaseSlips/PurchaseSlipTable.jsx";
 import { useErpData } from "../context/ErpDataContext.jsx";
 import { getTodayISO } from "../utils/dateUtils.js";
+import { canUseDesktopBridge, openPurchaseSlipWindow } from "../utils/desktopBridge.js";
 import { formatCurrency } from "../utils/formatters.js";
 
 export default function PurchaseSlips() {
@@ -40,6 +41,10 @@ export default function PurchaseSlips() {
     setSelectedSlip(newSlip);
   }
 
+  function handleOpenWindow() {
+    openPurchaseSlipWindow();
+  }
+
   return (
     <>
       <section className="page-title">
@@ -48,6 +53,12 @@ export default function PurchaseSlips() {
           <h1>Alış Fişleri</h1>
           <span>Tedarikçiden gelen ürünleri fiş mantığıyla stok ve cari hesaplara işleyin.</span>
         </div>
+        {canUseDesktopBridge() && (
+          <button className="primary-action" type="button" onClick={handleOpenWindow}>
+            <FilePlus2 size={18} />
+            Yeni Alış Fişini Pencerede Aç
+          </button>
+        )}
       </section>
 
       <section className="kpi-grid product-summary-grid">

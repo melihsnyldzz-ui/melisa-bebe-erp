@@ -1,10 +1,11 @@
 import { useMemo, useState } from "react";
-import { Clock3, ReceiptText, ShoppingBag, WalletCards } from "lucide-react";
+import { Clock3, FilePlus2, ReceiptText, ShoppingBag, WalletCards } from "lucide-react";
 import KpiCard from "../components/Dashboard/KpiCard.jsx";
 import SalesSlipForm from "../components/SalesSlips/SalesSlipForm.jsx";
 import SalesSlipTable from "../components/SalesSlips/SalesSlipTable.jsx";
 import { useErpData } from "../context/ErpDataContext.jsx";
 import { getTodayISO } from "../utils/dateUtils.js";
+import { canUseDesktopBridge, openSalesSlipWindow } from "../utils/desktopBridge.js";
 import { formatCurrency } from "../utils/formatters.js";
 
 export default function SalesSlips() {
@@ -46,6 +47,10 @@ export default function SalesSlips() {
     setSelectedSlip(newSlip);
   }
 
+  function handleOpenWindow() {
+    openSalesSlipWindow();
+  }
+
   return (
     <>
       <section className="page-title">
@@ -54,6 +59,12 @@ export default function SalesSlips() {
           <h1>Satış Fişleri</h1>
           <span>Müşteriye çıkan ürünleri fiş mantığıyla stok ve cari hesaplara işleyin.</span>
         </div>
+        {canUseDesktopBridge() && (
+          <button className="primary-action" type="button" onClick={handleOpenWindow}>
+            <FilePlus2 size={18} />
+            Yeni Satış Fişini Pencerede Aç
+          </button>
+        )}
       </section>
 
       <section className="kpi-grid product-summary-grid">

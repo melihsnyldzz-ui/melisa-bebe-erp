@@ -11,9 +11,20 @@ import SalesSlips from "./pages/SalesSlips.jsx";
 import Settings from "./pages/Settings.jsx";
 import StockMovements from "./pages/StockMovements.jsx";
 import Suppliers from "./pages/Suppliers.jsx";
+import PurchaseSlipWindow from "./pages/windows/PurchaseSlipWindow.jsx";
+import SalesSlipWindow from "./pages/windows/SalesSlipWindow.jsx";
 
 export default function App() {
   const [activeModule, setActiveModule] = useState("dashboard");
+  const windowType = new URLSearchParams(window.location.search).get("window");
+
+  if (windowType === "purchase-slip") {
+    return <PurchaseSlipWindow />;
+  }
+
+  if (windowType === "sales-slip") {
+    return <SalesSlipWindow />;
+  }
 
   const isDashboard = activeModule === "dashboard";
   const isProducts = activeModule === "products";
