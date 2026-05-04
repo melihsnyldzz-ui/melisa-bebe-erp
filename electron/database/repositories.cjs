@@ -309,13 +309,17 @@ function cancelPaymentTx(db, paymentId) {
 
 function addProductTx(db, payload) {
   const now = new Date().toISOString();
+  const product = normalizeProductPayload(payload);
+  assertUniqueProductFields(db, product);
   db.prepare(`
     INSERT INTO products (barcode, code, modelCode, variantCode, name, category, size, color, purchasePrice, salePrice, stockQuantity, criticalStockLevel, supplier, imageUrl, isActive, createdAt, updatedAt)
     VALUES (@barcode, @code, @modelCode, @variantCode, @name, @category, @size, @color, @purchasePrice, @salePrice, @stockQuantity, @criticalStockLevel, @supplier, @imageUrl, 1, @now, @now)
-  `).run({ ...normalizeProductPayload(payload), now });
+  `).run({ ...product, now });
 }
 
 function updateProductTx(db, payload) {
+  const product = normalizeProductPayload(payload);
+  assertUniqueProductFields(db, product, payload.id);
   db.prepare(`
     UPDATE products
     SET barcode=@barcode, code=@code, modelCode=@modelCode, variantCode=@variantCode, name=@name, category=@category, size=@size, color=@color, purchasePrice=@purchasePrice,
@@ -323,7 +327,7 @@ function updateProductTx(db, payload) {
       isActive=@isActive, updatedAt=@updatedAt
     WHERE id=@id
   `).run({
-    ...normalizeProductPayload(payload),
+    ...product,
     id: payload.id,
     isActive: payload.isActive ? 1 : 0,
     updatedAt: new Date().toISOString(),
@@ -387,8 +391,36 @@ function wrapMutation(fn, db) {
     fn();
     return { ok: true, data: getInitialErpData(db) };
   } catch (error) {
-    return { ok: false, error: error.message || "Veritabanı işlemi tamamlanamadı." };
+    return { ok: false, error: mapDatabaseError(error) };
   }
+}
+
+function assertUniqueProductFields(db, product, currentProductId = null) {
+  const checks = [
+    { key: "barcode", message: "Bu barkod başka bir üründe kullanılıyor." },
+    { key: "code", message: "Bu ürün kodu başka bir üründe kullanılıyor." },
+    { key: "variantCode", message: "Bu varyant kodu başka bir üründe kullanılıyor." },
+  ];
+
+  checks.forEach((check) => {
+    const value = String(product[check.key] || "").trim();
+    if (!value) return;
+
+    const row = db
+      .prepare(`SELECT id FROM products WHERE TRIM(COALESCE(${check.key}, '')) = ? LIMIT 1`)
+      .get(value);
+    if (row && row.id !== currentProductId) {
+      throw new Error(check.message);
+    }
+  });
+}
+
+function mapDatabaseError(error) {
+  const message = error.message || "Veritabanı işlemi tamamlanamadı.";
+  if (message.includes("products.barcode")) return "Bu barkod başka bir üründe kullanılıyor.";
+  if (message.includes("products.code")) return "Bu ürün kodu başka bir üründe kullanılıyor.";
+  if (message.includes("products.variantCode")) return "Bu varyant kodu başka bir üründe kullanılıyor.";
+  return message;
 }
 
 function normalizeProductPayload(payload) {
