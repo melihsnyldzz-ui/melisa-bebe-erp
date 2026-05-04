@@ -6,6 +6,7 @@ import PurchaseSlipTable from "../components/PurchaseSlips/PurchaseSlipTable.jsx
 import { useErpData } from "../context/ErpDataContext.jsx";
 import { getTodayISO } from "../utils/dateUtils.js";
 import { canUseDesktopBridge, openPurchaseSlipWindow } from "../utils/desktopBridge.js";
+import { getNextPurchaseSlipNo } from "../utils/documentNumbers.js";
 import { formatCurrency } from "../utils/formatters.js";
 
 export default function PurchaseSlips() {
@@ -14,10 +15,7 @@ export default function PurchaseSlips() {
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedSlip, setSelectedSlip] = useState(null);
 
-  const nextSlipNo = useMemo(() => {
-    const nextNumber = purchaseSlips.length + 1;
-    return `AF-${String(nextNumber).padStart(4, "0")}`;
-  }, [purchaseSlips.length]);
+  const nextSlipNo = useMemo(() => getNextPurchaseSlipNo(purchaseSlips), [purchaseSlips]);
 
   const summaryCards = useMemo(() => {
     const today = getTodayISO();

@@ -5,6 +5,7 @@ import CollectionForm from "../components/Collections/CollectionForm.jsx";
 import CollectionTable from "../components/Collections/CollectionTable.jsx";
 import { useErpData } from "../context/ErpDataContext.jsx";
 import { getTodayISO } from "../utils/dateUtils.js";
+import { getNextCollectionNo } from "../utils/documentNumbers.js";
 import { formatCurrency } from "../utils/formatters.js";
 
 export default function Collections() {
@@ -13,10 +14,7 @@ export default function Collections() {
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedCollection, setSelectedCollection] = useState(null);
 
-  const nextCollectionNo = useMemo(() => {
-    const nextNumber = collections.length + 1;
-    return `TH-${String(nextNumber).padStart(4, "0")}`;
-  }, [collections.length]);
+  const nextCollectionNo = useMemo(() => getNextCollectionNo(collections), [collections]);
 
   const summaryCards = useMemo(() => {
     const today = getTodayISO();

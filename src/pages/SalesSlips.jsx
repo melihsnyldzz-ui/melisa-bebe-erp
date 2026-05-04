@@ -6,6 +6,7 @@ import SalesSlipTable from "../components/SalesSlips/SalesSlipTable.jsx";
 import { useErpData } from "../context/ErpDataContext.jsx";
 import { getTodayISO } from "../utils/dateUtils.js";
 import { canUseDesktopBridge, openSalesSlipWindow } from "../utils/desktopBridge.js";
+import { getNextSalesSlipNo } from "../utils/documentNumbers.js";
 import { formatCurrency } from "../utils/formatters.js";
 
 export default function SalesSlips() {
@@ -14,10 +15,7 @@ export default function SalesSlips() {
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedSlip, setSelectedSlip] = useState(null);
 
-  const nextSlipNo = useMemo(() => {
-    const nextNumber = salesSlips.length + 1;
-    return `SF-${String(nextNumber).padStart(4, "0")}`;
-  }, [salesSlips.length]);
+  const nextSlipNo = useMemo(() => getNextSalesSlipNo(salesSlips), [salesSlips]);
 
   const summaryCards = useMemo(() => {
     const today = getTodayISO();

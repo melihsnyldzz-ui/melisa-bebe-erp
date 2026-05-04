@@ -5,6 +5,7 @@ import PaymentForm from "../components/Payments/PaymentForm.jsx";
 import PaymentTable from "../components/Payments/PaymentTable.jsx";
 import { useErpData } from "../context/ErpDataContext.jsx";
 import { getTodayISO } from "../utils/dateUtils.js";
+import { getNextPaymentNo } from "../utils/documentNumbers.js";
 import { formatCurrency } from "../utils/formatters.js";
 
 export default function Payments() {
@@ -13,10 +14,7 @@ export default function Payments() {
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedPayment, setSelectedPayment] = useState(null);
 
-  const nextPaymentNo = useMemo(() => {
-    const nextNumber = payments.length + 1;
-    return `OD-${String(nextNumber).padStart(4, "0")}`;
-  }, [payments.length]);
+  const nextPaymentNo = useMemo(() => getNextPaymentNo(payments), [payments]);
 
   const summaryCards = useMemo(() => {
     const today = getTodayISO();

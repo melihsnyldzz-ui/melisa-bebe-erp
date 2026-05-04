@@ -1,16 +1,14 @@
 import { useMemo, useState } from "react";
 import SalesSlipForm from "../../components/SalesSlips/SalesSlipForm.jsx";
 import { useErpData } from "../../context/ErpDataContext.jsx";
+import { getNextSalesSlipNo } from "../../utils/documentNumbers.js";
 
 export default function SalesSlipWindow() {
   const { customers, products, salesSlips, saveSalesSlip } = useErpData();
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const nextSlipNo = useMemo(() => {
-    const nextNumber = salesSlips.length + 1;
-    return `SF-${String(nextNumber).padStart(4, "0")}`;
-  }, [salesSlips.length]);
+  const nextSlipNo = useMemo(() => getNextSalesSlipNo(salesSlips), [salesSlips]);
 
   async function handleSaveSlip(slipPayload) {
     const result = await saveSalesSlip(slipPayload);
