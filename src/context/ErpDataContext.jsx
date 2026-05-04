@@ -14,6 +14,7 @@ const ErpDataContext = createContext(null);
 const fallbackAppSettings = {
   dataMode: "demo",
   setupCompleted: "false",
+  demoDataClearedAt: "",
 };
 
 export function ErpDataProvider({ children }) {
@@ -445,6 +446,17 @@ export function ErpDataProvider({ children }) {
     return result;
   }
 
+  async function resetDemoData() {
+    const erp = getDesktopErp();
+    if (!erp?.resetDemoData) {
+      return { ok: false, error: "Demo veri temizleme yalnızca Electron modunda yapılabilir." };
+    }
+
+    const result = await erp.resetDemoData();
+    if (result.ok) applyInitialData(result.data);
+    return result;
+  }
+
   const value = useMemo(
     () => ({
       products,
@@ -486,6 +498,7 @@ export function ErpDataProvider({ children }) {
       exportDatabaseBackup,
       refreshAppSettings,
       startLiveMode,
+      resetDemoData,
       refreshData,
     }),
     [

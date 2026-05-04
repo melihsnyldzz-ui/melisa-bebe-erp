@@ -52,6 +52,12 @@ export default function LiveModeSettings() {
             <strong>{formatDateTR(appSettings.liveStartedAt)}</strong>
           </div>
         )}
+        {appSettings.demoDataClearedAt && (
+          <div className="data-status-card">
+            <span>Demo verileri temizlenme tarihi</span>
+            <strong>{formatDateTR(appSettings.demoDataClearedAt)}</strong>
+          </div>
+        )}
       </div>
 
       {isLiveMode ? (

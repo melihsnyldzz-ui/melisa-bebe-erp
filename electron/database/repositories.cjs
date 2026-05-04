@@ -3,6 +3,7 @@ const DEFAULT_APP_SETTINGS = {
   setupCompleted: "false",
   firstRunAt: "",
   liveStartedAt: "",
+  demoDataClearedAt: "",
 };
 
 function createRepositories(db, options = {}) {
@@ -37,6 +38,7 @@ function createRepositories(db, options = {}) {
     getAppSettings: () => getAppSettings(db),
     updateAppSetting: (key, value) => wrapMutation(() => updateAppSettingTx(db, key, value), db),
     startLiveMode: () => startLiveMode(db, options),
+    resetDemoData: () => resetDemoData(db, options),
     getInitialErpData: () => getInitialErpData(db),
     savePurchaseSlip: (payload) => wrapMutation(() => purchaseTransaction(payload), db),
     saveSalesSlip: (payload) => wrapMutation(() => salesTransaction(payload), db),
@@ -113,6 +115,39 @@ function startLiveMode(db, options = {}) {
   } catch (error) {
     console.error("Gerçek kullanım moduna geçiş tamamlanamadı:", error);
     return { ok: false, error: error.message || "Gerçek kullanım moduna geçiş tamamlanamadı." };
+  }
+}
+
+function resetDemoData(db, options = {}) {
+  try {
+    const backupResult = options.createBackup ? options.createBackup() : { ok: false, error: "Otomatik yedekleme fonksiyonu tanımlı değil." };
+    if (!backupResult.ok) return { ok: false, error: backupResult.error || "Otomatik yedek oluşturulamadı." };
+
+    const now = new Date().toISOString();
+    const tablesToClear = [
+      "stock_movements",
+      "purchase_slip_items",
+      "sales_slip_items",
+      "purchase_slips",
+      "sales_slips",
+      "collections",
+      "payments",
+      "products",
+      "customers",
+      "suppliers",
+    ];
+    const tx = db.transaction(() => {
+      tablesToClear.forEach((table) => db.prepare(`DELETE FROM ${table}`).run());
+      updateAppSettingTx(db, "dataMode", "live");
+      updateAppSettingTx(db, "setupCompleted", "true");
+      updateAppSettingTx(db, "demoDataClearedAt", now);
+    });
+
+    tx();
+    return { ok: true, path: backupResult.path, data: getInitialErpData(db) };
+  } catch (error) {
+    console.error("Demo veri temizleme işlemi tamamlanamadı:", error);
+    return { ok: false, error: error.message || "Demo veri temizleme işlemi tamamlanamadı." };
   }
 }
 

@@ -9,6 +9,7 @@ contextBridge.exposeInMainWorld("electronAPI", {
     getAppSettings: () => ipcRenderer.invoke("erp:get-app-settings"),
     updateAppSetting: (key, value) => ipcRenderer.invoke("erp:update-app-setting", key, value),
     startLiveMode: () => ipcRenderer.invoke("erp:start-live-mode"),
+    resetDemoData: () => ipcRenderer.invoke("erp:reset-demo-data"),
     getAllCurrencies: () => ipcRenderer.invoke("erp:get-all-currencies"),
     getAllExchangeRates: () => ipcRenderer.invoke("erp:get-all-exchange-rates"),
     getAllCurrentAccounts: () => ipcRenderer.invoke("erp:get-all-current-accounts"),

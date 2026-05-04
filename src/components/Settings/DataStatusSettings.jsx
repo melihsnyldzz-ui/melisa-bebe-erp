@@ -1,6 +1,7 @@
 import { ActivitySquare } from "lucide-react";
 import { useMemo } from "react";
 import { useErpData } from "../../context/ErpDataContext.jsx";
+import { formatDateTR } from "../../utils/dateUtils.js";
 import { canUsePersistentDatabase, getDatabaseModeLabel } from "../../utils/desktopBridge.js";
 
 export default function DataStatusSettings() {
@@ -53,6 +54,12 @@ export default function DataStatusSettings() {
       )}
 
       <div className="data-status-grid">
+        {appSettings.demoDataClearedAt && (
+          <div className="data-status-card">
+            <span>Demo verileri temizlenme tarihi</span>
+            <strong>{formatDateTR(appSettings.demoDataClearedAt)}</strong>
+          </div>
+        )}
         {recordCounts.map((item) => (
           <div className="data-status-card" key={item.label}>
             <span>{item.label}</span>

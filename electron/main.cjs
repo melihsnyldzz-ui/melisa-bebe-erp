@@ -97,6 +97,7 @@ function registerErpHandlers() {
   ipcMain.handle("erp:get-app-settings", () => repositories.getAppSettings());
   ipcMain.handle("erp:update-app-setting", (_event, key, value) => repositories.updateAppSetting(key, value));
   ipcMain.handle("erp:start-live-mode", () => repositories.startLiveMode());
+  ipcMain.handle("erp:reset-demo-data", () => repositories.resetDemoData());
   ipcMain.handle("erp:get-all-currencies", () => repositories.getAllCurrencies());
   ipcMain.handle("erp:get-all-exchange-rates", () => repositories.getAllExchangeRates());
   ipcMain.handle("erp:get-all-current-accounts", () => repositories.getAllCurrentAccounts());

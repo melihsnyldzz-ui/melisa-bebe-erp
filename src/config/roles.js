@@ -18,6 +18,7 @@ export const PERMISSIONS = [
   "reports.view",
   "settings.view",
   "cancelRecords",
+  "system.resetData",
   "viewCosts",
   "viewProfit",
 ];
