@@ -1,8 +1,8 @@
-import { Edit3, Power, Truck } from "lucide-react";
+import { BookOpenText, Edit3, Power, Truck } from "lucide-react";
 import { formatDateTR } from "../../utils/dateUtils.js";
 import { formatCurrency } from "../../utils/formatters.js";
 
-export default function SupplierTable({ suppliers, onEdit, onToggleStatus }) {
+export default function SupplierTable({ suppliers, selectedSupplierId, onEdit, onToggleStatus, onViewLedger }) {
   return (
     <section className="table-panel product-table-panel">
       <div className="section-heading">
@@ -32,7 +32,7 @@ export default function SupplierTable({ suppliers, onEdit, onToggleStatus }) {
               const hasDebt = supplier.currentBalance > 0;
 
               return (
-                <tr className={!supplier.isActive ? "passive-row" : ""} key={supplier.id}>
+                <tr className={`${!supplier.isActive ? "passive-row" : ""} ${selectedSupplierId === supplier.id ? "selected-row" : ""}`} key={supplier.id}>
                   <td className="strong-cell">{supplier.name}</td>
                   <td>{supplier.companyTitle}</td>
                   <td>{supplier.contactPerson}</td>
@@ -52,6 +52,9 @@ export default function SupplierTable({ suppliers, onEdit, onToggleStatus }) {
                   </td>
                   <td>
                     <div className="table-actions">
+                      <button className="icon-button small" aria-label="Cari hareketlerini görüntüle" onClick={() => onViewLedger(supplier)}>
+                        <BookOpenText size={16} />
+                      </button>
                       <button className="icon-button small" aria-label="Tedarikçiyi düzenle" onClick={() => onEdit(supplier)}>
                         <Edit3 size={16} />
                       </button>
