@@ -7,6 +7,8 @@ function runMigrations(db) {
       id INTEGER PRIMARY KEY,
       barcode TEXT,
       code TEXT UNIQUE NOT NULL,
+      modelCode TEXT,
+      variantCode TEXT,
       name TEXT NOT NULL,
       category TEXT,
       size TEXT,
@@ -363,6 +365,12 @@ function runMigrations(db) {
 
   ensureColumn(db, "collections", "status", "TEXT DEFAULT 'Kayıtlı'");
   ensureColumn(db, "payments", "status", "TEXT DEFAULT 'Kayıtlı'");
+  ensureColumn(db, "products", "modelCode", "TEXT");
+  ensureColumn(db, "products", "variantCode", "TEXT");
+  normalizeEmptyProductCodes(db);
+  createUniqueIndexIfClean(db, "idx_products_barcode_unique", "products", "barcode");
+  createUniqueIndexIfClean(db, "idx_products_code_unique", "products", "code");
+  createUniqueIndexIfClean(db, "idx_products_variant_code_unique", "products", "variantCode");
 }
 
 module.exports = { runMigrations };
@@ -372,4 +380,30 @@ function ensureColumn(db, tableName, columnName, definition) {
   if (columns.some((column) => column.name === columnName)) return;
 
   db.prepare(`ALTER TABLE ${tableName} ADD COLUMN ${columnName} ${definition}`).run();
+}
+
+function normalizeEmptyProductCodes(db) {
+  db.prepare("UPDATE products SET barcode = NULL WHERE barcode IS NOT NULL AND TRIM(barcode) = ''").run();
+  db.prepare("UPDATE products SET variantCode = NULL WHERE variantCode IS NOT NULL AND TRIM(variantCode) = ''").run();
+}
+
+function createUniqueIndexIfClean(db, indexName, tableName, columnName) {
+  const duplicate = db
+    .prepare(
+      `SELECT TRIM(${columnName}) AS value
+       FROM ${tableName}
+       WHERE ${columnName} IS NOT NULL AND TRIM(${columnName}) <> ''
+       GROUP BY TRIM(${columnName})
+       HAVING COUNT(*) > 1
+       LIMIT 1`,
+    )
+    .get();
+
+  if (duplicate) return;
+
+  db.prepare(
+    `CREATE UNIQUE INDEX IF NOT EXISTS ${indexName}
+     ON ${tableName}(${columnName})
+     WHERE ${columnName} IS NOT NULL AND TRIM(${columnName}) <> ''`,
+  ).run();
 }

@@ -2,11 +2,11 @@ const now = "2026-05-03T09:00:00.000Z";
 
 const seedData = {
   products: [
-    [1, "869000001001", "MB-TRK-001", "Kız Bebek Triko Takım", "Takım", "6-9 Ay", "Pudra", 180, 280, 36, 5, "ABC Tekstil", "", 1],
-    [2, "869000001002", "MB-TLM-002", "Erkek Bebek Tulum", "Tulum", "3-6 Ay", "Mavi", 140, 230, 48, 8, "Yıldız Bebe", "", 1],
-    [3, "869000001003", "MB-YLK-003", "Bebek Yelek", "Yelek", "1 Yaş", "Krem", 95, 150, 4, 5, "Minik Moda", "", 1],
-    [4, "869000001004", "MB-HST-004", "Yenidoğan Hastane Çıkışı", "Hastane Çıkışı", "0-3 Ay", "Beyaz", 220, 340, 18, 6, "ABC Tekstil", "", 1],
-    [5, "869000001005", "MB-ELB-005", "Kız Bebek Elbise", "Elbise", "9-12 Ay", "Ekru", 190, 310, 12, 4, "Yıldız Bebe", "", 1],
+    [1, "869000001001", "MB-TRK-001", "MB-TRK", "MB-TRK-6-9 Ay-Pudra", "Kız Bebek Triko Takım", "Takım", "6-9 Ay", "Pudra", 180, 280, 36, 5, "ABC Tekstil", "", 1],
+    [2, "869000001002", "MB-TLM-002", "MB-TLM", "MB-TLM-3-6 Ay-Mavi", "Erkek Bebek Tulum", "Tulum", "3-6 Ay", "Mavi", 140, 230, 48, 8, "Yıldız Bebe", "", 1],
+    [3, "869000001003", "MB-YLK-003", "MB-YLK", "MB-YLK-1 Yaş-Krem", "Bebek Yelek", "Yelek", "1 Yaş", "Krem", 95, 150, 4, 5, "Minik Moda", "", 1],
+    [4, "869000001004", "MB-HST-004", "MB-HST", "MB-HST-0-3 Ay-Beyaz", "Yenidoğan Hastane Çıkışı", "Hastane Çıkışı", "0-3 Ay", "Beyaz", 220, 340, 18, 6, "ABC Tekstil", "", 1],
+    [5, "869000001005", "MB-ELB-005", "MB-ELB", "MB-ELB-9-12 Ay-Ekru", "Kız Bebek Elbise", "Elbise", "9-12 Ay", "Ekru", 190, 310, 12, 4, "Yıldız Bebe", "", 1],
   ],
   customers: [
     [1, "Ayşe Kids Boutique", "Ayşe Kids Tekstil", "0532 111 22 33", "0532 111 22 33", "Türkiye", "İstanbul", "Mağaza", 0, 18500, 8500, 10000, 50000, "2026-05-02", "", 1],
@@ -32,8 +32,8 @@ function seedDatabase(db) {
   }
 
   const insertProduct = db.prepare(`
-    INSERT INTO products (id, barcode, code, name, category, size, color, purchasePrice, salePrice, stockQuantity, criticalStockLevel, supplier, imageUrl, isActive, createdAt, updatedAt)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO products (id, barcode, code, modelCode, variantCode, name, category, size, color, purchasePrice, salePrice, stockQuantity, criticalStockLevel, supplier, imageUrl, isActive, createdAt, updatedAt)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `);
   const insertCustomer = db.prepare(`
     INSERT INTO customers (id, name, companyName, phone, whatsapp, country, city, customerType, openingBalance, totalSales, totalPayments, currentBalance, riskLimit, lastPurchaseDate, notes, isActive, createdAt, updatedAt)

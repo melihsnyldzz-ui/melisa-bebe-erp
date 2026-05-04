@@ -641,6 +641,27 @@ button {
   grid-column: 1 / -1;
 }
 
+.barcode-message {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 900;
+  text-transform: none;
+}
+
+.barcode-message-success {
+  color: #0f6e52;
+  background: #e8f7f1;
+}
+
+.barcode-message-error {
+  color: var(--red-dark);
+  background: #fdecee;
+}
+
 .purchase-items-table {
   min-width: 1080px;
 }
@@ -845,7 +866,7 @@ button {
 }
 
 .product-table {
-  min-width: 1180px;
+  min-width: 1360px;
 }
 
 .customer-table {
@@ -855,6 +876,19 @@ button {
 .strong-cell {
   color: var(--anthracite);
   font-weight: 800;
+}
+
+.barcode-cell {
+  max-width: 150px;
+  color: var(--anthracite);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+
+.product-code-cell {
+  max-width: 150px;
+  white-space: nowrap;
 }
 
 .product-thumb {
@@ -1062,6 +1096,7 @@ button {
 
 .product-form .filter-field:first-child,
 .product-form .notes-field,
+.product-form .product-form-message,
 .product-form .form-note,
 .product-form .modal-actions {
   grid-column: 1 / -1;

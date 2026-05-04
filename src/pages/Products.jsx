@@ -29,7 +29,9 @@ export default function Products() {
       const isCritical = product.stockQuantity <= product.criticalStockLevel;
       const matchesSearch =
         !query ||
-        [product.name, product.barcode, product.code].some((value) => value.toLocaleLowerCase("tr-TR").includes(query));
+        [product.name, product.barcode, product.code, product.modelCode, product.variantCode].some((value) =>
+          String(value || "").toLocaleLowerCase("tr-TR").includes(query),
+        );
 
       return (
         matchesSearch &&
@@ -74,14 +76,21 @@ export default function Products() {
     setIsModalOpen(true);
   }
 
-  function handleSaveProduct(productPayload) {
+  async function handleSaveProduct(productPayload) {
+    const duplicateError = getDuplicateProductError(products, productPayload, editingProduct?.id);
+    if (duplicateError) return { ok: false, error: duplicateError };
+
+    let result;
     if (editingProduct) {
-      updateProduct({ ...editingProduct, ...productPayload });
+      result = await updateProduct({ ...editingProduct, ...productPayload });
     } else {
-      addProduct(productPayload);
+      result = await addProduct(productPayload);
     }
 
+    if (result && !result.ok) return result;
+
     setIsModalOpen(false);
+    return { ok: true };
   }
 
   return (
@@ -118,5 +127,29 @@ export default function Products() {
 }
 
 function uniqueValues(items, key) {
-  return [...new Set(items.map((item) => item[key]))].sort((a, b) => a.localeCompare(b, "tr"));
+  return [...new Set(items.map((item) => item[key]).filter(Boolean))].sort((a, b) => a.localeCompare(b, "tr"));
+}
+
+function getDuplicateProductError(products, productPayload, editingProductId) {
+  const fields = [
+    { key: "barcode", message: "Bu barkod başka bir üründe kullanılıyor." },
+    { key: "code", message: "Bu ürün kodu başka bir üründe kullanılıyor." },
+    { key: "variantCode", message: "Bu varyant kodu başka bir üründe kullanılıyor." },
+  ];
+
+  for (const field of fields) {
+    const value = normalizeProductKey(productPayload[field.key]);
+    if (!value) continue;
+
+    const hasDuplicate = products.some(
+      (product) => product.id !== editingProductId && normalizeProductKey(product[field.key]) === value,
+    );
+    if (hasDuplicate) return field.message;
+  }
+
+  return "";
+}
+
+function normalizeProductKey(value) {
+  return String(value || "").trim().toLocaleLowerCase("tr-TR");
 }

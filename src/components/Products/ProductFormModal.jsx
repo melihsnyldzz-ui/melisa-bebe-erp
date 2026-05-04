@@ -4,6 +4,8 @@ import { Save, X } from "lucide-react";
 const initialForm = {
   barcode: "",
   code: "",
+  modelCode: "",
+  variantCode: "",
   name: "",
   category: "",
   size: "",
@@ -18,6 +20,7 @@ const initialForm = {
 
 export default function ProductFormModal({ isOpen, product, onClose, onSave }) {
   const [form, setForm] = useState(initialForm);
+  const [formError, setFormError] = useState("");
 
   useEffect(() => {
     if (!isOpen) return;
@@ -25,21 +28,24 @@ export default function ProductFormModal({ isOpen, product, onClose, onSave }) {
     setForm(
       product
         ? {
-            barcode: product.barcode,
-            code: product.code,
-            name: product.name,
-            category: product.category,
-            size: product.size,
-            color: product.color,
-            purchasePrice: product.purchasePrice,
-            salePrice: product.salePrice,
-            stockQuantity: product.stockQuantity,
-            criticalStockLevel: product.criticalStockLevel,
-            supplier: product.supplier,
+            barcode: product.barcode || "",
+            code: product.code || "",
+            modelCode: product.modelCode || "",
+            variantCode: product.variantCode || "",
+            name: product.name || "",
+            category: product.category || "",
+            size: product.size || "",
+            color: product.color || "",
+            purchasePrice: product.purchasePrice ?? "",
+            salePrice: product.salePrice ?? "",
+            stockQuantity: product.stockQuantity ?? "",
+            criticalStockLevel: product.criticalStockLevel ?? "",
+            supplier: product.supplier || "",
             imageUrl: product.imageUrl || "",
           }
         : initialForm,
     );
+    setFormError("");
   }, [isOpen, product]);
 
   if (!isOpen) return null;
@@ -48,22 +54,46 @@ export default function ProductFormModal({ isOpen, product, onClose, onSave }) {
     setForm((currentForm) => ({ ...currentForm, [key]: value }));
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
-    onSave({
-      barcode: form.barcode,
-      code: form.code,
-      name: form.name,
-      category: form.category,
-      size: form.size,
-      color: form.color,
+
+    const barcode = form.barcode.trim();
+    const code = form.code.trim();
+    const modelCode = form.modelCode.trim();
+    const size = form.size.trim();
+    const color = form.color.trim();
+    const variantCode = form.variantCode.trim() || buildVariantCode(modelCode, size, color);
+
+    if (!barcode) {
+      setFormError("Barkod boş bırakılamaz.");
+      return;
+    }
+
+    if (!code) {
+      setFormError("Ürün kodu boş bırakılamaz.");
+      return;
+    }
+
+    const result = await onSave({
+      barcode,
+      code,
+      modelCode,
+      variantCode,
+      name: form.name.trim(),
+      category: form.category.trim(),
+      size,
+      color,
       purchasePrice: Number(form.purchasePrice),
       salePrice: Number(form.salePrice),
       stockQuantity: Number(form.stockQuantity),
       criticalStockLevel: Number(form.criticalStockLevel),
-      supplier: form.supplier,
+      supplier: form.supplier.trim(),
       imageUrl: form.imageUrl.trim(),
     });
+
+    if (result && !result.ok) {
+      setFormError(result.error);
+    }
   }
 
   return (
@@ -83,6 +113,8 @@ export default function ProductFormModal({ isOpen, product, onClose, onSave }) {
           <TextField label="Ürün Adı" value={form.name} onChange={(value) => updateField("name", value)} required />
           <TextField label="Ürün Kodu" value={form.code} onChange={(value) => updateField("code", value)} required />
           <TextField label="Barkod" value={form.barcode} onChange={(value) => updateField("barcode", value)} required />
+          <TextField label="Model Kodu" value={form.modelCode} onChange={(value) => updateField("modelCode", value)} />
+          <TextField label="Varyant Kodu" value={form.variantCode} onChange={(value) => updateField("variantCode", value)} />
           <TextField label="Kategori" value={form.category} onChange={(value) => updateField("category", value)} required />
           <TextField label="Beden" value={form.size} onChange={(value) => updateField("size", value)} required />
           <TextField label="Renk" value={form.color} onChange={(value) => updateField("color", value)} required />
@@ -98,6 +130,7 @@ export default function ProductFormModal({ isOpen, product, onClose, onSave }) {
             required
           />
           <TextField label="Tedarikçi" value={form.supplier} onChange={(value) => updateField("supplier", value)} required />
+          {formError && <p className="error-message product-form-message">{formError}</p>}
           <p className="form-note">Not: Stok miktarı ileride alış fişi, satış fişi ve sayım fişi üzerinden yönetilecektir.</p>
 
           <div className="modal-actions">
@@ -113,6 +146,11 @@ export default function ProductFormModal({ isOpen, product, onClose, onSave }) {
       </section>
     </div>
   );
+}
+
+function buildVariantCode(modelCode, size, color) {
+  if (!modelCode || !size || !color) return "";
+  return `${modelCode}-${size}-${color}`;
 }
 
 function TextField({ label, value, onChange, type = "text", required = false }) {

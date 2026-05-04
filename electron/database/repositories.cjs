@@ -310,19 +310,24 @@ function cancelPaymentTx(db, paymentId) {
 function addProductTx(db, payload) {
   const now = new Date().toISOString();
   db.prepare(`
-    INSERT INTO products (barcode, code, name, category, size, color, purchasePrice, salePrice, stockQuantity, criticalStockLevel, supplier, imageUrl, isActive, createdAt, updatedAt)
-    VALUES (@barcode, @code, @name, @category, @size, @color, @purchasePrice, @salePrice, @stockQuantity, @criticalStockLevel, @supplier, @imageUrl, 1, @now, @now)
-  `).run({ ...payload, imageUrl: payload.imageUrl || "", now });
+    INSERT INTO products (barcode, code, modelCode, variantCode, name, category, size, color, purchasePrice, salePrice, stockQuantity, criticalStockLevel, supplier, imageUrl, isActive, createdAt, updatedAt)
+    VALUES (@barcode, @code, @modelCode, @variantCode, @name, @category, @size, @color, @purchasePrice, @salePrice, @stockQuantity, @criticalStockLevel, @supplier, @imageUrl, 1, @now, @now)
+  `).run({ ...normalizeProductPayload(payload), now });
 }
 
 function updateProductTx(db, payload) {
   db.prepare(`
     UPDATE products
-    SET barcode=@barcode, code=@code, name=@name, category=@category, size=@size, color=@color, purchasePrice=@purchasePrice,
+    SET barcode=@barcode, code=@code, modelCode=@modelCode, variantCode=@variantCode, name=@name, category=@category, size=@size, color=@color, purchasePrice=@purchasePrice,
       salePrice=@salePrice, stockQuantity=@stockQuantity, criticalStockLevel=@criticalStockLevel, supplier=@supplier, imageUrl=@imageUrl,
       isActive=@isActive, updatedAt=@updatedAt
     WHERE id=@id
-  `).run({ ...payload, imageUrl: payload.imageUrl || "", isActive: payload.isActive ? 1 : 0, updatedAt: new Date().toISOString() });
+  `).run({
+    ...normalizeProductPayload(payload),
+    id: payload.id,
+    isActive: payload.isActive ? 1 : 0,
+    updatedAt: new Date().toISOString(),
+  });
 }
 
 function addCustomerTx(db, payload) {
@@ -384,6 +389,27 @@ function wrapMutation(fn, db) {
   } catch (error) {
     return { ok: false, error: error.message || "Veritabanı işlemi tamamlanamadı." };
   }
+}
+
+function normalizeProductPayload(payload) {
+  return {
+    ...payload,
+    barcode: trimToNull(payload.barcode),
+    code: String(payload.code || "").trim(),
+    modelCode: String(payload.modelCode || "").trim(),
+    variantCode: trimToNull(payload.variantCode),
+    name: String(payload.name || "").trim(),
+    category: String(payload.category || "").trim(),
+    size: String(payload.size || "").trim(),
+    color: String(payload.color || "").trim(),
+    supplier: String(payload.supplier || "").trim(),
+    imageUrl: String(payload.imageUrl || "").trim(),
+  };
+}
+
+function trimToNull(value) {
+  const trimmed = String(value || "").trim();
+  return trimmed || null;
 }
 
 function rowsToBooleans(rows) {

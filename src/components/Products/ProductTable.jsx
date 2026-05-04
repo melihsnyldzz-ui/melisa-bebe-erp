@@ -15,6 +15,8 @@ export default function ProductTable({ products, onEdit, onToggleStatus }) {
               <th>Görsel</th>
               <th>Ürün Kodu</th>
               <th>Barkod</th>
+              <th>Model Kodu</th>
+              <th>Varyant Kodu</th>
               <th>Ürün Adı</th>
               <th>Kategori</th>
               <th>Beden</th>
@@ -36,8 +38,10 @@ export default function ProductTable({ products, onEdit, onToggleStatus }) {
                   <td>
                     <ProductImage product={product} />
                   </td>
-                  <td className="strong-cell">{product.code}</td>
-                  <td>{product.barcode}</td>
+                  <td className="strong-cell product-code-cell">{product.code}</td>
+                  <td className="barcode-cell">{product.barcode}</td>
+                  <td className="product-code-cell">{product.modelCode || "-"}</td>
+                  <td className="product-code-cell">{product.variantCode || "-"}</td>
                   <td>{product.name}</td>
                   <td>{product.category}</td>
                   <td>{product.size}</td>
