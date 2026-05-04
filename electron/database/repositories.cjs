@@ -1,4 +1,11 @@
-function createRepositories(db) {
+const DEFAULT_APP_SETTINGS = {
+  dataMode: "demo",
+  setupCompleted: "false",
+  firstRunAt: "",
+  liveStartedAt: "",
+};
+
+function createRepositories(db, options = {}) {
   const purchaseTransaction = db.transaction((payload) => savePurchaseSlipTx(db, payload));
   const salesTransaction = db.transaction((payload) => saveSalesSlipTx(db, payload));
   const collectionTransaction = db.transaction((payload) => saveCollectionTx(db, payload));
@@ -27,6 +34,9 @@ function createRepositories(db) {
     getAllPriceLists: () => rowsToBooleanFields(db.prepare("SELECT * FROM price_lists ORDER BY isDefault DESC, id ASC").all()),
     getAllPriceListItems: () => rowsToBooleanFields(db.prepare("SELECT * FROM price_list_items ORDER BY id DESC").all()),
     getAllDocumentNumbers: () => rowsToBooleanFields(db.prepare("SELECT * FROM document_numbers ORDER BY documentType ASC").all()),
+    getAppSettings: () => getAppSettings(db),
+    updateAppSetting: (key, value) => wrapMutation(() => updateAppSettingTx(db, key, value), db),
+    startLiveMode: () => startLiveMode(db, options),
     getInitialErpData: () => getInitialErpData(db),
     savePurchaseSlip: (payload) => wrapMutation(() => purchaseTransaction(payload), db),
     saveSalesSlip: (payload) => wrapMutation(() => salesTransaction(payload), db),
@@ -68,7 +78,50 @@ function getInitialErpData(db) {
     priceLists: rowsToBooleanFields(db.prepare("SELECT * FROM price_lists ORDER BY isDefault DESC, id ASC").all()),
     priceListItems: rowsToBooleanFields(db.prepare("SELECT * FROM price_list_items ORDER BY id DESC").all()),
     documentNumbers: rowsToBooleanFields(db.prepare("SELECT * FROM document_numbers ORDER BY documentType ASC").all()),
+    appSettings: getAppSettings(db),
   };
+}
+
+function getAppSettings(db) {
+  ensureAppSettings(db);
+  const rows = db.prepare("SELECT key, value FROM settings").all();
+  return rows.reduce((settings, row) => ({ ...settings, [row.key]: row.value }), { ...DEFAULT_APP_SETTINGS });
+}
+
+function updateAppSettingTx(db, key, value) {
+  db.prepare(`
+    INSERT INTO settings (key, value)
+    VALUES (?, ?)
+    ON CONFLICT(key) DO UPDATE SET value = excluded.value
+  `).run(key, String(value));
+}
+
+function startLiveMode(db, options = {}) {
+  try {
+    const backupResult = options.createBackup ? options.createBackup() : { ok: false, error: "Otomatik yedekleme fonksiyonu tanımlı değil." };
+    if (!backupResult.ok) return { ok: false, error: backupResult.error || "Otomatik yedek oluşturulamadı." };
+
+    const now = new Date().toISOString();
+    const tx = db.transaction(() => {
+      updateAppSettingTx(db, "dataMode", "live");
+      updateAppSettingTx(db, "setupCompleted", "true");
+      updateAppSettingTx(db, "liveStartedAt", now);
+    });
+
+    tx();
+    return { ok: true, path: backupResult.path, data: getInitialErpData(db) };
+  } catch (error) {
+    console.error("Gerçek kullanım moduna geçiş tamamlanamadı:", error);
+    return { ok: false, error: error.message || "Gerçek kullanım moduna geçiş tamamlanamadı." };
+  }
+}
+
+function ensureAppSettings(db) {
+  const now = new Date().toISOString();
+  const insert = db.prepare("INSERT OR IGNORE INTO settings (key, value) VALUES (?, ?)");
+  const defaults = { ...DEFAULT_APP_SETTINGS, firstRunAt: now };
+
+  Object.entries(defaults).forEach(([key, value]) => insert.run(key, value));
 }
 
 function getPurchaseSlips(db) {

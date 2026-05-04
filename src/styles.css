@@ -639,6 +639,12 @@ button {
   gap: 14px;
 }
 
+.live-mode-panel {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+}
+
 .settings-panel-description {
   margin: 0;
   color: var(--muted);
@@ -647,8 +653,28 @@ button {
 
 .database-backup-note,
 .database-backup-message,
-.data-status-note {
+.data-status-note,
+.live-mode-note,
+.live-mode-message {
   margin: 0;
+}
+
+.live-mode-summary {
+  display: grid;
+  gap: 10px;
+}
+
+.live-mode-info {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-weight: 750;
+}
+
+.live-mode-info.live {
+  color: #087f5b;
+  background: #e6fcf5;
+  border: 1px solid #c3fae8;
 }
 
 .data-status-grid {

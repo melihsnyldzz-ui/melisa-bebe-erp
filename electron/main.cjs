@@ -68,7 +68,9 @@ function createSlipWindow(type) {
 
 app.whenReady().then(() => {
   Menu.setApplicationMenu(null);
-  repositories = createRepositories(initializeDatabase(app));
+  repositories = createRepositories(initializeDatabase(app), {
+    createBackup: () => exportDatabaseBackup(app),
+  });
   registerErpHandlers();
   createMainWindow();
 
@@ -92,6 +94,9 @@ app.whenReady().then(() => {
 function registerErpHandlers() {
   ipcMain.handle("erp:get-initial-data", () => repositories.getInitialErpData());
   ipcMain.handle("erp:export-database-backup", (_event, targetDirectory) => exportDatabaseBackup(app, targetDirectory));
+  ipcMain.handle("erp:get-app-settings", () => repositories.getAppSettings());
+  ipcMain.handle("erp:update-app-setting", (_event, key, value) => repositories.updateAppSetting(key, value));
+  ipcMain.handle("erp:start-live-mode", () => repositories.startLiveMode());
   ipcMain.handle("erp:get-all-currencies", () => repositories.getAllCurrencies());
   ipcMain.handle("erp:get-all-exchange-rates", () => repositories.getAllExchangeRates());
   ipcMain.handle("erp:get-all-current-accounts", () => repositories.getAllCurrentAccounts());

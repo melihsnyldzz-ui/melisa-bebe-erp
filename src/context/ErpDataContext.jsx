@@ -11,6 +11,10 @@ import {
 } from "../data/mockData.js";
 
 const ErpDataContext = createContext(null);
+const fallbackAppSettings = {
+  dataMode: "demo",
+  setupCompleted: "false",
+};
 
 export function ErpDataProvider({ children }) {
   const [products, setProducts] = useState(initialProducts);
@@ -31,6 +35,7 @@ export function ErpDataProvider({ children }) {
   const [priceLists, setPriceLists] = useState([]);
   const [priceListItems, setPriceListItems] = useState([]);
   const [documentNumbers, setDocumentNumbers] = useState([]);
+  const [appSettings, setAppSettings] = useState(fallbackAppSettings);
 
   useEffect(() => {
     refreshData();
@@ -412,6 +417,34 @@ export function ErpDataProvider({ children }) {
     return erp.exportDatabaseBackup(targetDirectory);
   }
 
+  async function refreshAppSettings() {
+    const erp = getDesktopErp();
+    if (!erp?.getAppSettings) {
+      setAppSettings(fallbackAppSettings);
+      return { ok: false, error: "Uygulama ayarları yalnızca Electron modunda okunabilir." };
+    }
+
+    try {
+      const settings = await erp.getAppSettings();
+      setAppSettings(settings || fallbackAppSettings);
+      return { ok: true, data: settings };
+    } catch (error) {
+      console.error("Uygulama ayarları alınamadı:", error);
+      return { ok: false, error: error.message || "Uygulama ayarları alınamadı." };
+    }
+  }
+
+  async function startLiveMode() {
+    const erp = getDesktopErp();
+    if (!erp?.startLiveMode) {
+      return { ok: false, error: "Gerçek kullanım moduna geçiş yalnızca Electron modunda yapılabilir." };
+    }
+
+    const result = await erp.startLiveMode();
+    if (result.ok) applyInitialData(result.data);
+    return result;
+  }
+
   const value = useMemo(
     () => ({
       products,
@@ -432,6 +465,7 @@ export function ErpDataProvider({ children }) {
       priceLists,
       priceListItems,
       documentNumbers,
+      appSettings,
       savePurchaseSlip,
       saveSalesSlip,
       saveCollection,
@@ -450,9 +484,12 @@ export function ErpDataProvider({ children }) {
       addSupplier,
       toggleSupplierStatus,
       exportDatabaseBackup,
+      refreshAppSettings,
+      startLiveMode,
       refreshData,
     }),
     [
+      appSettings,
       collections,
       currentAccountMovements,
       currentAccounts,
@@ -496,6 +533,7 @@ export function ErpDataProvider({ children }) {
     setPriceLists(data.priceLists || []);
     setPriceListItems(data.priceListItems || []);
     setDocumentNumbers(data.documentNumbers || []);
+    setAppSettings(data.appSettings || fallbackAppSettings);
   }
 }
 

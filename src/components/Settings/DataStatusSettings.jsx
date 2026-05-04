@@ -4,9 +4,10 @@ import { useErpData } from "../../context/ErpDataContext.jsx";
 import { canUsePersistentDatabase, getDatabaseModeLabel } from "../../utils/desktopBridge.js";
 
 export default function DataStatusSettings() {
-  const { products, customers, suppliers, purchaseSlips, salesSlips, collections, payments, stockMovements } = useErpData();
+  const { appSettings, products, customers, suppliers, purchaseSlips, salesSlips, collections, payments, stockMovements } = useErpData();
   const persistentDatabaseActive = useMemo(() => canUsePersistentDatabase(), []);
   const modeLabel = useMemo(() => getDatabaseModeLabel(), []);
+  const dataModeLabel = appSettings.dataMode === "live" ? "Gerçek kullanım modu" : "Demo veri modu";
   const recordCounts = [
     { label: "Ürün", value: products.length },
     { label: "Müşteri", value: customers.length },
@@ -32,6 +33,16 @@ export default function DataStatusSettings() {
         </div>
         <span className={`data-mode-badge ${persistentDatabaseActive ? "persistent" : "temporary"}`}>
           {persistentDatabaseActive ? "Kalıcı veri aktif" : "Geçici veri modu"}
+        </span>
+      </div>
+
+      <div className="data-status-card">
+        <div>
+          <span>Veri Modu</span>
+          <strong>{dataModeLabel}</strong>
+        </div>
+        <span className={`data-mode-badge ${appSettings.dataMode === "live" ? "persistent" : "temporary"}`}>
+          {appSettings.dataMode === "live" ? "Gerçek kullanım" : "Demo veri"}
         </span>
       </div>
 

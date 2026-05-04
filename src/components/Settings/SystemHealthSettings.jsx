@@ -6,9 +6,10 @@ import { formatCurrency, formatNumber } from "../../utils/formatters.js";
 import { canUsePersistentDatabase } from "../../utils/desktopBridge.js";
 
 export default function SystemHealthSettings() {
-  const { customers, suppliers, products, purchaseSlips, salesSlips, collections, payments, stockMovements } = useErpData();
+  const { appSettings, customers, suppliers, products, purchaseSlips, salesSlips, collections, payments, stockMovements } = useErpData();
   const today = getTodayISO();
   const modeLabel = canUsePersistentDatabase() ? "Electron SQLite" : "Tarayıcı modu";
+  const dataModeLabel = appSettings.dataMode === "live" ? "Gerçek kullanım modu" : "Demo veri modu";
 
   const healthRows = useMemo(() => {
     const activeSalesSlips = salesSlips.filter((slip) => isActiveRecord(slip));
@@ -24,6 +25,7 @@ export default function SystemHealthSettings() {
 
     return [
       { label: "Çalışma modu", value: modeLabel },
+      { label: "Veri modu", value: dataModeLabel },
       { label: "Bugünkü satış fişi sayısı", value: formatNumber(todaySalesSlips.length) },
       { label: "Bugünkü alış fişi sayısı", value: formatNumber(todayPurchaseSlips.length) },
       { label: "Bugünkü tahsilat sayısı", value: formatNumber(todayCollections.length) },
@@ -36,7 +38,7 @@ export default function SystemHealthSettings() {
       { label: "Toplam müşteri alacağı", value: formatCurrency(sumBy(customers, "currentBalance")) },
       { label: "Toplam tedarikçi borcu", value: formatCurrency(sumBy(suppliers, "currentBalance")) },
     ];
-  }, [collections, customers, modeLabel, payments, products, purchaseSlips, salesSlips, stockMovements, suppliers, today]);
+  }, [collections, customers, dataModeLabel, modeLabel, payments, products, purchaseSlips, salesSlips, stockMovements, suppliers, today]);
 
   return (
     <section className="table-panel settings-panel system-health-panel">
