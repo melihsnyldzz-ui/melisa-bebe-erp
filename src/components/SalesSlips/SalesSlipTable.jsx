@@ -3,6 +3,8 @@ import { formatDateTR } from "../../utils/dateUtils.js";
 import { formatCurrency } from "../../utils/formatters.js";
 
 export default function SalesSlipTable({ canCancel = true, slips, selectedSlip, onCancel, onViewDetail }) {
+  const selectedItems = selectedSlip?.items || [];
+
   return (
     <section className="table-panel product-table-panel purchase-list-panel">
       <div className="section-heading">
@@ -33,7 +35,7 @@ export default function SalesSlipTable({ canCancel = true, slips, selectedSlip, 
                   <td>{formatDateTR(slip.date)}</td>
                   <td>{slip.customerName}</td>
                   <td>{slip.saleType}</td>
-                  <td>{slip.items.length}</td>
+                  <td>{(slip.items || []).length}</td>
                   <td className="strong-cell">{formatCurrency(slip.grandTotal)}</td>
                   <td>
                     <span className={`status ${isCanceled ? "status-canceled" : "status-active"}`}>{slip.status}</span>
@@ -69,8 +71,16 @@ export default function SalesSlipTable({ canCancel = true, slips, selectedSlip, 
             <h2>{selectedSlip.slipNo} Detayı</h2>
           </div>
           <div className="slip-detail-grid">
-            {selectedSlip.items.map((item) => (
-              <div className="slip-detail-line" key={item.id}>
+            <div className="slip-detail-summary">
+              <span>{selectedSlip.customerName}</span>
+              <span>{formatDateTR(selectedSlip.date)}</span>
+              <strong>{formatCurrency(selectedSlip.grandTotal)}</strong>
+            </div>
+            {selectedItems.length === 0 && (
+              <p className="empty-detail-message">Bu fiş için satır detayı bulunamadı. Fiş kaydı korunuyor, ancak ürün satırları veritabanından okunamadı.</p>
+            )}
+            {selectedItems.map((item, index) => (
+              <div className="slip-detail-line" key={item.id || `${item.productId}-${index}`}>
                 <strong>{item.productName}</strong>
                 <span>
                   {item.size} / {item.color} - {item.quantity} adet x {formatCurrency(item.unitPrice)}

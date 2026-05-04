@@ -826,6 +826,24 @@ button {
   margin-top: 12px;
 }
 
+.slip-detail-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(249, 250, 251, 0.86);
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.slip-detail-summary strong {
+  color: var(--text);
+}
+
 .slip-detail-line {
   display: grid;
   grid-template-columns: minmax(180px, 1fr) minmax(220px, 1.2fr) auto;
@@ -838,6 +856,15 @@ button {
 
 .slip-detail-line span {
   color: var(--muted);
+}
+
+.empty-detail-message {
+  margin: 0;
+  padding: 12px;
+  border: 1px dashed rgba(148, 163, 184, 0.7);
+  border-radius: 8px;
+  color: var(--muted);
+  background: rgba(248, 250, 252, 0.82);
 }
 
 .filter-field {

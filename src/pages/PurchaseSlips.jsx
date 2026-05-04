@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Clock3, FilePlus2, ReceiptText, ShoppingCart, WalletCards } from "lucide-react";
 import KpiCard from "../components/Dashboard/KpiCard.jsx";
 import PurchaseSlipForm from "../components/PurchaseSlips/PurchaseSlipForm.jsx";
@@ -12,7 +12,7 @@ import { formatCurrency } from "../utils/formatters.js";
 
 export default function PurchaseSlips() {
   const { hasPermission } = useAuth();
-  const { cancelPurchaseSlip, products, purchaseSlips, savePurchaseSlip, suppliers } = useErpData();
+  const { cancelPurchaseSlip, products, purchaseSlips, refreshData, savePurchaseSlip, suppliers } = useErpData();
   const canCancelRecords = hasPermission("cancelRecords");
   const canEditPurchaseSlips = hasPermission("purchaseSlips.edit");
   const [successMessage, setSuccessMessage] = useState("");
@@ -20,6 +20,24 @@ export default function PurchaseSlips() {
   const [selectedSlip, setSelectedSlip] = useState(null);
 
   const nextSlipNo = useMemo(() => getNextPurchaseSlipNo(purchaseSlips), [purchaseSlips]);
+
+  useEffect(() => {
+    function handleFocus() {
+      refreshData();
+    }
+
+    window.addEventListener("focus", handleFocus);
+    return () => window.removeEventListener("focus", handleFocus);
+  }, [refreshData]);
+
+  useEffect(() => {
+    if (!selectedSlip) return;
+
+    const currentSlip = purchaseSlips.find((slip) => slip.id === selectedSlip.id);
+    if (currentSlip && currentSlip !== selectedSlip) {
+      setSelectedSlip(currentSlip);
+    }
+  }, [purchaseSlips, selectedSlip]);
 
   const summaryCards = useMemo(() => {
     const today = getTodayISO();

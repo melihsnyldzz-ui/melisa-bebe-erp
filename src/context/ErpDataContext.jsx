@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import {
   collections as initialCollections,
   customers as initialCustomers,
@@ -33,13 +33,21 @@ export function ErpDataProvider({ children }) {
   const [documentNumbers, setDocumentNumbers] = useState([]);
 
   useEffect(() => {
-    const erp = getDesktopErp();
-    if (!erp) return;
+    refreshData();
+  }, []);
 
-    erp
-      .getInitialData()
-      .then((data) => applyInitialData(data))
-      .catch((error) => console.error("SQLite başlangıç verisi alınamadı:", error));
+  const refreshData = useCallback(async () => {
+    const erp = getDesktopErp();
+    if (!erp) return { ok: false, error: "Electron veri köprüsü aktif değil." };
+
+    try {
+      const data = await erp.getInitialData();
+      applyInitialData(data);
+      return { ok: true, data };
+    } catch (error) {
+      console.error("SQLite başlangıç verisi alınamadı:", error);
+      return { ok: false, error: error.message || "SQLite başlangıç verisi alınamadı." };
+    }
   }, []);
 
   async function savePurchaseSlip(slipPayload) {
@@ -442,6 +450,7 @@ export function ErpDataProvider({ children }) {
       addSupplier,
       toggleSupplierStatus,
       exportDatabaseBackup,
+      refreshData,
     }),
     [
       collections,
@@ -462,6 +471,7 @@ export function ErpDataProvider({ children }) {
       stockMovements,
       suppliers,
       warehouses,
+      refreshData,
     ],
   );
 
