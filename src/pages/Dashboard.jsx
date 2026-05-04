@@ -62,10 +62,10 @@ export default function Dashboard() {
 
 function buildDashboardData({ collections, customers, payments, products, purchaseSlips, salesSlips, suppliers }) {
   const today = getTodayISO();
-  const activeSalesSlips = salesSlips.filter((slip) => slip.status !== "İptal");
-  const activePurchaseSlips = purchaseSlips.filter((slip) => slip.status !== "İptal");
-  const activeCollections = collections.filter((collection) => collection.status !== "İptal");
-  const activePayments = payments.filter((payment) => payment.status !== "İptal");
+  const activeSalesSlips = salesSlips.filter(isActiveRecord);
+  const activePurchaseSlips = purchaseSlips.filter(isActiveRecord);
+  const activeCollections = collections.filter(isActiveRecord);
+  const activePayments = payments.filter(isActiveRecord);
   const criticalProducts = products.filter((product) => toNumber(product.stockQuantity) <= toNumber(product.criticalStockLevel));
 
   const todaySales = sumByDate(activeSalesSlips, today, "grandTotal");
@@ -130,6 +130,10 @@ function buildDashboardData({ collections, customers, payments, products, purcha
 
 function sumByDate(items, date, key) {
   return items.filter((item) => item.date === date).reduce((total, item) => total + toNumber(item[key]), 0);
+}
+
+function isActiveRecord(record) {
+  return record.status !== "İptal";
 }
 
 function sumBy(items, key) {

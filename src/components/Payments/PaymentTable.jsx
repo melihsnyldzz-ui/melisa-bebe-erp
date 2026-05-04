@@ -29,7 +29,7 @@ export default function PaymentTable({ payments, selectedPayment, onCancel, onVi
               const isCanceled = payment.status === "İptal";
 
               return (
-                <tr className={isCanceled ? "canceled-row" : ""} key={payment.id}>
+                <tr className={isCanceled ? "cancelled-row" : ""} key={payment.id}>
                   <td className="strong-cell">{payment.paymentNo}</td>
                   <td>{formatDateTR(payment.date)}</td>
                   <td>{payment.supplierName}</td>
@@ -55,7 +55,7 @@ export default function PaymentTable({ payments, selectedPayment, onCancel, onVi
                         <Eye size={16} />
                       </button>
                       <button
-                        className="icon-button small danger"
+                        className="icon-button small cancel-action"
                         aria-label="Ödemeyi iptal et"
                         disabled={isCanceled}
                         onClick={() => onCancel(payment)}

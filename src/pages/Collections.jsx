@@ -10,6 +10,7 @@ import { formatCurrency } from "../utils/formatters.js";
 export default function Collections() {
   const { cancelCollection, collections, customers, saveCollection } = useErpData();
   const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [selectedCollection, setSelectedCollection] = useState(null);
 
   const nextCollectionNo = useMemo(() => {
@@ -36,16 +37,23 @@ export default function Collections() {
 
   async function handleSaveCollection(collectionPayload) {
     const { data: newCollection } = await saveCollection(collectionPayload);
+    setErrorMessage("");
     setSuccessMessage(`${newCollection.collectionNo} numaralı tahsilat kaydedildi.`);
     setSelectedCollection(newCollection);
   }
 
   async function handleCancelCollection(collection) {
-    const confirmed = window.confirm("Bu fişi iptal etmek istediğinize emin misiniz? Stok ve cari etkileri geri alınacaktır.");
+    const confirmed = window.confirm("Bu tahsilatı iptal etmek istediğinize emin misiniz? Müşteri cari etkisi geri alınacaktır.");
     if (!confirmed) return;
 
     const result = await cancelCollection(collection.id);
-    if (!result.ok) return;
+    if (!result.ok) {
+      setSuccessMessage("");
+      setErrorMessage(result.error);
+      return;
+    }
+
+    setErrorMessage("");
     setSuccessMessage(`${collection.collectionNo} numaralı tahsilat iptal edildi.`);
     setSelectedCollection({ ...collection, status: "İptal" });
   }
@@ -67,6 +75,7 @@ export default function Collections() {
       </section>
 
       {successMessage && <p className="success-message">{successMessage}</p>}
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
 
       <CollectionForm nextCollectionNo={nextCollectionNo} customers={customers} onSave={handleSaveCollection} />
       <CollectionTable

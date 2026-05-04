@@ -29,7 +29,7 @@ export default function CollectionTable({ collections, selectedCollection, onCan
               const isCanceled = collection.status === "İptal";
 
               return (
-                <tr className={isCanceled ? "canceled-row" : ""} key={collection.id}>
+                <tr className={isCanceled ? "cancelled-row" : ""} key={collection.id}>
                   <td className="strong-cell">{collection.collectionNo}</td>
                   <td>{formatDateTR(collection.date)}</td>
                   <td>{collection.customerName}</td>
@@ -55,7 +55,7 @@ export default function CollectionTable({ collections, selectedCollection, onCan
                         <Eye size={16} />
                       </button>
                       <button
-                        className="icon-button small danger"
+                        className="icon-button small cancel-action"
                         aria-label="Tahsilatı iptal et"
                         disabled={isCanceled}
                         onClick={() => onCancel(collection)}

@@ -52,8 +52,8 @@ export default function SalesSlips() {
     openSalesSlipWindow();
   }
 
-  async function handleCancelSlip(slip) {
-    const confirmed = window.confirm("Bu fişi iptal etmek istediğinize emin misiniz? Stok ve cari etkileri geri alınacaktır.");
+  async function handleCancelSalesSlip(slip) {
+    const confirmed = window.confirm("Bu satış fişini iptal etmek istediğinize emin misiniz? Stok ve müşteri cari etkileri geri alınacaktır.");
     if (!confirmed) return;
 
     const result = await cancelSalesSlip(slip.id);
@@ -94,7 +94,7 @@ export default function SalesSlips() {
       {errorMessage && <p className="error-message">{errorMessage}</p>}
 
       <SalesSlipForm nextSlipNo={nextSlipNo} products={products} customers={customers} onSave={handleSaveSlip} />
-      <SalesSlipTable slips={salesSlips} selectedSlip={selectedSlip} onCancel={handleCancelSlip} onViewDetail={setSelectedSlip} />
+      <SalesSlipTable slips={salesSlips} selectedSlip={selectedSlip} onCancel={handleCancelSalesSlip} onViewDetail={setSelectedSlip} />
     </>
   );
 }

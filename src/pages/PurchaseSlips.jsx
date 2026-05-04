@@ -11,6 +11,7 @@ import { formatCurrency } from "../utils/formatters.js";
 export default function PurchaseSlips() {
   const { cancelPurchaseSlip, products, purchaseSlips, savePurchaseSlip, suppliers } = useErpData();
   const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [selectedSlip, setSelectedSlip] = useState(null);
 
   const nextSlipNo = useMemo(() => {
@@ -39,6 +40,7 @@ export default function PurchaseSlips() {
     const result = await savePurchaseSlip(slipPayload);
     if (!result.ok) return;
     const newSlip = result.data;
+    setErrorMessage("");
     setSuccessMessage(`${newSlip.slipNo} numaralı alış fişi kaydedildi.`);
     setSelectedSlip(newSlip);
   }
@@ -47,12 +49,18 @@ export default function PurchaseSlips() {
     openPurchaseSlipWindow();
   }
 
-  async function handleCancelSlip(slip) {
-    const confirmed = window.confirm("Bu fişi iptal etmek istediğinize emin misiniz? Stok ve cari etkileri geri alınacaktır.");
+  async function handleCancelPurchaseSlip(slip) {
+    const confirmed = window.confirm("Bu alış fişini iptal etmek istediğinize emin misiniz? Stok ve tedarikçi cari etkileri geri alınacaktır.");
     if (!confirmed) return;
 
     const result = await cancelPurchaseSlip(slip.id);
-    if (!result.ok) return;
+    if (!result.ok) {
+      setSuccessMessage("");
+      setErrorMessage(result.error);
+      return;
+    }
+
+    setErrorMessage("");
     setSuccessMessage(`${slip.slipNo} numaralı alış fişi iptal edildi.`);
     setSelectedSlip({ ...slip, status: "İptal" });
   }
@@ -80,6 +88,7 @@ export default function PurchaseSlips() {
       </section>
 
       {successMessage && <p className="success-message">{successMessage}</p>}
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
 
       <PurchaseSlipForm
         nextSlipNo={nextSlipNo}
@@ -88,7 +97,7 @@ export default function PurchaseSlips() {
         onSave={handleSaveSlip}
       />
 
-      <PurchaseSlipTable slips={purchaseSlips} selectedSlip={selectedSlip} onCancel={handleCancelSlip} onViewDetail={setSelectedSlip} />
+      <PurchaseSlipTable slips={purchaseSlips} selectedSlip={selectedSlip} onCancel={handleCancelPurchaseSlip} onViewDetail={setSelectedSlip} />
     </>
   );
 }

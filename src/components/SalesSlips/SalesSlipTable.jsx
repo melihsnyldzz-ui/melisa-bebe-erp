@@ -28,7 +28,7 @@ export default function SalesSlipTable({ slips, selectedSlip, onCancel, onViewDe
               const isCanceled = slip.status === "İptal";
 
               return (
-                <tr className={isCanceled ? "canceled-row" : ""} key={slip.id}>
+                <tr className={isCanceled ? "cancelled-row" : ""} key={slip.id}>
                   <td className="strong-cell">{slip.slipNo}</td>
                   <td>{formatDateTR(slip.date)}</td>
                   <td>{slip.customerName}</td>
@@ -44,7 +44,7 @@ export default function SalesSlipTable({ slips, selectedSlip, onCancel, onViewDe
                         <Eye size={16} />
                       </button>
                       <button
-                        className="icon-button small danger"
+                        className="icon-button small cancel-action"
                         aria-label="Satış fişini iptal et"
                         disabled={isCanceled}
                         onClick={() => onCancel(slip)}

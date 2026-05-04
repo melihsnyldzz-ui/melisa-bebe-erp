@@ -2,7 +2,7 @@ export function buildCustomerLedger(customerId, salesSlips, collections) {
   const targetId = Number(customerId);
   const movements = [
     ...salesSlips
-      .filter((slip) => Number(slip.customerId) === targetId)
+      .filter((slip) => isActiveRecord(slip) && Number(slip.customerId) === targetId)
       .map((slip) => ({
         date: slip.date,
         createdAt: slip.createdAt,
@@ -13,7 +13,7 @@ export function buildCustomerLedger(customerId, salesSlips, collections) {
         description: slip.description || slip.saleType || "Satış fişi",
       })),
     ...collections
-      .filter((collection) => Number(collection.customerId) === targetId)
+      .filter((collection) => isActiveRecord(collection) && Number(collection.customerId) === targetId)
       .map((collection) => ({
         date: collection.date,
         createdAt: collection.createdAt,
@@ -32,7 +32,7 @@ export function buildSupplierLedger(supplierId, purchaseSlips, payments) {
   const targetId = Number(supplierId);
   const movements = [
     ...purchaseSlips
-      .filter((slip) => Number(slip.supplierId) === targetId)
+      .filter((slip) => isActiveRecord(slip) && Number(slip.supplierId) === targetId)
       .map((slip) => ({
         date: slip.date,
         createdAt: slip.createdAt,
@@ -43,7 +43,7 @@ export function buildSupplierLedger(supplierId, purchaseSlips, payments) {
         description: slip.description || slip.warehouse || "Alış fişi",
       })),
     ...payments
-      .filter((payment) => Number(payment.supplierId) === targetId)
+      .filter((payment) => isActiveRecord(payment) && Number(payment.supplierId) === targetId)
       .map((payment) => ({
         date: payment.date,
         createdAt: payment.createdAt,
@@ -77,6 +77,10 @@ function withRunningBalance(movements, decreaseKey) {
 
 function getSortTime(movement) {
   return new Date(movement.createdAt || movement.date || 0).getTime();
+}
+
+function isActiveRecord(record) {
+  return record.status !== "İptal";
 }
 
 function toNumber(value) {

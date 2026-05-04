@@ -10,6 +10,7 @@ import { formatCurrency } from "../utils/formatters.js";
 export default function Payments() {
   const { cancelPayment, payments, suppliers, savePayment } = useErpData();
   const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [selectedPayment, setSelectedPayment] = useState(null);
 
   const nextPaymentNo = useMemo(() => {
@@ -34,17 +35,24 @@ export default function Payments() {
 
   async function handleSavePayment(paymentPayload) {
     const { data: newPayment } = await savePayment(paymentPayload);
+    setErrorMessage("");
     setSuccessMessage(`${newPayment.paymentNo} numaralı ödeme kaydedildi.`);
     setSelectedPayment(newPayment);
   }
 
   async function handleCancelPayment(payment) {
-    const confirmed = window.confirm("Bu fişi iptal etmek istediğinize emin misiniz? Stok ve cari etkileri geri alınacaktır.");
+    const confirmed = window.confirm("Bu tedarikçi ödemesini iptal etmek istediğinize emin misiniz? Tedarikçi cari etkisi geri alınacaktır.");
     if (!confirmed) return;
 
     const result = await cancelPayment(payment.id);
-    if (!result.ok) return;
-    setSuccessMessage(`${payment.paymentNo} numaralı ödeme iptal edildi.`);
+    if (!result.ok) {
+      setSuccessMessage("");
+      setErrorMessage(result.error);
+      return;
+    }
+
+    setErrorMessage("");
+    setSuccessMessage(`${payment.paymentNo} numaralı tedarikçi ödemesi iptal edildi.`);
     setSelectedPayment({ ...payment, status: "İptal" });
   }
 
@@ -65,6 +73,7 @@ export default function Payments() {
       </section>
 
       {successMessage && <p className="success-message">{successMessage}</p>}
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
 
       <PaymentForm nextPaymentNo={nextPaymentNo} suppliers={suppliers} onSave={handleSavePayment} />
       <PaymentTable payments={payments} selectedPayment={selectedPayment} onCancel={handleCancelPayment} onViewDetail={setSelectedPayment} />

@@ -954,15 +954,19 @@ button {
   background: rgba(244, 245, 247, 0.5);
 }
 
+.cancelled-row,
 .canceled-row {
-  color: #9f6467;
-  background: rgba(253, 236, 238, 0.48);
+  opacity: 0.62;
+  background: #fff1f2;
 }
 
+.cancelled-row td,
 .canceled-row td {
-  opacity: 0.72;
+  color: #8a3a3a;
 }
 
+.cancelled-row .table-actions,
+.cancelled-row .status,
 .canceled-row .table-actions,
 .canceled-row .status {
   opacity: 1;
@@ -983,6 +987,17 @@ button {
 
 .icon-button.danger {
   color: var(--red-dark);
+}
+
+.cancel-action {
+  border: 1px solid rgba(215, 25, 32, 0.3);
+  color: #a80f17;
+  background: #fdecee;
+}
+
+.cancel-action:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
 }
 
 .icon-button:disabled {
