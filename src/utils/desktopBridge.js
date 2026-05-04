@@ -17,3 +17,11 @@ export function canUseDatabaseBackup() {
 export function exportDatabaseBackup() {
   return window.electronAPI.erp.exportDatabaseBackup();
 }
+
+export function canUsePersistentDatabase() {
+  return typeof window !== "undefined" && Boolean(window.electronAPI?.erp?.getInitialData);
+}
+
+export function getDatabaseModeLabel() {
+  return canUsePersistentDatabase() ? "Electron SQLite · Kalıcı veri" : "Tarayıcı modu · Geçici veri";
+}
