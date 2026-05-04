@@ -4,8 +4,10 @@ import KpiCard from "../components/Dashboard/KpiCard.jsx";
 import CustomerFilters from "../components/Customers/CustomerFilters.jsx";
 import CustomerFormModal from "../components/Customers/CustomerFormModal.jsx";
 import CustomerTable from "../components/Customers/CustomerTable.jsx";
+import CurrentLedgerTable from "../components/Ledger/CurrentLedgerTable.jsx";
 import { useErpData } from "../context/ErpDataContext.jsx";
 import { formatCurrency } from "../utils/formatters.js";
+import { buildCustomerLedger } from "../utils/ledgerCalculations.js";
 
 const emptyFilters = {
   search: "",
@@ -17,9 +19,10 @@ const emptyFilters = {
 };
 
 export default function Customers() {
-  const { customers, addCustomer, updateCustomer, toggleCustomerStatus } = useErpData();
+  const { collections, customers, salesSlips, addCustomer, updateCustomer, toggleCustomerStatus } = useErpData();
   const [filters, setFilters] = useState(emptyFilters);
   const [editingCustomer, setEditingCustomer] = useState(null);
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const filteredCustomers = useMemo(() => {
@@ -66,6 +69,11 @@ export default function Customers() {
     ];
   }, [customers]);
 
+  const selectedCustomerLedger = useMemo(() => {
+    if (!selectedCustomer) return [];
+    return buildCustomerLedger(selectedCustomer.id, salesSlips, collections);
+  }, [collections, salesSlips, selectedCustomer]);
+
   function openCreateModal() {
     setEditingCustomer(null);
     setIsModalOpen(true);
@@ -107,7 +115,22 @@ export default function Customers() {
       </section>
 
       <CustomerFilters filters={filters} options={filterOptions} onChange={setFilters} onReset={() => setFilters(emptyFilters)} />
-      <CustomerTable customers={filteredCustomers} onEdit={openEditModal} onToggleStatus={toggleCustomerStatus} />
+      <CustomerTable
+        customers={filteredCustomers}
+        selectedCustomerId={selectedCustomer?.id}
+        onEdit={openEditModal}
+        onToggleStatus={toggleCustomerStatus}
+        onViewLedger={setSelectedCustomer}
+      />
+
+      {selectedCustomer && (
+        <CurrentLedgerTable
+          accountName={selectedCustomer.name}
+          decreaseLabel="Alacak"
+          decreaseKey="credit"
+          rows={selectedCustomerLedger}
+        />
+      )}
 
       <CustomerFormModal
         isOpen={isModalOpen}
