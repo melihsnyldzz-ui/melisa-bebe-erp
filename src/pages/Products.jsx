@@ -11,6 +11,10 @@ import { formatNumber } from "../utils/formatters.js";
 const emptyFilters = {
   search: "",
   category: "all",
+  brand: "all",
+  season: "all",
+  ageGroup: "all",
+  gender: "all",
   size: "all",
   color: "all",
   stock: "all",
@@ -33,11 +37,17 @@ export default function Products() {
       const isCritical = product.stockQuantity <= product.criticalStockLevel;
       const matchesSearch =
         !query ||
-        [product.name, product.barcode, product.code].some((value) => value.toLocaleLowerCase("tr-TR").includes(query));
+        [product.name, product.code, product.modelCode, product.variantCode, product.barcode, product.brand].some((value) =>
+          String(value || "").toLocaleLowerCase("tr-TR").includes(query),
+        );
 
       return (
         matchesSearch &&
         (filters.category === "all" || product.category === filters.category) &&
+        (filters.brand === "all" || product.brand === filters.brand) &&
+        (filters.season === "all" || product.season === filters.season) &&
+        (filters.ageGroup === "all" || product.ageGroup === filters.ageGroup) &&
+        (filters.gender === "all" || product.gender === filters.gender) &&
         (filters.size === "all" || product.size === filters.size) &&
         (filters.color === "all" || product.color === filters.color) &&
         (filters.stock === "all" || (filters.stock === "critical" ? isCritical : !isCritical)) &&
@@ -49,6 +59,10 @@ export default function Products() {
   const filterOptions = useMemo(
     () => ({
       categories: uniqueValues(products, "category"),
+      brands: uniqueValues(products, "brand"),
+      seasons: uniqueValues(products, "season"),
+      ageGroups: uniqueValues(products, "ageGroup"),
+      genders: uniqueValues(products, "gender"),
       sizes: uniqueValues(products, "size"),
       colors: uniqueValues(products, "color"),
     }),
@@ -130,5 +144,5 @@ export default function Products() {
 }
 
 function uniqueValues(items, key) {
-  return [...new Set(items.map((item) => item[key]))].sort((a, b) => a.localeCompare(b, "tr"));
+  return [...new Set(items.map((item) => item[key]).filter(Boolean))].sort((a, b) => a.localeCompare(b, "tr"));
 }

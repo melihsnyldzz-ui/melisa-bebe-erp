@@ -7,7 +7,13 @@ function runMigrations(db) {
       id INTEGER PRIMARY KEY,
       barcode TEXT,
       code TEXT UNIQUE NOT NULL,
+      modelCode TEXT,
+      variantCode TEXT,
       name TEXT NOT NULL,
+      brand TEXT,
+      season TEXT,
+      ageGroup TEXT,
+      gender TEXT,
       category TEXT,
       size TEXT,
       color TEXT,
@@ -365,6 +371,12 @@ function runMigrations(db) {
 
   ensureColumn(db, "collections", "status", "TEXT DEFAULT 'Kayıtlı'");
   ensureColumn(db, "payments", "status", "TEXT DEFAULT 'Kayıtlı'");
+  ensureColumn(db, "products", "modelCode", "TEXT");
+  ensureColumn(db, "products", "variantCode", "TEXT");
+  ensureColumn(db, "products", "season", "TEXT");
+  ensureColumn(db, "products", "ageGroup", "TEXT");
+  ensureColumn(db, "products", "gender", "TEXT");
+  ensureColumn(db, "products", "brand", "TEXT");
   ensureColumn(db, "purchase_slips", "items_json", "TEXT");
   ensureColumn(db, "sales_slips", "items_json", "TEXT");
 }

@@ -493,7 +493,7 @@ button {
 
 .filters-grid {
   display: grid;
-  grid-template-columns: minmax(260px, 1.4fr) repeat(5, minmax(138px, 1fr)) auto;
+  grid-template-columns: minmax(260px, 1.4fr) repeat(auto-fit, minmax(138px, 1fr));
   gap: 12px;
   align-items: end;
   margin-top: 14px;
@@ -815,6 +815,7 @@ button {
 }
 
 .purchase-search-field,
+.quick-barcode-entry,
 .purchase-items-area,
 .purchase-totals,
 .purchase-note,
@@ -962,6 +963,43 @@ button {
   margin-top: 12px;
 }
 
+.quick-barcode-entry {
+  display: grid;
+  grid-template-columns: minmax(210px, 0.45fr) minmax(260px, 1fr);
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid rgba(215, 25, 32, 0.18);
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(253, 236, 238, 0.72), rgba(255, 255, 255, 0.94));
+}
+
+.quick-barcode-entry strong,
+.quick-barcode-entry span {
+  display: block;
+}
+
+.quick-barcode-entry strong {
+  color: var(--text);
+  font-size: 0.92rem;
+}
+
+.quick-barcode-entry span {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.quick-barcode-entry input {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid rgba(215, 25, 32, 0.24);
+  border-radius: 8px;
+  padding: 0 12px;
+  font-weight: 750;
+}
+
 .slip-detail-summary {
   display: flex;
   flex-wrap: wrap;
@@ -1053,7 +1091,7 @@ button {
 }
 
 .product-table {
-  min-width: 1180px;
+  min-width: 1420px;
 }
 
 .customer-table {
@@ -1472,6 +1510,7 @@ tr:last-child td {
   }
 
   .purchase-slip-form,
+  .quick-barcode-entry,
   .purchase-totals,
   .slip-detail-line,
   .report-list-row,

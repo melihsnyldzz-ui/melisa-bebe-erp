@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.7.1";
-export const APP_STAGE = "Demo veri temizleme güvenliği";
+export const APP_VERSION = "v1.8.0";
+export const APP_STAGE = "Barkod ve varyant sistemi";

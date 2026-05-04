@@ -404,19 +404,42 @@ function cancelPaymentTx(db, paymentId) {
 function addProductTx(db, payload) {
   const now = new Date().toISOString();
   db.prepare(`
-    INSERT INTO products (barcode, code, name, category, size, color, purchasePrice, salePrice, stockQuantity, criticalStockLevel, supplier, imageUrl, isActive, createdAt, updatedAt)
-    VALUES (@barcode, @code, @name, @category, @size, @color, @purchasePrice, @salePrice, @stockQuantity, @criticalStockLevel, @supplier, @imageUrl, 1, @now, @now)
-  `).run({ ...payload, imageUrl: payload.imageUrl || "", now });
+    INSERT INTO products (
+      barcode, code, modelCode, variantCode, name, brand, season, ageGroup, gender, category, size, color,
+      purchasePrice, salePrice, stockQuantity, criticalStockLevel, supplier, imageUrl, isActive, createdAt, updatedAt
+    )
+    VALUES (
+      @barcode, @code, @modelCode, @variantCode, @name, @brand, @season, @ageGroup, @gender, @category, @size, @color,
+      @purchasePrice, @salePrice, @stockQuantity, @criticalStockLevel, @supplier, @imageUrl, 1, @now, @now
+    )
+  `).run(normalizeProductPayload(payload, { now }));
 }
 
 function updateProductTx(db, payload) {
   db.prepare(`
     UPDATE products
-    SET barcode=@barcode, code=@code, name=@name, category=@category, size=@size, color=@color, purchasePrice=@purchasePrice,
+    SET barcode=@barcode, code=@code, modelCode=@modelCode, variantCode=@variantCode, name=@name, brand=@brand,
+      season=@season, ageGroup=@ageGroup, gender=@gender, category=@category, size=@size, color=@color, purchasePrice=@purchasePrice,
       salePrice=@salePrice, stockQuantity=@stockQuantity, criticalStockLevel=@criticalStockLevel, supplier=@supplier, imageUrl=@imageUrl,
       isActive=@isActive, updatedAt=@updatedAt
     WHERE id=@id
-  `).run({ ...payload, imageUrl: payload.imageUrl || "", isActive: payload.isActive ? 1 : 0, updatedAt: new Date().toISOString() });
+  `).run(normalizeProductPayload(payload, { isActive: payload.isActive ? 1 : 0, updatedAt: new Date().toISOString() }));
+}
+
+function normalizeProductPayload(payload, extraFields = {}) {
+  return {
+    ...payload,
+    modelCode: payload.modelCode || "",
+    variantCode: payload.variantCode || "",
+    brand: payload.brand || "",
+    season: payload.season || "",
+    ageGroup: payload.ageGroup || "",
+    gender: payload.gender || "",
+    category: payload.category || "",
+    supplier: payload.supplier || "",
+    imageUrl: payload.imageUrl || "",
+    ...extraFields,
+  };
 }
 
 function addCustomerTx(db, payload) {

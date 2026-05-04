@@ -13,16 +13,18 @@ export default function ProductTable({ canEdit = true, canViewCosts = true, prod
           <thead>
             <tr>
               <th>Görsel</th>
+              <th>Model Kodu</th>
               <th>Ürün Kodu</th>
               <th>Barkod</th>
               <th>Ürün Adı</th>
-              <th>Kategori</th>
+              <th>Marka</th>
+              <th>Sezon</th>
+              <th>Yaş Grubu</th>
               <th>Beden</th>
               <th>Renk</th>
               <th>Stok</th>
-              <th>Alış</th>
+              {canViewCosts && <th>Alış</th>}
               <th>Satış</th>
-              <th>Tedarikçi</th>
               <th>Durum</th>
               <th>İşlemler</th>
             </tr>
@@ -36,10 +38,13 @@ export default function ProductTable({ canEdit = true, canViewCosts = true, prod
                   <td>
                     <ProductImage product={product} />
                   </td>
+                  <td>{product.modelCode || "-"}</td>
                   <td className="strong-cell">{product.code}</td>
                   <td>{product.barcode}</td>
                   <td>{product.name}</td>
-                  <td>{product.category}</td>
+                  <td>{product.brand || "-"}</td>
+                  <td>{product.season || "-"}</td>
+                  <td>{product.ageGroup || "-"}</td>
                   <td>{product.size}</td>
                   <td>{product.color}</td>
                   <td>
@@ -48,9 +53,8 @@ export default function ProductTable({ canEdit = true, canViewCosts = true, prod
                       {isCritical && <span className="warning-badge">Kritik</span>}
                     </div>
                   </td>
-                  <td>{canViewCosts ? formatCurrency(product.purchasePrice) : "-"}</td>
-                  <td>{canViewCosts ? formatCurrency(product.salePrice) : "-"}</td>
-                  <td>{product.supplier}</td>
+                  {canViewCosts && <td>{formatCurrency(product.purchasePrice)}</td>}
+                  <td>{formatCurrency(product.salePrice)}</td>
                   <td>
                     <span className={`status ${product.isActive ? "status-active" : "status-passive"}`}>
                       {product.isActive ? "Aktif" : "Pasif"}

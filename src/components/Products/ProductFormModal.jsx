@@ -2,6 +2,12 @@ import { useEffect, useState } from "react";
 import { Save, X } from "lucide-react";
 
 const initialForm = {
+  modelCode: "",
+  variantCode: "",
+  brand: "",
+  season: "",
+  ageGroup: "",
+  gender: "",
   barcode: "",
   code: "",
   name: "",
@@ -25,6 +31,12 @@ export default function ProductFormModal({ isOpen, product, onClose, onSave }) {
     setForm(
       product
         ? {
+            modelCode: product.modelCode || "",
+            variantCode: product.variantCode || "",
+            brand: product.brand || "",
+            season: product.season || "",
+            ageGroup: product.ageGroup || "",
+            gender: product.gender || "",
             barcode: product.barcode,
             code: product.code,
             name: product.name,
@@ -51,17 +63,23 @@ export default function ProductFormModal({ isOpen, product, onClose, onSave }) {
   function handleSubmit(event) {
     event.preventDefault();
     onSave({
-      barcode: form.barcode,
-      code: form.code,
-      name: form.name,
-      category: form.category,
-      size: form.size,
-      color: form.color,
+      modelCode: form.modelCode.trim(),
+      variantCode: form.variantCode.trim(),
+      brand: form.brand.trim(),
+      season: form.season.trim(),
+      ageGroup: form.ageGroup.trim(),
+      gender: form.gender.trim(),
+      barcode: form.barcode.trim(),
+      code: form.code.trim(),
+      name: form.name.trim(),
+      category: form.category.trim(),
+      size: form.size.trim(),
+      color: form.color.trim(),
       purchasePrice: Number(form.purchasePrice),
       salePrice: Number(form.salePrice),
       stockQuantity: Number(form.stockQuantity),
       criticalStockLevel: Number(form.criticalStockLevel),
-      supplier: form.supplier,
+      supplier: form.supplier.trim(),
       imageUrl: form.imageUrl.trim(),
     });
   }
@@ -81,7 +99,13 @@ export default function ProductFormModal({ isOpen, product, onClose, onSave }) {
 
         <form className="product-form" onSubmit={handleSubmit}>
           <TextField label="Ürün Adı" value={form.name} onChange={(value) => updateField("name", value)} required />
+          <TextField label="Model Kodu" value={form.modelCode} onChange={(value) => updateField("modelCode", value)} />
+          <TextField label="Varyant Kodu" value={form.variantCode} onChange={(value) => updateField("variantCode", value)} />
           <TextField label="Ürün Kodu" value={form.code} onChange={(value) => updateField("code", value)} required />
+          <TextField label="Marka" value={form.brand} onChange={(value) => updateField("brand", value)} />
+          <TextField label="Sezon" value={form.season} onChange={(value) => updateField("season", value)} />
+          <TextField label="Yaş Grubu" value={form.ageGroup} onChange={(value) => updateField("ageGroup", value)} />
+          <TextField label="Cinsiyet" value={form.gender} onChange={(value) => updateField("gender", value)} />
           <TextField label="Barkod" value={form.barcode} onChange={(value) => updateField("barcode", value)} required />
           <TextField label="Kategori" value={form.category} onChange={(value) => updateField("category", value)} required />
           <TextField label="Beden" value={form.size} onChange={(value) => updateField("size", value)} required />
@@ -89,9 +113,9 @@ export default function ProductFormModal({ isOpen, product, onClose, onSave }) {
           <TextField label="Ürün Görsel URL" value={form.imageUrl} onChange={(value) => updateField("imageUrl", value)} />
           <TextField label="Alış Fiyatı" type="number" value={form.purchasePrice} onChange={(value) => updateField("purchasePrice", value)} required />
           <TextField label="Satış Fiyatı" type="number" value={form.salePrice} onChange={(value) => updateField("salePrice", value)} required />
-          <TextField label="Başlangıç Stok" type="number" value={form.stockQuantity} onChange={(value) => updateField("stockQuantity", value)} required />
+          <TextField label="Stok" type="number" value={form.stockQuantity} onChange={(value) => updateField("stockQuantity", value)} required />
           <TextField
-            label="Kritik Stok Seviyesi"
+            label="Kritik Stok"
             type="number"
             value={form.criticalStockLevel}
             onChange={(value) => updateField("criticalStockLevel", value)}

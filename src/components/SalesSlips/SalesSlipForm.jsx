@@ -3,6 +3,7 @@ import { Plus, RotateCcw, Save } from "lucide-react";
 import SalesSlipItemsTable from "./SalesSlipItemsTable.jsx";
 import { getTodayISO } from "../../utils/dateUtils.js";
 import { formatCurrency } from "../../utils/formatters.js";
+import { findProductByCodeOrBarcode } from "../../utils/productLookup.js";
 
 const initialForm = {
   date: getTodayISO(),
@@ -19,6 +20,7 @@ const saleTypes = ["Toptan Satış", "Sıcak Satış", "Instagram Satıcı", "Ba
 export default function SalesSlipForm({ nextSlipNo, products, customers, onSave }) {
   const [form, setForm] = useState(initialForm);
   const [items, setItems] = useState([]);
+  const [quickEntry, setQuickEntry] = useState("");
   const [formError, setFormError] = useState("");
 
   const filteredProducts = useMemo(() => {
@@ -26,7 +28,9 @@ export default function SalesSlipForm({ nextSlipNo, products, customers, onSave 
     if (!query) return products;
 
     return products.filter((product) =>
-      [product.name, product.code, product.barcode].some((value) => value.toLocaleLowerCase("tr-TR").includes(query)),
+      [product.name, product.code, product.modelCode, product.variantCode, product.barcode, product.brand].some((value) =>
+        String(value || "").toLocaleLowerCase("tr-TR").includes(query),
+      ),
     );
   }, [form.search, products]);
 
@@ -41,23 +45,69 @@ export default function SalesSlipForm({ nextSlipNo, products, customers, onSave 
     const selectedProduct = products.find((product) => product.id === Number(form.productId));
     if (!selectedProduct) return;
 
+    addProductToItems(selectedProduct);
+    setForm((currentForm) => ({ ...currentForm, productId: "", search: "" }));
+  }
+
+  function handleQuickEntryKeyDown(event) {
+    if (event.key !== "Enter") return;
+    event.preventDefault();
+
+    const product = findProductByCodeOrBarcode(products, quickEntry);
+    if (!product) {
+      setFormError("Ürün bulunamadı.");
+      return;
+    }
+
+    if (product.stockQuantity <= 0) {
+      setFormError("Bu ürün için stok bulunmuyor.");
+      return;
+    }
+
+    const existingItem = items.find((item) => item.productId === product.id);
+    if (existingItem && existingItem.quantity + 1 > existingItem.availableStock) {
+      setFormError("Stok yetersiz.");
+      return;
+    }
+
+    addProductToItems(product);
+    setQuickEntry("");
+  }
+
+  function addProductToItems(product) {
+    if (product.stockQuantity <= 0) {
+      setFormError("Bu ürün için stok bulunmuyor.");
+      return;
+    }
+
+    const existingItem = items.find((item) => item.productId === product.id);
+    if (existingItem) {
+      if (existingItem.quantity + 1 > existingItem.availableStock) {
+        setFormError("Stok yetersiz.");
+        return;
+      }
+
+      setItems((currentItems) => currentItems.map((item) => (item.productId === product.id ? calculateLine({ ...item, quantity: item.quantity + 1 }) : item)));
+      setFormError("");
+      return;
+    }
+
     setItems((currentItems) => [
       ...currentItems,
       calculateLine({
         id: Date.now(),
-        productId: selectedProduct.id,
-        productCode: selectedProduct.code,
-        barcode: selectedProduct.barcode,
-        productName: selectedProduct.name,
-        size: selectedProduct.size,
-        color: selectedProduct.color,
+        productId: product.id,
+        productCode: product.code,
+        barcode: product.barcode,
+        productName: product.name,
+        size: product.size,
+        color: product.color,
         quantity: 1,
-        unitPrice: selectedProduct.salePrice,
+        unitPrice: product.salePrice,
         discountRate: 0,
-        availableStock: selectedProduct.stockQuantity,
+        availableStock: product.stockQuantity,
       }),
     ]);
-    setForm((currentForm) => ({ ...currentForm, productId: "", search: "" }));
     setFormError("");
   }
 
@@ -74,6 +124,7 @@ export default function SalesSlipForm({ nextSlipNo, products, customers, onSave 
   function resetForm() {
     setForm(initialForm);
     setItems([]);
+    setQuickEntry("");
     setFormError("");
   }
 
@@ -142,6 +193,19 @@ export default function SalesSlipForm({ nextSlipNo, products, customers, onSave 
             ))}
           </select>
         </label>
+
+        <div className="quick-barcode-entry">
+          <div>
+            <strong>Hızlı Barkod Girişi</strong>
+            <span>Barkod / ürün kodu okut veya yaz</span>
+          </div>
+          <input
+            value={quickEntry}
+            onChange={(event) => setQuickEntry(event.target.value)}
+            onKeyDown={handleQuickEntryKeyDown}
+            placeholder="Barkod / ürün kodu okut veya yaz"
+          />
+        </div>
 
         <label className="filter-field purchase-search-field">
           <span>Barkod / Ürün Arama</span>
