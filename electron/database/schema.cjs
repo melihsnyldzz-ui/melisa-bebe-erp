@@ -78,6 +78,7 @@ function runMigrations(db) {
       taxTotal REAL DEFAULT 0,
       grandTotal REAL DEFAULT 0,
       description TEXT,
+      items_json TEXT,
       status TEXT,
       createdAt TEXT
     );
@@ -111,6 +112,7 @@ function runMigrations(db) {
       discountTotal REAL DEFAULT 0,
       grandTotal REAL DEFAULT 0,
       description TEXT,
+      items_json TEXT,
       status TEXT,
       createdAt TEXT
     );
@@ -363,6 +365,8 @@ function runMigrations(db) {
 
   ensureColumn(db, "collections", "status", "TEXT DEFAULT 'Kayıtlı'");
   ensureColumn(db, "payments", "status", "TEXT DEFAULT 'Kayıtlı'");
+  ensureColumn(db, "purchase_slips", "items_json", "TEXT");
+  ensureColumn(db, "sales_slips", "items_json", "TEXT");
 }
 
 module.exports = { runMigrations };

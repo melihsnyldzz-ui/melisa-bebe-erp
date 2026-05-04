@@ -5,6 +5,7 @@ contextBridge.exposeInMainWorld("electronAPI", {
   openSalesSlipWindow: () => ipcRenderer.invoke("sales-slip-window:open"),
   erp: {
     getInitialData: () => ipcRenderer.invoke("erp:get-initial-data"),
+    exportDatabaseBackup: (targetDirectory) => ipcRenderer.invoke("erp:export-database-backup", targetDirectory),
     getAllCurrencies: () => ipcRenderer.invoke("erp:get-all-currencies"),
     getAllExchangeRates: () => ipcRenderer.invoke("erp:get-all-exchange-rates"),
     getAllCurrentAccounts: () => ipcRenderer.invoke("erp:get-all-current-accounts"),

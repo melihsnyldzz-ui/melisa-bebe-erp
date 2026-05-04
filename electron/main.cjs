@@ -1,6 +1,6 @@
 const path = require("node:path");
 const { app, BrowserWindow, ipcMain, Menu } = require("electron");
-const { initializeDatabase } = require("./database/db.cjs");
+const { exportDatabaseBackup, initializeDatabase } = require("./database/db.cjs");
 const { createRepositories } = require("./database/repositories.cjs");
 
 const isDev = !app.isPackaged;
@@ -91,6 +91,7 @@ app.whenReady().then(() => {
 
 function registerErpHandlers() {
   ipcMain.handle("erp:get-initial-data", () => repositories.getInitialErpData());
+  ipcMain.handle("erp:export-database-backup", (_event, targetDirectory) => exportDatabaseBackup(app, targetDirectory));
   ipcMain.handle("erp:get-all-currencies", () => repositories.getAllCurrencies());
   ipcMain.handle("erp:get-all-exchange-rates", () => repositories.getAllExchangeRates());
   ipcMain.handle("erp:get-all-current-accounts", () => repositories.getAllCurrentAccounts());

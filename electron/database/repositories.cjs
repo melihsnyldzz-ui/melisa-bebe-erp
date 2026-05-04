@@ -74,21 +74,27 @@ function getInitialErpData(db) {
 function getPurchaseSlips(db) {
   const slips = db.prepare("SELECT * FROM purchase_slips ORDER BY id DESC").all();
   const itemStmt = db.prepare("SELECT * FROM purchase_slip_items WHERE slipId = ? ORDER BY id ASC");
-  return slips.map((slip) => ({ ...slip, items: itemStmt.all(slip.id) }));
+  return slips.map((slip) => {
+    const items = itemStmt.all(slip.id);
+    return { ...slip, items: items.length ? items : parseItemsJson(slip.items_json) };
+  });
 }
 
 function getSalesSlips(db) {
   const slips = db.prepare("SELECT * FROM sales_slips ORDER BY id DESC").all();
   const itemStmt = db.prepare("SELECT * FROM sales_slip_items WHERE slipId = ? ORDER BY id ASC");
-  return slips.map((slip) => ({ ...slip, items: itemStmt.all(slip.id) }));
+  return slips.map((slip) => {
+    const items = itemStmt.all(slip.id);
+    return { ...slip, items: items.length ? items : parseItemsJson(slip.items_json) };
+  });
 }
 
 function savePurchaseSlipTx(db, payload) {
   const createdAt = new Date().toISOString();
   const slipInfo = db.prepare(`
-    INSERT INTO purchase_slips (slipNo, date, supplierId, supplierName, warehouse, subtotal, discountTotal, taxTotal, grandTotal, description, status, createdAt)
-    VALUES (@slipNo, @date, @supplierId, @supplierName, @warehouse, @subtotal, @discountTotal, @taxTotal, @grandTotal, @description, 'Kayıtlı', @createdAt)
-  `).run({ ...payload, description: payload.description || "", createdAt });
+    INSERT INTO purchase_slips (slipNo, date, supplierId, supplierName, warehouse, subtotal, discountTotal, taxTotal, grandTotal, description, items_json, status, createdAt)
+    VALUES (@slipNo, @date, @supplierId, @supplierName, @warehouse, @subtotal, @discountTotal, @taxTotal, @grandTotal, @description, @items_json, 'Kayıtlı', @createdAt)
+  `).run({ ...payload, description: payload.description || "", items_json: JSON.stringify(payload.items || []), createdAt });
   const slipId = slipInfo.lastInsertRowid;
   const insertItem = db.prepare(`
     INSERT INTO purchase_slip_items (slipId, productId, productCode, barcode, productName, size, color, quantity, unitPrice, discountRate, taxRate, lineTotal)
@@ -139,9 +145,9 @@ function saveSalesSlipTx(db, payload) {
   }
 
   const slipInfo = db.prepare(`
-    INSERT INTO sales_slips (slipNo, date, customerId, customerName, saleType, cargoInfo, subtotal, discountTotal, grandTotal, description, status, createdAt)
-    VALUES (@slipNo, @date, @customerId, @customerName, @saleType, @cargoInfo, @subtotal, @discountTotal, @grandTotal, @description, 'Kayıtlı', @createdAt)
-  `).run({ ...payload, cargoInfo: payload.cargoInfo || "", description: payload.description || "", createdAt });
+    INSERT INTO sales_slips (slipNo, date, customerId, customerName, saleType, cargoInfo, subtotal, discountTotal, grandTotal, description, items_json, status, createdAt)
+    VALUES (@slipNo, @date, @customerId, @customerName, @saleType, @cargoInfo, @subtotal, @discountTotal, @grandTotal, @description, @items_json, 'Kayıtlı', @createdAt)
+  `).run({ ...payload, cargoInfo: payload.cargoInfo || "", description: payload.description || "", items_json: JSON.stringify(payload.items || []), createdAt });
   const slipId = slipInfo.lastInsertRowid;
   const insertItem = db.prepare(`
     INSERT INTO sales_slip_items (slipId, productId, productCode, barcode, productName, size, color, quantity, unitPrice, discountRate, availableStock, lineTotal)
@@ -382,7 +388,20 @@ function wrapMutation(fn, db) {
     fn();
     return { ok: true, data: getInitialErpData(db) };
   } catch (error) {
+    console.error("SQLite mutasyon işlemi tamamlanamadı:", error);
     return { ok: false, error: error.message || "Veritabanı işlemi tamamlanamadı." };
+  }
+}
+
+function parseItemsJson(value) {
+  if (!value) return [];
+
+  try {
+    const parsed = JSON.parse(value);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (error) {
+    console.error("Fiş satırları JSON alanından okunamadı:", error);
+    return [];
   }
 }
 

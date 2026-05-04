@@ -395,6 +395,15 @@ export function ErpDataProvider({ children }) {
     );
   }
 
+  async function exportDatabaseBackup(targetDirectory) {
+    const erp = getDesktopErp();
+    if (!erp?.exportDatabaseBackup) {
+      return { ok: false, error: "Veritabanı yedekleme yalnızca Electron modunda kullanılabilir." };
+    }
+
+    return erp.exportDatabaseBackup(targetDirectory);
+  }
+
   const value = useMemo(
     () => ({
       products,
@@ -432,6 +441,7 @@ export function ErpDataProvider({ children }) {
       updateSupplier,
       addSupplier,
       toggleSupplierStatus,
+      exportDatabaseBackup,
     }),
     [
       collections,
