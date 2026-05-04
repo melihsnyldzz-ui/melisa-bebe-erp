@@ -26,6 +26,6 @@ npm run electron:dev
 npm run build
 ```
 
-## GitHub'a gönderirken dikkat
+## GitHub’a gönderirken dikkat
 
-node_modules, dist, build ve geçici dosyalar GitHub'a gönderilmez. Bu dosyalar .gitignore ile hariç tutulmuştur.
+node_modules, dist, build ve geçici dosyalar GitHub’a gönderilmez. Bu dosyalar .gitignore ile hariç tutulmuştur.
