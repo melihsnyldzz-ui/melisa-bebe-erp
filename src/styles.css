@@ -218,6 +218,35 @@ button {
   box-shadow: 0 10px 26px rgba(24, 26, 31, 0.07);
 }
 
+.role-selector {
+  display: grid;
+  gap: 3px;
+  min-width: 150px;
+  padding: 6px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--white);
+  box-shadow: 0 10px 26px rgba(24, 26, 31, 0.07);
+}
+
+.role-selector span {
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.role-selector select {
+  height: 24px;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  color: var(--anthracite);
+  background: transparent;
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
 .avatar {
   width: 36px;
   height: 36px;
@@ -255,6 +284,22 @@ button {
   display: block;
   margin-top: 10px;
   color: var(--muted);
+}
+
+.page-title .version-badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  margin-top: 0;
+  margin-bottom: 6px;
+  padding: 3px 7px;
+  border-radius: 999px;
+  color: #737783;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(229, 231, 235, 0.9);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
 .primary-action {
@@ -448,7 +493,7 @@ button {
 
 .filters-grid {
   display: grid;
-  grid-template-columns: minmax(260px, 1.4fr) repeat(5, minmax(138px, 1fr)) auto;
+  grid-template-columns: minmax(260px, 1.4fr) repeat(auto-fit, minmax(138px, 1fr));
   gap: 12px;
   align-items: end;
   margin-top: 14px;
@@ -576,6 +621,142 @@ button {
   min-width: 0;
 }
 
+.database-backup-panel {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+}
+
+.data-status-panel {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+}
+
+.system-health-panel {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+}
+
+.live-mode-panel {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+}
+
+.settings-panel-description {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.database-backup-note,
+.database-backup-message,
+.data-status-note,
+.live-mode-note,
+.live-mode-message {
+  margin: 0;
+}
+
+.live-mode-summary {
+  display: grid;
+  gap: 10px;
+}
+
+.live-mode-info {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-weight: 750;
+}
+
+.live-mode-info.live {
+  color: #087f5b;
+  background: #e6fcf5;
+  border: 1px solid #c3fae8;
+}
+
+.data-status-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.system-health-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.data-status-card {
+  display: flex;
+  min-height: 54px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(249, 250, 251, 0.86);
+}
+
+.data-status-card span {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.data-status-card strong {
+  color: var(--text);
+  font-size: 0.98rem;
+}
+
+.data-mode-badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  white-space: nowrap;
+  border-radius: 999px;
+  padding: 5px 9px;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.data-mode-badge.persistent {
+  color: #087f5b;
+  background: #e6fcf5;
+  border: 1px solid #c3fae8;
+}
+
+.data-mode-badge.temporary {
+  color: #946200;
+  background: #fff4d6;
+  border: 1px solid #ffe1a3;
+}
+
+.system-health-card {
+  display: grid;
+  gap: 5px;
+  min-height: 62px;
+  align-content: center;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(249, 250, 251, 0.86);
+}
+
+.system-health-card span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 750;
+}
+
+.system-health-card strong {
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
 .settings-roles-panel {
   grid-column: 1 / -1;
 }
@@ -634,32 +815,12 @@ button {
 }
 
 .purchase-search-field,
+.quick-barcode-entry,
 .purchase-items-area,
 .purchase-totals,
 .purchase-note,
 .purchase-actions {
   grid-column: 1 / -1;
-}
-
-.barcode-message {
-  display: inline-flex;
-  align-items: center;
-  min-height: 34px;
-  padding: 8px 10px;
-  border-radius: 8px;
-  font-size: 0.82rem;
-  font-weight: 900;
-  text-transform: none;
-}
-
-.barcode-message-success {
-  color: #0f6e52;
-  background: #e8f7f1;
-}
-
-.barcode-message-error {
-  color: var(--red-dark);
-  background: #fdecee;
 }
 
 .purchase-items-table {
@@ -802,6 +963,90 @@ button {
   margin-top: 12px;
 }
 
+.quick-barcode-entry {
+  display: grid;
+  grid-template-columns: minmax(210px, 0.45fr) minmax(260px, 1fr);
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid rgba(215, 25, 32, 0.18);
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(253, 236, 238, 0.72), rgba(255, 255, 255, 0.94));
+}
+
+.quick-barcode-entry strong,
+.quick-barcode-entry span {
+  display: block;
+}
+
+.quick-barcode-entry strong {
+  color: var(--text);
+  font-size: 0.92rem;
+}
+
+.quick-barcode-entry span {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.quick-barcode-entry input {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid rgba(215, 25, 32, 0.24);
+  border-radius: 8px;
+  padding: 0 12px;
+  font-weight: 750;
+}
+
+.barcode-message {
+  grid-column: 2;
+  display: inline-flex;
+  width: fit-content;
+  margin-top: -4px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.barcode-message-success {
+  color: #0f6e52;
+  background: #e8f7f1;
+}
+
+.barcode-message-error {
+  color: var(--red-dark);
+  background: #fdecee;
+}
+
+.barcode-cell,
+.product-code-cell {
+  max-width: 150px;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+
+.slip-detail-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(249, 250, 251, 0.86);
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.slip-detail-summary strong {
+  color: var(--text);
+}
+
 .slip-detail-line {
   display: grid;
   grid-template-columns: minmax(180px, 1fr) minmax(220px, 1.2fr) auto;
@@ -814,6 +1059,15 @@ button {
 
 .slip-detail-line span {
   color: var(--muted);
+}
+
+.empty-detail-message {
+  margin: 0;
+  padding: 12px;
+  border: 1px dashed rgba(148, 163, 184, 0.7);
+  border-radius: 8px;
+  color: var(--muted);
+  background: rgba(248, 250, 252, 0.82);
 }
 
 .filter-field {
@@ -866,7 +1120,7 @@ button {
 }
 
 .product-table {
-  min-width: 1360px;
+  min-width: 1420px;
 }
 
 .customer-table {
@@ -876,19 +1130,6 @@ button {
 .strong-cell {
   color: var(--anthracite);
   font-weight: 800;
-}
-
-.barcode-cell {
-  max-width: 150px;
-  color: var(--anthracite);
-  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-  font-size: 0.78rem;
-  white-space: nowrap;
-}
-
-.product-code-cell {
-  max-width: 150px;
-  white-space: nowrap;
 }
 
 .product-thumb {
@@ -1096,7 +1337,6 @@ button {
 
 .product-form .filter-field:first-child,
 .product-form .notes-field,
-.product-form .product-form-message,
 .product-form .form-note,
 .product-form .modal-actions {
   grid-column: 1 / -1;
@@ -1299,6 +1539,7 @@ tr:last-child td {
   }
 
   .purchase-slip-form,
+  .quick-barcode-entry,
   .purchase-totals,
   .slip-detail-line,
   .report-list-row,

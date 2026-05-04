@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import AppLayout from "./components/Layout/AppLayout.jsx";
+import { useAuth } from "./context/AuthContext.jsx";
 import Collections from "./pages/Collections.jsx";
 import Customers from "./pages/Customers.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
@@ -15,8 +16,32 @@ import PurchaseSlipWindow from "./pages/windows/PurchaseSlipWindow.jsx";
 import SalesSlipWindow from "./pages/windows/SalesSlipWindow.jsx";
 
 export default function App() {
+  const { hasPermission } = useAuth();
   const [activeModule, setActiveModule] = useState("dashboard");
   const windowType = new URLSearchParams(window.location.search).get("window");
+  const modulePermissions = useMemo(
+    () => ({
+      dashboard: "dashboard.view",
+      products: "products.view",
+      customers: "customers.view",
+      suppliers: "suppliers.view",
+      "purchase-slips": "purchaseSlips.view",
+      "sales-slips": "salesSlips.view",
+      collections: "collections.view",
+      payments: "payments.view",
+      "stock-movements": "stockMovements.view",
+      reports: "reports.view",
+      settings: "settings.view",
+    }),
+    [],
+  );
+
+  useEffect(() => {
+    const permission = modulePermissions[activeModule];
+    if (permission && !hasPermission(permission)) {
+      setActiveModule("dashboard");
+    }
+  }, [activeModule, hasPermission, modulePermissions]);
 
   if (windowType === "purchase-slip") {
     return <PurchaseSlipWindow />;

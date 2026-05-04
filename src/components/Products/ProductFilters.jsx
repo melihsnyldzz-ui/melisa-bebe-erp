@@ -17,10 +17,14 @@ export default function ProductFilters({ filters, options, onChange, onReset }) 
           <input
             value={filters.search}
             onChange={(event) => updateFilter("search", event.target.value)}
-            placeholder="Ürün adı, barkod veya kod"
+            placeholder="Ad, kod, model, varyant, barkod veya marka"
           />
         </label>
         <SelectFilter label="Kategori" value={filters.category} options={options.categories} onChange={(value) => updateFilter("category", value)} />
+        <SelectFilter label="Marka" value={filters.brand} options={options.brands} onChange={(value) => updateFilter("brand", value)} />
+        <SelectFilter label="Sezon" value={filters.season} options={options.seasons} onChange={(value) => updateFilter("season", value)} />
+        <SelectFilter label="Yaş Grubu" value={filters.ageGroup} options={options.ageGroups} onChange={(value) => updateFilter("ageGroup", value)} />
+        <SelectFilter label="Cinsiyet" value={filters.gender} options={options.genders} onChange={(value) => updateFilter("gender", value)} />
         <SelectFilter label="Beden" value={filters.size} options={options.sizes} onChange={(value) => updateFilter("size", value)} />
         <SelectFilter label="Renk" value={filters.color} options={options.colors} onChange={(value) => updateFilter("color", value)} />
         <label className="filter-field">

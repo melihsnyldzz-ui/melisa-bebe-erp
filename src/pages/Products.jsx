@@ -4,12 +4,17 @@ import KpiCard from "../components/Dashboard/KpiCard.jsx";
 import ProductFilters from "../components/Products/ProductFilters.jsx";
 import ProductFormModal from "../components/Products/ProductFormModal.jsx";
 import ProductTable from "../components/Products/ProductTable.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
 import { useErpData } from "../context/ErpDataContext.jsx";
 import { formatNumber } from "../utils/formatters.js";
 
 const emptyFilters = {
   search: "",
   category: "all",
+  brand: "all",
+  season: "all",
+  ageGroup: "all",
+  gender: "all",
   size: "all",
   color: "all",
   stock: "all",
@@ -17,7 +22,10 @@ const emptyFilters = {
 };
 
 export default function Products() {
+  const { hasPermission } = useAuth();
   const { products, addProduct, updateProduct, toggleProductStatus } = useErpData();
+  const canEditProducts = hasPermission("products.edit");
+  const canViewCosts = hasPermission("viewCosts");
   const [filters, setFilters] = useState(emptyFilters);
   const [editingProduct, setEditingProduct] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,13 +37,17 @@ export default function Products() {
       const isCritical = product.stockQuantity <= product.criticalStockLevel;
       const matchesSearch =
         !query ||
-        [product.name, product.barcode, product.code, product.modelCode, product.variantCode].some((value) =>
+        [product.name, product.code, product.modelCode, product.variantCode, product.barcode, product.brand].some((value) =>
           String(value || "").toLocaleLowerCase("tr-TR").includes(query),
         );
 
       return (
         matchesSearch &&
         (filters.category === "all" || product.category === filters.category) &&
+        (filters.brand === "all" || product.brand === filters.brand) &&
+        (filters.season === "all" || product.season === filters.season) &&
+        (filters.ageGroup === "all" || product.ageGroup === filters.ageGroup) &&
+        (filters.gender === "all" || product.gender === filters.gender) &&
         (filters.size === "all" || product.size === filters.size) &&
         (filters.color === "all" || product.color === filters.color) &&
         (filters.stock === "all" || (filters.stock === "critical" ? isCritical : !isCritical)) &&
@@ -47,6 +59,10 @@ export default function Products() {
   const filterOptions = useMemo(
     () => ({
       categories: uniqueValues(products, "category"),
+      brands: uniqueValues(products, "brand"),
+      seasons: uniqueValues(products, "season"),
+      ageGroups: uniqueValues(products, "ageGroup"),
+      genders: uniqueValues(products, "gender"),
       sizes: uniqueValues(products, "size"),
       colors: uniqueValues(products, "color"),
     }),
@@ -80,12 +96,9 @@ export default function Products() {
     const duplicateError = getDuplicateProductError(products, productPayload, editingProduct?.id);
     if (duplicateError) return { ok: false, error: duplicateError };
 
-    let result;
-    if (editingProduct) {
-      result = await updateProduct({ ...editingProduct, ...productPayload });
-    } else {
-      result = await addProduct(productPayload);
-    }
+    const result = editingProduct
+      ? await updateProduct({ ...editingProduct, ...productPayload })
+      : await addProduct(productPayload);
 
     if (result && !result.ok) return result;
 
@@ -101,10 +114,12 @@ export default function Products() {
           <h1>Ürün Yönetimi</h1>
           <span>Ürün kartlarını, stok seviyelerini ve fiyat bilgilerini yönetin.</span>
         </div>
-        <button className="primary-action" onClick={openCreateModal}>
-          <PackagePlus size={18} />
-          Yeni Ürün
-        </button>
+        {canEditProducts && (
+          <button className="primary-action" onClick={openCreateModal}>
+            <PackagePlus size={18} />
+            Yeni Ürün
+          </button>
+        )}
       </section>
 
       <section className="kpi-grid product-summary-grid">
@@ -114,7 +129,13 @@ export default function Products() {
       </section>
 
       <ProductFilters filters={filters} options={filterOptions} onChange={setFilters} onReset={() => setFilters(emptyFilters)} />
-      <ProductTable products={filteredProducts} onEdit={openEditModal} onToggleStatus={toggleProductStatus} />
+      <ProductTable
+        canEdit={canEditProducts}
+        canViewCosts={canViewCosts}
+        products={filteredProducts}
+        onEdit={openEditModal}
+        onToggleStatus={toggleProductStatus}
+      />
 
       <ProductFormModal
         isOpen={isModalOpen}

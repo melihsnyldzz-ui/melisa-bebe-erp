@@ -2,7 +2,7 @@ import { BookOpenText, Edit3, Power, Truck } from "lucide-react";
 import { formatDateTR } from "../../utils/dateUtils.js";
 import { formatCurrency } from "../../utils/formatters.js";
 
-export default function SupplierTable({ suppliers, selectedSupplierId, onEdit, onToggleStatus, onViewLedger }) {
+export default function SupplierTable({ canEdit = true, suppliers, selectedSupplierId, onEdit, onToggleStatus, onViewLedger }) {
   return (
     <section className="table-panel product-table-panel">
       <div className="section-heading">
@@ -55,12 +55,16 @@ export default function SupplierTable({ suppliers, selectedSupplierId, onEdit, o
                       <button className="icon-button small" aria-label="Cari hareketlerini görüntüle" onClick={() => onViewLedger(supplier)}>
                         <BookOpenText size={16} />
                       </button>
-                      <button className="icon-button small" aria-label="Tedarikçiyi düzenle" onClick={() => onEdit(supplier)}>
-                        <Edit3 size={16} />
-                      </button>
-                      <button className="icon-button small" aria-label="Aktif pasif yap" onClick={() => onToggleStatus(supplier.id)}>
-                        <Power size={16} />
-                      </button>
+                      {canEdit && (
+                        <>
+                          <button className="icon-button small" aria-label="Tedarikçiyi düzenle" onClick={() => onEdit(supplier)}>
+                            <Edit3 size={16} />
+                          </button>
+                          <button className="icon-button small" aria-label="Aktif pasif yap" onClick={() => onToggleStatus(supplier.id)}>
+                            <Power size={16} />
+                          </button>
+                        </>
+                      )}
                     </div>
                   </td>
                 </tr>

@@ -2,7 +2,7 @@ import { Eye, Image, ReceiptText, XCircle } from "lucide-react";
 import { formatDateTR } from "../../utils/dateUtils.js";
 import { formatCurrency } from "../../utils/formatters.js";
 
-export default function CollectionTable({ collections, selectedCollection, onCancel, onViewDetail }) {
+export default function CollectionTable({ canCancel = true, collections, selectedCollection, onCancel, onViewDetail }) {
   return (
     <section className="table-panel product-table-panel purchase-list-panel">
       <div className="section-heading">
@@ -54,15 +54,17 @@ export default function CollectionTable({ collections, selectedCollection, onCan
                       <button className="icon-button small" aria-label="Tahsilat detayı görüntüle" onClick={() => onViewDetail(collection)}>
                         <Eye size={16} />
                       </button>
-                      <button
-                        className="icon-button small cancel-action"
-                        aria-label="Tahsilatı iptal et"
-                        disabled={isCanceled}
-                        onClick={() => onCancel(collection)}
-                        title="İptal Et"
-                      >
-                        <XCircle size={16} />
-                      </button>
+                      {canCancel && (
+                        <button
+                          className="icon-button small cancel-action"
+                          aria-label="Tahsilatı iptal et"
+                          disabled={isCanceled}
+                          onClick={() => onCancel(collection)}
+                          title="İptal Et"
+                        >
+                          <XCircle size={16} />
+                        </button>
+                      )}
                     </div>
                   </td>
                 </tr>

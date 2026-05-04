@@ -3,6 +3,7 @@ import { Plus, RotateCcw, Save } from "lucide-react";
 import PurchaseSlipItemsTable from "./PurchaseSlipItemsTable.jsx";
 import { getTodayISO } from "../../utils/dateUtils.js";
 import { formatCurrency } from "../../utils/formatters.js";
+import { findProductByCodeOrBarcode } from "../../utils/productLookup.js";
 
 const initialForm = {
   date: getTodayISO(),
@@ -16,6 +17,8 @@ const initialForm = {
 export default function PurchaseSlipForm({ nextSlipNo, products, suppliers, onSave }) {
   const [form, setForm] = useState(initialForm);
   const [items, setItems] = useState([]);
+  const [quickEntry, setQuickEntry] = useState("");
+  const [formError, setFormError] = useState("");
   const [barcodeMessage, setBarcodeMessage] = useState(null);
   const barcodeInputRef = useRef(null);
 
@@ -28,7 +31,7 @@ export default function PurchaseSlipForm({ nextSlipNo, products, suppliers, onSa
     if (!query) return products;
 
     return products.filter((product) =>
-      [product.name, product.code, product.barcode].some((value) =>
+      [product.name, product.code, product.modelCode, product.variantCode, product.barcode, product.brand].some((value) =>
         String(value || "").toLocaleLowerCase("tr-TR").includes(query),
       ),
     );
@@ -38,40 +41,65 @@ export default function PurchaseSlipForm({ nextSlipNo, products, suppliers, onSa
 
   function updateForm(key, value) {
     setForm((currentForm) => ({ ...currentForm, [key]: value }));
-    if (key === "search") setBarcodeMessage(null);
   }
 
   function addSelectedProduct() {
-    const selectedProduct =
-      products.find((product) => product.id === Number(form.productId)) || findProductByBarcode(products, form.search);
-    if (!selectedProduct) {
+    const selectedProduct = products.find((product) => product.id === Number(form.productId));
+    if (!selectedProduct) return;
+
+    const action = addProductToItems(selectedProduct);
+    setBarcodeMessage({
+      type: "success",
+      text: action === "increase" ? `${selectedProduct.name} miktarı artırıldı.` : `${selectedProduct.name} satıra eklendi.`,
+    });
+    setForm((currentForm) => ({ ...currentForm, productId: "", search: "" }));
+  }
+
+  function handleQuickEntryKeyDown(event) {
+    if (event.key !== "Enter") return;
+    event.preventDefault();
+
+    const product = findProductByCodeOrBarcode(products, quickEntry);
+    if (!product) {
       setBarcodeMessage({ type: "error", text: "Ürün bulunamadı." });
       return;
     }
 
-    const action = addOrIncreaseItem(selectedProduct);
-    setForm((currentForm) => ({ ...currentForm, productId: "", search: "" }));
+    const action = addProductToItems(product);
     setBarcodeMessage({
       type: "success",
-      text:
-        action === "increase"
-          ? `${selectedProduct.name} miktarı artırıldı.`
-          : `${selectedProduct.name} satıra eklendi.`,
+      text: action === "increase" ? `${product.name} miktarı artırıldı.` : `${product.name} satıra eklendi.`,
     });
+    setQuickEntry("");
   }
 
-  function addOrIncreaseItem(product) {
+  function addProductToItems(product) {
     const action = items.some((item) => item.productId === product.id) ? "increase" : "add";
 
     setItems((currentItems) => {
       const existingItem = currentItems.find((item) => item.productId === product.id);
-      if (!existingItem) return [...currentItems, createPurchaseItem(product)];
+      if (existingItem) {
+        return currentItems.map((item) => (item.productId === product.id ? calculateLine({ ...item, quantity: item.quantity + 1 }) : item));
+      }
 
-      return currentItems.map((item) =>
-        item.productId === product.id ? calculateLine({ ...item, quantity: item.quantity + 1 }) : item,
-      );
+      return [
+        ...currentItems,
+        calculateLine({
+          id: Date.now(),
+          productId: product.id,
+          productCode: product.code,
+          barcode: product.barcode,
+          productName: product.name,
+          size: product.size,
+          color: product.color,
+          quantity: 1,
+          unitPrice: product.purchasePrice,
+          discountRate: 0,
+          taxRate: 0,
+        }),
+      ];
     });
-
+    setFormError("");
     return action;
   }
 
@@ -88,8 +116,10 @@ export default function PurchaseSlipForm({ nextSlipNo, products, suppliers, onSa
   function resetForm() {
     setForm(initialForm);
     setItems([]);
+    setQuickEntry("");
+    setFormError("");
     setBarcodeMessage(null);
-    requestAnimationFrame(() => barcodeInputRef.current?.focus());
+    window.requestAnimationFrame(() => barcodeInputRef.current?.focus());
   }
 
   function handleSubmit(event) {
@@ -149,21 +179,31 @@ export default function PurchaseSlipForm({ nextSlipNo, products, suppliers, onSa
           </select>
         </label>
 
-        <label className="filter-field purchase-search-field">
-          <span>Hızlı Barkod Girişi / Ürün Arama</span>
+        <div className="quick-barcode-entry">
+          <div>
+            <strong>Hızlı Barkod Girişi</strong>
+            <span>Barkod / ürün kodu okut veya yaz</span>
+          </div>
           <input
             ref={barcodeInputRef}
-            value={form.search}
-            onChange={(event) => updateForm("search", event.target.value)}
-            onKeyDown={(event) => {
-              if (event.key === "Enter") {
-                event.preventDefault();
-                addSelectedProduct();
-              }
+            value={quickEntry}
+            onChange={(event) => {
+              setQuickEntry(event.target.value);
+              setBarcodeMessage(null);
             }}
-            placeholder="Barkod, ürün kodu veya ürün adı"
+            onKeyDown={handleQuickEntryKeyDown}
+            placeholder="Barkod / ürün kodu okut veya yaz"
           />
           {barcodeMessage && <span className={`barcode-message barcode-message-${barcodeMessage.type}`}>{barcodeMessage.text}</span>}
+        </div>
+
+        <label className="filter-field purchase-search-field">
+          <span>Barkod / Ürün Arama</span>
+          <input
+            value={form.search}
+            onChange={(event) => updateForm("search", event.target.value)}
+            placeholder="Barkod, ürün kodu veya ürün adı"
+          />
         </label>
         <label className="filter-field">
           <span>Ürün Seç</span>
@@ -180,6 +220,8 @@ export default function PurchaseSlipForm({ nextSlipNo, products, suppliers, onSa
           <Plus size={17} />
           Satıra Ekle
         </button>
+
+        {formError && <p className="error-message purchase-note">{formError}</p>}
 
         <div className="purchase-items-area">
           <PurchaseSlipItemsTable items={items} onUpdateItem={updateItem} onRemoveItem={removeItem} />
@@ -226,28 +268,6 @@ export default function PurchaseSlipForm({ nextSlipNo, products, suppliers, onSa
       </form>
     </section>
   );
-}
-
-function findProductByBarcode(products, value) {
-  const barcode = value.trim();
-  if (!barcode) return null;
-  return products.find((product) => String(product.barcode || "").trim() === barcode) || null;
-}
-
-function createPurchaseItem(product) {
-  return calculateLine({
-    id: Date.now(),
-    productId: product.id,
-    productCode: product.code,
-    barcode: product.barcode,
-    productName: product.name,
-    size: product.size,
-    color: product.color,
-    quantity: 1,
-    unitPrice: product.purchasePrice,
-    discountRate: 0,
-    taxRate: 0,
-  });
 }
 
 function calculateLine(item) {

@@ -1,8 +1,26 @@
 import { PackageCheck } from "lucide-react";
 import melisaBabyLogo from "../../assets/melisa-baby-logo.jpg";
+import { useAuth } from "../../context/AuthContext.jsx";
 import { menuItems } from "../../data/mockData.js";
 
+const menuPermissions = {
+  dashboard: "dashboard.view",
+  products: "products.view",
+  customers: "customers.view",
+  suppliers: "suppliers.view",
+  "purchase-slips": "purchaseSlips.view",
+  "sales-slips": "salesSlips.view",
+  collections: "collections.view",
+  payments: "payments.view",
+  "stock-movements": "stockMovements.view",
+  reports: "reports.view",
+  settings: "settings.view",
+};
+
 export default function Sidebar({ activeModule, onModuleChange }) {
+  const { hasPermission } = useAuth();
+  const visibleMenuItems = menuItems.filter((item) => hasPermission(menuPermissions[item.id]));
+
   return (
     <aside className="sidebar">
       <div className="brand">
@@ -15,7 +33,7 @@ export default function Sidebar({ activeModule, onModuleChange }) {
         </div>
       </div>
       <nav className="nav-list">
-        {menuItems.map((item) => {
+        {visibleMenuItems.map((item) => {
           const Icon = item.icon;
           const isActive = activeModule === item.id;
 

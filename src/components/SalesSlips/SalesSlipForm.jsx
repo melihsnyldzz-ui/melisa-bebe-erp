@@ -3,6 +3,7 @@ import { Plus, RotateCcw, Save } from "lucide-react";
 import SalesSlipItemsTable from "./SalesSlipItemsTable.jsx";
 import { getTodayISO } from "../../utils/dateUtils.js";
 import { formatCurrency } from "../../utils/formatters.js";
+import { findProductByCodeOrBarcode } from "../../utils/productLookup.js";
 
 const initialForm = {
   date: getTodayISO(),
@@ -19,6 +20,7 @@ const saleTypes = ["Toptan Satış", "Sıcak Satış", "Instagram Satıcı", "Ba
 export default function SalesSlipForm({ nextSlipNo, products, customers, onSave }) {
   const [form, setForm] = useState(initialForm);
   const [items, setItems] = useState([]);
+  const [quickEntry, setQuickEntry] = useState("");
   const [formError, setFormError] = useState("");
   const [barcodeMessage, setBarcodeMessage] = useState(null);
   const barcodeInputRef = useRef(null);
@@ -32,7 +34,7 @@ export default function SalesSlipForm({ nextSlipNo, products, customers, onSave 
     if (!query) return products;
 
     return products.filter((product) =>
-      [product.name, product.code, product.barcode].some((value) =>
+      [product.name, product.code, product.modelCode, product.variantCode, product.barcode, product.brand].some((value) =>
         String(value || "").toLocaleLowerCase("tr-TR").includes(query),
       ),
     );
@@ -43,49 +45,85 @@ export default function SalesSlipForm({ nextSlipNo, products, customers, onSave 
 
   function updateForm(key, value) {
     setForm((currentForm) => ({ ...currentForm, [key]: value }));
-    if (key === "search") setBarcodeMessage(null);
   }
 
   function addSelectedProduct() {
-    const selectedProduct =
-      products.find((product) => product.id === Number(form.productId)) || findProductByBarcode(products, form.search);
-    if (!selectedProduct) {
+    const selectedProduct = products.find((product) => product.id === Number(form.productId));
+    if (!selectedProduct) return;
+
+    const result = addProductToItems(selectedProduct);
+    if (result.ok) {
+      setBarcodeMessage({
+        type: "success",
+        text: result.action === "increase" ? `${selectedProduct.name} miktarı artırıldı.` : `${selectedProduct.name} satıra eklendi.`,
+      });
+    } else {
+      setBarcodeMessage({ type: "error", text: result.error });
+    }
+    setForm((currentForm) => ({ ...currentForm, productId: "", search: "" }));
+  }
+
+  function handleQuickEntryKeyDown(event) {
+    if (event.key !== "Enter") return;
+    event.preventDefault();
+
+    const product = findProductByCodeOrBarcode(products, quickEntry);
+    if (!product) {
       setBarcodeMessage({ type: "error", text: "Ürün bulunamadı." });
       return;
     }
 
-    const existingItem = items.find((item) => item.productId === selectedProduct.id);
-    const nextQuantity = (existingItem?.quantity || 0) + 1;
-    if (nextQuantity > selectedProduct.stockQuantity) {
-      setBarcodeMessage({ type: "error", text: `Stok yetersiz. Mevcut stok: ${selectedProduct.stockQuantity}` });
+    const result = addProductToItems(product);
+    if (!result.ok) {
+      setBarcodeMessage({ type: "error", text: result.error });
       return;
     }
 
-    const action = addOrIncreaseItem(selectedProduct);
-    setForm((currentForm) => ({ ...currentForm, productId: "", search: "" }));
     setBarcodeMessage({
       type: "success",
-      text:
-        action === "increase"
-          ? `${selectedProduct.name} miktarı artırıldı.`
-          : `${selectedProduct.name} satıra eklendi.`,
+      text: result.action === "increase" ? `${product.name} miktarı artırıldı.` : `${product.name} satıra eklendi.`,
     });
-    setFormError("");
+    setQuickEntry("");
   }
 
-  function addOrIncreaseItem(product) {
-    const action = items.some((item) => item.productId === product.id) ? "increase" : "add";
+  function addProductToItems(product) {
+    if (product.stockQuantity <= 0) {
+      const error = `Stok yetersiz. Mevcut stok: ${product.stockQuantity}`;
+      setFormError(error);
+      return { ok: false, error };
+    }
 
-    setItems((currentItems) => {
-      const existingItem = currentItems.find((item) => item.productId === product.id);
-      if (!existingItem) return [...currentItems, createSalesItem(product)];
+    const existingItem = items.find((item) => item.productId === product.id);
+    if (existingItem) {
+      if (existingItem.quantity + 1 > existingItem.availableStock) {
+        const error = `Stok yetersiz. Mevcut stok: ${existingItem.availableStock}`;
+        setFormError(error);
+        return { ok: false, error };
+      }
 
-      return currentItems.map((item) =>
-        item.productId === product.id ? calculateLine({ ...item, quantity: item.quantity + 1 }) : item,
-      );
-    });
+      setItems((currentItems) => currentItems.map((item) => (item.productId === product.id ? calculateLine({ ...item, quantity: item.quantity + 1 }) : item)));
+      setFormError("");
+      return { ok: true, action: "increase" };
+    }
 
-    return action;
+    setItems((currentItems) => [
+      ...currentItems,
+      calculateLine({
+        id: Date.now(),
+        productId: product.id,
+        productCode: product.code,
+        barcode: product.barcode,
+        productName: product.name,
+        size: product.size,
+        color: product.color,
+        quantity: 1,
+        unitPrice: product.salePrice,
+        discountRate: 0,
+        availableStock: product.stockQuantity,
+      }),
+    ]);
+    setFormError("");
+    return { ok: true, action: "add" };
   }
 
   function updateItem(itemId, key, value) {
@@ -101,9 +139,10 @@ export default function SalesSlipForm({ nextSlipNo, products, customers, onSave 
   function resetForm() {
     setForm(initialForm);
     setItems([]);
+    setQuickEntry("");
     setFormError("");
     setBarcodeMessage(null);
-    requestAnimationFrame(() => barcodeInputRef.current?.focus());
+    window.requestAnimationFrame(() => barcodeInputRef.current?.focus());
   }
 
   function handleSubmit(event) {
@@ -172,21 +211,31 @@ export default function SalesSlipForm({ nextSlipNo, products, customers, onSave 
           </select>
         </label>
 
-        <label className="filter-field purchase-search-field">
-          <span>Hızlı Barkod Girişi / Ürün Arama</span>
+        <div className="quick-barcode-entry">
+          <div>
+            <strong>Hızlı Barkod Girişi</strong>
+            <span>Barkod / ürün kodu okut veya yaz</span>
+          </div>
           <input
             ref={barcodeInputRef}
-            value={form.search}
-            onChange={(event) => updateForm("search", event.target.value)}
-            onKeyDown={(event) => {
-              if (event.key === "Enter") {
-                event.preventDefault();
-                addSelectedProduct();
-              }
+            value={quickEntry}
+            onChange={(event) => {
+              setQuickEntry(event.target.value);
+              setBarcodeMessage(null);
             }}
-            placeholder="Barkod, ürün kodu veya ürün adı"
+            onKeyDown={handleQuickEntryKeyDown}
+            placeholder="Barkod / ürün kodu okut veya yaz"
           />
           {barcodeMessage && <span className={`barcode-message barcode-message-${barcodeMessage.type}`}>{barcodeMessage.text}</span>}
+        </div>
+
+        <label className="filter-field purchase-search-field">
+          <span>Barkod / Ürün Arama</span>
+          <input
+            value={form.search}
+            onChange={(event) => updateForm("search", event.target.value)}
+            placeholder="Barkod, ürün kodu veya ürün adı"
+          />
         </label>
         <label className="filter-field">
           <span>Ürün Seç</span>
@@ -251,28 +300,6 @@ export default function SalesSlipForm({ nextSlipNo, products, customers, onSave 
       </form>
     </section>
   );
-}
-
-function findProductByBarcode(products, value) {
-  const barcode = value.trim();
-  if (!barcode) return null;
-  return products.find((product) => String(product.barcode || "").trim() === barcode) || null;
-}
-
-function createSalesItem(product) {
-  return calculateLine({
-    id: Date.now(),
-    productId: product.id,
-    productCode: product.code,
-    barcode: product.barcode,
-    productName: product.name,
-    size: product.size,
-    color: product.color,
-    quantity: 1,
-    unitPrice: product.salePrice,
-    discountRate: 0,
-    availableStock: product.stockQuantity,
-  });
 }
 
 function calculateLine(item) {

@@ -1,23 +1,43 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Clock3, FilePlus2, ReceiptText, ShoppingCart, WalletCards } from "lucide-react";
 import KpiCard from "../components/Dashboard/KpiCard.jsx";
 import PurchaseSlipForm from "../components/PurchaseSlips/PurchaseSlipForm.jsx";
 import PurchaseSlipTable from "../components/PurchaseSlips/PurchaseSlipTable.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
 import { useErpData } from "../context/ErpDataContext.jsx";
 import { getTodayISO } from "../utils/dateUtils.js";
 import { canUseDesktopBridge, openPurchaseSlipWindow } from "../utils/desktopBridge.js";
+import { getNextPurchaseSlipNo } from "../utils/documentNumbers.js";
 import { formatCurrency } from "../utils/formatters.js";
 
 export default function PurchaseSlips() {
-  const { cancelPurchaseSlip, products, purchaseSlips, savePurchaseSlip, suppliers } = useErpData();
+  const { hasPermission } = useAuth();
+  const { cancelPurchaseSlip, products, purchaseSlips, refreshData, savePurchaseSlip, suppliers } = useErpData();
+  const canCancelRecords = hasPermission("cancelRecords");
+  const canEditPurchaseSlips = hasPermission("purchaseSlips.edit");
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedSlip, setSelectedSlip] = useState(null);
 
-  const nextSlipNo = useMemo(() => {
-    const nextNumber = purchaseSlips.length + 1;
-    return `AF-${String(nextNumber).padStart(4, "0")}`;
-  }, [purchaseSlips.length]);
+  const nextSlipNo = useMemo(() => getNextPurchaseSlipNo(purchaseSlips), [purchaseSlips]);
+
+  useEffect(() => {
+    function handleFocus() {
+      refreshData();
+    }
+
+    window.addEventListener("focus", handleFocus);
+    return () => window.removeEventListener("focus", handleFocus);
+  }, [refreshData]);
+
+  useEffect(() => {
+    if (!selectedSlip) return;
+
+    const currentSlip = purchaseSlips.find((slip) => slip.id === selectedSlip.id);
+    if (currentSlip && currentSlip !== selectedSlip) {
+      setSelectedSlip(currentSlip);
+    }
+  }, [purchaseSlips, selectedSlip]);
 
   const summaryCards = useMemo(() => {
     const today = getTodayISO();
@@ -73,7 +93,7 @@ export default function PurchaseSlips() {
           <h1>Alış Fişleri</h1>
           <span>Tedarikçiden gelen ürünleri fiş mantığıyla stok ve cari hesaplara işleyin.</span>
         </div>
-        {canUseDesktopBridge() && (
+        {canEditPurchaseSlips && canUseDesktopBridge() && (
           <button className="primary-action" type="button" onClick={handleOpenWindow}>
             <FilePlus2 size={18} />
             Yeni Alış Fişini Pencerede Aç
@@ -90,14 +110,22 @@ export default function PurchaseSlips() {
       {successMessage && <p className="success-message">{successMessage}</p>}
       {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-      <PurchaseSlipForm
-        nextSlipNo={nextSlipNo}
-        products={products}
-        suppliers={suppliers}
-        onSave={handleSaveSlip}
-      />
+      {canEditPurchaseSlips && (
+        <PurchaseSlipForm
+          nextSlipNo={nextSlipNo}
+          products={products}
+          suppliers={suppliers}
+          onSave={handleSaveSlip}
+        />
+      )}
 
-      <PurchaseSlipTable slips={purchaseSlips} selectedSlip={selectedSlip} onCancel={handleCancelPurchaseSlip} onViewDetail={setSelectedSlip} />
+      <PurchaseSlipTable
+        canCancel={canCancelRecords}
+        slips={purchaseSlips}
+        selectedSlip={selectedSlip}
+        onCancel={handleCancelPurchaseSlip}
+        onViewDetail={setSelectedSlip}
+      />
     </>
   );
 }

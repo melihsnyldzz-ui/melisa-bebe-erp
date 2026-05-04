@@ -1,15 +1,13 @@
 import { useMemo, useState } from "react";
 import PurchaseSlipForm from "../../components/PurchaseSlips/PurchaseSlipForm.jsx";
 import { useErpData } from "../../context/ErpDataContext.jsx";
+import { getNextPurchaseSlipNo } from "../../utils/documentNumbers.js";
 
 export default function PurchaseSlipWindow() {
   const { products, purchaseSlips, savePurchaseSlip, suppliers } = useErpData();
   const [successMessage, setSuccessMessage] = useState("");
 
-  const nextSlipNo = useMemo(() => {
-    const nextNumber = purchaseSlips.length + 1;
-    return `AF-${String(nextNumber).padStart(4, "0")}`;
-  }, [purchaseSlips.length]);
+  const nextSlipNo = useMemo(() => getNextPurchaseSlipNo(purchaseSlips), [purchaseSlips]);
 
   async function handleSaveSlip(slipPayload) {
     const result = await savePurchaseSlip(slipPayload);

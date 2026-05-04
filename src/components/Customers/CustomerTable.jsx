@@ -2,7 +2,7 @@ import { BookOpenText, Edit3, Power, UsersRound } from "lucide-react";
 import { formatDateTR } from "../../utils/dateUtils.js";
 import { formatCurrency } from "../../utils/formatters.js";
 
-export default function CustomerTable({ customers, selectedCustomerId, onEdit, onToggleStatus, onViewLedger }) {
+export default function CustomerTable({ canEdit = true, customers, selectedCustomerId, onEdit, onToggleStatus, onViewLedger }) {
   return (
     <section className="table-panel product-table-panel">
       <div className="section-heading">
@@ -61,12 +61,16 @@ export default function CustomerTable({ customers, selectedCustomerId, onEdit, o
                       <button className="icon-button small" aria-label="Cari hareketlerini görüntüle" onClick={() => onViewLedger(customer)}>
                         <BookOpenText size={16} />
                       </button>
-                      <button className="icon-button small" aria-label="Müşteriyi düzenle" onClick={() => onEdit(customer)}>
-                        <Edit3 size={16} />
-                      </button>
-                      <button className="icon-button small" aria-label="Aktif pasif yap" onClick={() => onToggleStatus(customer.id)}>
-                        <Power size={16} />
-                      </button>
+                      {canEdit && (
+                        <>
+                          <button className="icon-button small" aria-label="Müşteriyi düzenle" onClick={() => onEdit(customer)}>
+                            <Edit3 size={16} />
+                          </button>
+                          <button className="icon-button small" aria-label="Aktif pasif yap" onClick={() => onToggleStatus(customer.id)}>
+                            <Power size={16} />
+                          </button>
+                        </>
+                      )}
                     </div>
                   </td>
                 </tr>

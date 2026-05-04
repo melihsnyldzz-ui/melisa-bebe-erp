@@ -1,6 +1,10 @@
 import { Bell, Menu, Search, UserRound } from "lucide-react";
+import { ROLE_DEFINITIONS, ROLE_OPTIONS } from "../../config/roles.js";
+import { useAuth } from "../../context/AuthContext.jsx";
 
 export default function Topbar() {
+  const { currentRole, currentUser, setCurrentRole } = useAuth();
+
   return (
     <header className="topbar">
       <button className="mobile-menu" aria-label="Menüyü aç">
@@ -19,10 +23,20 @@ export default function Topbar() {
             <UserRound size={18} />
           </div>
           <div>
-            <strong>Melisa Bebe</strong>
-            <span>Yönetici</span>
+            <strong>{currentUser.name}</strong>
+            <span>{ROLE_DEFINITIONS[currentRole].label}</span>
           </div>
         </div>
+        <label className="role-selector">
+          <span>Rol</span>
+          <select value={currentRole} onChange={(event) => setCurrentRole(event.target.value)}>
+            {ROLE_OPTIONS.map((role) => (
+              <option value={role.value} key={role.value}>
+                {role.label}
+              </option>
+            ))}
+          </select>
+        </label>
       </div>
     </header>
   );

@@ -1,5 +1,10 @@
 import { useState } from "react";
 import CompanySettings from "../components/Settings/CompanySettings.jsx";
+import DatabaseBackupSettings from "../components/Settings/DatabaseBackupSettings.jsx";
+import DataStatusSettings from "../components/Settings/DataStatusSettings.jsx";
+import DemoDataResetSettings from "../components/Settings/DemoDataResetSettings.jsx";
+import LiveModeSettings from "../components/Settings/LiveModeSettings.jsx";
+import SystemHealthSettings from "../components/Settings/SystemHealthSettings.jsx";
 import SystemSettings from "../components/Settings/SystemSettings.jsx";
 import UserRoleSettings from "../components/Settings/UserRoleSettings.jsx";
 
@@ -58,6 +63,11 @@ export default function Settings() {
       <section className="settings-grid">
         <CompanySettings settings={companySettings} onChange={setCompanySettings} />
         <SystemSettings settings={systemSettings} onChange={setSystemSettings} />
+        <DataStatusSettings />
+        <LiveModeSettings />
+        <DemoDataResetSettings />
+        <SystemHealthSettings />
+        <DatabaseBackupSettings />
         <UserRoleSettings />
       </section>
     </>

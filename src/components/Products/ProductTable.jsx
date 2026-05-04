@@ -1,7 +1,7 @@
 import { Edit3, PackageSearch, Power } from "lucide-react";
 import { formatCurrency } from "../../utils/formatters.js";
 
-export default function ProductTable({ products, onEdit, onToggleStatus }) {
+export default function ProductTable({ canEdit = true, canViewCosts = true, products, onEdit, onToggleStatus }) {
   return (
     <section className="table-panel product-table-panel">
       <div className="section-heading">
@@ -13,18 +13,19 @@ export default function ProductTable({ products, onEdit, onToggleStatus }) {
           <thead>
             <tr>
               <th>Görsel</th>
-              <th>Ürün Kodu</th>
-              <th>Barkod</th>
               <th>Model Kodu</th>
               <th>Varyant Kodu</th>
+              <th>Ürün Kodu</th>
+              <th>Barkod</th>
               <th>Ürün Adı</th>
-              <th>Kategori</th>
+              <th>Marka</th>
+              <th>Sezon</th>
+              <th>Yaş Grubu</th>
               <th>Beden</th>
               <th>Renk</th>
               <th>Stok</th>
-              <th>Alış</th>
+              {canViewCosts && <th>Alış</th>}
               <th>Satış</th>
-              <th>Tedarikçi</th>
               <th>Durum</th>
               <th>İşlemler</th>
             </tr>
@@ -38,12 +39,14 @@ export default function ProductTable({ products, onEdit, onToggleStatus }) {
                   <td>
                     <ProductImage product={product} />
                   </td>
-                  <td className="strong-cell product-code-cell">{product.code}</td>
-                  <td className="barcode-cell">{product.barcode}</td>
                   <td className="product-code-cell">{product.modelCode || "-"}</td>
                   <td className="product-code-cell">{product.variantCode || "-"}</td>
+                  <td className="strong-cell product-code-cell">{product.code}</td>
+                  <td className="barcode-cell">{product.barcode}</td>
                   <td>{product.name}</td>
-                  <td>{product.category}</td>
+                  <td>{product.brand || "-"}</td>
+                  <td>{product.season || "-"}</td>
+                  <td>{product.ageGroup || "-"}</td>
                   <td>{product.size}</td>
                   <td>{product.color}</td>
                   <td>
@@ -52,23 +55,24 @@ export default function ProductTable({ products, onEdit, onToggleStatus }) {
                       {isCritical && <span className="warning-badge">Kritik</span>}
                     </div>
                   </td>
-                  <td>{formatCurrency(product.purchasePrice)}</td>
+                  {canViewCosts && <td>{formatCurrency(product.purchasePrice)}</td>}
                   <td>{formatCurrency(product.salePrice)}</td>
-                  <td>{product.supplier}</td>
                   <td>
                     <span className={`status ${product.isActive ? "status-active" : "status-passive"}`}>
                       {product.isActive ? "Aktif" : "Pasif"}
                     </span>
                   </td>
                   <td>
-                    <div className="table-actions">
-                      <button className="icon-button small" aria-label="Ürünü düzenle" onClick={() => onEdit(product)}>
-                        <Edit3 size={16} />
-                      </button>
-                      <button className="icon-button small" aria-label="Aktif pasif yap" onClick={() => onToggleStatus(product.id)}>
-                        <Power size={16} />
-                      </button>
-                    </div>
+                    {canEdit && (
+                      <div className="table-actions">
+                        <button className="icon-button small" aria-label="Ürünü düzenle" onClick={() => onEdit(product)}>
+                          <Edit3 size={16} />
+                        </button>
+                        <button className="icon-button small" aria-label="Aktif pasif yap" onClick={() => onToggleStatus(product.id)}>
+                          <Power size={16} />
+                        </button>
+                      </div>
+                    )}
                   </td>
                 </tr>
               );

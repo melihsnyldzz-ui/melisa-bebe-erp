@@ -10,6 +10,10 @@ function runMigrations(db) {
       modelCode TEXT,
       variantCode TEXT,
       name TEXT NOT NULL,
+      brand TEXT,
+      season TEXT,
+      ageGroup TEXT,
+      gender TEXT,
       category TEXT,
       size TEXT,
       color TEXT,
@@ -80,6 +84,7 @@ function runMigrations(db) {
       taxTotal REAL DEFAULT 0,
       grandTotal REAL DEFAULT 0,
       description TEXT,
+      items_json TEXT,
       status TEXT,
       createdAt TEXT
     );
@@ -113,6 +118,7 @@ function runMigrations(db) {
       discountTotal REAL DEFAULT 0,
       grandTotal REAL DEFAULT 0,
       description TEXT,
+      items_json TEXT,
       status TEXT,
       createdAt TEXT
     );
@@ -367,6 +373,12 @@ function runMigrations(db) {
   ensureColumn(db, "payments", "status", "TEXT DEFAULT 'Kayıtlı'");
   ensureColumn(db, "products", "modelCode", "TEXT");
   ensureColumn(db, "products", "variantCode", "TEXT");
+  ensureColumn(db, "products", "season", "TEXT");
+  ensureColumn(db, "products", "ageGroup", "TEXT");
+  ensureColumn(db, "products", "gender", "TEXT");
+  ensureColumn(db, "products", "brand", "TEXT");
+  ensureColumn(db, "purchase_slips", "items_json", "TEXT");
+  ensureColumn(db, "sales_slips", "items_json", "TEXT");
   normalizeEmptyProductCodes(db);
   createUniqueIndexIfClean(db, "idx_products_barcode_unique", "products", "barcode");
   createUniqueIndexIfClean(db, "idx_products_code_unique", "products", "code");
@@ -383,17 +395,18 @@ function ensureColumn(db, tableName, columnName, definition) {
 }
 
 function normalizeEmptyProductCodes(db) {
-  db.prepare("UPDATE products SET barcode = NULL WHERE barcode IS NOT NULL AND TRIM(barcode) = ''").run();
-  db.prepare("UPDATE products SET variantCode = NULL WHERE variantCode IS NOT NULL AND TRIM(variantCode) = ''").run();
+  ["barcode", "code", "variantCode"].forEach((columnName) => {
+    db.prepare(`UPDATE products SET ${columnName} = NULL WHERE TRIM(COALESCE(${columnName}, '')) = ''`).run();
+  });
 }
 
 function createUniqueIndexIfClean(db, indexName, tableName, columnName) {
   const duplicate = db
     .prepare(
-      `SELECT TRIM(${columnName}) AS value
+      `SELECT ${columnName}
        FROM ${tableName}
-       WHERE ${columnName} IS NOT NULL AND TRIM(${columnName}) <> ''
-       GROUP BY TRIM(${columnName})
+       WHERE ${columnName} IS NOT NULL AND TRIM(${columnName}) != ''
+       GROUP BY ${columnName}
        HAVING COUNT(*) > 1
        LIMIT 1`,
     )
@@ -404,6 +417,6 @@ function createUniqueIndexIfClean(db, indexName, tableName, columnName) {
   db.prepare(
     `CREATE UNIQUE INDEX IF NOT EXISTS ${indexName}
      ON ${tableName}(${columnName})
-     WHERE ${columnName} IS NOT NULL AND TRIM(${columnName}) <> ''`,
+     WHERE ${columnName} IS NOT NULL AND TRIM(${columnName}) != ''`,
   ).run();
 }

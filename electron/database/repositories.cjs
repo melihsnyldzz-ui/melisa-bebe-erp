@@ -1,4 +1,12 @@
-function createRepositories(db) {
+const DEFAULT_APP_SETTINGS = {
+  dataMode: "demo",
+  setupCompleted: "false",
+  firstRunAt: "",
+  liveStartedAt: "",
+  demoDataClearedAt: "",
+};
+
+function createRepositories(db, options = {}) {
   const purchaseTransaction = db.transaction((payload) => savePurchaseSlipTx(db, payload));
   const salesTransaction = db.transaction((payload) => saveSalesSlipTx(db, payload));
   const collectionTransaction = db.transaction((payload) => saveCollectionTx(db, payload));
@@ -27,6 +35,10 @@ function createRepositories(db) {
     getAllPriceLists: () => rowsToBooleanFields(db.prepare("SELECT * FROM price_lists ORDER BY isDefault DESC, id ASC").all()),
     getAllPriceListItems: () => rowsToBooleanFields(db.prepare("SELECT * FROM price_list_items ORDER BY id DESC").all()),
     getAllDocumentNumbers: () => rowsToBooleanFields(db.prepare("SELECT * FROM document_numbers ORDER BY documentType ASC").all()),
+    getAppSettings: () => getAppSettings(db),
+    updateAppSetting: (key, value) => wrapMutation(() => updateAppSettingTx(db, key, value), db),
+    startLiveMode: () => startLiveMode(db, options),
+    resetDemoData: () => resetDemoData(db, options),
     getInitialErpData: () => getInitialErpData(db),
     savePurchaseSlip: (payload) => wrapMutation(() => purchaseTransaction(payload), db),
     saveSalesSlip: (payload) => wrapMutation(() => salesTransaction(payload), db),
@@ -68,27 +80,109 @@ function getInitialErpData(db) {
     priceLists: rowsToBooleanFields(db.prepare("SELECT * FROM price_lists ORDER BY isDefault DESC, id ASC").all()),
     priceListItems: rowsToBooleanFields(db.prepare("SELECT * FROM price_list_items ORDER BY id DESC").all()),
     documentNumbers: rowsToBooleanFields(db.prepare("SELECT * FROM document_numbers ORDER BY documentType ASC").all()),
+    appSettings: getAppSettings(db),
   };
+}
+
+function getAppSettings(db) {
+  ensureAppSettings(db);
+  const rows = db.prepare("SELECT key, value FROM settings").all();
+  return rows.reduce((settings, row) => ({ ...settings, [row.key]: row.value }), { ...DEFAULT_APP_SETTINGS });
+}
+
+function updateAppSettingTx(db, key, value) {
+  db.prepare(`
+    INSERT INTO settings (key, value)
+    VALUES (?, ?)
+    ON CONFLICT(key) DO UPDATE SET value = excluded.value
+  `).run(key, String(value));
+}
+
+function startLiveMode(db, options = {}) {
+  try {
+    const backupResult = options.createBackup ? options.createBackup() : { ok: false, error: "Otomatik yedekleme fonksiyonu tanımlı değil." };
+    if (!backupResult.ok) return { ok: false, error: backupResult.error || "Otomatik yedek oluşturulamadı." };
+
+    const now = new Date().toISOString();
+    const tx = db.transaction(() => {
+      updateAppSettingTx(db, "dataMode", "live");
+      updateAppSettingTx(db, "setupCompleted", "true");
+      updateAppSettingTx(db, "liveStartedAt", now);
+    });
+
+    tx();
+    return { ok: true, path: backupResult.path, data: getInitialErpData(db) };
+  } catch (error) {
+    console.error("Gerçek kullanım moduna geçiş tamamlanamadı:", error);
+    return { ok: false, error: error.message || "Gerçek kullanım moduna geçiş tamamlanamadı." };
+  }
+}
+
+function resetDemoData(db, options = {}) {
+  try {
+    const backupResult = options.createBackup ? options.createBackup() : { ok: false, error: "Otomatik yedekleme fonksiyonu tanımlı değil." };
+    if (!backupResult.ok) return { ok: false, error: backupResult.error || "Otomatik yedek oluşturulamadı." };
+
+    const now = new Date().toISOString();
+    const tablesToClear = [
+      "stock_movements",
+      "purchase_slip_items",
+      "sales_slip_items",
+      "purchase_slips",
+      "sales_slips",
+      "collections",
+      "payments",
+      "products",
+      "customers",
+      "suppliers",
+    ];
+    const tx = db.transaction(() => {
+      tablesToClear.forEach((table) => db.prepare(`DELETE FROM ${table}`).run());
+      updateAppSettingTx(db, "dataMode", "live");
+      updateAppSettingTx(db, "setupCompleted", "true");
+      updateAppSettingTx(db, "demoDataClearedAt", now);
+    });
+
+    tx();
+    return { ok: true, path: backupResult.path, data: getInitialErpData(db) };
+  } catch (error) {
+    console.error("Demo veri temizleme işlemi tamamlanamadı:", error);
+    return { ok: false, error: error.message || "Demo veri temizleme işlemi tamamlanamadı." };
+  }
+}
+
+function ensureAppSettings(db) {
+  const now = new Date().toISOString();
+  const insert = db.prepare("INSERT OR IGNORE INTO settings (key, value) VALUES (?, ?)");
+  const defaults = { ...DEFAULT_APP_SETTINGS, firstRunAt: now };
+
+  Object.entries(defaults).forEach(([key, value]) => insert.run(key, value));
 }
 
 function getPurchaseSlips(db) {
   const slips = db.prepare("SELECT * FROM purchase_slips ORDER BY id DESC").all();
   const itemStmt = db.prepare("SELECT * FROM purchase_slip_items WHERE slipId = ? ORDER BY id ASC");
-  return slips.map((slip) => ({ ...slip, items: itemStmt.all(slip.id) }));
+  return slips.map((slip) => {
+    const items = itemStmt.all(slip.id);
+    return { ...slip, items: items.length ? items : parseItemsJson(slip.items_json) };
+  });
 }
 
 function getSalesSlips(db) {
   const slips = db.prepare("SELECT * FROM sales_slips ORDER BY id DESC").all();
   const itemStmt = db.prepare("SELECT * FROM sales_slip_items WHERE slipId = ? ORDER BY id ASC");
-  return slips.map((slip) => ({ ...slip, items: itemStmt.all(slip.id) }));
+  return slips.map((slip) => {
+    const items = itemStmt.all(slip.id);
+    return { ...slip, items: items.length ? items : parseItemsJson(slip.items_json) };
+  });
 }
 
 function savePurchaseSlipTx(db, payload) {
   const createdAt = new Date().toISOString();
   const slipInfo = db.prepare(`
-    INSERT INTO purchase_slips (slipNo, date, supplierId, supplierName, warehouse, subtotal, discountTotal, taxTotal, grandTotal, description, status, createdAt)
-    VALUES (@slipNo, @date, @supplierId, @supplierName, @warehouse, @subtotal, @discountTotal, @taxTotal, @grandTotal, @description, 'Kayıtlı', @createdAt)
-  `).run({ ...payload, description: payload.description || "", createdAt });
+    INSERT INTO purchase_slips (slipNo, date, supplierId, supplierName, warehouse, subtotal, discountTotal, taxTotal, grandTotal, description, items_json, status, createdAt)
+    VALUES (@slipNo, @date, @supplierId, @supplierName, @warehouse, @subtotal, @discountTotal, @taxTotal, @grandTotal, @description, @items_json, 'Kayıtlı', @createdAt)
+  `).run({ ...payload, description: payload.description || "", items_json: JSON.stringify(payload.items || []), createdAt });
   const slipId = slipInfo.lastInsertRowid;
   const insertItem = db.prepare(`
     INSERT INTO purchase_slip_items (slipId, productId, productCode, barcode, productName, size, color, quantity, unitPrice, discountRate, taxRate, lineTotal)
@@ -139,9 +233,9 @@ function saveSalesSlipTx(db, payload) {
   }
 
   const slipInfo = db.prepare(`
-    INSERT INTO sales_slips (slipNo, date, customerId, customerName, saleType, cargoInfo, subtotal, discountTotal, grandTotal, description, status, createdAt)
-    VALUES (@slipNo, @date, @customerId, @customerName, @saleType, @cargoInfo, @subtotal, @discountTotal, @grandTotal, @description, 'Kayıtlı', @createdAt)
-  `).run({ ...payload, cargoInfo: payload.cargoInfo || "", description: payload.description || "", createdAt });
+    INSERT INTO sales_slips (slipNo, date, customerId, customerName, saleType, cargoInfo, subtotal, discountTotal, grandTotal, description, items_json, status, createdAt)
+    VALUES (@slipNo, @date, @customerId, @customerName, @saleType, @cargoInfo, @subtotal, @discountTotal, @grandTotal, @description, @items_json, 'Kayıtlı', @createdAt)
+  `).run({ ...payload, cargoInfo: payload.cargoInfo || "", description: payload.description || "", items_json: JSON.stringify(payload.items || []), createdAt });
   const slipId = slipInfo.lastInsertRowid;
   const insertItem = db.prepare(`
     INSERT INTO sales_slip_items (slipId, productId, productCode, barcode, productName, size, color, quantity, unitPrice, discountRate, availableStock, lineTotal)
@@ -309,28 +403,71 @@ function cancelPaymentTx(db, paymentId) {
 
 function addProductTx(db, payload) {
   const now = new Date().toISOString();
-  const product = normalizeProductPayload(payload);
+  const product = normalizeProductPayload(payload, { now });
   assertUniqueProductFields(db, product);
+
   db.prepare(`
-    INSERT INTO products (barcode, code, modelCode, variantCode, name, category, size, color, purchasePrice, salePrice, stockQuantity, criticalStockLevel, supplier, imageUrl, isActive, createdAt, updatedAt)
-    VALUES (@barcode, @code, @modelCode, @variantCode, @name, @category, @size, @color, @purchasePrice, @salePrice, @stockQuantity, @criticalStockLevel, @supplier, @imageUrl, 1, @now, @now)
-  `).run({ ...product, now });
+    INSERT INTO products (
+      barcode, code, modelCode, variantCode, name, brand, season, ageGroup, gender, category, size, color,
+      purchasePrice, salePrice, stockQuantity, criticalStockLevel, supplier, imageUrl, isActive, createdAt, updatedAt
+    )
+    VALUES (
+      @barcode, @code, @modelCode, @variantCode, @name, @brand, @season, @ageGroup, @gender, @category, @size, @color,
+      @purchasePrice, @salePrice, @stockQuantity, @criticalStockLevel, @supplier, @imageUrl, 1, @now, @now
+    )
+  `).run(product);
 }
 
 function updateProductTx(db, payload) {
-  const product = normalizeProductPayload(payload);
+  const product = normalizeProductPayload(payload, { isActive: payload.isActive ? 1 : 0, updatedAt: new Date().toISOString() });
   assertUniqueProductFields(db, product, payload.id);
+
   db.prepare(`
     UPDATE products
-    SET barcode=@barcode, code=@code, modelCode=@modelCode, variantCode=@variantCode, name=@name, category=@category, size=@size, color=@color, purchasePrice=@purchasePrice,
+    SET barcode=@barcode, code=@code, modelCode=@modelCode, variantCode=@variantCode, name=@name, brand=@brand,
+      season=@season, ageGroup=@ageGroup, gender=@gender, category=@category, size=@size, color=@color, purchasePrice=@purchasePrice,
       salePrice=@salePrice, stockQuantity=@stockQuantity, criticalStockLevel=@criticalStockLevel, supplier=@supplier, imageUrl=@imageUrl,
       isActive=@isActive, updatedAt=@updatedAt
     WHERE id=@id
-  `).run({
-    ...product,
-    id: payload.id,
-    isActive: payload.isActive ? 1 : 0,
-    updatedAt: new Date().toISOString(),
+  `).run(product);
+}
+
+function normalizeProductPayload(payload, extraFields = {}) {
+  return {
+    ...payload,
+    barcode: normalizeNullableText(payload.barcode),
+    code: normalizeNullableText(payload.code),
+    modelCode: normalizeNullableText(payload.modelCode),
+    variantCode: normalizeNullableText(payload.variantCode),
+    brand: normalizeNullableText(payload.brand),
+    season: normalizeNullableText(payload.season),
+    ageGroup: normalizeNullableText(payload.ageGroup),
+    gender: normalizeNullableText(payload.gender),
+    category: normalizeNullableText(payload.category),
+    supplier: normalizeNullableText(payload.supplier),
+    imageUrl: normalizeNullableText(payload.imageUrl),
+    ...extraFields,
+  };
+}
+
+function normalizeNullableText(value) {
+  const text = String(value || "").trim();
+  return text || null;
+}
+
+function assertUniqueProductFields(db, product, currentProductId = null) {
+  const checks = [
+    { key: "barcode", message: "Bu barkod başka bir üründe kullanılıyor." },
+    { key: "code", message: "Bu ürün kodu başka bir üründe kullanılıyor." },
+    { key: "variantCode", message: "Bu varyant kodu başka bir üründe kullanılıyor." },
+  ];
+
+  checks.forEach((check) => {
+    const value = product[check.key];
+    if (!value) return;
+
+    const row = db.prepare(`SELECT id FROM products WHERE TRIM(COALESCE(${check.key}, '')) = ? LIMIT 1`).get(value);
+    if (row && row.id !== currentProductId) throw new Error(check.message);
   });
 }
 
@@ -391,28 +528,9 @@ function wrapMutation(fn, db) {
     fn();
     return { ok: true, data: getInitialErpData(db) };
   } catch (error) {
+    console.error("SQLite mutasyon işlemi tamamlanamadı:", error);
     return { ok: false, error: mapDatabaseError(error) };
   }
-}
-
-function assertUniqueProductFields(db, product, currentProductId = null) {
-  const checks = [
-    { key: "barcode", message: "Bu barkod başka bir üründe kullanılıyor." },
-    { key: "code", message: "Bu ürün kodu başka bir üründe kullanılıyor." },
-    { key: "variantCode", message: "Bu varyant kodu başka bir üründe kullanılıyor." },
-  ];
-
-  checks.forEach((check) => {
-    const value = String(product[check.key] || "").trim();
-    if (!value) return;
-
-    const row = db
-      .prepare(`SELECT id FROM products WHERE TRIM(COALESCE(${check.key}, '')) = ? LIMIT 1`)
-      .get(value);
-    if (row && row.id !== currentProductId) {
-      throw new Error(check.message);
-    }
-  });
 }
 
 function mapDatabaseError(error) {
@@ -423,25 +541,16 @@ function mapDatabaseError(error) {
   return message;
 }
 
-function normalizeProductPayload(payload) {
-  return {
-    ...payload,
-    barcode: trimToNull(payload.barcode),
-    code: String(payload.code || "").trim(),
-    modelCode: String(payload.modelCode || "").trim(),
-    variantCode: trimToNull(payload.variantCode),
-    name: String(payload.name || "").trim(),
-    category: String(payload.category || "").trim(),
-    size: String(payload.size || "").trim(),
-    color: String(payload.color || "").trim(),
-    supplier: String(payload.supplier || "").trim(),
-    imageUrl: String(payload.imageUrl || "").trim(),
-  };
-}
+function parseItemsJson(value) {
+  if (!value) return [];
 
-function trimToNull(value) {
-  const trimmed = String(value || "").trim();
-  return trimmed || null;
+  try {
+    const parsed = JSON.parse(value);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (error) {
+    console.error("Fiş satırları JSON alanından okunamadı:", error);
+    return [];
+  }
 }
 
 function rowsToBooleans(rows) {

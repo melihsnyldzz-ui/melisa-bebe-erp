@@ -3,20 +3,22 @@ import { CircleDollarSign, CreditCard, ReceiptText, Trophy } from "lucide-react"
 import KpiCard from "../components/Dashboard/KpiCard.jsx";
 import PaymentForm from "../components/Payments/PaymentForm.jsx";
 import PaymentTable from "../components/Payments/PaymentTable.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
 import { useErpData } from "../context/ErpDataContext.jsx";
 import { getTodayISO } from "../utils/dateUtils.js";
+import { getNextPaymentNo } from "../utils/documentNumbers.js";
 import { formatCurrency } from "../utils/formatters.js";
 
 export default function Payments() {
+  const { hasPermission } = useAuth();
   const { cancelPayment, payments, suppliers, savePayment } = useErpData();
+  const canCancelRecords = hasPermission("cancelRecords");
+  const canEditPayments = hasPermission("payments.edit");
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedPayment, setSelectedPayment] = useState(null);
 
-  const nextPaymentNo = useMemo(() => {
-    const nextNumber = payments.length + 1;
-    return `OD-${String(nextNumber).padStart(4, "0")}`;
-  }, [payments.length]);
+  const nextPaymentNo = useMemo(() => getNextPaymentNo(payments), [payments]);
 
   const summaryCards = useMemo(() => {
     const today = getTodayISO();
@@ -75,8 +77,14 @@ export default function Payments() {
       {successMessage && <p className="success-message">{successMessage}</p>}
       {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-      <PaymentForm nextPaymentNo={nextPaymentNo} suppliers={suppliers} onSave={handleSavePayment} />
-      <PaymentTable payments={payments} selectedPayment={selectedPayment} onCancel={handleCancelPayment} onViewDetail={setSelectedPayment} />
+      {canEditPayments && <PaymentForm nextPaymentNo={nextPaymentNo} suppliers={suppliers} onSave={handleSavePayment} />}
+      <PaymentTable
+        canCancel={canCancelRecords}
+        payments={payments}
+        selectedPayment={selectedPayment}
+        onCancel={handleCancelPayment}
+        onViewDetail={setSelectedPayment}
+      />
     </>
   );
 }

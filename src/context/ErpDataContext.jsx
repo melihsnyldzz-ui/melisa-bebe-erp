@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import {
   collections as initialCollections,
   customers as initialCustomers,
@@ -11,6 +11,11 @@ import {
 } from "../data/mockData.js";
 
 const ErpDataContext = createContext(null);
+const fallbackAppSettings = {
+  dataMode: "demo",
+  setupCompleted: "false",
+  demoDataClearedAt: "",
+};
 
 export function ErpDataProvider({ children }) {
   const [products, setProducts] = useState(initialProducts);
@@ -31,15 +36,24 @@ export function ErpDataProvider({ children }) {
   const [priceLists, setPriceLists] = useState([]);
   const [priceListItems, setPriceListItems] = useState([]);
   const [documentNumbers, setDocumentNumbers] = useState([]);
+  const [appSettings, setAppSettings] = useState(fallbackAppSettings);
 
   useEffect(() => {
-    const erp = getDesktopErp();
-    if (!erp) return;
+    refreshData();
+  }, []);
 
-    erp
-      .getInitialData()
-      .then((data) => applyInitialData(data))
-      .catch((error) => console.error("SQLite başlangıç verisi alınamadı:", error));
+  const refreshData = useCallback(async () => {
+    const erp = getDesktopErp();
+    if (!erp) return { ok: false, error: "Electron veri köprüsü aktif değil." };
+
+    try {
+      const data = await erp.getInitialData();
+      applyInitialData(data);
+      return { ok: true, data };
+    } catch (error) {
+      console.error("SQLite başlangıç verisi alınamadı:", error);
+      return { ok: false, error: error.message || "SQLite başlangıç verisi alınamadı." };
+    }
   }, []);
 
   async function savePurchaseSlip(slipPayload) {
@@ -395,6 +409,54 @@ export function ErpDataProvider({ children }) {
     );
   }
 
+  async function exportDatabaseBackup(targetDirectory) {
+    const erp = getDesktopErp();
+    if (!erp?.exportDatabaseBackup) {
+      return { ok: false, error: "Veritabanı yedekleme yalnızca Electron modunda kullanılabilir." };
+    }
+
+    return erp.exportDatabaseBackup(targetDirectory);
+  }
+
+  async function refreshAppSettings() {
+    const erp = getDesktopErp();
+    if (!erp?.getAppSettings) {
+      setAppSettings(fallbackAppSettings);
+      return { ok: false, error: "Uygulama ayarları yalnızca Electron modunda okunabilir." };
+    }
+
+    try {
+      const settings = await erp.getAppSettings();
+      setAppSettings(settings || fallbackAppSettings);
+      return { ok: true, data: settings };
+    } catch (error) {
+      console.error("Uygulama ayarları alınamadı:", error);
+      return { ok: false, error: error.message || "Uygulama ayarları alınamadı." };
+    }
+  }
+
+  async function startLiveMode() {
+    const erp = getDesktopErp();
+    if (!erp?.startLiveMode) {
+      return { ok: false, error: "Gerçek kullanım moduna geçiş yalnızca Electron modunda yapılabilir." };
+    }
+
+    const result = await erp.startLiveMode();
+    if (result.ok) applyInitialData(result.data);
+    return result;
+  }
+
+  async function resetDemoData() {
+    const erp = getDesktopErp();
+    if (!erp?.resetDemoData) {
+      return { ok: false, error: "Demo veri temizleme yalnızca Electron modunda yapılabilir." };
+    }
+
+    const result = await erp.resetDemoData();
+    if (result.ok) applyInitialData(result.data);
+    return result;
+  }
+
   const value = useMemo(
     () => ({
       products,
@@ -415,6 +477,7 @@ export function ErpDataProvider({ children }) {
       priceLists,
       priceListItems,
       documentNumbers,
+      appSettings,
       savePurchaseSlip,
       saveSalesSlip,
       saveCollection,
@@ -432,8 +495,14 @@ export function ErpDataProvider({ children }) {
       updateSupplier,
       addSupplier,
       toggleSupplierStatus,
+      exportDatabaseBackup,
+      refreshAppSettings,
+      startLiveMode,
+      resetDemoData,
+      refreshData,
     }),
     [
+      appSettings,
       collections,
       currentAccountMovements,
       currentAccounts,
@@ -452,6 +521,7 @@ export function ErpDataProvider({ children }) {
       stockMovements,
       suppliers,
       warehouses,
+      refreshData,
     ],
   );
 
@@ -476,6 +546,7 @@ export function ErpDataProvider({ children }) {
     setPriceLists(data.priceLists || []);
     setPriceListItems(data.priceListItems || []);
     setDocumentNumbers(data.documentNumbers || []);
+    setAppSettings(data.appSettings || fallbackAppSettings);
   }
 }
 

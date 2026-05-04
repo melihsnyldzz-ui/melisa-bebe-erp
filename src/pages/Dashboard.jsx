@@ -16,6 +16,7 @@ import DataTable from "../components/Dashboard/DataTable.jsx";
 import KpiCard from "../components/Dashboard/KpiCard.jsx";
 import SalesChart from "../components/Dashboard/SalesChart.jsx";
 import TopProductsChart from "../components/Dashboard/TopProductsChart.jsx";
+import { APP_STAGE, APP_VERSION } from "../config/appVersion.js";
 import { useErpData } from "../context/ErpDataContext.jsx";
 import { formatDateTR, getTodayISO } from "../utils/dateUtils.js";
 import { formatCurrency, formatNumber } from "../utils/formatters.js";
@@ -28,6 +29,9 @@ export default function Dashboard() {
     <>
       <section className="page-title">
         <div>
+          <span className="version-badge">
+            {APP_VERSION} · {APP_STAGE}
+          </span>
           <p>Canlı özet</p>
           <h1>Melisa Bebe Yönetim Paneli</h1>
           <span>Bugünkü satış, stok ve cari durumunuzu tek ekrandan takip edin.</span>
