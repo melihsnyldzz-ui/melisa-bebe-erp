@@ -633,6 +633,12 @@ button {
   gap: 14px;
 }
 
+.system-health-panel {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+}
+
 .settings-panel-description {
   margin: 0;
   color: var(--muted);
@@ -646,6 +652,12 @@ button {
 }
 
 .data-status-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.system-health-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
@@ -695,6 +707,28 @@ button {
   color: #946200;
   background: #fff4d6;
   border: 1px solid #ffe1a3;
+}
+
+.system-health-card {
+  display: grid;
+  gap: 5px;
+  min-height: 62px;
+  align-content: center;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(249, 250, 251, 0.86);
+}
+
+.system-health-card span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 750;
+}
+
+.system-health-card strong {
+  color: var(--text);
+  font-size: 0.95rem;
 }
 
 .settings-roles-panel {

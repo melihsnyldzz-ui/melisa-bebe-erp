@@ -2,6 +2,7 @@ import { useState } from "react";
 import CompanySettings from "../components/Settings/CompanySettings.jsx";
 import DatabaseBackupSettings from "../components/Settings/DatabaseBackupSettings.jsx";
 import DataStatusSettings from "../components/Settings/DataStatusSettings.jsx";
+import SystemHealthSettings from "../components/Settings/SystemHealthSettings.jsx";
 import SystemSettings from "../components/Settings/SystemSettings.jsx";
 import UserRoleSettings from "../components/Settings/UserRoleSettings.jsx";
 
@@ -61,6 +62,7 @@ export default function Settings() {
         <CompanySettings settings={companySettings} onChange={setCompanySettings} />
         <SystemSettings settings={systemSettings} onChange={setSystemSettings} />
         <DataStatusSettings />
+        <SystemHealthSettings />
         <DatabaseBackupSettings />
         <UserRoleSettings />
       </section>
