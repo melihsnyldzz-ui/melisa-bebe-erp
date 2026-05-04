@@ -3,6 +3,10 @@ function createRepositories(db) {
   const salesTransaction = db.transaction((payload) => saveSalesSlipTx(db, payload));
   const collectionTransaction = db.transaction((payload) => saveCollectionTx(db, payload));
   const paymentTransaction = db.transaction((payload) => savePaymentTx(db, payload));
+  const cancelPurchaseTransaction = db.transaction((id) => cancelPurchaseSlipTx(db, id));
+  const cancelSalesTransaction = db.transaction((id) => cancelSalesSlipTx(db, id));
+  const cancelCollectionTransaction = db.transaction((id) => cancelCollectionTx(db, id));
+  const cancelPaymentTransaction = db.transaction((id) => cancelPaymentTx(db, id));
 
   return {
     getAllProducts: () => rowsToBooleans(db.prepare("SELECT * FROM products ORDER BY id DESC").all()),
@@ -18,6 +22,10 @@ function createRepositories(db) {
     saveSalesSlip: (payload) => wrapMutation(() => salesTransaction(payload), db),
     saveCollection: (payload) => wrapMutation(() => collectionTransaction(payload), db),
     savePayment: (payload) => wrapMutation(() => paymentTransaction(payload), db),
+    cancelPurchaseSlip: (id) => wrapMutation(() => cancelPurchaseTransaction(id), db),
+    cancelSalesSlip: (id) => wrapMutation(() => cancelSalesTransaction(id), db),
+    cancelCollection: (id) => wrapMutation(() => cancelCollectionTransaction(id), db),
+    cancelPayment: (id) => wrapMutation(() => cancelPaymentTransaction(id), db),
     addProduct: (payload) => wrapMutation(() => addProductTx(db, payload), db),
     updateProduct: (payload) => wrapMutation(() => updateProductTx(db, payload), db),
     toggleProductStatus: (id) => wrapMutation(() => toggleStatusTx(db, "products", id), db),
@@ -151,8 +159,8 @@ function saveSalesSlipTx(db, payload) {
 function saveCollectionTx(db, payload) {
   const createdAt = new Date().toISOString();
   db.prepare(`
-    INSERT INTO collections (collectionNo, date, customerId, customerName, paymentType, amount, description, receiptImageUrl, createdAt)
-    VALUES (@collectionNo, @date, @customerId, @customerName, @paymentType, @amount, @description, @receiptImageUrl, @createdAt)
+    INSERT INTO collections (collectionNo, date, customerId, customerName, paymentType, amount, description, receiptImageUrl, status, createdAt)
+    VALUES (@collectionNo, @date, @customerId, @customerName, @paymentType, @amount, @description, @receiptImageUrl, 'Kayıtlı', @createdAt)
   `).run({ ...payload, description: payload.description || "", receiptImageUrl: payload.receiptImageUrl || "", createdAt });
   db.prepare("UPDATE customers SET currentBalance = currentBalance - ?, totalPayments = totalPayments + ?, updatedAt = ? WHERE id = ?").run(
     payload.amount,
@@ -165,14 +173,118 @@ function saveCollectionTx(db, payload) {
 function savePaymentTx(db, payload) {
   const createdAt = new Date().toISOString();
   db.prepare(`
-    INSERT INTO payments (paymentNo, date, supplierId, supplierName, paymentType, amount, description, receiptImageUrl, createdAt)
-    VALUES (@paymentNo, @date, @supplierId, @supplierName, @paymentType, @amount, @description, @receiptImageUrl, @createdAt)
+    INSERT INTO payments (paymentNo, date, supplierId, supplierName, paymentType, amount, description, receiptImageUrl, status, createdAt)
+    VALUES (@paymentNo, @date, @supplierId, @supplierName, @paymentType, @amount, @description, @receiptImageUrl, 'Kayıtlı', @createdAt)
   `).run({ ...payload, description: payload.description || "", receiptImageUrl: payload.receiptImageUrl || "", createdAt });
   db.prepare(`
     UPDATE suppliers
     SET currentBalance = currentBalance - ?, totalPayments = totalPayments + ?, lastTransactionDate = ?, updatedAt = ?
     WHERE id = ?
   `).run(payload.amount, payload.amount, payload.date, createdAt, payload.supplierId);
+}
+
+function cancelPurchaseSlipTx(db, slipId) {
+  const now = new Date().toISOString();
+  const today = now.slice(0, 10);
+  const slip = db.prepare("SELECT * FROM purchase_slips WHERE id = ?").get(slipId);
+  if (!slip) throw new Error("Alış fişi bulunamadı.");
+  if (slip.status === "İptal") throw new Error("Bu alış fişi zaten iptal edilmiş.");
+
+  const items = db.prepare("SELECT * FROM purchase_slip_items WHERE slipId = ? ORDER BY id ASC").all(slipId);
+  const getProduct = db.prepare("SELECT stockQuantity FROM products WHERE id = ?");
+  const updateStock = db.prepare("UPDATE products SET stockQuantity = stockQuantity - ?, updatedAt = ? WHERE id = ?");
+  const insertMovement = db.prepare(`
+    INSERT INTO stock_movements (date, productId, productCode, barcode, productName, size, color, movementType, quantityIn, quantityOut, remainingStock, relatedSlipNo, relatedPartyName, createdBy, createdAt)
+    VALUES (@date, @productId, @productCode, @barcode, @productName, @size, @color, 'Alış İptali', 0, @quantityOut, @remainingStock, @relatedSlipNo, @relatedPartyName, 'İptal', @createdAt)
+  `);
+
+  items.forEach((item) => {
+    const currentStock = getProduct.get(item.productId)?.stockQuantity || 0;
+    const remainingStock = currentStock - item.quantity;
+    updateStock.run(item.quantity, now, item.productId);
+    insertMovement.run({
+      ...item,
+      date: today,
+      quantityOut: item.quantity,
+      remainingStock,
+      relatedSlipNo: slip.slipNo,
+      relatedPartyName: slip.supplierName,
+      createdAt: now,
+    });
+  });
+
+  db.prepare("UPDATE purchase_slips SET status = 'İptal' WHERE id = ?").run(slipId);
+  db.prepare(`
+    UPDATE suppliers
+    SET currentBalance = currentBalance - ?, totalPurchases = totalPurchases - ?, updatedAt = ?
+    WHERE id = ?
+  `).run(slip.grandTotal, slip.grandTotal, now, slip.supplierId);
+}
+
+function cancelSalesSlipTx(db, slipId) {
+  const now = new Date().toISOString();
+  const today = now.slice(0, 10);
+  const slip = db.prepare("SELECT * FROM sales_slips WHERE id = ?").get(slipId);
+  if (!slip) throw new Error("Satış fişi bulunamadı.");
+  if (slip.status === "İptal") throw new Error("Bu satış fişi zaten iptal edilmiş.");
+
+  const items = db.prepare("SELECT * FROM sales_slip_items WHERE slipId = ? ORDER BY id ASC").all(slipId);
+  const getProduct = db.prepare("SELECT stockQuantity FROM products WHERE id = ?");
+  const updateStock = db.prepare("UPDATE products SET stockQuantity = stockQuantity + ?, updatedAt = ? WHERE id = ?");
+  const insertMovement = db.prepare(`
+    INSERT INTO stock_movements (date, productId, productCode, barcode, productName, size, color, movementType, quantityIn, quantityOut, remainingStock, relatedSlipNo, relatedPartyName, createdBy, createdAt)
+    VALUES (@date, @productId, @productCode, @barcode, @productName, @size, @color, 'Satış İptali', @quantityIn, 0, @remainingStock, @relatedSlipNo, @relatedPartyName, 'İptal', @createdAt)
+  `);
+
+  items.forEach((item) => {
+    const currentStock = getProduct.get(item.productId)?.stockQuantity || 0;
+    const remainingStock = currentStock + item.quantity;
+    updateStock.run(item.quantity, now, item.productId);
+    insertMovement.run({
+      ...item,
+      date: today,
+      quantityIn: item.quantity,
+      remainingStock,
+      relatedSlipNo: slip.slipNo,
+      relatedPartyName: slip.customerName,
+      createdAt: now,
+    });
+  });
+
+  db.prepare("UPDATE sales_slips SET status = 'İptal' WHERE id = ?").run(slipId);
+  db.prepare(`
+    UPDATE customers
+    SET currentBalance = currentBalance - ?, totalSales = totalSales - ?, updatedAt = ?
+    WHERE id = ?
+  `).run(slip.grandTotal, slip.grandTotal, now, slip.customerId);
+}
+
+function cancelCollectionTx(db, collectionId) {
+  const now = new Date().toISOString();
+  const collection = db.prepare("SELECT * FROM collections WHERE id = ?").get(collectionId);
+  if (!collection) throw new Error("Tahsilat bulunamadı.");
+  if (collection.status === "İptal") throw new Error("Bu tahsilat zaten iptal edilmiş.");
+
+  db.prepare("UPDATE collections SET status = 'İptal' WHERE id = ?").run(collectionId);
+  db.prepare(`
+    UPDATE customers
+    SET currentBalance = currentBalance + ?, totalPayments = totalPayments - ?, updatedAt = ?
+    WHERE id = ?
+  `).run(collection.amount, collection.amount, now, collection.customerId);
+}
+
+function cancelPaymentTx(db, paymentId) {
+  const now = new Date().toISOString();
+  const payment = db.prepare("SELECT * FROM payments WHERE id = ?").get(paymentId);
+  if (!payment) throw new Error("Ödeme bulunamadı.");
+  if (payment.status === "İptal") throw new Error("Bu ödeme zaten iptal edilmiş.");
+
+  db.prepare("UPDATE payments SET status = 'İptal' WHERE id = ?").run(paymentId);
+  db.prepare(`
+    UPDATE suppliers
+    SET currentBalance = currentBalance + ?, totalPayments = totalPayments - ?, updatedAt = ?
+    WHERE id = ?
+  `).run(payment.amount, payment.amount, now, payment.supplierId);
 }
 
 function addProductTx(db, payload) {

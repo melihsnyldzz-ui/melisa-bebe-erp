@@ -95,6 +95,10 @@ function registerErpHandlers() {
   ipcMain.handle("erp:save-sales-slip", (_event, payload) => repositories.saveSalesSlip(payload));
   ipcMain.handle("erp:save-collection", (_event, payload) => repositories.saveCollection(payload));
   ipcMain.handle("erp:save-payment", (_event, payload) => repositories.savePayment(payload));
+  ipcMain.handle("erp:cancel-purchase-slip", (_event, id) => repositories.cancelPurchaseSlip(id));
+  ipcMain.handle("erp:cancel-sales-slip", (_event, id) => repositories.cancelSalesSlip(id));
+  ipcMain.handle("erp:cancel-collection", (_event, id) => repositories.cancelCollection(id));
+  ipcMain.handle("erp:cancel-payment", (_event, id) => repositories.cancelPayment(id));
   ipcMain.handle("erp:add-product", (_event, payload) => repositories.addProduct(payload));
   ipcMain.handle("erp:update-product", (_event, payload) => repositories.updateProduct(payload));
   ipcMain.handle("erp:toggle-product-status", (_event, id) => repositories.toggleProductStatus(id));

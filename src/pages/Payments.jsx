@@ -8,7 +8,7 @@ import { getTodayISO } from "../utils/dateUtils.js";
 import { formatCurrency } from "../utils/formatters.js";
 
 export default function Payments() {
-  const { payments, suppliers, savePayment } = useErpData();
+  const { cancelPayment, payments, suppliers, savePayment } = useErpData();
   const [successMessage, setSuccessMessage] = useState("");
   const [selectedPayment, setSelectedPayment] = useState(null);
 
@@ -19,9 +19,10 @@ export default function Payments() {
 
   const summaryCards = useMemo(() => {
     const today = getTodayISO();
-    const todayTotal = payments.filter((payment) => payment.date === today).reduce((total, payment) => total + payment.amount, 0);
-    const totalAmount = payments.reduce((total, payment) => total + payment.amount, 0);
-    const highestAmount = payments.reduce((highest, payment) => Math.max(highest, payment.amount), 0);
+    const activePayments = payments.filter((payment) => payment.status !== "İptal");
+    const todayTotal = activePayments.filter((payment) => payment.date === today).reduce((total, payment) => total + payment.amount, 0);
+    const totalAmount = activePayments.reduce((total, payment) => total + payment.amount, 0);
+    const highestAmount = activePayments.reduce((highest, payment) => Math.max(highest, payment.amount), 0);
 
     return [
       { label: "Toplam Ödeme Kaydı", value: payments.length.toString(), icon: ReceiptText, tone: "dark" },
@@ -35,6 +36,16 @@ export default function Payments() {
     const { data: newPayment } = await savePayment(paymentPayload);
     setSuccessMessage(`${newPayment.paymentNo} numaralı ödeme kaydedildi.`);
     setSelectedPayment(newPayment);
+  }
+
+  async function handleCancelPayment(payment) {
+    const confirmed = window.confirm("Bu fişi iptal etmek istediğinize emin misiniz? Stok ve cari etkileri geri alınacaktır.");
+    if (!confirmed) return;
+
+    const result = await cancelPayment(payment.id);
+    if (!result.ok) return;
+    setSuccessMessage(`${payment.paymentNo} numaralı ödeme iptal edildi.`);
+    setSelectedPayment({ ...payment, status: "İptal" });
   }
 
   return (
@@ -56,7 +67,7 @@ export default function Payments() {
       {successMessage && <p className="success-message">{successMessage}</p>}
 
       <PaymentForm nextPaymentNo={nextPaymentNo} suppliers={suppliers} onSave={handleSavePayment} />
-      <PaymentTable payments={payments} selectedPayment={selectedPayment} onViewDetail={setSelectedPayment} />
+      <PaymentTable payments={payments} selectedPayment={selectedPayment} onCancel={handleCancelPayment} onViewDetail={setSelectedPayment} />
     </>
   );
 }

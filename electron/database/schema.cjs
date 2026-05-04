@@ -142,6 +142,7 @@ function runMigrations(db) {
       amount REAL DEFAULT 0,
       description TEXT,
       receiptImageUrl TEXT,
+      status TEXT DEFAULT 'Kayıtlı',
       createdAt TEXT
     );
 
@@ -155,6 +156,7 @@ function runMigrations(db) {
       amount REAL DEFAULT 0,
       description TEXT,
       receiptImageUrl TEXT,
+      status TEXT DEFAULT 'Kayıtlı',
       createdAt TEXT
     );
 
@@ -182,6 +184,16 @@ function runMigrations(db) {
       value TEXT
     );
   `);
+
+  ensureColumn(db, "collections", "status", "TEXT DEFAULT 'Kayıtlı'");
+  ensureColumn(db, "payments", "status", "TEXT DEFAULT 'Kayıtlı'");
 }
 
 module.exports = { runMigrations };
+
+function ensureColumn(db, tableName, columnName, definition) {
+  const columns = db.prepare(`PRAGMA table_info(${tableName})`).all();
+  if (columns.some((column) => column.name === columnName)) return;
+
+  db.prepare(`ALTER TABLE ${tableName} ADD COLUMN ${columnName} ${definition}`).run();
+}

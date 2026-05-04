@@ -8,7 +8,7 @@ import { getTodayISO } from "../utils/dateUtils.js";
 import { formatCurrency } from "../utils/formatters.js";
 
 export default function Collections() {
-  const { collections, customers, saveCollection } = useErpData();
+  const { cancelCollection, collections, customers, saveCollection } = useErpData();
   const [successMessage, setSuccessMessage] = useState("");
   const [selectedCollection, setSelectedCollection] = useState(null);
 
@@ -19,11 +19,12 @@ export default function Collections() {
 
   const summaryCards = useMemo(() => {
     const today = getTodayISO();
-    const todayTotal = collections
+    const activeCollections = collections.filter((collection) => collection.status !== "İptal");
+    const todayTotal = activeCollections
       .filter((collection) => collection.date === today)
       .reduce((total, collection) => total + collection.amount, 0);
-    const totalAmount = collections.reduce((total, collection) => total + collection.amount, 0);
-    const highestAmount = collections.reduce((highest, collection) => Math.max(highest, collection.amount), 0);
+    const totalAmount = activeCollections.reduce((total, collection) => total + collection.amount, 0);
+    const highestAmount = activeCollections.reduce((highest, collection) => Math.max(highest, collection.amount), 0);
 
     return [
       { label: "Toplam Tahsilat Kaydı", value: collections.length.toString(), icon: ReceiptText, tone: "dark" },
@@ -37,6 +38,16 @@ export default function Collections() {
     const { data: newCollection } = await saveCollection(collectionPayload);
     setSuccessMessage(`${newCollection.collectionNo} numaralı tahsilat kaydedildi.`);
     setSelectedCollection(newCollection);
+  }
+
+  async function handleCancelCollection(collection) {
+    const confirmed = window.confirm("Bu fişi iptal etmek istediğinize emin misiniz? Stok ve cari etkileri geri alınacaktır.");
+    if (!confirmed) return;
+
+    const result = await cancelCollection(collection.id);
+    if (!result.ok) return;
+    setSuccessMessage(`${collection.collectionNo} numaralı tahsilat iptal edildi.`);
+    setSelectedCollection({ ...collection, status: "İptal" });
   }
 
   return (
@@ -58,7 +69,12 @@ export default function Collections() {
       {successMessage && <p className="success-message">{successMessage}</p>}
 
       <CollectionForm nextCollectionNo={nextCollectionNo} customers={customers} onSave={handleSaveCollection} />
-      <CollectionTable collections={collections} selectedCollection={selectedCollection} onViewDetail={setSelectedCollection} />
+      <CollectionTable
+        collections={collections}
+        selectedCollection={selectedCollection}
+        onCancel={handleCancelCollection}
+        onViewDetail={setSelectedCollection}
+      />
     </>
   );
 }

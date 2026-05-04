@@ -108,7 +108,7 @@ export function ErpDataProvider({ children }) {
       return { ok: true, data: result.data.collections.find((collection) => collection.collectionNo === collectionPayload.collectionNo) };
     }
 
-    const newCollection = createRecord(collectionPayload);
+    const newCollection = createRecord(collectionPayload, { status: "Kayıtlı" });
 
     setCollections((currentCollections) => [newCollection, ...currentCollections]);
     setCustomers((currentCustomers) =>
@@ -135,7 +135,7 @@ export function ErpDataProvider({ children }) {
       return { ok: true, data: result.data.payments.find((payment) => payment.paymentNo === paymentPayload.paymentNo) };
     }
 
-    const newPayment = createRecord(paymentPayload);
+    const newPayment = createRecord(paymentPayload, { status: "Kayıtlı" });
 
     setPayments((currentPayments) => [newPayment, ...currentPayments]);
     setSuppliers((currentSuppliers) =>
@@ -152,6 +152,126 @@ export function ErpDataProvider({ children }) {
     );
 
     return { ok: true, data: newPayment };
+  }
+
+  async function cancelPurchaseSlip(slipId) {
+    const erp = getDesktopErp();
+    if (erp) {
+      const result = await erp.cancelPurchaseSlip(slipId);
+      if (result.ok) applyInitialData(result.data);
+      return result;
+    }
+
+    const slip = purchaseSlips.find((item) => item.id === slipId);
+    if (!slip) return { ok: false, error: "Alış fişi bulunamadı." };
+    if (slip.status === "İptal") return { ok: false, error: "Bu alış fişi zaten iptal edilmiş." };
+
+    const stockRows = buildPurchaseCancelStockMovements(slip, products);
+    setPurchaseSlips((currentSlips) => currentSlips.map((item) => (item.id === slipId ? { ...item, status: "İptal" } : item)));
+    setProducts((currentProducts) => applyStockDecrease(currentProducts, slip.items));
+    setSuppliers((currentSuppliers) =>
+      currentSuppliers.map((supplier) =>
+        supplier.id === slip.supplierId
+          ? {
+              ...supplier,
+              currentBalance: supplier.currentBalance - slip.grandTotal,
+              totalPurchases: supplier.totalPurchases - slip.grandTotal,
+            }
+          : supplier,
+      ),
+    );
+    setStockMovements((currentMovements) => [...stockRows, ...currentMovements]);
+
+    return { ok: true, data: { ...slip, status: "İptal" } };
+  }
+
+  async function cancelSalesSlip(slipId) {
+    const erp = getDesktopErp();
+    if (erp) {
+      const result = await erp.cancelSalesSlip(slipId);
+      if (result.ok) applyInitialData(result.data);
+      return result;
+    }
+
+    const slip = salesSlips.find((item) => item.id === slipId);
+    if (!slip) return { ok: false, error: "Satış fişi bulunamadı." };
+    if (slip.status === "İptal") return { ok: false, error: "Bu satış fişi zaten iptal edilmiş." };
+
+    const stockRows = buildSalesCancelStockMovements(slip, products);
+    setSalesSlips((currentSlips) => currentSlips.map((item) => (item.id === slipId ? { ...item, status: "İptal" } : item)));
+    setProducts((currentProducts) => applyStockIncrease(currentProducts, slip.items));
+    setCustomers((currentCustomers) =>
+      currentCustomers.map((customer) =>
+        customer.id === slip.customerId
+          ? {
+              ...customer,
+              currentBalance: customer.currentBalance - slip.grandTotal,
+              totalSales: customer.totalSales - slip.grandTotal,
+            }
+          : customer,
+      ),
+    );
+    setStockMovements((currentMovements) => [...stockRows, ...currentMovements]);
+
+    return { ok: true, data: { ...slip, status: "İptal" } };
+  }
+
+  async function cancelCollection(collectionId) {
+    const erp = getDesktopErp();
+    if (erp) {
+      const result = await erp.cancelCollection(collectionId);
+      if (result.ok) applyInitialData(result.data);
+      return result;
+    }
+
+    const collection = collections.find((item) => item.id === collectionId);
+    if (!collection) return { ok: false, error: "Tahsilat bulunamadı." };
+    if (collection.status === "İptal") return { ok: false, error: "Bu tahsilat zaten iptal edilmiş." };
+
+    setCollections((currentCollections) =>
+      currentCollections.map((item) => (item.id === collectionId ? { ...item, status: "İptal" } : item)),
+    );
+    setCustomers((currentCustomers) =>
+      currentCustomers.map((customer) =>
+        customer.id === collection.customerId
+          ? {
+              ...customer,
+              currentBalance: customer.currentBalance + collection.amount,
+              totalPayments: customer.totalPayments - collection.amount,
+            }
+          : customer,
+      ),
+    );
+
+    return { ok: true, data: { ...collection, status: "İptal" } };
+  }
+
+  async function cancelPayment(paymentId) {
+    const erp = getDesktopErp();
+    if (erp) {
+      const result = await erp.cancelPayment(paymentId);
+      if (result.ok) applyInitialData(result.data);
+      return result;
+    }
+
+    const payment = payments.find((item) => item.id === paymentId);
+    if (!payment) return { ok: false, error: "Ödeme bulunamadı." };
+    if (payment.status === "İptal") return { ok: false, error: "Bu ödeme zaten iptal edilmiş." };
+
+    setPayments((currentPayments) => currentPayments.map((item) => (item.id === paymentId ? { ...item, status: "İptal" } : item)));
+    setSuppliers((currentSuppliers) =>
+      currentSuppliers.map((supplier) =>
+        supplier.id === payment.supplierId
+          ? {
+              ...supplier,
+              currentBalance: supplier.currentBalance + payment.amount,
+              totalPayments: supplier.totalPayments - payment.amount,
+            }
+          : supplier,
+      ),
+    );
+
+    return { ok: true, data: { ...payment, status: "İptal" } };
   }
 
   async function addProduct(product) {
@@ -279,6 +399,10 @@ export function ErpDataProvider({ children }) {
       saveSalesSlip,
       saveCollection,
       savePayment,
+      cancelPurchaseSlip,
+      cancelSalesSlip,
+      cancelCollection,
+      cancelPayment,
       updateProduct,
       addProduct,
       toggleProductStatus,
@@ -413,6 +537,54 @@ function buildSalesStockMovements(slip, products) {
       relatedSlipNo: slip.slipNo,
       relatedPartyName: slip.customerName,
       createdBy: "Satış",
+    };
+  });
+}
+
+function buildPurchaseCancelStockMovements(slip, products) {
+  return slip.items.map((item, index) => {
+    const product = products.find((currentProduct) => currentProduct.id === item.productId);
+
+    return {
+      id: Date.now() + index,
+      date: new Date().toISOString().slice(0, 10),
+      productId: item.productId,
+      productCode: item.productCode,
+      barcode: item.barcode,
+      productName: item.productName,
+      size: item.size,
+      color: item.color,
+      movementType: "Alış İptali",
+      quantityIn: 0,
+      quantityOut: item.quantity,
+      remainingStock: (product?.stockQuantity || 0) - item.quantity,
+      relatedSlipNo: slip.slipNo,
+      relatedPartyName: slip.supplierName,
+      createdBy: "İptal",
+    };
+  });
+}
+
+function buildSalesCancelStockMovements(slip, products) {
+  return slip.items.map((item, index) => {
+    const product = products.find((currentProduct) => currentProduct.id === item.productId);
+
+    return {
+      id: Date.now() + index,
+      date: new Date().toISOString().slice(0, 10),
+      productId: item.productId,
+      productCode: item.productCode,
+      barcode: item.barcode,
+      productName: item.productName,
+      size: item.size,
+      color: item.color,
+      movementType: "Satış İptali",
+      quantityIn: item.quantity,
+      quantityOut: 0,
+      remainingStock: (product?.stockQuantity || 0) + item.quantity,
+      relatedSlipNo: slip.slipNo,
+      relatedPartyName: slip.customerName,
+      createdBy: "İptal",
     };
   });
 }
