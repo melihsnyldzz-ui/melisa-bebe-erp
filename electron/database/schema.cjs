@@ -181,6 +181,182 @@ function runMigrations(db) {
       key TEXT PRIMARY KEY,
       value TEXT
     );
+
+    CREATE TABLE IF NOT EXISTS currencies (
+      id INTEGER PRIMARY KEY,
+      code TEXT UNIQUE NOT NULL,
+      name TEXT NOT NULL,
+      symbol TEXT,
+      isDefault INTEGER DEFAULT 0,
+      isActive INTEGER DEFAULT 1,
+      createdAt TEXT,
+      updatedAt TEXT
+    );
+
+    CREATE TABLE IF NOT EXISTS exchange_rates (
+      id INTEGER PRIMARY KEY,
+      currencyCode TEXT NOT NULL,
+      rateDate TEXT NOT NULL,
+      rate REAL DEFAULT 1,
+      source TEXT,
+      createdAt TEXT,
+      UNIQUE(currencyCode, rateDate, source),
+      FOREIGN KEY (currencyCode) REFERENCES currencies(code)
+    );
+
+    CREATE TABLE IF NOT EXISTS current_accounts (
+      id INTEGER PRIMARY KEY,
+      accountCode TEXT UNIQUE NOT NULL,
+      accountName TEXT NOT NULL,
+      accountType TEXT NOT NULL,
+      companyName TEXT,
+      phone TEXT,
+      whatsapp TEXT,
+      email TEXT,
+      country TEXT,
+      city TEXT,
+      district TEXT,
+      address TEXT,
+      taxOffice TEXT,
+      taxNumber TEXT,
+      currencyCode TEXT DEFAULT 'TRY',
+      openingBalance REAL DEFAULT 0,
+      currentBalance REAL DEFAULT 0,
+      foreignBalance REAL DEFAULT 0,
+      riskLimit REAL DEFAULT 0,
+      isActive INTEGER DEFAULT 1,
+      createdAt TEXT,
+      updatedAt TEXT,
+      FOREIGN KEY (currencyCode) REFERENCES currencies(code)
+    );
+
+    CREATE TABLE IF NOT EXISTS current_account_movements (
+      id INTEGER PRIMARY KEY,
+      accountId INTEGER,
+      accountCode TEXT,
+      accountName TEXT,
+      movementDate TEXT,
+      movementType TEXT,
+      documentType TEXT,
+      documentNo TEXT,
+      debit REAL DEFAULT 0,
+      credit REAL DEFAULT 0,
+      balance REAL DEFAULT 0,
+      currencyCode TEXT DEFAULT 'TRY',
+      exchangeRate REAL DEFAULT 1,
+      foreignDebit REAL DEFAULT 0,
+      foreignCredit REAL DEFAULT 0,
+      foreignBalance REAL DEFAULT 0,
+      description TEXT,
+      relatedModule TEXT,
+      relatedId INTEGER,
+      createdAt TEXT,
+      FOREIGN KEY (accountId) REFERENCES current_accounts(id),
+      FOREIGN KEY (currencyCode) REFERENCES currencies(code)
+    );
+
+    CREATE TABLE IF NOT EXISTS product_barcodes (
+      id INTEGER PRIMARY KEY,
+      productId INTEGER NOT NULL,
+      barcode TEXT UNIQUE NOT NULL,
+      barcodeType TEXT,
+      priceType TEXT,
+      isMain INTEGER DEFAULT 0,
+      isActive INTEGER DEFAULT 1,
+      createdAt TEXT,
+      updatedAt TEXT,
+      FOREIGN KEY (productId) REFERENCES products(id)
+    );
+
+    CREATE TABLE IF NOT EXISTS warehouses (
+      id INTEGER PRIMARY KEY,
+      code TEXT UNIQUE NOT NULL,
+      name TEXT NOT NULL,
+      description TEXT,
+      isDefault INTEGER DEFAULT 0,
+      isActive INTEGER DEFAULT 1,
+      createdAt TEXT,
+      updatedAt TEXT
+    );
+
+    CREATE TABLE IF NOT EXISTS stock_balances (
+      id INTEGER PRIMARY KEY,
+      productId INTEGER NOT NULL,
+      warehouseId INTEGER NOT NULL,
+      quantity REAL DEFAULT 0,
+      reservedQuantity REAL DEFAULT 0,
+      availableQuantity REAL DEFAULT 0,
+      updatedAt TEXT,
+      UNIQUE(productId, warehouseId),
+      FOREIGN KEY (productId) REFERENCES products(id),
+      FOREIGN KEY (warehouseId) REFERENCES warehouses(id)
+    );
+
+    CREATE TABLE IF NOT EXISTS price_lists (
+      id INTEGER PRIMARY KEY,
+      code TEXT UNIQUE NOT NULL,
+      name TEXT NOT NULL,
+      currencyCode TEXT DEFAULT 'TRY',
+      priceType TEXT,
+      isDefault INTEGER DEFAULT 0,
+      isActive INTEGER DEFAULT 1,
+      createdAt TEXT,
+      updatedAt TEXT,
+      FOREIGN KEY (currencyCode) REFERENCES currencies(code)
+    );
+
+    CREATE TABLE IF NOT EXISTS price_list_items (
+      id INTEGER PRIMARY KEY,
+      priceListId INTEGER NOT NULL,
+      productId INTEGER NOT NULL,
+      price REAL DEFAULT 0,
+      currencyCode TEXT DEFAULT 'TRY',
+      validFrom TEXT,
+      validTo TEXT,
+      isActive INTEGER DEFAULT 1,
+      createdAt TEXT,
+      updatedAt TEXT,
+      UNIQUE(priceListId, productId),
+      FOREIGN KEY (priceListId) REFERENCES price_lists(id),
+      FOREIGN KEY (productId) REFERENCES products(id),
+      FOREIGN KEY (currencyCode) REFERENCES currencies(code)
+    );
+
+    CREATE TABLE IF NOT EXISTS document_numbers (
+      id INTEGER PRIMARY KEY,
+      documentType TEXT NOT NULL,
+      prefix TEXT NOT NULL,
+      lastNumber INTEGER DEFAULT 0,
+      year INTEGER,
+      isActive INTEGER DEFAULT 1,
+      updatedAt TEXT,
+      UNIQUE(documentType, year)
+    );
+
+    CREATE TABLE IF NOT EXISTS audit_logs (
+      id INTEGER PRIMARY KEY,
+      userId INTEGER,
+      userName TEXT,
+      action TEXT,
+      entityType TEXT,
+      entityId INTEGER,
+      oldValue TEXT,
+      newValue TEXT,
+      description TEXT,
+      createdAt TEXT
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_current_account_movements_account
+      ON current_account_movements(accountId, movementDate);
+
+    CREATE INDEX IF NOT EXISTS idx_product_barcodes_product
+      ON product_barcodes(productId);
+
+    CREATE INDEX IF NOT EXISTS idx_stock_balances_product
+      ON stock_balances(productId, warehouseId);
+
+    CREATE INDEX IF NOT EXISTS idx_price_list_items_product
+      ON price_list_items(productId, priceListId);
   `);
 }
 
