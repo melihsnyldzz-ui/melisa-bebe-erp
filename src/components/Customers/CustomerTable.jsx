@@ -1,8 +1,8 @@
-import { Edit3, Power, UsersRound } from "lucide-react";
+import { BookOpenText, Edit3, Power, UsersRound } from "lucide-react";
 import { formatDateTR } from "../../utils/dateUtils.js";
 import { formatCurrency } from "../../utils/formatters.js";
 
-export default function CustomerTable({ customers, onEdit, onToggleStatus }) {
+export default function CustomerTable({ customers, selectedCustomerId, onEdit, onToggleStatus, onViewLedger }) {
   return (
     <section className="table-panel product-table-panel">
       <div className="section-heading">
@@ -34,7 +34,7 @@ export default function CustomerTable({ customers, onEdit, onToggleStatus }) {
               const hasDebt = customer.currentBalance > 0;
 
               return (
-                <tr className={!customer.isActive ? "passive-row" : ""} key={customer.id}>
+                <tr className={`${!customer.isActive ? "passive-row" : ""} ${selectedCustomerId === customer.id ? "selected-row" : ""}`} key={customer.id}>
                   <td className="strong-cell">{customer.name}</td>
                   <td>{customer.companyName}</td>
                   <td>{customer.phone}</td>
@@ -58,6 +58,9 @@ export default function CustomerTable({ customers, onEdit, onToggleStatus }) {
                   </td>
                   <td>
                     <div className="table-actions">
+                      <button className="icon-button small" aria-label="Cari hareketlerini görüntüle" onClick={() => onViewLedger(customer)}>
+                        <BookOpenText size={16} />
+                      </button>
                       <button className="icon-button small" aria-label="Müşteriyi düzenle" onClick={() => onEdit(customer)}>
                         <Edit3 size={16} />
                       </button>
