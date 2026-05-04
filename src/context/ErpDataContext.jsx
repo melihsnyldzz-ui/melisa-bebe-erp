@@ -21,6 +21,16 @@ export function ErpDataProvider({ children }) {
   const [collections, setCollections] = useState(initialCollections);
   const [payments, setPayments] = useState(initialPayments);
   const [stockMovements, setStockMovements] = useState(initialStockMovements);
+  const [currencies, setCurrencies] = useState([]);
+  const [exchangeRates, setExchangeRates] = useState([]);
+  const [currentAccounts, setCurrentAccounts] = useState([]);
+  const [currentAccountMovements, setCurrentAccountMovements] = useState([]);
+  const [productBarcodes, setProductBarcodes] = useState([]);
+  const [warehouses, setWarehouses] = useState([]);
+  const [stockBalances, setStockBalances] = useState([]);
+  const [priceLists, setPriceLists] = useState([]);
+  const [priceListItems, setPriceListItems] = useState([]);
+  const [documentNumbers, setDocumentNumbers] = useState([]);
 
   useEffect(() => {
     const erp = getDesktopErp();
@@ -395,6 +405,16 @@ export function ErpDataProvider({ children }) {
       collections,
       payments,
       stockMovements,
+      currencies,
+      exchangeRates,
+      currentAccounts,
+      currentAccountMovements,
+      productBarcodes,
+      warehouses,
+      stockBalances,
+      priceLists,
+      priceListItems,
+      documentNumbers,
       savePurchaseSlip,
       saveSalesSlip,
       saveCollection,
@@ -413,7 +433,26 @@ export function ErpDataProvider({ children }) {
       addSupplier,
       toggleSupplierStatus,
     }),
-    [collections, customers, payments, products, purchaseSlips, salesSlips, stockMovements, suppliers],
+    [
+      collections,
+      currentAccountMovements,
+      currentAccounts,
+      currencies,
+      customers,
+      documentNumbers,
+      exchangeRates,
+      payments,
+      priceListItems,
+      priceLists,
+      productBarcodes,
+      products,
+      purchaseSlips,
+      salesSlips,
+      stockBalances,
+      stockMovements,
+      suppliers,
+      warehouses,
+    ],
   );
 
   return <ErpDataContext.Provider value={value}>{children}</ErpDataContext.Provider>;
@@ -427,6 +466,16 @@ export function ErpDataProvider({ children }) {
     setCollections(data.collections || []);
     setPayments(data.payments || []);
     setStockMovements(data.stockMovements || []);
+    setCurrencies(data.currencies || []);
+    setExchangeRates(data.exchangeRates || []);
+    setCurrentAccounts(data.currentAccounts || []);
+    setCurrentAccountMovements(data.currentAccountMovements || []);
+    setProductBarcodes(data.productBarcodes || []);
+    setWarehouses(data.warehouses || []);
+    setStockBalances(data.stockBalances || []);
+    setPriceLists(data.priceLists || []);
+    setPriceListItems(data.priceListItems || []);
+    setDocumentNumbers(data.documentNumbers || []);
   }
 }
 

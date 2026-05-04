@@ -17,6 +17,16 @@ function createRepositories(db) {
     getAllCollections: () => db.prepare("SELECT * FROM collections ORDER BY id DESC").all(),
     getAllPayments: () => db.prepare("SELECT * FROM payments ORDER BY id DESC").all(),
     getAllStockMovements: () => db.prepare("SELECT * FROM stock_movements ORDER BY id DESC").all(),
+    getAllCurrencies: () => rowsToBooleanFields(db.prepare("SELECT * FROM currencies ORDER BY isDefault DESC, code ASC").all()),
+    getAllExchangeRates: () => db.prepare("SELECT * FROM exchange_rates ORDER BY rateDate DESC, currencyCode ASC").all(),
+    getAllCurrentAccounts: () => rowsToBooleanFields(db.prepare("SELECT * FROM current_accounts ORDER BY id DESC").all()),
+    getAllCurrentAccountMovements: () => db.prepare("SELECT * FROM current_account_movements ORDER BY id DESC").all(),
+    getAllProductBarcodes: () => rowsToBooleanFields(db.prepare("SELECT * FROM product_barcodes ORDER BY id DESC").all()),
+    getAllWarehouses: () => rowsToBooleanFields(db.prepare("SELECT * FROM warehouses ORDER BY isDefault DESC, id ASC").all()),
+    getAllStockBalances: () => db.prepare("SELECT * FROM stock_balances ORDER BY id DESC").all(),
+    getAllPriceLists: () => rowsToBooleanFields(db.prepare("SELECT * FROM price_lists ORDER BY isDefault DESC, id ASC").all()),
+    getAllPriceListItems: () => rowsToBooleanFields(db.prepare("SELECT * FROM price_list_items ORDER BY id DESC").all()),
+    getAllDocumentNumbers: () => rowsToBooleanFields(db.prepare("SELECT * FROM document_numbers ORDER BY documentType ASC").all()),
     getInitialErpData: () => getInitialErpData(db),
     savePurchaseSlip: (payload) => wrapMutation(() => purchaseTransaction(payload), db),
     saveSalesSlip: (payload) => wrapMutation(() => salesTransaction(payload), db),
@@ -48,6 +58,16 @@ function getInitialErpData(db) {
     collections: db.prepare("SELECT * FROM collections ORDER BY id DESC").all(),
     payments: db.prepare("SELECT * FROM payments ORDER BY id DESC").all(),
     stockMovements: db.prepare("SELECT * FROM stock_movements ORDER BY id DESC").all(),
+    currencies: rowsToBooleanFields(db.prepare("SELECT * FROM currencies ORDER BY isDefault DESC, code ASC").all()),
+    exchangeRates: db.prepare("SELECT * FROM exchange_rates ORDER BY rateDate DESC, currencyCode ASC").all(),
+    currentAccounts: rowsToBooleanFields(db.prepare("SELECT * FROM current_accounts ORDER BY id DESC").all()),
+    currentAccountMovements: db.prepare("SELECT * FROM current_account_movements ORDER BY id DESC").all(),
+    productBarcodes: rowsToBooleanFields(db.prepare("SELECT * FROM product_barcodes ORDER BY id DESC").all()),
+    warehouses: rowsToBooleanFields(db.prepare("SELECT * FROM warehouses ORDER BY isDefault DESC, id ASC").all()),
+    stockBalances: db.prepare("SELECT * FROM stock_balances ORDER BY id DESC").all(),
+    priceLists: rowsToBooleanFields(db.prepare("SELECT * FROM price_lists ORDER BY isDefault DESC, id ASC").all()),
+    priceListItems: rowsToBooleanFields(db.prepare("SELECT * FROM price_list_items ORDER BY id DESC").all()),
+    documentNumbers: rowsToBooleanFields(db.prepare("SELECT * FROM document_numbers ORDER BY documentType ASC").all()),
   };
 }
 
@@ -368,6 +388,16 @@ function wrapMutation(fn, db) {
 
 function rowsToBooleans(rows) {
   return rows.map((row) => ({ ...row, isActive: Boolean(row.isActive) }));
+}
+
+function rowsToBooleanFields(rows) {
+  return rows.map((row) => {
+    const result = { ...row };
+    ["isActive", "isDefault", "isMain"].forEach((field) => {
+      if (field in result) result[field] = Boolean(result[field]);
+    });
+    return result;
+  });
 }
 
 function sumQuantitiesByProduct(items) {

@@ -1,14 +1,17 @@
 import { PackageCheck } from "lucide-react";
+import melisaBabyLogo from "../../assets/melisa-baby-logo.jpg";
 import { menuItems } from "../../data/mockData.js";
 
 export default function Sidebar({ activeModule, onModuleChange }) {
   return (
     <aside className="sidebar">
       <div className="brand">
-        <div className="brand-mark">M</div>
+        <div className="brand-logo">
+          <img className="brand-logo-image" src={melisaBabyLogo} alt="Melisa Baby" />
+        </div>
         <div>
-          <strong>Melisa Bebe</strong>
-          <span>ERP</span>
+          <strong>Melisa Bebe ERP</strong>
+          <span>Yönetim paneli</span>
         </div>
       </div>
       <nav className="nav-list">

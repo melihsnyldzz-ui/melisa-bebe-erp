@@ -26,7 +26,10 @@ const seedData = {
 
 function seedDatabase(db) {
   const productCount = db.prepare("SELECT COUNT(*) AS count FROM products").get().count;
-  if (productCount > 0) return;
+  if (productCount > 0) {
+    seedV2Data(db);
+    return;
+  }
 
   const insertProduct = db.prepare(`
     INSERT INTO products (id, barcode, code, name, category, size, color, purchasePrice, salePrice, stockQuantity, criticalStockLevel, supplier, imageUrl, isActive, createdAt, updatedAt)
@@ -49,6 +52,7 @@ function seedDatabase(db) {
   });
 
   tx();
+  seedV2Data(db);
 }
 
 function seedSlips(db) {
@@ -106,6 +110,173 @@ function seedSlips(db) {
       (4, '2026-05-02', 3, 'MB-YLK-003', '869000001003', 'Bebek Yelek', '1 Yaş', 'Krem', 'Satış Çıkışı', 0, 10, 18, 'SF-0001', 'Ayşe Kids Boutique', 'Satış', ?),
       (5, '2026-05-01', 2, 'MB-TLM-002', '869000001002', 'Erkek Bebek Tulum', '3-6 Ay', 'Mavi', 'Alış Girişi', 18, 0, 66, 'AF-0001', 'ABC Tekstil', 'Muhasebe', ?)
   `).run(now, now, now, now, now);
+}
+
+function seedV2Data(db) {
+  const tx = db.transaction(() => {
+    seedCurrencies(db);
+    seedExchangeRates(db);
+    seedWarehouses(db);
+    seedPriceLists(db);
+    seedDocumentNumbers(db);
+    migrateCustomersToCurrentAccounts(db);
+    migrateSuppliersToCurrentAccounts(db);
+    migrateProductBarcodes(db);
+    migrateStockBalances(db);
+    migratePriceListItems(db);
+  });
+
+  tx();
+}
+
+function seedCurrencies(db) {
+  const insert = db.prepare(`
+    INSERT OR IGNORE INTO currencies (code, name, symbol, isDefault, isActive, createdAt, updatedAt)
+    VALUES (?, ?, ?, ?, 1, ?, ?)
+  `);
+
+  [
+    ["TRY", "Turkish Lira", "TL", 1],
+    ["USD", "US Dollar", "$", 0],
+    ["EUR", "Euro", "EUR", 0],
+  ].forEach((currency) => insert.run(...currency, now, now));
+}
+
+function seedExchangeRates(db) {
+  const insert = db.prepare(`
+    INSERT OR IGNORE INTO exchange_rates (currencyCode, rateDate, rate, source, createdAt)
+    VALUES (?, ?, ?, ?, ?)
+  `);
+
+  insert.run("USD", "2026-05-04", 32.5, "seed", now);
+  insert.run("EUR", "2026-05-04", 35.1, "seed", now);
+}
+
+function seedWarehouses(db) {
+  db.prepare(`
+    INSERT OR IGNORE INTO warehouses (code, name, description, isDefault, isActive, createdAt, updatedAt)
+    VALUES ('MERKEZ', 'Merkez Depo', 'Varsayilan ana depo', 1, 1, ?, ?)
+  `).run(now, now);
+}
+
+function seedPriceLists(db) {
+  const insert = db.prepare(`
+    INSERT OR IGNORE INTO price_lists (code, name, currencyCode, priceType, isDefault, isActive, createdAt, updatedAt)
+    VALUES (?, ?, ?, ?, ?, 1, ?, ?)
+  `);
+
+  insert.run("TOPTAN-TRY", "Toptan TRY", "TRY", "toptan", 1, now, now);
+  insert.run("TOPTAN-USD", "Toptan USD", "USD", "toptan", 0, now, now);
+  insert.run("TOPTAN-EUR", "Toptan EUR", "EUR", "toptan", 0, now, now);
+}
+
+function seedDocumentNumbers(db) {
+  const insert = db.prepare(`
+    INSERT OR IGNORE INTO document_numbers (documentType, prefix, lastNumber, year, isActive, updatedAt)
+    VALUES (?, ?, 0, ?, 1, ?)
+  `);
+  const year = 2026;
+
+  [
+    ["purchase_slip", "AF"],
+    ["sales_slip", "SF"],
+    ["collection", "TH"],
+    ["payment", "OD"],
+  ].forEach((item) => insert.run(item[0], item[1], year, now));
+}
+
+function migrateCustomersToCurrentAccounts(db) {
+  const customers = db.prepare("SELECT * FROM customers ORDER BY id ASC").all();
+  const exists = db.prepare("SELECT 1 FROM current_accounts WHERE accountType = 'customer' AND accountName = ? LIMIT 1");
+  const insert = db.prepare(`
+    INSERT INTO current_accounts (
+      accountCode, accountName, accountType, companyName, phone, whatsapp, email, country, city, district, address,
+      taxOffice, taxNumber, currencyCode, openingBalance, currentBalance, foreignBalance, riskLimit, isActive, createdAt, updatedAt
+    )
+    VALUES (?, ?, 'customer', ?, ?, ?, '', ?, ?, '', '', '', '', 'TRY', ?, ?, 0, ?, ?, ?, ?)
+  `);
+
+  customers.forEach((customer, index) => {
+    if (exists.get(customer.name)) return;
+    insert.run(
+      `C-${String(index + 1).padStart(4, "0")}`,
+      customer.name,
+      customer.companyName || "",
+      customer.phone || "",
+      customer.whatsapp || "",
+      customer.country || "",
+      customer.city || "",
+      customer.openingBalance || 0,
+      customer.currentBalance || 0,
+      customer.riskLimit || 0,
+      customer.isActive ?? 1,
+      customer.createdAt || now,
+      customer.updatedAt || now,
+    );
+  });
+}
+
+function migrateSuppliersToCurrentAccounts(db) {
+  const suppliers = db.prepare("SELECT * FROM suppliers ORDER BY id ASC").all();
+  const exists = db.prepare("SELECT 1 FROM current_accounts WHERE accountType = 'supplier' AND accountName = ? LIMIT 1");
+  const insert = db.prepare(`
+    INSERT INTO current_accounts (
+      accountCode, accountName, accountType, companyName, phone, whatsapp, email, country, city, district, address,
+      taxOffice, taxNumber, currencyCode, openingBalance, currentBalance, foreignBalance, riskLimit, isActive, createdAt, updatedAt
+    )
+    VALUES (?, ?, 'supplier', ?, ?, ?, '', ?, ?, '', ?, '', ?, 'TRY', ?, ?, 0, 0, ?, ?, ?)
+  `);
+
+  suppliers.forEach((supplier, index) => {
+    if (exists.get(supplier.name)) return;
+    insert.run(
+      `S-${String(index + 1).padStart(4, "0")}`,
+      supplier.name,
+      supplier.companyTitle || "",
+      supplier.phone || "",
+      supplier.whatsapp || "",
+      supplier.country || "",
+      supplier.city || "",
+      supplier.address || "",
+      supplier.taxInfo || "",
+      supplier.openingBalance || 0,
+      supplier.currentBalance || 0,
+      supplier.isActive ?? 1,
+      supplier.createdAt || now,
+      supplier.updatedAt || now,
+    );
+  });
+}
+
+function migrateProductBarcodes(db) {
+  db.prepare(`
+    INSERT OR IGNORE INTO product_barcodes (productId, barcode, barcodeType, priceType, isMain, isActive, createdAt, updatedAt)
+    SELECT id, barcode, 'EAN13', 'TOPTAN', 1, isActive, COALESCE(createdAt, ?), COALESCE(updatedAt, ?)
+    FROM products
+    WHERE barcode IS NOT NULL AND TRIM(barcode) <> ''
+  `).run(now, now);
+}
+
+function migrateStockBalances(db) {
+  const warehouse = db.prepare("SELECT id FROM warehouses WHERE code = 'MERKEZ'").get();
+  if (!warehouse) return;
+
+  db.prepare(`
+    INSERT OR IGNORE INTO stock_balances (productId, warehouseId, quantity, reservedQuantity, availableQuantity, updatedAt)
+    SELECT id, ?, COALESCE(stockQuantity, 0), 0, COALESCE(stockQuantity, 0), COALESCE(updatedAt, ?)
+    FROM products
+  `).run(warehouse.id, now);
+}
+
+function migratePriceListItems(db) {
+  const priceList = db.prepare("SELECT id FROM price_lists WHERE code = 'TOPTAN-TRY'").get();
+  if (!priceList) return;
+
+  db.prepare(`
+    INSERT OR IGNORE INTO price_list_items (priceListId, productId, price, currencyCode, validFrom, validTo, isActive, createdAt, updatedAt)
+    SELECT ?, id, COALESCE(salePrice, 0), 'TRY', NULL, NULL, isActive, COALESCE(createdAt, ?), COALESCE(updatedAt, ?)
+    FROM products
+  `).run(priceList.id, now, now);
 }
 
 module.exports = { seedDatabase };

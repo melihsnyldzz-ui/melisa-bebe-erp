@@ -91,6 +91,16 @@ app.whenReady().then(() => {
 
 function registerErpHandlers() {
   ipcMain.handle("erp:get-initial-data", () => repositories.getInitialErpData());
+  ipcMain.handle("erp:get-all-currencies", () => repositories.getAllCurrencies());
+  ipcMain.handle("erp:get-all-exchange-rates", () => repositories.getAllExchangeRates());
+  ipcMain.handle("erp:get-all-current-accounts", () => repositories.getAllCurrentAccounts());
+  ipcMain.handle("erp:get-all-current-account-movements", () => repositories.getAllCurrentAccountMovements());
+  ipcMain.handle("erp:get-all-product-barcodes", () => repositories.getAllProductBarcodes());
+  ipcMain.handle("erp:get-all-warehouses", () => repositories.getAllWarehouses());
+  ipcMain.handle("erp:get-all-stock-balances", () => repositories.getAllStockBalances());
+  ipcMain.handle("erp:get-all-price-lists", () => repositories.getAllPriceLists());
+  ipcMain.handle("erp:get-all-price-list-items", () => repositories.getAllPriceListItems());
+  ipcMain.handle("erp:get-all-document-numbers", () => repositories.getAllDocumentNumbers());
   ipcMain.handle("erp:save-purchase-slip", (_event, payload) => repositories.savePurchaseSlip(payload));
   ipcMain.handle("erp:save-sales-slip", (_event, payload) => repositories.saveSalesSlip(payload));
   ipcMain.handle("erp:save-collection", (_event, payload) => repositories.saveCollection(payload));
