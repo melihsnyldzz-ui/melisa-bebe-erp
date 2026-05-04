@@ -1,8 +1,8 @@
-import { Eye, ReceiptText } from "lucide-react";
+import { Eye, ReceiptText, XCircle } from "lucide-react";
 import { formatDateTR } from "../../utils/dateUtils.js";
 import { formatCurrency } from "../../utils/formatters.js";
 
-export default function SalesSlipTable({ slips, selectedSlip, onViewDetail }) {
+export default function SalesSlipTable({ slips, selectedSlip, onCancel, onViewDetail }) {
   return (
     <section className="table-panel product-table-panel purchase-list-panel">
       <div className="section-heading">
@@ -24,24 +24,39 @@ export default function SalesSlipTable({ slips, selectedSlip, onViewDetail }) {
             </tr>
           </thead>
           <tbody>
-            {slips.map((slip) => (
-              <tr key={slip.id}>
-                <td className="strong-cell">{slip.slipNo}</td>
-                <td>{formatDateTR(slip.date)}</td>
-                <td>{slip.customerName}</td>
-                <td>{slip.saleType}</td>
-                <td>{slip.items.length}</td>
-                <td className="strong-cell">{formatCurrency(slip.grandTotal)}</td>
-                <td>
-                  <span className="status status-active">{slip.status}</span>
-                </td>
-                <td>
-                  <button className="icon-button small" aria-label="Fiş detayı görüntüle" onClick={() => onViewDetail(slip)}>
-                    <Eye size={16} />
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {slips.map((slip) => {
+              const isCanceled = slip.status === "İptal";
+
+              return (
+                <tr className={isCanceled ? "canceled-row" : ""} key={slip.id}>
+                  <td className="strong-cell">{slip.slipNo}</td>
+                  <td>{formatDateTR(slip.date)}</td>
+                  <td>{slip.customerName}</td>
+                  <td>{slip.saleType}</td>
+                  <td>{slip.items.length}</td>
+                  <td className="strong-cell">{formatCurrency(slip.grandTotal)}</td>
+                  <td>
+                    <span className={`status ${isCanceled ? "status-canceled" : "status-active"}`}>{slip.status}</span>
+                  </td>
+                  <td>
+                    <div className="table-actions">
+                      <button className="icon-button small" aria-label="Fiş detayı görüntüle" onClick={() => onViewDetail(slip)}>
+                        <Eye size={16} />
+                      </button>
+                      <button
+                        className="icon-button small danger"
+                        aria-label="Satış fişini iptal et"
+                        disabled={isCanceled}
+                        onClick={() => onCancel(slip)}
+                        title="İptal Et"
+                      >
+                        <XCircle size={16} />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

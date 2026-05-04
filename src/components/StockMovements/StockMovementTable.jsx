@@ -61,8 +61,8 @@ export default function StockMovementTable({ movements }) {
 }
 
 function getMovementClass(type) {
-  if (type === "Alış Girişi" || type === "İade Girişi") return "movement-in";
-  if (type === "Satış Çıkışı" || type === "İade Çıkışı") return "movement-out";
+  if (type === "Alış Girişi" || type === "İade Girişi" || type === "Satış İptali") return "movement-in";
+  if (type === "Satış Çıkışı" || type === "İade Çıkışı" || type === "Alış İptali") return "movement-out";
   if (type === "Sayım Farkı") return "movement-count";
   return "movement-neutral";
 }

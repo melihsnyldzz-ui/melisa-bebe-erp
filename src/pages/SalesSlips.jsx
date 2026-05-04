@@ -9,7 +9,7 @@ import { canUseDesktopBridge, openSalesSlipWindow } from "../utils/desktopBridge
 import { formatCurrency } from "../utils/formatters.js";
 
 export default function SalesSlips() {
-  const { customers, products, salesSlips, saveSalesSlip } = useErpData();
+  const { cancelSalesSlip, customers, products, salesSlips, saveSalesSlip } = useErpData();
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedSlip, setSelectedSlip] = useState(null);
@@ -21,9 +21,10 @@ export default function SalesSlips() {
 
   const summaryCards = useMemo(() => {
     const today = getTodayISO();
-    const todayTotal = salesSlips.filter((slip) => slip.date === today).reduce((total, slip) => total + slip.grandTotal, 0);
-    const grandTotal = salesSlips.reduce((total, slip) => total + slip.grandTotal, 0);
-    const draftCount = salesSlips.filter((slip) => slip.status !== "Kayıtlı").length;
+    const activeSlips = salesSlips.filter((slip) => slip.status !== "İptal");
+    const todayTotal = activeSlips.filter((slip) => slip.date === today).reduce((total, slip) => total + slip.grandTotal, 0);
+    const grandTotal = activeSlips.reduce((total, slip) => total + slip.grandTotal, 0);
+    const draftCount = salesSlips.filter((slip) => slip.status !== "Kayıtlı" && slip.status !== "İptal").length;
 
     return [
       { label: "Toplam Satış Fişi", value: salesSlips.length.toString(), icon: ReceiptText, tone: "dark" },
@@ -49,6 +50,22 @@ export default function SalesSlips() {
 
   function handleOpenWindow() {
     openSalesSlipWindow();
+  }
+
+  async function handleCancelSlip(slip) {
+    const confirmed = window.confirm("Bu fişi iptal etmek istediğinize emin misiniz? Stok ve cari etkileri geri alınacaktır.");
+    if (!confirmed) return;
+
+    const result = await cancelSalesSlip(slip.id);
+    if (!result.ok) {
+      setSuccessMessage("");
+      setErrorMessage(result.error);
+      return;
+    }
+
+    setErrorMessage("");
+    setSuccessMessage(`${slip.slipNo} numaralı satış fişi iptal edildi.`);
+    setSelectedSlip({ ...slip, status: "İptal" });
   }
 
   return (
@@ -77,7 +94,7 @@ export default function SalesSlips() {
       {errorMessage && <p className="error-message">{errorMessage}</p>}
 
       <SalesSlipForm nextSlipNo={nextSlipNo} products={products} customers={customers} onSave={handleSaveSlip} />
-      <SalesSlipTable slips={salesSlips} selectedSlip={selectedSlip} onViewDetail={setSelectedSlip} />
+      <SalesSlipTable slips={salesSlips} selectedSlip={selectedSlip} onCancel={handleCancelSlip} onViewDetail={setSelectedSlip} />
     </>
   );
 }

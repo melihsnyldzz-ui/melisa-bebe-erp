@@ -38,10 +38,14 @@ export default function Reports() {
 }
 
 function buildReportData({ collections, customers, payments, products, purchaseSlips, salesSlips, suppliers }) {
-  const totalSales = salesSlips.reduce((total, slip) => total + slip.grandTotal, 0);
-  const totalPurchases = purchaseSlips.reduce((total, slip) => total + slip.grandTotal, 0);
-  const totalCollections = collections.reduce((total, item) => total + item.amount, 0);
-  const totalPayments = payments.reduce((total, item) => total + item.amount, 0);
+  const activeSalesSlips = salesSlips.filter((slip) => slip.status !== "İptal");
+  const activePurchaseSlips = purchaseSlips.filter((slip) => slip.status !== "İptal");
+  const activeCollections = collections.filter((item) => item.status !== "İptal");
+  const activePayments = payments.filter((item) => item.status !== "İptal");
+  const totalSales = activeSalesSlips.reduce((total, slip) => total + slip.grandTotal, 0);
+  const totalPurchases = activePurchaseSlips.reduce((total, slip) => total + slip.grandTotal, 0);
+  const totalCollections = activeCollections.reduce((total, item) => total + item.amount, 0);
+  const totalPayments = activePayments.reduce((total, item) => total + item.amount, 0);
   const customerReceivable = customers.reduce((total, customer) => total + customer.currentBalance, 0);
   const supplierDebt = suppliers.reduce((total, supplier) => total + supplier.currentBalance, 0);
   const criticalProducts = products.filter((product) => product.stockQuantity <= product.criticalStockLevel);
@@ -55,8 +59,8 @@ function buildReportData({ collections, customers, payments, products, purchaseS
       supplierDebt,
       criticalProductCount: criticalProducts.length,
     },
-    salesPurchaseChart: buildSalesPurchaseChart(salesSlips, purchaseSlips),
-    topProducts: buildTopProducts(salesSlips),
+    salesPurchaseChart: buildSalesPurchaseChart(activeSalesSlips, activePurchaseSlips),
+    topProducts: buildTopProducts(activeSalesSlips),
     criticalProducts,
   };
 }
