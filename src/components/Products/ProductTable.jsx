@@ -1,7 +1,7 @@
 import { Edit3, PackageSearch, Power } from "lucide-react";
 import { formatCurrency } from "../../utils/formatters.js";
 
-export default function ProductTable({ products, onEdit, onToggleStatus }) {
+export default function ProductTable({ canEdit = true, canViewCosts = true, products, onEdit, onToggleStatus }) {
   return (
     <section className="table-panel product-table-panel">
       <div className="section-heading">
@@ -48,8 +48,8 @@ export default function ProductTable({ products, onEdit, onToggleStatus }) {
                       {isCritical && <span className="warning-badge">Kritik</span>}
                     </div>
                   </td>
-                  <td>{formatCurrency(product.purchasePrice)}</td>
-                  <td>{formatCurrency(product.salePrice)}</td>
+                  <td>{canViewCosts ? formatCurrency(product.purchasePrice) : "-"}</td>
+                  <td>{canViewCosts ? formatCurrency(product.salePrice) : "-"}</td>
                   <td>{product.supplier}</td>
                   <td>
                     <span className={`status ${product.isActive ? "status-active" : "status-passive"}`}>
@@ -57,14 +57,16 @@ export default function ProductTable({ products, onEdit, onToggleStatus }) {
                     </span>
                   </td>
                   <td>
-                    <div className="table-actions">
-                      <button className="icon-button small" aria-label="Ürünü düzenle" onClick={() => onEdit(product)}>
-                        <Edit3 size={16} />
-                      </button>
-                      <button className="icon-button small" aria-label="Aktif pasif yap" onClick={() => onToggleStatus(product.id)}>
-                        <Power size={16} />
-                      </button>
-                    </div>
+                    {canEdit && (
+                      <div className="table-actions">
+                        <button className="icon-button small" aria-label="Ürünü düzenle" onClick={() => onEdit(product)}>
+                          <Edit3 size={16} />
+                        </button>
+                        <button className="icon-button small" aria-label="Aktif pasif yap" onClick={() => onToggleStatus(product.id)}>
+                          <Power size={16} />
+                        </button>
+                      </div>
+                    )}
                   </td>
                 </tr>
               );

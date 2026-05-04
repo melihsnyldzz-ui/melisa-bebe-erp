@@ -2,7 +2,7 @@ import { Eye, Image, ReceiptText, XCircle } from "lucide-react";
 import { formatDateTR } from "../../utils/dateUtils.js";
 import { formatCurrency } from "../../utils/formatters.js";
 
-export default function PaymentTable({ payments, selectedPayment, onCancel, onViewDetail }) {
+export default function PaymentTable({ canCancel = true, payments, selectedPayment, onCancel, onViewDetail }) {
   return (
     <section className="table-panel product-table-panel purchase-list-panel">
       <div className="section-heading">
@@ -54,15 +54,17 @@ export default function PaymentTable({ payments, selectedPayment, onCancel, onVi
                       <button className="icon-button small" aria-label="Ödeme detayı görüntüle" onClick={() => onViewDetail(payment)}>
                         <Eye size={16} />
                       </button>
-                      <button
-                        className="icon-button small cancel-action"
-                        aria-label="Ödemeyi iptal et"
-                        disabled={isCanceled}
-                        onClick={() => onCancel(payment)}
-                        title="İptal Et"
-                      >
-                        <XCircle size={16} />
-                      </button>
+                      {canCancel && (
+                        <button
+                          className="icon-button small cancel-action"
+                          aria-label="Ödemeyi iptal et"
+                          disabled={isCanceled}
+                          onClick={() => onCancel(payment)}
+                          title="İptal Et"
+                        >
+                          <XCircle size={16} />
+                        </button>
+                      )}
                     </div>
                   </td>
                 </tr>

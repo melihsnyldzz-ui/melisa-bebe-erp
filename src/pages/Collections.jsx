@@ -3,13 +3,17 @@ import { Banknote, CircleDollarSign, ReceiptText, Trophy } from "lucide-react";
 import KpiCard from "../components/Dashboard/KpiCard.jsx";
 import CollectionForm from "../components/Collections/CollectionForm.jsx";
 import CollectionTable from "../components/Collections/CollectionTable.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
 import { useErpData } from "../context/ErpDataContext.jsx";
 import { getTodayISO } from "../utils/dateUtils.js";
 import { getNextCollectionNo } from "../utils/documentNumbers.js";
 import { formatCurrency } from "../utils/formatters.js";
 
 export default function Collections() {
+  const { hasPermission } = useAuth();
   const { cancelCollection, collections, customers, saveCollection } = useErpData();
+  const canCancelRecords = hasPermission("cancelRecords");
+  const canEditCollections = hasPermission("collections.edit");
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedCollection, setSelectedCollection] = useState(null);
@@ -75,8 +79,9 @@ export default function Collections() {
       {successMessage && <p className="success-message">{successMessage}</p>}
       {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-      <CollectionForm nextCollectionNo={nextCollectionNo} customers={customers} onSave={handleSaveCollection} />
+      {canEditCollections && <CollectionForm nextCollectionNo={nextCollectionNo} customers={customers} onSave={handleSaveCollection} />}
       <CollectionTable
+        canCancel={canCancelRecords}
         collections={collections}
         selectedCollection={selectedCollection}
         onCancel={handleCancelCollection}

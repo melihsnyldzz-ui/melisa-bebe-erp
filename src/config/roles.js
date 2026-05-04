@@ -1,0 +1,90 @@
+export const PERMISSIONS = [
+  "dashboard.view",
+  "products.view",
+  "products.edit",
+  "customers.view",
+  "customers.edit",
+  "suppliers.view",
+  "suppliers.edit",
+  "purchaseSlips.view",
+  "purchaseSlips.edit",
+  "salesSlips.view",
+  "salesSlips.edit",
+  "collections.view",
+  "collections.edit",
+  "payments.view",
+  "payments.edit",
+  "stockMovements.view",
+  "reports.view",
+  "settings.view",
+  "cancelRecords",
+  "viewCosts",
+  "viewProfit",
+];
+
+export const ROLE_DEFINITIONS = {
+  owner: {
+    label: "Patron",
+    permissions: PERMISSIONS,
+  },
+  accounting: {
+    label: "Muhasebe",
+    permissions: [
+      "dashboard.view",
+      "customers.view",
+      "customers.edit",
+      "suppliers.view",
+      "suppliers.edit",
+      "collections.view",
+      "collections.edit",
+      "payments.view",
+      "payments.edit",
+      "reports.view",
+      "cancelRecords",
+      "viewCosts",
+      "viewProfit",
+    ],
+  },
+  sales: {
+    label: "Satış",
+    permissions: [
+      "dashboard.view",
+      "products.view",
+      "customers.view",
+      "customers.edit",
+      "salesSlips.view",
+      "salesSlips.edit",
+      "collections.view",
+    ],
+  },
+  warehouse: {
+    label: "Depo",
+    permissions: [
+      "dashboard.view",
+      "products.view",
+      "stockMovements.view",
+      "purchaseSlips.view",
+      "salesSlips.view",
+    ],
+  },
+  readonly: {
+    label: "Sadece Görüntüleme",
+    permissions: [
+      "dashboard.view",
+      "products.view",
+      "customers.view",
+      "suppliers.view",
+      "purchaseSlips.view",
+      "salesSlips.view",
+      "collections.view",
+      "payments.view",
+      "stockMovements.view",
+      "reports.view",
+    ],
+  },
+};
+
+export const ROLE_OPTIONS = Object.entries(ROLE_DEFINITIONS).map(([value, role]) => ({
+  value,
+  label: role.label,
+}));

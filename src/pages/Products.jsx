@@ -4,6 +4,7 @@ import KpiCard from "../components/Dashboard/KpiCard.jsx";
 import ProductFilters from "../components/Products/ProductFilters.jsx";
 import ProductFormModal from "../components/Products/ProductFormModal.jsx";
 import ProductTable from "../components/Products/ProductTable.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
 import { useErpData } from "../context/ErpDataContext.jsx";
 import { formatNumber } from "../utils/formatters.js";
 
@@ -17,7 +18,10 @@ const emptyFilters = {
 };
 
 export default function Products() {
+  const { hasPermission } = useAuth();
   const { products, addProduct, updateProduct, toggleProductStatus } = useErpData();
+  const canEditProducts = hasPermission("products.edit");
+  const canViewCosts = hasPermission("viewCosts");
   const [filters, setFilters] = useState(emptyFilters);
   const [editingProduct, setEditingProduct] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -92,10 +96,12 @@ export default function Products() {
           <h1>Ürün Yönetimi</h1>
           <span>Ürün kartlarını, stok seviyelerini ve fiyat bilgilerini yönetin.</span>
         </div>
-        <button className="primary-action" onClick={openCreateModal}>
-          <PackagePlus size={18} />
-          Yeni Ürün
-        </button>
+        {canEditProducts && (
+          <button className="primary-action" onClick={openCreateModal}>
+            <PackagePlus size={18} />
+            Yeni Ürün
+          </button>
+        )}
       </section>
 
       <section className="kpi-grid product-summary-grid">
@@ -105,7 +111,13 @@ export default function Products() {
       </section>
 
       <ProductFilters filters={filters} options={filterOptions} onChange={setFilters} onReset={() => setFilters(emptyFilters)} />
-      <ProductTable products={filteredProducts} onEdit={openEditModal} onToggleStatus={toggleProductStatus} />
+      <ProductTable
+        canEdit={canEditProducts}
+        canViewCosts={canViewCosts}
+        products={filteredProducts}
+        onEdit={openEditModal}
+        onToggleStatus={toggleProductStatus}
+      />
 
       <ProductFormModal
         isOpen={isModalOpen}

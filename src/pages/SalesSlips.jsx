@@ -3,6 +3,7 @@ import { Clock3, FilePlus2, ReceiptText, ShoppingBag, WalletCards } from "lucide
 import KpiCard from "../components/Dashboard/KpiCard.jsx";
 import SalesSlipForm from "../components/SalesSlips/SalesSlipForm.jsx";
 import SalesSlipTable from "../components/SalesSlips/SalesSlipTable.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
 import { useErpData } from "../context/ErpDataContext.jsx";
 import { getTodayISO } from "../utils/dateUtils.js";
 import { canUseDesktopBridge, openSalesSlipWindow } from "../utils/desktopBridge.js";
@@ -10,7 +11,10 @@ import { getNextSalesSlipNo } from "../utils/documentNumbers.js";
 import { formatCurrency } from "../utils/formatters.js";
 
 export default function SalesSlips() {
+  const { hasPermission } = useAuth();
   const { cancelSalesSlip, customers, products, salesSlips, saveSalesSlip } = useErpData();
+  const canCancelRecords = hasPermission("cancelRecords");
+  const canEditSalesSlips = hasPermission("salesSlips.edit");
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedSlip, setSelectedSlip] = useState(null);
@@ -74,7 +78,7 @@ export default function SalesSlips() {
           <h1>Satış Fişleri</h1>
           <span>Müşteriye çıkan ürünleri fiş mantığıyla stok ve cari hesaplara işleyin.</span>
         </div>
-        {canUseDesktopBridge() && (
+        {canEditSalesSlips && canUseDesktopBridge() && (
           <button className="primary-action" type="button" onClick={handleOpenWindow}>
             <FilePlus2 size={18} />
             Yeni Satış Fişini Pencerede Aç
@@ -91,8 +95,14 @@ export default function SalesSlips() {
       {successMessage && <p className="success-message">{successMessage}</p>}
       {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-      <SalesSlipForm nextSlipNo={nextSlipNo} products={products} customers={customers} onSave={handleSaveSlip} />
-      <SalesSlipTable slips={salesSlips} selectedSlip={selectedSlip} onCancel={handleCancelSalesSlip} onViewDetail={setSelectedSlip} />
+      {canEditSalesSlips && <SalesSlipForm nextSlipNo={nextSlipNo} products={products} customers={customers} onSave={handleSaveSlip} />}
+      <SalesSlipTable
+        canCancel={canCancelRecords}
+        slips={salesSlips}
+        selectedSlip={selectedSlip}
+        onCancel={handleCancelSalesSlip}
+        onViewDetail={setSelectedSlip}
+      />
     </>
   );
 }

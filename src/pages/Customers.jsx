@@ -5,6 +5,7 @@ import CustomerFilters from "../components/Customers/CustomerFilters.jsx";
 import CustomerFormModal from "../components/Customers/CustomerFormModal.jsx";
 import CustomerTable from "../components/Customers/CustomerTable.jsx";
 import CurrentLedgerTable from "../components/Ledger/CurrentLedgerTable.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
 import { useErpData } from "../context/ErpDataContext.jsx";
 import { formatCurrency } from "../utils/formatters.js";
 import { buildCustomerLedger } from "../utils/ledgerCalculations.js";
@@ -19,7 +20,9 @@ const emptyFilters = {
 };
 
 export default function Customers() {
+  const { hasPermission } = useAuth();
   const { collections, customers, salesSlips, addCustomer, updateCustomer, toggleCustomerStatus } = useErpData();
+  const canEditCustomers = hasPermission("customers.edit");
   const [filters, setFilters] = useState(emptyFilters);
   const [editingCustomer, setEditingCustomer] = useState(null);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
@@ -102,10 +105,12 @@ export default function Customers() {
           <h1>Müşteri Cari Yönetimi</h1>
           <span>Müşteri bakiyelerini, risk limitlerini ve satış geçmişini takip edin.</span>
         </div>
-        <button className="primary-action" onClick={openCreateModal}>
-          <UserPlus size={18} />
-          Yeni Müşteri
-        </button>
+        {canEditCustomers && (
+          <button className="primary-action" onClick={openCreateModal}>
+            <UserPlus size={18} />
+            Yeni Müşteri
+          </button>
+        )}
       </section>
 
       <section className="kpi-grid product-summary-grid">
@@ -117,6 +122,7 @@ export default function Customers() {
       <CustomerFilters filters={filters} options={filterOptions} onChange={setFilters} onReset={() => setFilters(emptyFilters)} />
       <CustomerTable
         customers={filteredCustomers}
+        canEdit={canEditCustomers}
         selectedCustomerId={selectedCustomer?.id}
         onEdit={openEditModal}
         onToggleStatus={toggleCustomerStatus}

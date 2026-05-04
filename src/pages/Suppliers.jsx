@@ -5,6 +5,7 @@ import CurrentLedgerTable from "../components/Ledger/CurrentLedgerTable.jsx";
 import SupplierFilters from "../components/Suppliers/SupplierFilters.jsx";
 import SupplierFormModal from "../components/Suppliers/SupplierFormModal.jsx";
 import SupplierTable from "../components/Suppliers/SupplierTable.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
 import { useErpData } from "../context/ErpDataContext.jsx";
 import { formatCurrency } from "../utils/formatters.js";
 import { isWithinLastDays } from "../utils/dateUtils.js";
@@ -18,7 +19,9 @@ const emptyFilters = {
 };
 
 export default function Suppliers() {
+  const { hasPermission } = useAuth();
   const { payments, purchaseSlips, suppliers, addSupplier, updateSupplier, toggleSupplierStatus } = useErpData();
+  const canEditSuppliers = hasPermission("suppliers.edit");
   const [filters, setFilters] = useState(emptyFilters);
   const [editingSupplier, setEditingSupplier] = useState(null);
   const [selectedSupplier, setSelectedSupplier] = useState(null);
@@ -97,10 +100,12 @@ export default function Suppliers() {
           <h1>Tedarikçi Cari Yönetimi</h1>
           <span>Tedarikçi bakiyelerini, alış toplamlarını ve ödeme durumlarını takip edin.</span>
         </div>
-        <button className="primary-action" onClick={openCreateModal}>
-          <UserPlus size={18} />
-          Yeni Tedarikçi
-        </button>
+        {canEditSuppliers && (
+          <button className="primary-action" onClick={openCreateModal}>
+            <UserPlus size={18} />
+            Yeni Tedarikçi
+          </button>
+        )}
       </section>
 
       <section className="kpi-grid product-summary-grid">
@@ -112,6 +117,7 @@ export default function Suppliers() {
       <SupplierFilters filters={filters} options={filterOptions} onChange={setFilters} onReset={() => setFilters(emptyFilters)} />
       <SupplierTable
         suppliers={filteredSuppliers}
+        canEdit={canEditSuppliers}
         selectedSupplierId={selectedSupplier?.id}
         onEdit={openEditModal}
         onToggleStatus={toggleSupplierStatus}
