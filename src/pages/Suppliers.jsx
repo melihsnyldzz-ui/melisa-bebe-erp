@@ -1,12 +1,14 @@
 import { useMemo, useState } from "react";
 import { CalendarClock, HandCoins, Truck, UserPlus, WalletCards } from "lucide-react";
 import KpiCard from "../components/Dashboard/KpiCard.jsx";
+import CurrentLedgerTable from "../components/Ledger/CurrentLedgerTable.jsx";
 import SupplierFilters from "../components/Suppliers/SupplierFilters.jsx";
 import SupplierFormModal from "../components/Suppliers/SupplierFormModal.jsx";
 import SupplierTable from "../components/Suppliers/SupplierTable.jsx";
 import { useErpData } from "../context/ErpDataContext.jsx";
 import { formatCurrency } from "../utils/formatters.js";
 import { isWithinLastDays } from "../utils/dateUtils.js";
+import { buildSupplierLedger } from "../utils/ledgerCalculations.js";
 
 const emptyFilters = {
   search: "",
@@ -16,9 +18,10 @@ const emptyFilters = {
 };
 
 export default function Suppliers() {
-  const { suppliers, addSupplier, updateSupplier, toggleSupplierStatus } = useErpData();
+  const { payments, purchaseSlips, suppliers, addSupplier, updateSupplier, toggleSupplierStatus } = useErpData();
   const [filters, setFilters] = useState(emptyFilters);
   const [editingSupplier, setEditingSupplier] = useState(null);
+  const [selectedSupplier, setSelectedSupplier] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const filteredSuppliers = useMemo(() => {
@@ -61,6 +64,11 @@ export default function Suppliers() {
     ];
   }, [suppliers]);
 
+  const selectedSupplierLedger = useMemo(() => {
+    if (!selectedSupplier) return [];
+    return buildSupplierLedger(selectedSupplier.id, purchaseSlips, payments);
+  }, [payments, purchaseSlips, selectedSupplier]);
+
   function openCreateModal() {
     setEditingSupplier(null);
     setIsModalOpen(true);
@@ -102,7 +110,22 @@ export default function Suppliers() {
       </section>
 
       <SupplierFilters filters={filters} options={filterOptions} onChange={setFilters} onReset={() => setFilters(emptyFilters)} />
-      <SupplierTable suppliers={filteredSuppliers} onEdit={openEditModal} onToggleStatus={toggleSupplierStatus} />
+      <SupplierTable
+        suppliers={filteredSuppliers}
+        selectedSupplierId={selectedSupplier?.id}
+        onEdit={openEditModal}
+        onToggleStatus={toggleSupplierStatus}
+        onViewLedger={setSelectedSupplier}
+      />
+
+      {selectedSupplier && (
+        <CurrentLedgerTable
+          accountName={selectedSupplier.name}
+          decreaseLabel="Ödeme"
+          decreaseKey="payment"
+          rows={selectedSupplierLedger}
+        />
+      )}
 
       <SupplierFormModal
         isOpen={isModalOpen}
