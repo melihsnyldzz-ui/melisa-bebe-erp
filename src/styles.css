@@ -520,6 +520,24 @@ button {
   background: #fdecee;
 }
 
+.barcode-technical-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 12px;
+  align-items: center;
+  padding: 8px 10px;
+  border: 1px dashed rgba(115, 119, 131, 0.32);
+  border-radius: 8px;
+  color: var(--muted);
+  background: rgba(249, 250, 251, 0.72);
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.barcode-technical-line span {
+  overflow-wrap: anywhere;
+}
+
 .barcode-result-card {
   display: grid;
   gap: 14px;
@@ -549,7 +567,8 @@ button {
   display: block;
   margin-top: 4px;
   color: var(--anthracite);
-  font-size: 1.05rem;
+  font-size: 1.24rem;
+  line-height: 1.2;
 }
 
 .barcode-result-grid {
@@ -626,14 +645,20 @@ button {
 
 .barcode-attempts li {
   display: grid;
-  grid-template-columns: 18px minmax(120px, 1fr) auto auto;
+  grid-template-columns: 18px minmax(160px, 1fr) auto auto;
   gap: 9px;
-  align-items: center;
-  min-height: 36px;
+  align-items: start;
+  min-height: 44px;
   padding: 8px 10px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.72);
+}
+
+.barcode-attempts li > div {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
 }
 
 .barcode-attempt-error svg {
@@ -657,6 +682,12 @@ button {
   color: var(--muted);
   font-size: 0.76rem;
   font-weight: 800;
+}
+
+.barcode-attempts li > div strong {
+  color: var(--anthracite);
+  font-size: 0.82rem;
+  overflow-wrap: anywhere;
 }
 
 .filters-grid {
@@ -1732,6 +1763,10 @@ tr:last-child td {
 
   .barcode-attempts small,
   .barcode-attempts time {
+    grid-column: 2;
+  }
+
+  .barcode-attempts li > div {
     grid-column: 2;
   }
 

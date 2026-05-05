@@ -16,6 +16,8 @@ export function findProductByCodeOrBarcode(products, value) {
   );
 }
 
-function normalizeLookupValue(value) {
-  return String(value || "").trim();
+export function normalizeLookupValue(value) {
+  return String(value || "")
+    .replace(/[\u200B-\u200D\uFEFF\u2060]/g, "")
+    .trim();
 }

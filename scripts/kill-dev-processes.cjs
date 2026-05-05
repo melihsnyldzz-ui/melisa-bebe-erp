@@ -1,27 +1,35 @@
 const { execFileSync } = require("node:child_process");
 
 if (process.platform !== "win32") {
-  console.log("Bu otomatik temizleme script’i Windows için hazırlanmıştır.");
+  console.log("Bu otomatik temizleme scripti Windows icin hazirlanmistir.");
   process.exit(0);
 }
 
 const killedPids = new Set();
+const keepPids = new Set(
+  String(process.env.MELISA_ERP_KEEP_PIDS || "")
+    .split(",")
+    .map((pid) => pid.trim())
+    .filter(Boolean),
+);
 
-killPortProcess(5173);
+if (process.env.MELISA_ERP_SKIP_PORT_KILL !== "1") {
+  killPortProcess(5173);
+}
 killProcessesByName("node.exe");
 killProcessesByName("electron.exe");
 
-console.log("Geliştirme ortamı temizlendi. Şimdi npm run electron:dev çalıştırabilirsiniz.");
+console.log("Gelistirme ortami temizlendi. Simdi npm run desktop calistirabilirsiniz.");
 
 function killPortProcess(port) {
   const pids = getPidsUsingPort(port);
   if (!pids.length) {
-    console.log(`${port} portunu kullanan süreç bulunamadı.`);
+    console.log(`${port} portunu kullanan surec bulunamadi.`);
     return;
   }
 
   pids.forEach((pid) => killPid(pid));
-  console.log(`${port} portunu kullanan süreç kapatıldı.`);
+  console.log(`${port} portunu kullanan surec kapatildi.`);
 }
 
 function getPidsUsingPort(port) {
@@ -37,7 +45,7 @@ function getPidsUsingPort(port) {
         .filter(Boolean),
     )];
   } catch (error) {
-    console.error(`${port} portunu kontrol ederken hata oluştu: ${error.message}`);
+    console.error(`${port} portu kontrol edilirken hata olustu: ${error.message}`);
     return [];
   }
 }
@@ -45,12 +53,12 @@ function getPidsUsingPort(port) {
 function killProcessesByName(processName) {
   const pids = getPidsByName(processName);
   if (!pids.length) {
-    console.log(`${processName} süreci bulunamadı.`);
+    console.log(`${processName} sureci bulunamadi.`);
     return;
   }
 
   pids.forEach((pid) => killPid(pid));
-  console.log(`${processName} süreçleri kapatıldı.`);
+  console.log(`${processName} surecleri kapatildi.`);
 }
 
 function getPidsByName(processName) {
@@ -76,18 +84,19 @@ function getPidsByName(processName) {
       .map((row) => String(row.ProcessId))
       .filter(Boolean);
   } catch (error) {
-    console.error(`${processName} süreçleri listelenirken hata oluştu: ${error.message}`);
+    console.error(`${processName} surecleri listelenirken hata olustu: ${error.message}`);
     return [];
   }
 }
 
 function killPid(pid) {
-  if (!pid || killedPids.has(pid) || Number(pid) === process.pid) return;
+  const normalizedPid = String(pid);
+  if (!pid || killedPids.has(normalizedPid) || Number(pid) === process.pid || keepPids.has(normalizedPid)) return;
 
   try {
-    execFileSync("taskkill", ["/PID", String(pid), "/T", "/F"], { stdio: "ignore" });
-    killedPids.add(pid);
+    execFileSync("taskkill", ["/PID", normalizedPid, "/T", "/F"], { stdio: "ignore" });
+    killedPids.add(normalizedPid);
   } catch (error) {
-    console.error(`${pid} PID numaralı süreç kapatılamadı: ${error.message}`);
+    console.error(`${pid} PID numarali surec kapatilamadi: ${error.message}`);
   }
 }
