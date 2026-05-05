@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.8.7";
-export const APP_STAGE = "Stok ve cari doğruluk kontrolü";
+export const APP_VERSION = "v1.8.8";
+export const APP_STAGE = "Yedekleme ve veri kurtarma";

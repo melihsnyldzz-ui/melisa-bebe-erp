@@ -1,8 +1,11 @@
-import { DatabaseBackup } from "lucide-react";
+import { DatabaseBackup, FolderArchive, Info } from "lucide-react";
 import { useMemo, useState } from "react";
-import { canUseDatabaseBackup, exportDatabaseBackup } from "../../utils/desktopBridge.js";
+import { useErpData } from "../../context/ErpDataContext.jsx";
+import { formatBackupDate, getBackupStatusClass, getBackupStatusLabel } from "../../utils/backupUtils.js";
+import { canUseDatabaseBackup } from "../../utils/desktopBridge.js";
 
 export default function DatabaseBackupSettings() {
+  const { appSettings, exportDatabaseBackup } = useErpData();
   const backupAvailable = useMemo(() => canUseDatabaseBackup(), []);
   const [backupMessage, setBackupMessage] = useState("");
   const [backupError, setBackupError] = useState("");
@@ -18,10 +21,10 @@ export default function DatabaseBackupSettings() {
       if (result.ok) {
         setBackupMessage(`Veritabanı yedeği oluşturuldu: ${result.path}`);
       } else {
-        setBackupError(`Yedek oluşturulamadı: ${result.error}`);
+        setBackupError(result.error || "Yedek oluşturulamadı.");
       }
     } catch (error) {
-      setBackupError(`Yedek oluşturulamadı: ${error.message || "Beklenmeyen hata oluştu."}`);
+      setBackupError(error.message || "Yedek oluşturulamadı.");
     } finally {
       setIsBackingUp(false);
     }
@@ -35,7 +38,7 @@ export default function DatabaseBackupSettings() {
       </div>
 
       <p className="settings-panel-description">
-        SQLite veritabanının güvenli bir kopyasını bilgisayarınıza kaydedin. Bu işlem özellikle gün sonu, büyük kayıt girişi veya sistem güncellemesi öncesinde önerilir.
+        Yedekleme işlemi mevcut ERP veritabanının güvenli bir kopyasını oluşturur. Varsayılan yedek klasörü masaüstü uygulamanın güvenli veri klasörü altındadır.
       </p>
 
       {!backupAvailable && (
@@ -45,9 +48,36 @@ export default function DatabaseBackupSettings() {
       {backupMessage && <p className="success-message database-backup-message">{backupMessage}</p>}
       {backupError && <p className="error-message database-backup-message">{backupError}</p>}
 
+      <div className="backup-history-grid">
+        <div className="backup-history-card">
+          <span>Son yedek zamanı</span>
+          <strong>{formatBackupDate(appSettings.lastBackupAt)}</strong>
+        </div>
+        <div className="backup-history-card">
+          <span>Son yedek durumu</span>
+          <strong className={`status ${getBackupStatusClass(appSettings.lastBackupStatus)}`}>
+            {getBackupStatusLabel(appSettings.lastBackupStatus)}
+          </strong>
+        </div>
+        <div className="backup-history-card backup-path-card">
+          <span>Son yedek dosyası</span>
+          <strong>{appSettings.lastBackupPath || "-"}</strong>
+        </div>
+      </div>
+
+      {appSettings.lastBackupStatus === "failed" && appSettings.lastBackupError && (
+        <p className="error-message database-backup-message">{appSettings.lastBackupError}</p>
+      )}
+
       <button className="primary-action" type="button" disabled={!backupAvailable || isBackingUp} onClick={handleExportBackup}>
+        <FolderArchive size={18} />
         {isBackingUp ? "Yedek oluşturuluyor..." : "Veritabanı Yedeği Al"}
       </button>
+
+      <p className="form-note database-backup-note">
+        <Info size={16} />
+        Yedekten geri yükleme işlemi sonraki sürümde güvenli kapatma/açma akışıyla eklenecektir.
+      </p>
     </section>
   );
 }

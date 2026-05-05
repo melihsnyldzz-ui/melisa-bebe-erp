@@ -15,6 +15,10 @@ const fallbackAppSettings = {
   dataMode: "demo",
   setupCompleted: "false",
   demoDataClearedAt: "",
+  lastBackupAt: "",
+  lastBackupPath: "",
+  lastBackupStatus: "",
+  lastBackupError: "",
 };
 
 export function ErpDataProvider({ children }) {
@@ -419,7 +423,13 @@ export function ErpDataProvider({ children }) {
       return { ok: false, error: "Veritabanı yedekleme yalnızca Electron modunda kullanılabilir." };
     }
 
-    return erp.exportDatabaseBackup(targetDirectory);
+    const result = await erp.exportDatabaseBackup(targetDirectory);
+    if (result.appSettings) {
+      setAppSettings(result.appSettings);
+    } else {
+      await refreshAppSettings();
+    }
+    return result;
   }
 
   async function refreshAppSettings() {

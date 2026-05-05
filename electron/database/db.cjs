@@ -1,6 +1,7 @@
 const path = require("node:path");
 const fs = require("node:fs");
 const Database = require("better-sqlite3");
+const { createDatabaseBackup } = require("./backup.cjs");
 const { runMigrations } = require("./schema.cjs");
 const { seedDatabase } = require("./seed.cjs");
 
@@ -27,19 +28,7 @@ function getDatabasePath(app) {
 
 function exportDatabaseBackup(app, targetDirectory) {
   const activeDb = initializeDatabase(app);
-  const backupDirectory = targetDirectory || app.getPath("downloads");
-  const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
-  const backupPath = path.join(backupDirectory, `melisa-bebe-erp-backup-${timestamp}.sqlite`);
-
-  try {
-    fs.mkdirSync(backupDirectory, { recursive: true });
-    activeDb.pragma("wal_checkpoint(TRUNCATE)");
-    fs.copyFileSync(databasePath, backupPath);
-    return { ok: true, path: backupPath };
-  } catch (error) {
-    console.error("SQLite yedekleme dosyası oluşturulamadı:", error);
-    return { ok: false, error: error.message || "Veritabanı yedeği oluşturulamadı." };
-  }
+  return createDatabaseBackup({ app, activeDb, databasePath, targetDirectory });
 }
 
 function migrateLegacyDatabase(app, targetPath) {

@@ -935,6 +935,42 @@ button {
   margin: 0;
 }
 
+.database-backup-note {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.backup-history-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.backup-history-card {
+  display: grid;
+  gap: 7px;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(249, 250, 251, 0.86);
+}
+
+.backup-history-card span {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.backup-history-card strong {
+  color: var(--text);
+  font-size: 0.92rem;
+  overflow-wrap: anywhere;
+}
+
+.backup-path-card {
+  grid-column: 1 / -1;
+}
+
 .live-mode-summary {
   display: grid;
   gap: 10px;

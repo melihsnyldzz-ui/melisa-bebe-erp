@@ -93,7 +93,11 @@ app.whenReady().then(() => {
 
 function registerErpHandlers() {
   ipcMain.handle("erp:get-initial-data", () => repositories.getInitialErpData());
-  ipcMain.handle("erp:export-database-backup", (_event, targetDirectory) => exportDatabaseBackup(app, targetDirectory));
+  ipcMain.handle("erp:export-database-backup", (_event, targetDirectory) => {
+    const result = exportDatabaseBackup(app, targetDirectory);
+    const appSettings = repositories.recordBackupResult(result);
+    return { ...result, appSettings };
+  });
   ipcMain.handle("erp:get-app-settings", () => repositories.getAppSettings());
   ipcMain.handle("erp:update-app-setting", (_event, key, value) => repositories.updateAppSetting(key, value));
   ipcMain.handle("erp:start-live-mode", () => repositories.startLiveMode());

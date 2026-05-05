@@ -4,6 +4,10 @@ const DEFAULT_APP_SETTINGS = {
   firstRunAt: "",
   liveStartedAt: "",
   demoDataClearedAt: "",
+  lastBackupAt: "",
+  lastBackupPath: "",
+  lastBackupStatus: "",
+  lastBackupError: "",
 };
 
 function createRepositories(db, options = {}) {
@@ -36,6 +40,7 @@ function createRepositories(db, options = {}) {
     getAllPriceListItems: () => rowsToBooleanFields(db.prepare("SELECT * FROM price_list_items ORDER BY id DESC").all()),
     getAllDocumentNumbers: () => rowsToBooleanFields(db.prepare("SELECT * FROM document_numbers ORDER BY documentType ASC").all()),
     getAppSettings: () => getAppSettings(db),
+    recordBackupResult: (result) => recordBackupResult(db, result),
     updateAppSetting: (key, value) => wrapMutation(() => updateAppSettingTx(db, key, value), db),
     startLiveMode: () => startLiveMode(db, options),
     resetDemoData: () => resetDemoData(db, options),
@@ -98,9 +103,19 @@ function updateAppSettingTx(db, key, value) {
   `).run(key, String(value));
 }
 
+function recordBackupResult(db, result) {
+  const now = result?.createdAt || new Date().toISOString();
+  updateAppSettingTx(db, "lastBackupAt", now);
+  updateAppSettingTx(db, "lastBackupPath", result?.path || "");
+  updateAppSettingTx(db, "lastBackupStatus", result?.ok ? "success" : "failed");
+  updateAppSettingTx(db, "lastBackupError", result?.ok ? "" : result?.error || "Yedekleme tamamlanamadı.");
+  return getAppSettings(db);
+}
+
 function startLiveMode(db, options = {}) {
   try {
     const backupResult = options.createBackup ? options.createBackup() : { ok: false, error: "Otomatik yedekleme fonksiyonu tanımlı değil." };
+    recordBackupResult(db, backupResult);
     if (!backupResult.ok) return { ok: false, error: backupResult.error || "Otomatik yedek oluşturulamadı." };
 
     const now = new Date().toISOString();
@@ -121,6 +136,7 @@ function startLiveMode(db, options = {}) {
 function resetDemoData(db, options = {}) {
   try {
     const backupResult = options.createBackup ? options.createBackup() : { ok: false, error: "Otomatik yedekleme fonksiyonu tanımlı değil." };
+    recordBackupResult(db, backupResult);
     if (!backupResult.ok) return { ok: false, error: backupResult.error || "Otomatik yedek oluşturulamadı." };
 
     const now = new Date().toISOString();

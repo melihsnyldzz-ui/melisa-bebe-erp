@@ -14,8 +14,8 @@ export function canUseDatabaseBackup() {
   return typeof window !== "undefined" && Boolean(window.electronAPI?.erp?.exportDatabaseBackup);
 }
 
-export function exportDatabaseBackup() {
-  return window.electronAPI.erp.exportDatabaseBackup();
+export function exportDatabaseBackup(targetDirectory) {
+  return window.electronAPI.erp.exportDatabaseBackup(targetDirectory);
 }
 
 export function canUsePersistentDatabase() {
