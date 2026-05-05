@@ -1447,9 +1447,89 @@ button {
   margin: 14px 0;
 }
 
+.print-mode-tabs {
+  display: inline-flex;
+  gap: 4px;
+  margin-right: auto;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.print-mode-tabs button {
+  min-height: 36px;
+  border: 0;
+  border-radius: 7px;
+  padding: 0 12px;
+  color: var(--muted);
+  background: transparent;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.print-mode-tabs button.active {
+  color: var(--white);
+  background: var(--anthracite);
+}
+
 .sales-slip-print-panel {
   margin-top: 14px;
   background: #fff;
+}
+
+.dot-matrix-panel {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+  background: #fff;
+}
+
+.dot-matrix-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dot-matrix-option {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  color: var(--text);
+  font-weight: 850;
+}
+
+.dot-matrix-option input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--red);
+}
+
+.dot-matrix-toolbar-actions {
+  display: inline-flex;
+  gap: 10px;
+}
+
+.dot-matrix-copy-message {
+  margin: 0;
+}
+
+.dot-matrix-preview {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  margin: 0;
+  padding: 16px;
+  border: 1px solid #d8dce2;
+  border-radius: 8px;
+  color: #111;
+  background: #fbfbfc;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 12px;
+  line-height: 1.35;
+  white-space: pre;
 }
 
 .print-document {
@@ -2326,6 +2406,23 @@ tr:last-child td {
 
   .print-footer {
     grid-template-columns: 1fr 260px !important;
+  }
+
+  .dot-matrix-print-area {
+    font-family: "Courier New", Courier, monospace !important;
+  }
+
+  .dot-matrix-preview {
+    overflow: visible !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    color: #000 !important;
+    background: #fff !important;
+    font-family: "Courier New", Courier, monospace !important;
+    font-size: 10pt !important;
+    line-height: 1.18 !important;
+    white-space: pre !important;
   }
 
   .app-shell,

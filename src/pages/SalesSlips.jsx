@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Clock3, FilePlus2, ReceiptText, ShoppingBag, WalletCards } from "lucide-react";
 import KpiCard from "../components/Dashboard/KpiCard.jsx";
+import DotMatrixSlipPreview from "../components/SalesSlips/DotMatrixSlipPreview.jsx";
 import QuickBarcodeSalePanel from "../components/SalesSlips/QuickBarcodeSalePanel.jsx";
 import SalesSlipForm from "../components/SalesSlips/SalesSlipForm.jsx";
 import SalesSlipPrintActions from "../components/SalesSlips/SalesSlipPrintActions.jsx";
@@ -20,6 +21,7 @@ export default function SalesSlips() {
   const canEditSalesSlips = hasPermission("salesSlips.edit");
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [printMode, setPrintMode] = useState("normal");
   const [printSlip, setPrintSlip] = useState(null);
   const [selectedSlip, setSelectedSlip] = useState(null);
 
@@ -110,6 +112,7 @@ export default function SalesSlips() {
   function handleOpenPrintPreview(slip) {
     setSelectedSlip(slip);
     setPrintSlip(slip);
+    setPrintMode("normal");
   }
 
   function handlePrintSlip() {
@@ -163,8 +166,17 @@ export default function SalesSlips() {
 
       {printSlip && (
         <>
-          <SalesSlipPrintActions onClose={() => setPrintSlip(null)} onPrint={handlePrintSlip} />
-          <SalesSlipPrintPreview slip={printSlip} />
+          <SalesSlipPrintActions
+            mode={printMode}
+            onClose={() => setPrintSlip(null)}
+            onModeChange={setPrintMode}
+            onPrint={handlePrintSlip}
+          />
+          {printMode === "normal" ? (
+            <SalesSlipPrintPreview slip={printSlip} />
+          ) : (
+            <DotMatrixSlipPreview slip={printSlip} onPrint={handlePrintSlip} />
+          )}
         </>
       )}
     </>

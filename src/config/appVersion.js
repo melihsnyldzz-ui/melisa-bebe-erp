@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.8.9";
-export const APP_STAGE = "Satış fişi yazdırma hazırlığı";
+export const APP_VERSION = "v1.9.0";
+export const APP_STAGE = "Oki dot-matrix çıktı uyumu";
