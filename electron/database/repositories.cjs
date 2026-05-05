@@ -179,10 +179,18 @@ function getSalesSlips(db) {
 
 function savePurchaseSlipTx(db, payload) {
   const createdAt = new Date().toISOString();
+  const slipNo = allocateDocumentNo(db, {
+    documentType: "purchase_slip",
+    prefix: "AF",
+    tableName: "purchase_slips",
+    columnName: "slipNo",
+    requestedNo: payload.slipNo,
+  });
+  const slipPayload = { ...payload, slipNo };
   const slipInfo = db.prepare(`
     INSERT INTO purchase_slips (slipNo, date, supplierId, supplierName, warehouse, subtotal, discountTotal, taxTotal, grandTotal, description, items_json, status, createdAt)
     VALUES (@slipNo, @date, @supplierId, @supplierName, @warehouse, @subtotal, @discountTotal, @taxTotal, @grandTotal, @description, @items_json, 'Kayıtlı', @createdAt)
-  `).run({ ...payload, description: payload.description || "", items_json: JSON.stringify(payload.items || []), createdAt });
+  `).run({ ...slipPayload, description: slipPayload.description || "", items_json: JSON.stringify(slipPayload.items || []), createdAt });
   const slipId = slipInfo.lastInsertRowid;
   const insertItem = db.prepare(`
     INSERT INTO purchase_slip_items (slipId, productId, productCode, barcode, productName, size, color, quantity, unitPrice, discountRate, taxRate, lineTotal)
@@ -195,7 +203,7 @@ function savePurchaseSlipTx(db, payload) {
   const getProduct = db.prepare("SELECT stockQuantity FROM products WHERE id = ?");
   const updateStock = db.prepare("UPDATE products SET stockQuantity = stockQuantity + ?, updatedAt = ? WHERE id = ?");
 
-  payload.items.forEach((item) => {
+  slipPayload.items.forEach((item) => {
     insertItem.run({ ...item, slipId });
     const currentStock = getProduct.get(item.productId)?.stockQuantity || 0;
     const remainingStock = currentStock + item.quantity;
@@ -205,8 +213,8 @@ function savePurchaseSlipTx(db, payload) {
       date: payload.date,
       quantityIn: item.quantity,
       remainingStock,
-      relatedSlipNo: payload.slipNo,
-      relatedPartyName: payload.supplierName,
+      relatedSlipNo: slipPayload.slipNo,
+      relatedPartyName: slipPayload.supplierName,
       createdAt,
     });
   });
@@ -215,7 +223,9 @@ function savePurchaseSlipTx(db, payload) {
     UPDATE suppliers
     SET currentBalance = currentBalance + ?, totalPurchases = totalPurchases + ?, lastTransactionDate = ?, updatedAt = ?
     WHERE id = ?
-  `).run(payload.grandTotal, payload.grandTotal, payload.date, createdAt, payload.supplierId);
+  `).run(slipPayload.grandTotal, slipPayload.grandTotal, slipPayload.date, createdAt, slipPayload.supplierId);
+
+  return { ...slipPayload, id: slipId, status: "Kayıtlı", createdAt };
 }
 
 function saveSalesSlipTx(db, payload) {
@@ -232,10 +242,18 @@ function saveSalesSlipTx(db, payload) {
     }
   }
 
+  const slipNo = allocateDocumentNo(db, {
+    documentType: "sales_slip",
+    prefix: "SF",
+    tableName: "sales_slips",
+    columnName: "slipNo",
+    requestedNo: payload.slipNo,
+  });
+  const slipPayload = { ...payload, slipNo };
   const slipInfo = db.prepare(`
     INSERT INTO sales_slips (slipNo, date, customerId, customerName, saleType, cargoInfo, subtotal, discountTotal, grandTotal, description, items_json, status, createdAt)
     VALUES (@slipNo, @date, @customerId, @customerName, @saleType, @cargoInfo, @subtotal, @discountTotal, @grandTotal, @description, @items_json, 'Kayıtlı', @createdAt)
-  `).run({ ...payload, cargoInfo: payload.cargoInfo || "", description: payload.description || "", items_json: JSON.stringify(payload.items || []), createdAt });
+  `).run({ ...slipPayload, cargoInfo: slipPayload.cargoInfo || "", description: slipPayload.description || "", items_json: JSON.stringify(slipPayload.items || []), createdAt });
   const slipId = slipInfo.lastInsertRowid;
   const insertItem = db.prepare(`
     INSERT INTO sales_slip_items (slipId, productId, productCode, barcode, productName, size, color, quantity, unitPrice, discountRate, availableStock, lineTotal)
@@ -247,7 +265,7 @@ function saveSalesSlipTx(db, payload) {
     VALUES (@date, @productId, @productCode, @barcode, @productName, @size, @color, 'Satış Çıkışı', 0, @quantityOut, @remainingStock, @relatedSlipNo, @relatedPartyName, 'Satış', @createdAt)
   `);
 
-  payload.items.forEach((item) => {
+  slipPayload.items.forEach((item) => {
     const currentStock = getProduct.get(item.productId)?.stockQuantity || 0;
     const remainingStock = currentStock - item.quantity;
     insertItem.run({ ...item, slipId, availableStock: currentStock });
@@ -257,8 +275,8 @@ function saveSalesSlipTx(db, payload) {
       date: payload.date,
       quantityOut: item.quantity,
       remainingStock,
-      relatedSlipNo: payload.slipNo,
-      relatedPartyName: payload.customerName,
+      relatedSlipNo: slipPayload.slipNo,
+      relatedPartyName: slipPayload.customerName,
       createdAt,
     });
   });
@@ -267,7 +285,9 @@ function saveSalesSlipTx(db, payload) {
     UPDATE customers
     SET currentBalance = currentBalance + ?, totalSales = totalSales + ?, lastPurchaseDate = ?, updatedAt = ?
     WHERE id = ?
-  `).run(payload.grandTotal, payload.grandTotal, payload.date, createdAt, payload.customerId);
+  `).run(slipPayload.grandTotal, slipPayload.grandTotal, slipPayload.date, createdAt, slipPayload.customerId);
+
+  return { ...slipPayload, id: slipId, status: "Kayıtlı", createdAt };
 }
 
 function saveCollectionTx(db, payload) {
@@ -525,8 +545,8 @@ function toggleStatusTx(db, table, id) {
 
 function wrapMutation(fn, db) {
   try {
-    fn();
-    return { ok: true, data: getInitialErpData(db) };
+    const record = fn();
+    return { ok: true, data: getInitialErpData(db), record };
   } catch (error) {
     console.error("SQLite mutasyon işlemi tamamlanamadı:", error);
     return { ok: false, error: mapDatabaseError(error) };
@@ -535,10 +555,110 @@ function wrapMutation(fn, db) {
 
 function mapDatabaseError(error) {
   const message = error.message || "Veritabanı işlemi tamamlanamadı.";
+  if (message.includes("sales_slips.slipNo") || message.includes("purchase_slips.slipNo")) return "Fiş numarası çakıştı. Lütfen tekrar kaydedin.";
   if (message.includes("products.barcode")) return "Bu barkod başka bir üründe kullanılıyor.";
   if (message.includes("products.code")) return "Bu ürün kodu başka bir üründe kullanılıyor.";
   if (message.includes("products.variantCode")) return "Bu varyant kodu başka bir üründe kullanılıyor.";
   return message;
+}
+
+function allocateDocumentNo(db, { documentType, prefix, tableName, columnName, requestedNo }) {
+  const year = new Date().getFullYear();
+  ensureDocumentCounter(db, { documentType, prefix, tableName, columnName, year });
+
+  const normalizedRequestedNo = normalizeNullableText(requestedNo);
+  if (normalizedRequestedNo && !documentNoExists(db, tableName, columnName, normalizedRequestedNo)) {
+    syncDocumentCounterWithNo(db, { documentType, prefix, year, documentNo: normalizedRequestedNo });
+    return normalizedRequestedNo;
+  }
+
+  for (let attempt = 0; attempt < 25; attempt += 1) {
+    const documentNo = incrementDocumentCounter(db, { documentType, prefix, year });
+    if (!documentNoExists(db, tableName, columnName, documentNo)) return documentNo;
+  }
+
+  throw new Error("Fiş numarası çakıştı. Lütfen tekrar kaydedin.");
+}
+
+function ensureDocumentCounter(db, { documentType, prefix, tableName, columnName, year }) {
+  const now = new Date().toISOString();
+  const maxExistingSequence = getMaxDocumentSequence(db, { tableName, columnName, prefix, year });
+  const existing = db.prepare("SELECT lastNumber FROM document_numbers WHERE documentType = ? AND year = ?").get(documentType, year);
+
+  if (!existing) {
+    db.prepare(`
+      INSERT INTO document_numbers (documentType, prefix, lastNumber, year, isActive, updatedAt)
+      VALUES (?, ?, ?, ?, 1, ?)
+    `).run(documentType, prefix, maxExistingSequence, year, now);
+    return;
+  }
+
+  if (Number(existing.lastNumber) < maxExistingSequence) {
+    db.prepare("UPDATE document_numbers SET lastNumber = ?, prefix = ?, isActive = 1, updatedAt = ? WHERE documentType = ? AND year = ?").run(
+      maxExistingSequence,
+      prefix,
+      now,
+      documentType,
+      year,
+    );
+  }
+}
+
+function incrementDocumentCounter(db, { documentType, prefix, year }) {
+  const now = new Date().toISOString();
+  db.prepare(`
+    UPDATE document_numbers
+    SET lastNumber = lastNumber + 1, prefix = ?, isActive = 1, updatedAt = ?
+    WHERE documentType = ? AND year = ?
+  `).run(prefix, now, documentType, year);
+
+  const row = db.prepare("SELECT lastNumber FROM document_numbers WHERE documentType = ? AND year = ?").get(documentType, year);
+  return formatDocumentNo(prefix, year, row.lastNumber);
+}
+
+function syncDocumentCounterWithNo(db, { documentType, prefix, year, documentNo }) {
+  const sequence = parseDocumentSequence(documentNo, prefix, year);
+  if (!sequence) return;
+
+  db.prepare(`
+    UPDATE document_numbers
+    SET lastNumber = MAX(lastNumber, ?), prefix = ?, isActive = 1, updatedAt = ?
+    WHERE documentType = ? AND year = ?
+  `).run(sequence, prefix, new Date().toISOString(), documentType, year);
+}
+
+function documentNoExists(db, tableName, columnName, documentNo) {
+  return Boolean(db.prepare(`SELECT 1 FROM ${tableName} WHERE ${columnName} = ? LIMIT 1`).get(documentNo));
+}
+
+function getMaxDocumentSequence(db, { tableName, columnName, prefix, year }) {
+  const rows = db.prepare(`SELECT ${columnName} AS documentNo FROM ${tableName} WHERE ${columnName} IS NOT NULL`).all();
+  return rows.reduce((maxSequence, row) => {
+    const sequence = parseDocumentSequence(row.documentNo, prefix, year);
+    return sequence && sequence > maxSequence ? sequence : maxSequence;
+  }, 0);
+}
+
+function parseDocumentSequence(documentNo, prefix, year) {
+  if (typeof documentNo !== "string") return 0;
+
+  const modernPrefix = `${prefix}-${year}-`;
+  if (documentNo.startsWith(modernPrefix)) {
+    const sequence = Number(documentNo.slice(modernPrefix.length));
+    return Number.isInteger(sequence) ? sequence : 0;
+  }
+
+  const legacyPrefix = `${prefix}-`;
+  if (documentNo.startsWith(legacyPrefix)) {
+    const sequence = Number(documentNo.slice(legacyPrefix.length));
+    return Number.isInteger(sequence) ? sequence : 0;
+  }
+
+  return 0;
+}
+
+function formatDocumentNo(prefix, year, sequence) {
+  return `${prefix}-${year}-${String(sequence).padStart(6, "0")}`;
 }
 
 function parseItemsJson(value) {

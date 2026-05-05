@@ -145,7 +145,7 @@ export default function SalesSlipForm({ nextSlipNo, products, customers, onSave 
     window.requestAnimationFrame(() => barcodeInputRef.current?.focus());
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     const customer = customers.find((item) => item.id === Number(form.customerId));
 
@@ -156,7 +156,7 @@ export default function SalesSlipForm({ nextSlipNo, products, customers, onSave 
       return;
     }
 
-    onSave({
+    const result = await onSave({
       slipNo: nextSlipNo,
       date: form.date,
       customerId: customer.id,
@@ -170,7 +170,9 @@ export default function SalesSlipForm({ nextSlipNo, products, customers, onSave 
       description: form.description,
     });
 
-    resetForm();
+    if (!result || result.ok) {
+      resetForm();
+    }
   }
 
   return (

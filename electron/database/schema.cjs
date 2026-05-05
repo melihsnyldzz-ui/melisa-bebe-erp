@@ -383,6 +383,8 @@ function runMigrations(db) {
   createUniqueIndexIfClean(db, "idx_products_barcode_unique", "products", "barcode");
   createUniqueIndexIfClean(db, "idx_products_code_unique", "products", "code");
   createUniqueIndexIfClean(db, "idx_products_variant_code_unique", "products", "variantCode");
+  createUniqueIndexIfClean(db, "idx_purchase_slips_slip_no_unique", "purchase_slips", "slipNo");
+  createUniqueIndexIfClean(db, "idx_sales_slips_slip_no_unique", "sales_slips", "slipNo");
 }
 
 module.exports = { runMigrations };

@@ -122,13 +122,13 @@ export default function PurchaseSlipForm({ nextSlipNo, products, suppliers, onSa
     window.requestAnimationFrame(() => barcodeInputRef.current?.focus());
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     const supplier = suppliers.find((item) => item.id === Number(form.supplierId));
 
     if (!supplier || items.length === 0) return;
 
-    onSave({
+    const result = await onSave({
       slipNo: nextSlipNo,
       date: form.date,
       supplierId: supplier.id,
@@ -142,7 +142,9 @@ export default function PurchaseSlipForm({ nextSlipNo, products, suppliers, onSa
       description: form.description,
     });
 
-    resetForm();
+    if (!result || result.ok) {
+      resetForm();
+    }
   }
 
   return (

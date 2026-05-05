@@ -220,8 +220,9 @@ export default function QuickBarcodeSalePanel({ customers, getCurrentSlipNo, onS
       return;
     }
 
+    const savedSlipNo = result.data?.slipNo || currentSlipNo;
     resetPanel();
-    setMessage({ type: "success", text: `${currentSlipNo} numaralı satış fişi kaydedildi.` });
+    setMessage({ type: "success", text: `${savedSlipNo} numaralı satış fişi kaydedildi.` });
   }
 
   function syncItemStocks() {

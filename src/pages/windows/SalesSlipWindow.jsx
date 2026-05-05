@@ -22,6 +22,7 @@ export default function SalesSlipWindow() {
     const newSlip = result.data;
     setErrorMessage("");
     setSuccessMessage(`${newSlip.slipNo} numaralı satış fişi kaydedildi.`);
+    return result;
   }
 
   return (

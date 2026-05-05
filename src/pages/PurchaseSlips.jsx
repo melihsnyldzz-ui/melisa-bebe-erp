@@ -58,11 +58,16 @@ export default function PurchaseSlips() {
 
   async function handleSaveSlip(slipPayload) {
     const result = await savePurchaseSlip(slipPayload);
-    if (!result.ok) return;
+    if (!result.ok) {
+      setSuccessMessage("");
+      setErrorMessage(result.error);
+      return result;
+    }
     const newSlip = result.data;
     setErrorMessage("");
     setSuccessMessage(`${newSlip.slipNo} numaralı alış fişi kaydedildi.`);
     setSelectedSlip(newSlip);
+    return result;
   }
 
   function handleOpenWindow() {

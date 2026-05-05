@@ -62,7 +62,7 @@ export function ErpDataProvider({ children }) {
       const result = await erp.savePurchaseSlip(slipPayload);
       if (!result.ok) return result;
       applyInitialData(result.data);
-      return { ok: true, data: result.data.purchaseSlips.find((slip) => slip.slipNo === slipPayload.slipNo) };
+      return { ok: true, data: result.record || findSavedSlip(result.data.purchaseSlips, slipPayload.slipNo) };
     }
 
     const newSlip = createRecord(slipPayload, { status: "Kayıtlı" });
@@ -88,16 +88,16 @@ export function ErpDataProvider({ children }) {
   }
 
   async function saveSalesSlip(slipPayload) {
-    if (salesSlips.some((slip) => slip.slipNo === slipPayload.slipNo)) {
-      return { ok: false, error: `${slipPayload.slipNo} numaralı satış fişi zaten kayıtlı. Lütfen tekrar deneyin.` };
-    }
-
     const erp = getDesktopErp();
     if (erp) {
       const result = await erp.saveSalesSlip(slipPayload);
       if (!result.ok) return result;
       applyInitialData(result.data);
-      return { ok: true, data: result.data.salesSlips.find((slip) => slip.slipNo === slipPayload.slipNo) };
+      return { ok: true, data: result.record || findSavedSlip(result.data.salesSlips, slipPayload.slipNo) };
+    }
+
+    if (salesSlips.some((slip) => slip.slipNo === slipPayload.slipNo)) {
+      return { ok: false, error: `${slipPayload.slipNo} numaralı satış fişi zaten kayıtlı. Lütfen tekrar deneyin.` };
     }
 
     const shortage = findStockShortage(slipPayload.items, products);
@@ -569,6 +569,10 @@ function createRecord(payload, extraFields = {}) {
     id: Date.now(),
     createdAt: new Date().toISOString(),
   };
+}
+
+function findSavedSlip(slips, requestedSlipNo) {
+  return slips.find((slip) => slip.slipNo === requestedSlipNo) || slips[0] || null;
 }
 
 function getDesktopErp() {
