@@ -417,6 +417,61 @@ export function ErpDataProvider({ children }) {
     );
   }
 
+  async function applyStockCountAdjustment(adjustmentPayload) {
+    const erp = getDesktopErp();
+    if (erp?.applyStockCountAdjustment) {
+      const result = await erp.applyStockCountAdjustment(adjustmentPayload);
+      if (result.ok) applyInitialData(result.data);
+      return result;
+    }
+
+    const validationError = validateStockAdjustmentPayload(adjustmentPayload);
+    if (validationError) return { ok: false, error: validationError };
+
+    const now = new Date().toISOString();
+    const referenceNo = buildStockCountReference(now);
+    const movementRows = [];
+    const productMap = new Map(products.map((product) => [Number(product.id), product]));
+
+    for (const item of adjustmentPayload.items) {
+      const product = productMap.get(Number(item.productId));
+      if (!product) return { ok: false, error: `${item.productName || "Ürün"} bulunamadı.` };
+
+      const countedQuantity = Math.max(0, Number(item.countedQuantity) || 0);
+      const actualDifference = countedQuantity - (Number(product.stockQuantity) || 0);
+      if (actualDifference === 0) continue;
+
+      movementRows.push({
+        id: Date.now() + movementRows.length,
+        date: adjustmentPayload.date,
+        productId: product.id,
+        productCode: product.code || item.productCode || "",
+        barcode: product.barcode || item.barcode || "",
+        productName: product.name || item.productName || "",
+        size: product.size || item.size || "",
+        color: product.color || item.color || "",
+        movementType: actualDifference > 0 ? "Sayım Fazlası" : "Sayım Eksiği",
+        quantityIn: actualDifference > 0 ? actualDifference : 0,
+        quantityOut: actualDifference < 0 ? Math.abs(actualDifference) : 0,
+        remainingStock: countedQuantity,
+        relatedSlipNo: referenceNo,
+        relatedPartyName: "Barkodlu Stok Sayım",
+        createdBy: "Sayım",
+        createdAt: now,
+      });
+    }
+
+    setProducts((currentProducts) =>
+      currentProducts.map((product) => {
+        const adjustment = adjustmentPayload.items.find((item) => Number(item.productId) === Number(product.id));
+        return adjustment ? { ...product, stockQuantity: Math.max(0, Number(adjustment.countedQuantity) || 0), updatedAt: now } : product;
+      }),
+    );
+    setStockMovements((currentMovements) => [...movementRows, ...currentMovements]);
+
+    return { ok: true, data: { referenceNo, adjustedCount: movementRows.length } };
+  }
+
   async function exportDatabaseBackup(targetDirectory) {
     const erp = getDesktopErp();
     if (!erp?.exportDatabaseBackup) {
@@ -509,6 +564,7 @@ export function ErpDataProvider({ children }) {
       updateSupplier,
       addSupplier,
       toggleSupplierStatus,
+      applyStockCountAdjustment,
       exportDatabaseBackup,
       refreshAppSettings,
       startLiveMode,
@@ -725,4 +781,19 @@ function buildSalesCancelStockMovements(slip, products) {
       createdBy: "İptal",
     };
   });
+}
+
+function validateStockAdjustmentPayload(payload) {
+  if (!payload?.date) return "Sayım tarihi bulunamadı.";
+  if (!Array.isArray(payload.items) || payload.items.length === 0) return "Düzeltilecek sayım farkı bulunamadı.";
+
+  const invalidItem = payload.items.find((item) => !item.productId || Number(item.countedQuantity) < 0);
+  if (invalidItem) return "Sayım satırlarında geçersiz ürün veya negatif miktar var.";
+
+  return "";
+}
+
+function buildStockCountReference(value = new Date().toISOString()) {
+  const normalized = value.replace(/\D/g, "").slice(0, 14);
+  return `STOCK-COUNT-${normalized}`;
 }

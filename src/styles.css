@@ -741,6 +741,11 @@ button {
   justify-content: flex-end;
 }
 
+.stock-adjustment-action:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
 .stock-count-summary-grid {
   grid-template-columns: repeat(6, minmax(0, 1fr));
   margin-bottom: 14px;
@@ -782,6 +787,54 @@ button {
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   font-size: 0.82rem;
   line-height: 1.45;
+}
+
+.stock-adjustment-modal {
+  width: min(720px, 100%);
+}
+
+.stock-adjustment-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  padding: 18px 20px 0;
+}
+
+.stock-adjustment-summary div {
+  display: grid;
+  gap: 6px;
+  min-height: 78px;
+  align-content: center;
+  padding: 13px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfbfc;
+}
+
+.stock-adjustment-summary span {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.stock-adjustment-summary strong {
+  color: var(--anthracite);
+  font-size: 1.08rem;
+}
+
+.stock-adjustment-warning,
+.stock-adjustment-backup-note {
+  margin: 14px 20px 0;
+}
+
+.stock-adjustment-backup-note {
+  color: #8a5800;
+  border-color: rgba(180, 117, 0, 0.22);
+  background: #fff8ea;
+}
+
+.stock-adjustment-modal .modal-actions {
+  padding: 16px 20px 20px;
 }
 
 .reports-grid {
@@ -2347,6 +2400,7 @@ tr:last-child td {
   .slip-detail-line,
   .report-list-row,
   .receivable-payable-grid,
+  .stock-adjustment-summary,
   .settings-form-grid {
     grid-template-columns: 1fr;
   }

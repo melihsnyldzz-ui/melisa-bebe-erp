@@ -28,6 +28,7 @@ contextBridge.exposeInMainWorld("electronAPI", {
     cancelSalesSlip: (id) => ipcRenderer.invoke("erp:cancel-sales-slip", id),
     cancelCollection: (id) => ipcRenderer.invoke("erp:cancel-collection", id),
     cancelPayment: (id) => ipcRenderer.invoke("erp:cancel-payment", id),
+    applyStockCountAdjustment: (payload) => ipcRenderer.invoke("erp:apply-stock-count-adjustment", payload),
     addProduct: (payload) => ipcRenderer.invoke("erp:add-product", payload),
     updateProduct: (payload) => ipcRenderer.invoke("erp:update-product", payload),
     toggleProductStatus: (id) => ipcRenderer.invoke("erp:toggle-product-status", id),

@@ -19,6 +19,7 @@ function createRepositories(db, options = {}) {
   const cancelSalesTransaction = db.transaction((id) => cancelSalesSlipTx(db, id));
   const cancelCollectionTransaction = db.transaction((id) => cancelCollectionTx(db, id));
   const cancelPaymentTransaction = db.transaction((id) => cancelPaymentTx(db, id));
+  const stockCountAdjustmentTransaction = db.transaction((payload) => applyStockCountAdjustmentTx(db, payload));
 
   return {
     getAllProducts: () => rowsToBooleans(db.prepare("SELECT * FROM products ORDER BY id DESC").all()),
@@ -53,6 +54,7 @@ function createRepositories(db, options = {}) {
     cancelSalesSlip: (id) => wrapMutation(() => cancelSalesTransaction(id), db),
     cancelCollection: (id) => wrapMutation(() => cancelCollectionTransaction(id), db),
     cancelPayment: (id) => wrapMutation(() => cancelPaymentTransaction(id), db),
+    applyStockCountAdjustment: (payload) => wrapMutation(() => stockCountAdjustmentTransaction(payload), db),
     addProduct: (payload) => wrapMutation(() => addProductTx(db, payload), db),
     updateProduct: (payload) => wrapMutation(() => updateProductTx(db, payload), db),
     toggleProductStatus: (id) => wrapMutation(() => toggleStatusTx(db, "products", id), db),
@@ -437,6 +439,59 @@ function cancelPaymentTx(db, paymentId) {
   `).run(payment.amount, payment.amount, now, payment.supplierId);
 }
 
+function applyStockCountAdjustmentTx(db, payload) {
+  const validationError = validateStockAdjustmentPayload(payload);
+  if (validationError) throw new Error(validationError);
+
+  const now = new Date().toISOString();
+  const referenceNo = buildStockCountReference(now);
+  const getProduct = db.prepare("SELECT * FROM products WHERE id = ?");
+  const updateStock = db.prepare("UPDATE products SET stockQuantity = ?, updatedAt = ? WHERE id = ?");
+  const insertMovement = db.prepare(`
+    INSERT INTO stock_movements (
+      date, productId, productCode, barcode, productName, size, color, movementType,
+      quantityIn, quantityOut, remainingStock, relatedSlipNo, relatedPartyName, createdBy, createdAt
+    )
+    VALUES (
+      @date, @productId, @productCode, @barcode, @productName, @size, @color, @movementType,
+      @quantityIn, @quantityOut, @remainingStock, @relatedSlipNo, @relatedPartyName, 'Sayım', @createdAt
+    )
+  `);
+
+  let adjustedCount = 0;
+
+  payload.items.forEach((item) => {
+    const product = getProduct.get(item.productId);
+    if (!product) throw new Error(`${item.productName || "Ürün"} bulunamadı.`);
+
+    const countedQuantity = Math.max(0, Number(item.countedQuantity) || 0);
+    const currentDbStock = Number(product.stockQuantity) || 0;
+    const actualDifference = countedQuantity - currentDbStock;
+    if (actualDifference === 0) return;
+
+    updateStock.run(countedQuantity, now, product.id);
+    insertMovement.run({
+      date: payload.date,
+      productId: product.id,
+      productCode: product.code || item.productCode || "",
+      barcode: product.barcode || item.barcode || "",
+      productName: product.name || item.productName || "",
+      size: product.size || item.size || "",
+      color: product.color || item.color || "",
+      movementType: actualDifference > 0 ? "Sayım Fazlası" : "Sayım Eksiği",
+      quantityIn: actualDifference > 0 ? actualDifference : 0,
+      quantityOut: actualDifference < 0 ? Math.abs(actualDifference) : 0,
+      remainingStock: countedQuantity,
+      relatedSlipNo: referenceNo,
+      relatedPartyName: "Barkodlu Stok Sayım",
+      createdAt: now,
+    });
+    adjustedCount += 1;
+  });
+
+  return { referenceNo, adjustedCount };
+}
+
 function addProductTx(db, payload) {
   const now = new Date().toISOString();
   const product = normalizeProductPayload(payload, { now });
@@ -675,6 +730,21 @@ function parseDocumentSequence(documentNo, prefix, year) {
 
 function formatDocumentNo(prefix, year, sequence) {
   return `${prefix}-${year}-${String(sequence).padStart(6, "0")}`;
+}
+
+function validateStockAdjustmentPayload(payload) {
+  if (!payload?.date) return "Sayım tarihi bulunamadı.";
+  if (!Array.isArray(payload.items) || payload.items.length === 0) return "Düzeltilecek sayım farkı bulunamadı.";
+
+  const invalidItem = payload.items.find((item) => !item.productId || Number(item.countedQuantity) < 0);
+  if (invalidItem) return "Sayım satırlarında geçersiz ürün veya negatif miktar var.";
+
+  return "";
+}
+
+function buildStockCountReference(value = new Date().toISOString()) {
+  const normalized = value.replace(/\D/g, "").slice(0, 14);
+  return `STOCK-COUNT-${normalized}`;
 }
 
 function parseItemsJson(value) {

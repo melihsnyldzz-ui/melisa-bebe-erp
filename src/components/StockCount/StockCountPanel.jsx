@@ -1,24 +1,32 @@
-import { Barcode, FileJson, RotateCcw } from "lucide-react";
+import { Barcode, FileJson, RotateCcw, ShieldCheck } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { findProductByCodeOrBarcode, normalizeLookupValue } from "../../utils/productLookup.js";
+import {
+  buildStockAdjustmentPayload,
+  buildStockAdjustmentSummary,
+  getAdjustableStockCountItems,
+} from "../../utils/stockAdjustmentUtils.js";
 import {
   buildStockCountReport,
   buildStockCountSummary,
   calculateStockCountLine,
   createStockCountLine,
 } from "../../utils/stockCountUtils.js";
+import StockCountAdjustmentConfirm from "./StockCountAdjustmentConfirm.jsx";
 import StockCountItemsTable from "./StockCountItemsTable.jsx";
 import StockCountSummary from "./StockCountSummary.jsx";
 
 const BOUNCE_GUARD_MS = 450;
 
-export default function StockCountPanel({ products }) {
+export default function StockCountPanel({ onApplyStockCountAdjustment, products }) {
   const [barcodeValue, setBarcodeValue] = useState("");
   const [filter, setFilter] = useState("all");
   const [message, setMessage] = useState(null);
   const [report, setReport] = useState(null);
   const [search, setSearch] = useState("");
   const [items, setItems] = useState([]);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [isAdjusting, setIsAdjusting] = useState(false);
   const inputRef = useRef(null);
   const lastAcceptedScanRef = useRef({ normalizedValue: "", time: 0 });
 
@@ -27,7 +35,10 @@ export default function StockCountPanel({ products }) {
   }, []);
 
   const summary = useMemo(() => buildStockCountSummary(items), [items]);
+  const adjustableItems = useMemo(() => getAdjustableStockCountItems(items), [items]);
+  const adjustmentSummary = useMemo(() => buildStockAdjustmentSummary(adjustableItems), [adjustableItems]);
   const filteredItems = useMemo(() => filterItems(items, filter, search), [filter, items, search]);
+  const canApplyAdjustment = adjustableItems.length > 0 && !isAdjusting;
 
   function handleBarcodeSubmit(event) {
     event.preventDefault();
@@ -105,13 +116,42 @@ export default function StockCountPanel({ products }) {
     setReport(null);
     setSearch("");
     lastAcceptedScanRef.current = { normalizedValue: "", time: 0 };
+    setIsConfirmOpen(false);
     focusInput();
   }
 
   function prepareReport() {
     const payload = buildStockCountReport(items);
     setReport(payload);
-    setMessage({ type: "success", text: "Sayım raporu hazırlandı. Bu sürümde stoklar güncellenmez." });
+    setMessage({ type: "success", text: "Sayım raporu hazırlandı." });
+  }
+
+  function openAdjustmentConfirm() {
+    if (!canApplyAdjustment) return;
+    setIsConfirmOpen(true);
+  }
+
+  async function applyAdjustment() {
+    if (!onApplyStockCountAdjustment || !canApplyAdjustment) return;
+
+    setIsAdjusting(true);
+    const payload = buildStockAdjustmentPayload(items);
+    const result = await onApplyStockCountAdjustment(payload);
+    setIsAdjusting(false);
+
+    if (!result?.ok) {
+      setMessage({ type: "error", text: result?.error || "Stok düzeltme işlemi tamamlanamadı." });
+      setIsConfirmOpen(false);
+      focusInput();
+      return;
+    }
+
+    setMessage({ type: "success", text: "Stoklar sayım sonucuna göre düzeltildi." });
+    setItems([]);
+    setReport(null);
+    setIsConfirmOpen(false);
+    lastAcceptedScanRef.current = { normalizedValue: "", time: 0 };
+    focusInput();
   }
 
   function isBounceScan(normalizedValue) {
@@ -186,6 +226,10 @@ export default function StockCountPanel({ products }) {
             <FileJson size={18} />
             Sayım Raporunu Hazırla
           </button>
+          <button className="primary-action stock-adjustment-action" type="button" onClick={openAdjustmentConfirm} disabled={!canApplyAdjustment}>
+            <ShieldCheck size={18} />
+            Stokları Sayıma Göre Düzelt
+          </button>
         </div>
       </section>
 
@@ -198,7 +242,7 @@ export default function StockCountPanel({ products }) {
           <h2>Sayım Raporu</h2>
         </div>
         <p className="form-note stock-count-note">
-          Bu sürüm yalnızca sayım raporu oluşturur. Stok düzeltme işlemi sonraki sürümde onaylı şekilde eklenecektir.
+          Bu sürüm sayım raporu oluşturur. Stok düzeltme işlemi yalnızca onay modalından sonra ürün stoklarını günceller.
         </p>
         {report ? (
           <pre className="stock-count-report-preview">{JSON.stringify(report, null, 2)}</pre>
@@ -206,6 +250,14 @@ export default function StockCountPanel({ products }) {
           <p className="empty-table-text">Rapor payload’ını görmek için “Sayım Raporunu Hazırla” butonunu kullanın.</p>
         )}
       </section>
+
+      <StockCountAdjustmentConfirm
+        open={isConfirmOpen}
+        summary={adjustmentSummary}
+        isSaving={isAdjusting}
+        onCancel={() => setIsConfirmOpen(false)}
+        onConfirm={applyAdjustment}
+      />
     </>
   );
 }

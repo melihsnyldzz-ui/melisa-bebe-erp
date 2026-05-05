@@ -42,20 +42,16 @@ function buildStockResults(products, stockMovements) {
     const key = getProductKey(movement);
     if (!key) return map;
 
-    const current = map.get(key) || { quantityIn: 0, quantityOut: 0, movementCount: 0 };
-    map.set(key, {
-      quantityIn: current.quantityIn + toNumber(movement.quantityIn),
-      quantityOut: current.quantityOut + toNumber(movement.quantityOut),
-      movementCount: current.movementCount + 1,
-    });
+    const current = map.get(key) || [];
+    map.set(key, [...current, movement]);
     return map;
   }, new Map());
 
   return products.map((product) => {
-    const movementTotals = movementMap.get(getProductKey(product));
+    const movements = movementMap.get(getProductKey(product));
     const cardStock = toNumber(product.stockQuantity);
 
-    if (!movementTotals) {
+    if (!movements?.length) {
       return {
         id: product.id,
         productName: product.name,
@@ -68,7 +64,7 @@ function buildStockResults(products, stockMovements) {
       };
     }
 
-    const calculatedStock = movementTotals.quantityIn - movementTotals.quantityOut;
+    const calculatedStock = calculateStockFromMovements(movements);
     const difference = cardStock - calculatedStock;
 
     return {
@@ -82,6 +78,37 @@ function buildStockResults(products, stockMovements) {
       status: difference === 0 ? "ok" : "difference",
     };
   });
+}
+
+function calculateStockFromMovements(movements) {
+  const sortedMovements = [...movements].sort(compareMovementsAsc);
+  const latestCountIndex = findLatestCountMovementIndex(sortedMovements);
+  const calculationStartIndex = latestCountIndex >= 0 ? latestCountIndex + 1 : 0;
+  const baselineStock = latestCountIndex >= 0 ? toNumber(sortedMovements[latestCountIndex].remainingStock) : 0;
+
+  return sortedMovements.slice(calculationStartIndex).reduce(
+    (stock, movement) => stock + toNumber(movement.quantityIn) - toNumber(movement.quantityOut),
+    baselineStock,
+  );
+}
+
+function findLatestCountMovementIndex(movements) {
+  for (let index = movements.length - 1; index >= 0; index -= 1) {
+    if (isStockCountAdjustmentMovement(movements[index])) return index;
+  }
+
+  return -1;
+}
+
+function isStockCountAdjustmentMovement(movement) {
+  return ["Sayım Fazlası", "Sayım Eksiği"].includes(movement.movementType);
+}
+
+function compareMovementsAsc(first, second) {
+  const firstTime = new Date(first.createdAt || first.date || 0).getTime();
+  const secondTime = new Date(second.createdAt || second.date || 0).getTime();
+  if (firstTime !== secondTime) return firstTime - secondTime;
+  return toNumber(first.id) - toNumber(second.id);
 }
 
 function buildCustomerResults(customers, salesSlips, collections) {

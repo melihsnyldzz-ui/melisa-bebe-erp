@@ -1,6 +1,6 @@
 import { RotateCcw, Search } from "lucide-react";
 
-const movementTypes = ["Alış Girişi", "Satış Çıkışı", "İade Girişi", "İade Çıkışı", "Sayım Farkı", "Transfer"];
+const movementTypes = ["Alış Girişi", "Satış Çıkışı", "İade Girişi", "İade Çıkışı", "Sayım Farkı", "Sayım Fazlası", "Sayım Eksiği", "Transfer"];
 
 export default function StockMovementFilters({ filters, products, onChange, onReset }) {
   function updateFilter(key, value) {
