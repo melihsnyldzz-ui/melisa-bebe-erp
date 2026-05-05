@@ -88,6 +88,10 @@ export function ErpDataProvider({ children }) {
   }
 
   async function saveSalesSlip(slipPayload) {
+    if (salesSlips.some((slip) => slip.slipNo === slipPayload.slipNo)) {
+      return { ok: false, error: `${slipPayload.slipNo} numaralı satış fişi zaten kayıtlı. Lütfen tekrar deneyin.` };
+    }
+
     const erp = getDesktopErp();
     if (erp) {
       const result = await erp.saveSalesSlip(slipPayload);

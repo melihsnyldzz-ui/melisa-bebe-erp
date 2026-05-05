@@ -55,7 +55,7 @@ export default function SalesSlips() {
     ];
   }, [salesSlips]);
 
-  async function handleSaveSlip(slipPayload) {
+  async function handleSaveSlip(slipPayload, options = {}) {
     const result = await saveSalesSlip(slipPayload);
     if (!result.ok) {
       setSuccessMessage("");
@@ -66,7 +66,9 @@ export default function SalesSlips() {
     const newSlip = result.data;
     setErrorMessage("");
     setSuccessMessage(`${newSlip.slipNo} numaralı satış fişi kaydedildi.`);
-    setSelectedSlip(newSlip);
+    if (options.source !== "quickBarcodeSale") {
+      setSelectedSlip(newSlip);
+    }
     return result;
   }
 
@@ -117,7 +119,12 @@ export default function SalesSlips() {
 
       {canEditSalesSlips && (
         <>
-          <QuickBarcodeSalePanel customers={customers} nextSlipNo={nextSlipNo} products={products} onSave={handleSaveSlip} />
+          <QuickBarcodeSalePanel
+            customers={customers}
+            getCurrentSlipNo={() => getNextSalesSlipNo(salesSlips)}
+            products={products}
+            onSave={handleSaveSlip}
+          />
           <SalesSlipForm nextSlipNo={nextSlipNo} products={products} customers={customers} onSave={handleSaveSlip} />
         </>
       )}

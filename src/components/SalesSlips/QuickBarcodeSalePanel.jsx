@@ -6,7 +6,7 @@ import { findProductByCodeOrBarcode, normalizeLookupValue } from "../../utils/pr
 
 const BOUNCE_GUARD_MS = 400;
 
-export default function QuickBarcodeSalePanel({ customers, nextSlipNo, onSave, products }) {
+export default function QuickBarcodeSalePanel({ customers, getCurrentSlipNo, onSave, products }) {
   const [customerId, setCustomerId] = useState("");
   const [barcodeValue, setBarcodeValue] = useState("");
   const [items, setItems] = useState([]);
@@ -19,6 +19,22 @@ export default function QuickBarcodeSalePanel({ customers, nextSlipNo, onSave, p
     focusInput();
   }, []);
 
+  useEffect(() => {
+    setItems((currentItems) =>
+      currentItems.map((item) => {
+        const currentProduct = products.find((product) => product.id === item.productId);
+        if (!currentProduct) return item;
+
+        return {
+          ...item,
+          availableStock: Number(currentProduct.stockQuantity) || 0,
+          unitPrice: Number(currentProduct.salePrice) || item.unitPrice,
+        };
+      }),
+    );
+  }, [products]);
+
+  const activeCustomers = useMemo(() => customers.filter((customer) => customer.isActive !== false), [customers]);
   const totals = useMemo(() => calculateTotals(items), [items]);
   const hasStockWarning = items.some((item) => item.quantity > item.availableStock);
 
@@ -37,13 +53,20 @@ export default function QuickBarcodeSalePanel({ customers, nextSlipNo, onSave, p
       return;
     }
 
-    const product = findProductByCodeOrBarcode(products, normalizedValue);
-    if (!product) {
+    const matchedProduct = findProductByCodeOrBarcode(products, normalizedValue);
+    if (!matchedProduct) {
       setMessage({ type: "error", text: "Ürün bulunamadı." });
       focusInput();
       return;
     }
 
+    if (matchedProduct.isActive === false) {
+      setMessage({ type: "error", text: "Bu ürün pasif durumda, satışa eklenemez." });
+      focusInput();
+      return;
+    }
+
+    const product = findProductByCodeOrBarcode(products, normalizedValue, { activeOnly: true });
     const result = addProductToItems(product);
     if (!result.ok) {
       setMessage({ type: "error", text: result.error });
@@ -144,7 +167,7 @@ export default function QuickBarcodeSalePanel({ customers, nextSlipNo, onSave, p
   }
 
   async function handleSaveSale() {
-    const customer = customers.find((item) => item.id === Number(customerId));
+    const customer = activeCustomers.find((item) => item.id === Number(customerId));
     if (!customer) {
       setMessage({ type: "error", text: "Müşteri seçin." });
       focusInput();
@@ -163,20 +186,32 @@ export default function QuickBarcodeSalePanel({ customers, nextSlipNo, onSave, p
       return;
     }
 
+    const stockValidation = validateItemsAgainstCurrentProducts(items, products);
+    if (!stockValidation.ok) {
+      syncItemStocks();
+      setMessage({ type: "error", text: stockValidation.error });
+      focusInput();
+      return;
+    }
+
     setIsSaving(true);
-    const result = await onSave({
-      slipNo: nextSlipNo,
-      date: getTodayISO(),
-      customerId: customer.id,
-      customerName: customer.name,
-      saleType: "Hızlı Barkodlu Satış",
-      cargoInfo: "",
-      items,
-      subtotal: totals.subtotal,
-      discountTotal: totals.discountTotal,
-      grandTotal: totals.grandTotal,
-      description: "Barkodlu hızlı satış ekranından kaydedildi.",
-    });
+    const currentSlipNo = getCurrentSlipNo();
+    const result = await onSave(
+      {
+        slipNo: currentSlipNo,
+        date: getTodayISO(),
+        customerId: customer.id,
+        customerName: customer.name,
+        saleType: "Hızlı Barkodlu Satış",
+        cargoInfo: "",
+        items,
+        subtotal: totals.subtotal,
+        discountTotal: totals.discountTotal,
+        grandTotal: totals.grandTotal,
+        description: "Barkodlu hızlı satış ekranından kaydedildi.",
+      },
+      { source: "quickBarcodeSale" },
+    );
     setIsSaving(false);
 
     if (result && !result.ok) {
@@ -186,7 +221,16 @@ export default function QuickBarcodeSalePanel({ customers, nextSlipNo, onSave, p
     }
 
     resetPanel();
-    setMessage({ type: "success", text: "Satış fişi kaydedildi." });
+    setMessage({ type: "success", text: `${currentSlipNo} numaralı satış fişi kaydedildi.` });
+  }
+
+  function syncItemStocks() {
+    setItems((currentItems) =>
+      currentItems.map((item) => {
+        const currentProduct = products.find((product) => product.id === item.productId);
+        return currentProduct ? { ...item, availableStock: Number(currentProduct.stockQuantity) || 0 } : item;
+      }),
+    );
   }
 
   function isBounceScan(normalizedValue) {
@@ -218,7 +262,7 @@ export default function QuickBarcodeSalePanel({ customers, nextSlipNo, onSave, p
           <span>Müşteri</span>
           <select value={customerId} onChange={(event) => setCustomerId(event.target.value)}>
             <option value="">Müşteri seç</option>
-            {customers.map((customer) => (
+            {activeCustomers.map((customer) => (
               <option value={customer.id} key={customer.id}>
                 {customer.name}
               </option>
@@ -309,7 +353,7 @@ function QuickSaleItemsTable({ items, onRemoveItem, onUpdateItem }) {
               <td>{item.color || "-"}</td>
               <td>
                 <input
-                  className="line-input"
+                  className={`line-input ${item.quantity > item.availableStock ? "line-input-danger" : ""}`}
                   min="1"
                   max={item.availableStock}
                   type="number"
@@ -341,6 +385,22 @@ function QuickSaleItemsTable({ items, onRemoveItem, onUpdateItem }) {
       {items.length === 0 && <p className="empty-table-text">Hızlı satışa ürün eklemek için barkod okutun.</p>}
     </div>
   );
+}
+
+function validateItemsAgainstCurrentProducts(items, products) {
+  for (const item of items) {
+    const currentProduct = products.find((product) => product.id === item.productId);
+    const availableStock = Number(currentProduct?.stockQuantity) || 0;
+
+    if (!currentProduct || item.quantity > availableStock) {
+      return {
+        ok: false,
+        error: `Stok güncellendi. ${item.productName} için mevcut stok: ${availableStock}`,
+      };
+    }
+  }
+
+  return { ok: true };
 }
 
 function calculateLine(item) {
