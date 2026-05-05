@@ -3,6 +3,8 @@ import { Clock3, FilePlus2, ReceiptText, ShoppingBag, WalletCards } from "lucide
 import KpiCard from "../components/Dashboard/KpiCard.jsx";
 import QuickBarcodeSalePanel from "../components/SalesSlips/QuickBarcodeSalePanel.jsx";
 import SalesSlipForm from "../components/SalesSlips/SalesSlipForm.jsx";
+import SalesSlipPrintActions from "../components/SalesSlips/SalesSlipPrintActions.jsx";
+import SalesSlipPrintPreview from "../components/SalesSlips/SalesSlipPrintPreview.jsx";
 import SalesSlipTable from "../components/SalesSlips/SalesSlipTable.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useErpData } from "../context/ErpDataContext.jsx";
@@ -18,6 +20,7 @@ export default function SalesSlips() {
   const canEditSalesSlips = hasPermission("salesSlips.edit");
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [printSlip, setPrintSlip] = useState(null);
   const [selectedSlip, setSelectedSlip] = useState(null);
 
   const nextSlipNo = useMemo(() => getNextSalesSlipNo(salesSlips), [salesSlips]);
@@ -39,6 +42,15 @@ export default function SalesSlips() {
       setSelectedSlip(currentSlip);
     }
   }, [salesSlips, selectedSlip]);
+
+  useEffect(() => {
+    if (!printSlip) return;
+
+    const currentSlip = salesSlips.find((slip) => slip.id === printSlip.id);
+    if (currentSlip && currentSlip !== printSlip) {
+      setPrintSlip(currentSlip);
+    }
+  }, [printSlip, salesSlips]);
 
   const summaryCards = useMemo(() => {
     const today = getTodayISO();
@@ -90,6 +102,18 @@ export default function SalesSlips() {
     setErrorMessage("");
     setSuccessMessage(`${slip.slipNo} numaralı satış fişi iptal edildi.`);
     setSelectedSlip({ ...slip, status: "İptal" });
+    if (printSlip?.id === slip.id) {
+      setPrintSlip({ ...slip, status: "İptal" });
+    }
+  }
+
+  function handleOpenPrintPreview(slip) {
+    setSelectedSlip(slip);
+    setPrintSlip(slip);
+  }
+
+  function handlePrintSlip() {
+    window.print();
   }
 
   return (
@@ -133,8 +157,16 @@ export default function SalesSlips() {
         slips={salesSlips}
         selectedSlip={selectedSlip}
         onCancel={handleCancelSalesSlip}
+        onOpenPrintPreview={handleOpenPrintPreview}
         onViewDetail={setSelectedSlip}
       />
+
+      {printSlip && (
+        <>
+          <SalesSlipPrintActions onClose={() => setPrintSlip(null)} onPrint={handlePrintSlip} />
+          <SalesSlipPrintPreview slip={printSlip} />
+        </>
+      )}
     </>
   );
 }

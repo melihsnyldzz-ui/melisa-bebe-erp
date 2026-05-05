@@ -1,8 +1,8 @@
-import { Eye, ReceiptText, XCircle } from "lucide-react";
+import { Eye, Printer, ReceiptText, XCircle } from "lucide-react";
 import { formatDateTR } from "../../utils/dateUtils.js";
 import { formatCurrency } from "../../utils/formatters.js";
 
-export default function SalesSlipTable({ canCancel = true, slips, selectedSlip, onCancel, onViewDetail }) {
+export default function SalesSlipTable({ canCancel = true, slips, selectedSlip, onCancel, onOpenPrintPreview, onViewDetail }) {
   const selectedItems = selectedSlip?.items || [];
 
   return (
@@ -44,6 +44,14 @@ export default function SalesSlipTable({ canCancel = true, slips, selectedSlip, 
                     <div className="table-actions">
                       <button className="icon-button small" aria-label="Fiş detayı görüntüle" onClick={() => onViewDetail(slip)}>
                         <Eye size={16} />
+                      </button>
+                      <button
+                        className="icon-button small"
+                        aria-label="Yazdırma önizleme"
+                        onClick={() => onOpenPrintPreview(slip)}
+                        title="Yazdırma Önizleme"
+                      >
+                        <Printer size={16} />
                       </button>
                       {canCancel && (
                         <button

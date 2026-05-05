@@ -1440,6 +1440,169 @@ button {
   color: var(--text);
 }
 
+.print-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.sales-slip-print-panel {
+  margin-top: 14px;
+  background: #fff;
+}
+
+.print-document {
+  display: grid;
+  gap: 18px;
+  color: var(--text);
+}
+
+.print-header {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-bottom: 14px;
+  border-bottom: 2px solid var(--text);
+}
+
+.print-header h2,
+.print-header p {
+  margin: 0;
+}
+
+.print-header h2 {
+  font-size: 1.15rem;
+}
+
+.print-header p {
+  margin-top: 4px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.print-document-title {
+  display: grid;
+  gap: 5px;
+  justify-items: end;
+  min-width: 180px;
+}
+
+.print-document-title span {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.print-document-title strong {
+  color: var(--red-dark);
+  font-size: 1.2rem;
+}
+
+.print-document-title b {
+  padding: 5px 9px;
+  border: 2px solid var(--red-dark);
+  border-radius: 8px;
+  color: var(--red-dark);
+  font-size: 0.86rem;
+}
+
+.print-info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.print-info-grid div {
+  display: grid;
+  gap: 4px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfbfc;
+}
+
+.print-info-grid span,
+.print-description span,
+.print-totals span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.print-info-grid strong {
+  color: var(--text);
+  font-size: 0.92rem;
+}
+
+.print-table-wrap {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.print-slip-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.print-slip-table th,
+.print-slip-table td {
+  padding: 9px 8px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.print-slip-table th {
+  background: #f5f6f8;
+  color: var(--muted);
+  font-size: 0.74rem;
+  text-transform: uppercase;
+}
+
+.print-footer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.4fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.print-description {
+  display: grid;
+  gap: 7px;
+  min-height: 86px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfbfc;
+}
+
+.print-description p {
+  margin: 0;
+  font-weight: 750;
+}
+
+.print-totals {
+  display: grid;
+  gap: 8px;
+}
+
+.print-totals div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.print-total-strong {
+  color: var(--red-dark);
+  font-size: 1.08rem;
+}
+
 .slip-detail-line {
   display: grid;
   grid-template-columns: minmax(180px, 1fr) minmax(220px, 1.2fr) auto;
@@ -2089,5 +2252,92 @@ tr:last-child td {
   th,
   td {
     padding: 10px 8px;
+  }
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+
+  body {
+    background: #fff !important;
+  }
+
+  body * {
+    visibility: hidden !important;
+  }
+
+  .print-area,
+  .print-area * {
+    visibility: visible !important;
+  }
+
+  .no-print,
+  .no-print * {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  .print-area {
+    position: absolute !important;
+    inset: 0 auto auto 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    background: #fff !important;
+    overflow: visible !important;
+  }
+
+  .print-document {
+    gap: 12px !important;
+    color: #111 !important;
+  }
+
+  .print-header,
+  .print-info-grid div,
+  .print-description,
+  .print-table-wrap {
+    border-color: #222 !important;
+    background: #fff !important;
+  }
+
+  .print-info-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  .print-slip-table {
+    font-size: 10px !important;
+  }
+
+  .print-slip-table th,
+  .print-slip-table td {
+    padding: 5px 4px !important;
+    border-color: #333 !important;
+    color: #111 !important;
+  }
+
+  .print-slip-table th {
+    background: #fff !important;
+  }
+
+  .print-footer {
+    grid-template-columns: 1fr 260px !important;
+  }
+
+  .app-shell,
+  .sidebar,
+  .topbar,
+  .page-title,
+  .kpi-grid,
+  .quick-sale-panel,
+  .purchase-form-panel,
+  .purchase-list-panel,
+  .success-message,
+  .error-message {
+    box-shadow: none !important;
   }
 }
