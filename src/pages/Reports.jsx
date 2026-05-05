@@ -1,3 +1,4 @@
+import DataIntegrityPanel from "../components/Reports/DataIntegrityPanel.jsx";
 import CriticalStockReport from "../components/Reports/CriticalStockReport.jsx";
 import ReceivablePayableReport from "../components/Reports/ReceivablePayableReport.jsx";
 import ReportSummaryCards from "../components/Reports/ReportSummaryCards.jsx";
@@ -5,6 +6,7 @@ import SalesPurchaseChart from "../components/Reports/SalesPurchaseChart.jsx";
 import TopProductsReport from "../components/Reports/TopProductsReport.jsx";
 import { useErpData } from "../context/ErpDataContext.jsx";
 import { formatDateTR, getTodayISO } from "../utils/dateUtils.js";
+import { buildDataIntegrityReport } from "../utils/dataIntegrity.js";
 
 export default function Reports() {
   const erpData = useErpData();
@@ -29,6 +31,8 @@ export default function Reports() {
         <CriticalStockReport products={reportData.criticalProducts} />
       </section>
 
+      <DataIntegrityPanel integrity={reportData.integrity} />
+
       <section className="table-panel profitability-note">
         <h2>Kârlılık Ön Hazırlık Alanı</h2>
         <p>Ürün bazlı kârlılık raporu, alış fişi ve satış fişi gerçek stok maliyetiyle bağlandığında aktif edilecektir.</p>
@@ -37,7 +41,7 @@ export default function Reports() {
   );
 }
 
-function buildReportData({ collections, customers, payments, products, purchaseSlips, salesSlips, suppliers }) {
+function buildReportData({ collections, customers, payments, products, purchaseSlips, salesSlips, stockMovements, suppliers }) {
   const activeSalesSlips = salesSlips.filter((slip) => slip.status !== "İptal");
   const activePurchaseSlips = purchaseSlips.filter((slip) => slip.status !== "İptal");
   const activeCollections = collections.filter((item) => item.status !== "İptal");
@@ -62,6 +66,7 @@ function buildReportData({ collections, customers, payments, products, purchaseS
     salesPurchaseChart: buildSalesPurchaseChart(activeSalesSlips, activePurchaseSlips),
     topProducts: buildTopProducts(activeSalesSlips),
     criticalProducts,
+    integrity: buildDataIntegrityReport({ collections, customers, payments, products, purchaseSlips, salesSlips, stockMovements, suppliers }),
   };
 }
 

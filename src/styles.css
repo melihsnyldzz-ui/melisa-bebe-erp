@@ -720,6 +720,83 @@ button {
   min-width: 0;
 }
 
+.data-integrity-panel {
+  display: grid;
+  gap: 16px;
+  margin-top: 14px;
+}
+
+.integrity-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.integrity-summary-card {
+  display: grid;
+  gap: 7px;
+  min-height: 74px;
+  align-content: center;
+  padding: 13px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfbfc;
+}
+
+.integrity-summary-card span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.integrity-summary-card strong {
+  color: var(--text);
+  font-size: 1.05rem;
+}
+
+.integrity-summary-red {
+  border-color: rgba(215, 25, 32, 0.2);
+  background: #fff5f6;
+}
+
+.integrity-summary-amber {
+  border-color: rgba(180, 117, 0, 0.22);
+  background: #fff8ea;
+}
+
+.integrity-summary-green {
+  border-color: rgba(15, 110, 82, 0.18);
+  background: #f0faf6;
+}
+
+.integrity-message {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  margin: 0;
+}
+
+.integrity-table-block {
+  display: grid;
+  gap: 10px;
+}
+
+.integrity-table-block h3 {
+  margin: 0;
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.integrity-table th,
+.integrity-table td {
+  white-space: nowrap;
+}
+
+.danger-cell {
+  color: var(--red-dark);
+  font-weight: 900;
+}
+
 .report-panel {
   min-width: 0;
 }
@@ -1504,6 +1581,82 @@ button {
   background: #fdecee;
 }
 
+.status-warning {
+  color: #8a5800;
+  background: #fff3da;
+}
+
+.status svg {
+  margin-right: 5px;
+}
+
+.system-health-card {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin-bottom: 14px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: var(--shadow);
+}
+
+.system-health-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 8px;
+}
+
+.system-health-ok .system-health-icon {
+  color: #0f6e52;
+  background: #e8f7f1;
+}
+
+.system-health-warning .system-health-icon {
+  color: #8a5800;
+  background: #fff3da;
+}
+
+.system-health-card p,
+.system-health-card h2,
+.system-health-card span,
+.system-health-card small {
+  margin: 0;
+}
+
+.system-health-card p {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.system-health-card h2 {
+  margin-top: 3px;
+  color: var(--text);
+  font-size: 1.05rem;
+}
+
+.system-health-card span {
+  display: block;
+  margin-top: 5px;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.system-health-card small {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  margin-top: 8px;
+  color: var(--red-dark);
+  font-weight: 800;
+}
+
 .passive-row {
   color: #8a8f99;
   background: rgba(244, 245, 247, 0.5);
@@ -1745,6 +1898,7 @@ tr:last-child td {
   .quick-sale-controls,
   .quick-sale-totals,
   .reports-summary-grid,
+  .integrity-summary-grid,
   .reports-grid,
   .settings-grid {
     grid-template-columns: 1fr;

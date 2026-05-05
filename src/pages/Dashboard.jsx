@@ -15,10 +15,12 @@ import { useMemo } from "react";
 import DataTable from "../components/Dashboard/DataTable.jsx";
 import KpiCard from "../components/Dashboard/KpiCard.jsx";
 import SalesChart from "../components/Dashboard/SalesChart.jsx";
+import SystemHealthCard from "../components/Dashboard/SystemHealthCard.jsx";
 import TopProductsChart from "../components/Dashboard/TopProductsChart.jsx";
 import { APP_STAGE, APP_VERSION } from "../config/appVersion.js";
 import { useErpData } from "../context/ErpDataContext.jsx";
 import { formatDateTR, getTodayISO } from "../utils/dateUtils.js";
+import { buildDataIntegrityReport } from "../utils/dataIntegrity.js";
 import { formatCurrency, formatNumber } from "../utils/formatters.js";
 
 export default function Dashboard() {
@@ -53,6 +55,8 @@ export default function Dashboard() {
         <TopProductsChart data={dashboardData.topProducts} />
       </section>
 
+      <SystemHealthCard integrity={dashboardData.integrity} />
+
       <section className="tables-grid">
         <DataTable title="Son Satış Fişleri" icon={ReceiptText} rows={dashboardData.tables.sales} columns={["Fiş", "Müşteri", "Tutar", "Saat"]} />
         <DataTable title="Son Alış Fişleri" icon={Truck} rows={dashboardData.tables.purchases} columns={["Fiş", "Tedarikçi", "Tutar", "Zaman"]} />
@@ -64,7 +68,7 @@ export default function Dashboard() {
   );
 }
 
-function buildDashboardData({ collections, customers, payments, products, purchaseSlips, salesSlips, suppliers }) {
+function buildDashboardData({ collections, customers, payments, products, purchaseSlips, salesSlips, stockMovements, suppliers }) {
   const today = getTodayISO();
   const activeSalesSlips = salesSlips.filter(isActiveRecord);
   const activePurchaseSlips = purchaseSlips.filter(isActiveRecord);
@@ -93,6 +97,7 @@ function buildDashboardData({ collections, customers, payments, products, purcha
     ],
     salesChart: buildSalesChart(activeSalesSlips),
     topProducts: buildTopProducts(activeSalesSlips),
+    integrity: buildDataIntegrityReport({ collections, customers, payments, products, purchaseSlips, salesSlips, stockMovements, suppliers }),
     tables: {
       sales: latestRows(activeSalesSlips).map((slip) => [
         slip.slipNo,
