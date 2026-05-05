@@ -1052,6 +1052,87 @@ button {
   min-width: 1160px;
 }
 
+.quick-sale-panel {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.quick-sale-controls {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.36fr) minmax(320px, 1fr);
+  gap: 12px;
+  align-items: end;
+}
+
+.quick-sale-barcode-form input {
+  min-height: 48px;
+  border-color: rgba(215, 25, 32, 0.24);
+  font-size: 1rem;
+  font-weight: 850;
+}
+
+.quick-sale-message {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+.quick-sale-table-wrap {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfbfc;
+}
+
+.quick-sale-table {
+  min-width: 1180px;
+  margin-top: 0;
+}
+
+.quick-sale-table th,
+.quick-sale-table td {
+  background: transparent;
+}
+
+.quick-sale-totals {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.quick-sale-totals div {
+  display: grid;
+  gap: 6px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfbfc;
+}
+
+.quick-sale-totals span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.quick-sale-totals strong {
+  font-size: 1.1rem;
+}
+
+.quick-sale-totals .grand-total {
+  color: var(--white);
+  border-color: transparent;
+  background: var(--anthracite);
+}
+
+.quick-sale-totals .grand-total span {
+  color: #c9ccd3;
+}
+
+.quick-sale-actions {
+  padding-top: 0;
+}
+
 .error-message {
   margin: 0;
   padding: 12px 14px;
@@ -1661,6 +1742,8 @@ tr:last-child td {
   .charts-grid,
   .tables-grid,
   .filters-grid,
+  .quick-sale-controls,
+  .quick-sale-totals,
   .reports-summary-grid,
   .reports-grid,
   .settings-grid {
@@ -1748,6 +1831,8 @@ tr:last-child td {
 
   .purchase-slip-form,
   .barcode-test-form,
+  .quick-sale-controls,
+  .quick-sale-totals,
   .quick-barcode-entry,
   .purchase-totals,
   .slip-detail-line,

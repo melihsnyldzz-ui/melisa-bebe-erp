@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Clock3, FilePlus2, ReceiptText, ShoppingBag, WalletCards } from "lucide-react";
 import KpiCard from "../components/Dashboard/KpiCard.jsx";
+import QuickBarcodeSalePanel from "../components/SalesSlips/QuickBarcodeSalePanel.jsx";
 import SalesSlipForm from "../components/SalesSlips/SalesSlipForm.jsx";
 import SalesSlipTable from "../components/SalesSlips/SalesSlipTable.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
@@ -59,13 +60,14 @@ export default function SalesSlips() {
     if (!result.ok) {
       setSuccessMessage("");
       setErrorMessage(result.error);
-      return;
+      return result;
     }
 
     const newSlip = result.data;
     setErrorMessage("");
     setSuccessMessage(`${newSlip.slipNo} numaralı satış fişi kaydedildi.`);
     setSelectedSlip(newSlip);
+    return result;
   }
 
   function handleOpenWindow() {
@@ -113,7 +115,12 @@ export default function SalesSlips() {
       {successMessage && <p className="success-message">{successMessage}</p>}
       {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-      {canEditSalesSlips && <SalesSlipForm nextSlipNo={nextSlipNo} products={products} customers={customers} onSave={handleSaveSlip} />}
+      {canEditSalesSlips && (
+        <>
+          <QuickBarcodeSalePanel customers={customers} nextSlipNo={nextSlipNo} products={products} onSave={handleSaveSlip} />
+          <SalesSlipForm nextSlipNo={nextSlipNo} products={products} customers={customers} onSave={handleSaveSlip} />
+        </>
+      )}
       <SalesSlipTable
         canCancel={canCancelRecords}
         slips={salesSlips}
