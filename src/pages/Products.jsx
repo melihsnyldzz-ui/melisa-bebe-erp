@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Boxes, PackagePlus, PackageSearch, ShieldAlert, ToggleRight } from "lucide-react";
 import KpiCard from "../components/Dashboard/KpiCard.jsx";
+import BarcodeTestPanel from "../components/Products/BarcodeTestPanel.jsx";
 import ProductFilters from "../components/Products/ProductFilters.jsx";
 import ProductFormModal from "../components/Products/ProductFormModal.jsx";
 import ProductTable from "../components/Products/ProductTable.jsx";
@@ -128,6 +129,7 @@ export default function Products() {
         ))}
       </section>
 
+      <BarcodeTestPanel products={products} viewCosts={canViewCosts} />
       <ProductFilters filters={filters} options={filterOptions} onChange={setFilters} onReset={() => setFilters(emptyFilters)} />
       <ProductTable
         canEdit={canEditProducts}
