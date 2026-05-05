@@ -13,6 +13,7 @@ const menuPermissions = {
   collections: "collections.view",
   payments: "payments.view",
   "stock-movements": "stockMovements.view",
+  "stock-count": "stockMovements.view",
   reports: "reports.view",
   settings: "settings.view",
 };

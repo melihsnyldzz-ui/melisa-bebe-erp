@@ -10,6 +10,7 @@ import PurchaseSlips from "./pages/PurchaseSlips.jsx";
 import Reports from "./pages/Reports.jsx";
 import SalesSlips from "./pages/SalesSlips.jsx";
 import Settings from "./pages/Settings.jsx";
+import StockCount from "./pages/StockCount.jsx";
 import StockMovements from "./pages/StockMovements.jsx";
 import Suppliers from "./pages/Suppliers.jsx";
 import PurchaseSlipWindow from "./pages/windows/PurchaseSlipWindow.jsx";
@@ -30,6 +31,7 @@ export default function App() {
       collections: "collections.view",
       payments: "payments.view",
       "stock-movements": "stockMovements.view",
+      "stock-count": "stockMovements.view",
       reports: "reports.view",
       settings: "settings.view",
     }),
@@ -60,6 +62,7 @@ export default function App() {
   const isCollections = activeModule === "collections";
   const isPayments = activeModule === "payments";
   const isStockMovements = activeModule === "stock-movements";
+  const isStockCount = activeModule === "stock-count";
   const isReports = activeModule === "reports";
   const isSettings = activeModule === "settings";
 
@@ -74,6 +77,7 @@ export default function App() {
       {isCollections && <Collections />}
       {isPayments && <Payments />}
       {isStockMovements && <StockMovements />}
+      {isStockCount && <StockCount />}
       {isReports && <Reports />}
       {isSettings && <Settings />}
       {!isDashboard &&
@@ -85,6 +89,7 @@ export default function App() {
         !isCollections &&
         !isPayments &&
         !isStockMovements &&
+        !isStockCount &&
         !isReports &&
         !isSettings && <ModulePlaceholder />}
     </AppLayout>

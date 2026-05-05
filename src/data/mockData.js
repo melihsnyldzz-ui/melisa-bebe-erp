@@ -9,6 +9,7 @@ import {
   PackageSearch,
   ReceiptText,
   Settings,
+  ScanBarcode,
   ShoppingBag,
   Truck,
   UserRound,
@@ -26,6 +27,7 @@ export const menuItems = [
   { id: "collections", label: "Tahsilatlar", icon: Banknote },
   { id: "payments", label: "Ödemeler", icon: CreditCard },
   { id: "stock-movements", label: "Stok Hareketleri", icon: Boxes },
+  { id: "stock-count", label: "Barkodlu Sayım", icon: ScanBarcode },
   { id: "reports", label: "Raporlar", icon: ChartNoAxesColumnIncreasing },
   { id: "settings", label: "Ayarlar", icon: Settings },
 ];
