@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.19.7",
+    title: "Vega Stok Deneme görsel denge ve son kalite kontrol",
+    area: "Vega / Read-only",
+    description: "Vega Stok Deneme ekranındaki panel grup boşlukları, mobil görünüm, demo stok tablosu hizası ve read-only bağlantı hazırlığı başlık dili son kalite kontrol kapsamında sadeleştirildi.",
+  },
+  {
     version: "v1.19.6",
     title: "Vega Stok Deneme sayfa sadeleştirme ve panel gruplama",
     area: "Vega / Read-only",

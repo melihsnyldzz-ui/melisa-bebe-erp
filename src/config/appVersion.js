@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.19.6";
-export const APP_STAGE = "Vega Stok Deneme sayfa sadeleştirme ve panel gruplama";
+export const APP_VERSION = "v1.19.7";
+export const APP_STAGE = "Vega Stok Deneme görsel denge ve son kalite kontrol";

@@ -301,10 +301,9 @@ export default function VegaStockTrial() {
 
         <div className="vega-readonly-prep-panel">
           <div>
-            <h2>Read-only Bağlantı Hazırlığı</h2>
+            <h2>Hazırlık Durumu</h2>
             <p>
-              Bu alan ileride açılacak Vega read-only bağlantısı için gerekli hazırlıkları gösterir. Bu sürümde bağlantı
-              kurulmaz, sorgu çalıştırılmaz ve veri yazılmaz.
+              Read-only mod, sürücü, DB bilgisi ve stok sorgusu hazırlığı pasif olarak gösterilir.
             </p>
           </div>
           <div className="vega-readonly-prep-grid">

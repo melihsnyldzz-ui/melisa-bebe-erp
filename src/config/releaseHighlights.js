@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.19.6";
+export const currentReleaseVersion = "v1.19.7";
 
-export const currentReleaseTitle = "Vega Stok Deneme sayfa sadeleştirme ve panel gruplama";
+export const currentReleaseTitle = "Vega Stok Deneme görsel denge ve son kalite kontrol";
 
 export const updatedSectionIds = ["latest-version-history", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Vega Stok Deneme ekranındaki hazırlık panelleri okunabilir gruplara ayrıldı",
-  "Durum, bağlantı hazırlığı, sorgu bilgisi, güvenlik checklist'i ve demo tablo akışı sadeleştirildi",
-  "Gerçek bağlantı, sorgu çalıştırma ve veri yazma olmadan pasif güvenli görünüm korundu",
+  "Vega Stok Deneme panel gruplarının görsel boşlukları dengelendi",
+  "Read-only bağlantı hazırlığı alanındaki tekrar eden başlık dili sadeleştirildi",
+  "Mobil görünüm ve demo stok tablosu hizası son kalite kontrolünden geçirildi",
 ];
 
 export const releaseJumpLinks = [

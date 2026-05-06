@@ -3271,8 +3271,8 @@ button {
 
 .vega-panel-group {
   display: grid;
-  gap: 9px;
-  padding: 10px;
+  gap: 10px;
+  padding: 11px;
   border: 1px solid #edf0f4;
   border-radius: 10px;
   background: #fbfcfe;
@@ -3280,7 +3280,9 @@ button {
 
 .vega-panel-group-header {
   display: grid;
-  gap: 2px;
+  gap: 3px;
+  padding-bottom: 3px;
+  border-bottom: 1px solid #edf0f4;
 }
 
 .vega-panel-group-header h2,
@@ -3290,7 +3292,7 @@ button {
 
 .vega-panel-group-header h2 {
   color: var(--anthracite);
-  font-size: 1rem;
+  font-size: 0.98rem;
   font-weight: 900;
 }
 
@@ -5864,11 +5866,17 @@ tr:last-child td {
   }
 
   .vega-panel-group {
+    gap: 8px;
     padding: 9px;
+    border-radius: 8px;
   }
 
   .vega-panel-group-header h2 {
-    font-size: 0.94rem;
+    font-size: 0.92rem;
+  }
+
+  .vega-panel-group-header p {
+    font-size: 0.74rem;
   }
 
   .vega-stock-search {
