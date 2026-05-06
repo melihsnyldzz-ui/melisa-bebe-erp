@@ -15,6 +15,7 @@ import Settings from "./pages/Settings.jsx";
 import StockCount from "./pages/StockCount.jsx";
 import StockMovements from "./pages/StockMovements.jsx";
 import Suppliers from "./pages/Suppliers.jsx";
+import WarehouseTerminal from "./pages/WarehouseTerminal.jsx";
 import PurchaseSlipWindow from "./pages/windows/PurchaseSlipWindow.jsx";
 import SalesSlipWindow from "./pages/windows/SalesSlipWindow.jsx";
 
@@ -34,6 +35,7 @@ export default function App() {
       payments: "payments.view",
       "stock-movements": "stockMovements.view",
       "stock-count": "stockMovements.view",
+      "warehouse-terminal": "stockMovements.view",
       "data-import": "settings.view",
       "data-export": "reports.view",
       reports: "reports.view",
@@ -67,6 +69,7 @@ export default function App() {
   const isPayments = activeModule === "payments";
   const isStockMovements = activeModule === "stock-movements";
   const isStockCount = activeModule === "stock-count";
+  const isWarehouseTerminal = activeModule === "warehouse-terminal";
   const isDataImport = activeModule === "data-import";
   const isDataExport = activeModule === "data-export";
   const isReports = activeModule === "reports";
@@ -84,6 +87,7 @@ export default function App() {
       {isPayments && <Payments />}
       {isStockMovements && <StockMovements />}
       {isStockCount && <StockCount />}
+      {isWarehouseTerminal && <WarehouseTerminal />}
       {isDataImport && <DataImport />}
       {isDataExport && <DataExport />}
       {isReports && <Reports />}
@@ -98,6 +102,7 @@ export default function App() {
         !isPayments &&
         !isStockMovements &&
         !isStockCount &&
+        !isWarehouseTerminal &&
         !isDataImport &&
         !isDataExport &&
         !isReports &&
