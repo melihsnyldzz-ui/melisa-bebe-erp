@@ -19,6 +19,7 @@ import {
 import TerminalCountBasket from "./TerminalCountBasket.jsx";
 import TerminalProductCard from "./TerminalProductCard.jsx";
 import TerminalScanHistory from "./TerminalScanHistory.jsx";
+import TerminalTestScenarios from "./TerminalTestScenarios.jsx";
 
 export default function WarehouseTerminalPanel({ products = [], stockMovements = [] }) {
   const [scanValue, setScanValue] = useState("");
@@ -153,6 +154,8 @@ export default function WarehouseTerminalPanel({ products = [], stockMovements =
           Okuma modu salt okunurdur. Stok değiştirmez, fiş oluşturmaz, cari veya veritabanı kaydı yapmaz.
         </p>
       </section>
+
+      <TerminalTestScenarios />
 
       {matchedProducts.length > 0 && <MatchedProductsPanel products={matchedProducts} onSelect={openProduct} />}
 
