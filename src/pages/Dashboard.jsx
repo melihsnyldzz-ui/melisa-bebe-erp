@@ -12,6 +12,7 @@ import {
   WalletCards,
 } from "lucide-react";
 import { useMemo } from "react";
+import CommerceInsights from "../components/Dashboard/CommerceInsights.jsx";
 import DataTable from "../components/Dashboard/DataTable.jsx";
 import KpiCard from "../components/Dashboard/KpiCard.jsx";
 import SalesChart from "../components/Dashboard/SalesChart.jsx";
@@ -59,6 +60,8 @@ export default function Dashboard() {
         <TopProductsChart data={dashboardData.topProducts} />
       </section>
 
+      <CommerceInsights data={dashboardData.commerceInsights} />
+
       <SystemHealthCard integrity={dashboardData.integrity} />
 
       <section className="tables-grid">
@@ -101,6 +104,7 @@ function buildDashboardData({ collections, customers, payments, products, purcha
     ],
     salesChart: buildSalesChart(activeSalesSlips),
     topProducts: buildTopProducts(activeSalesSlips),
+    commerceInsights: buildCommerceInsights({ activeCollections, activeSalesSlips, products, today, todayCollections, todaySales }),
     integrity: buildDataIntegrityReport({ collections, customers, payments, products, purchaseSlips, salesSlips, stockMovements, suppliers }),
     tables: {
       sales: latestRows(activeSalesSlips).map((slip) => [
@@ -139,6 +143,171 @@ function buildDashboardData({ collections, customers, payments, products, purcha
       ]),
     },
   };
+}
+
+function buildCommerceInsights({ activeCollections, activeSalesSlips, products, today, todayCollections, todaySales }) {
+  const monthKey = today.slice(0, 7);
+  const todaySalesSlips = activeSalesSlips.filter((slip) => getRecordDate(slip) === today);
+  const monthlySalesSlips = activeSalesSlips.filter((slip) => getRecordDate(slip).startsWith(monthKey));
+  const monthlyCollections = activeCollections.filter((collection) => getRecordDate(collection).startsWith(monthKey));
+  const monthlySalesTotal = sumBy(monthlySalesSlips, "grandTotal");
+  const monthlyCollectionsTotal = sumBy(monthlyCollections, "amount");
+  const todaySoldQuantity = sumSlipQuantity(todaySalesSlips);
+  const monthlySoldQuantity = sumSlipQuantity(monthlySalesSlips);
+
+  return {
+    todayOperation: [
+      buildOperationRow("Bugünkü satış fişi", todaySalesSlips.length, monthlySalesSlips.length, "count"),
+      buildOperationRow("Bugün çıkan ürün", todaySoldQuantity, monthlySoldQuantity, "quantity"),
+      buildOperationRow("Bugünkü satış tutarı", todaySales, monthlySalesTotal, "currency"),
+      buildOperationRow("Bugünkü tahsilat tutarı", todayCollections, monthlyCollectionsTotal, "currency"),
+    ],
+    monthlySalesTrend: buildCurrentMonthSalesTrend(monthlySalesSlips, today),
+    monthlyTopProducts: buildMonthlyTopProducts(monthlySalesSlips),
+    topCustomersByRevenue: buildTopCustomers(monthlySalesSlips, "revenue"),
+    topCustomersByQuantity: buildTopCustomers(monthlySalesSlips, "quantity"),
+    categoryAgeDistribution: buildCategoryAgeDistribution(monthlySalesSlips, products),
+  };
+}
+
+function buildOperationRow(label, todayValue, monthValue, type) {
+  const monthTotal = Math.max(toNumber(monthValue), 0);
+  const currentValue = Math.max(toNumber(todayValue), 0);
+  const percent = monthTotal > 0 ? Math.min((currentValue / monthTotal) * 100, 100) : 0;
+
+  return {
+    label,
+    percent,
+    value: formatInsightValue(currentValue, type),
+    monthValue: formatInsightValue(monthTotal, type),
+  };
+}
+
+function formatInsightValue(value, type) {
+  if (type === "currency") return formatCurrency(value);
+  if (type === "quantity") return `${formatNumber(value)} adet`;
+  return formatNumber(value);
+}
+
+function buildCurrentMonthSalesTrend(salesSlips, today) {
+  const dayCount = Number(today.slice(8, 10));
+  const monthKey = today.slice(0, 7);
+
+  return Array.from({ length: dayCount }, (_, index) => {
+    const dayNumber = index + 1;
+    const date = `${monthKey}-${String(dayNumber).padStart(2, "0")}`;
+
+    return {
+      day: String(dayNumber),
+      value: sumByDate(salesSlips, date, "grandTotal"),
+    };
+  });
+}
+
+function buildMonthlyTopProducts(salesSlips) {
+  const productMap = new Map();
+
+  salesSlips.forEach((slip) => {
+    (slip.items || []).forEach((item) => {
+      const key = item.productId || item.productCode || item.barcode || item.productName;
+      const current = productMap.get(key) || { name: item.productName || "-", quantity: 0, revenue: 0 };
+      productMap.set(key, {
+        ...current,
+        quantity: current.quantity + toNumber(item.quantity),
+        revenue: current.revenue + getItemRevenue(item),
+      });
+    });
+  });
+
+  return [...productMap.values()]
+    .sort((a, b) => b.quantity - a.quantity)
+    .slice(0, 5)
+    .map((item) => ({ ...item, name: shortenLabel(item.name) }));
+}
+
+function buildTopCustomers(salesSlips, sortKey) {
+  const customerMap = new Map();
+
+  salesSlips.forEach((slip) => {
+    const key = slip.customerId || slip.customerName || "Müşteri";
+    const current = customerMap.get(key) || { name: slip.customerName || "Müşteri", quantity: 0, revenue: 0 };
+    customerMap.set(key, {
+      ...current,
+      quantity: current.quantity + sumSlipQuantity([slip]),
+      revenue: current.revenue + toNumber(slip.grandTotal),
+    });
+  });
+
+  return [...customerMap.values()]
+    .sort((a, b) => b[sortKey] - a[sortKey])
+    .slice(0, 5)
+    .map((item) => ({ ...item, name: shortenLabel(item.name) }));
+}
+
+function buildCategoryAgeDistribution(salesSlips, products) {
+  const productMap = buildProductLookup(products);
+  const distributionMap = new Map();
+
+  salesSlips.forEach((slip) => {
+    (slip.items || []).forEach((item) => {
+      const product = findProductForItem(productMap, item);
+      const category = product?.category || product?.categoryName;
+      const ageGroup = product?.ageGroup;
+      if (!category && !ageGroup) return;
+
+      const key = `${category || "Kategori yok"} / ${ageGroup || "Yaş grubu yok"}`;
+      distributionMap.set(key, (distributionMap.get(key) || 0) + toNumber(item.quantity));
+    });
+  });
+
+  const rows = [...distributionMap.entries()]
+    .map(([name, quantity]) => ({ name: shortenLabel(name, 34), quantity }))
+    .sort((a, b) => b.quantity - a.quantity)
+    .slice(0, 6);
+  const maxQuantity = Math.max(...rows.map((row) => row.quantity), 0);
+
+  return rows.map((row) => ({
+    ...row,
+    percent: maxQuantity > 0 ? Math.max((row.quantity / maxQuantity) * 100, 4) : 0,
+  }));
+}
+
+function buildProductLookup(products) {
+  const lookup = new Map();
+  products.forEach((product) => {
+    [product.id, product.productId, product.code, product.barcode, product.name].filter(Boolean).forEach((key) => {
+      lookup.set(String(key), product);
+    });
+  });
+  return lookup;
+}
+
+function findProductForItem(productMap, item) {
+  const keys = [item.productId, item.id, item.productCode, item.code, item.barcode, item.productName].filter(Boolean);
+  return keys.map((key) => productMap.get(String(key))).find(Boolean);
+}
+
+function sumSlipQuantity(slips) {
+  return slips.reduce((total, slip) => total + (slip.items || []).reduce((itemTotal, item) => itemTotal + toNumber(item.quantity), 0), 0);
+}
+
+function getItemRevenue(item) {
+  const directTotal = item.lineTotal ?? item.total ?? item.netTotal ?? item.amount;
+  if (directTotal !== undefined && directTotal !== null && directTotal !== "") return toNumber(directTotal);
+
+  const quantity = toNumber(item.quantity);
+  const unitPrice = toNumber(item.unitPrice || item.price || item.salePrice);
+  const discountRate = toNumber(item.discountRate);
+  return quantity * unitPrice * (1 - discountRate / 100);
+}
+
+function getRecordDate(record) {
+  return String(record.date || record.createdAt || "").slice(0, 10);
+}
+
+function shortenLabel(value, maxLength = 24) {
+  const text = String(value || "-");
+  return text.length > maxLength ? `${text.slice(0, maxLength - 1)}…` : text;
 }
 
 function sumByDate(items, date, key) {
