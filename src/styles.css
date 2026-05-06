@@ -391,6 +391,23 @@ button {
   background: rgba(255, 246, 247, 0.82);
 }
 
+.dashboard-decision-note-no-sales,
+.dashboard-decision-note-neutral {
+  border-color: rgba(107, 114, 128, 0.18);
+  background: rgba(248, 250, 252, 0.9);
+}
+
+.dashboard-decision-note-collection-warning,
+.dashboard-decision-note-stock-warning {
+  border-color: rgba(245, 158, 11, 0.24);
+  background: rgba(255, 251, 235, 0.88);
+}
+
+.dashboard-decision-note-active {
+  border-color: rgba(22, 163, 74, 0.22);
+  background: rgba(240, 253, 244, 0.9);
+}
+
 .dashboard-decision-note strong,
 .dashboard-decision-note span {
   min-width: 0;
@@ -402,6 +419,20 @@ button {
 .dashboard-decision-note strong {
   color: var(--red);
   font-size: 0.74rem;
+}
+
+.dashboard-decision-note-no-sales strong,
+.dashboard-decision-note-neutral strong {
+  color: #64748b;
+}
+
+.dashboard-decision-note-collection-warning strong,
+.dashboard-decision-note-stock-warning strong {
+  color: #b45309;
+}
+
+.dashboard-decision-note-active strong {
+  color: #15803d;
 }
 
 .dashboard-decision-note span {

@@ -60,7 +60,7 @@ export default function Dashboard() {
         </span>
       </div>
 
-      <section className="dashboard-decision-note" aria-label="Patron Notu">
+      <section className={`dashboard-decision-note ${dashboardData.patronNoteTone}`} aria-label="Patron Notu">
         <strong>Patron Notu</strong>
         <span>{dashboardData.patronNote}</span>
       </section>
@@ -192,7 +192,7 @@ function buildDashboardData({ collections, customers, products, purchaseSlips, s
       ...currencyTradeSummary,
       currencyNote: buildCurrencyNote(currencyTradeSummary),
     },
-    patronNote: buildPatronNote(periodSummary, criticalProducts),
+    ...buildPatronNote(periodSummary, criticalProducts),
     periodSummary,
   };
 }
@@ -234,11 +234,23 @@ function buildReportPreview({ commerceInsights, currencyTradeSummary, patronNote
 }
 
 function buildPatronNote(periodSummary, criticalProducts = []) {
-  if (periodSummary.salesSlipCount <= 0) return "Seçili dönemde satış fişi görünmüyor.";
-  if (periodSummary.salesTotal > 0 && periodSummary.collectionsTotal <= 0) return "Satış var, tahsilat takibi kontrol edilmeli.";
-  if (criticalProducts.length > 0) return "Kritik stokta ürün var, satın alma kontrol edilmeli.";
-  if (periodSummary.salesTotal > 0 && periodSummary.collectionsTotal > 0) return "Satış ve tahsilat hareketi oluşmuş, dönem aktif görünüyor.";
-  return "Seçili dönem ticari hareketleri izleniyor.";
+  const hasSalesSlip = toNumber(periodSummary.salesSlipCount) > 0;
+  const hasSalesActivity = hasSalesSlip || toNumber(periodSummary.salesTotal) > 0;
+  const hasCollection = toNumber(periodSummary.collectionsTotal) > 0;
+  const hasCriticalStock = criticalProducts.length > 0;
+
+  if (!hasSalesSlip) return createPatronNote("Seçili dönemde satış fişi görünmüyor.", "no-sales");
+  if (hasSalesActivity && !hasCollection) return createPatronNote("Satış var, tahsilat takibi kontrol edilmeli.", "collection-warning");
+  if (hasCriticalStock) return createPatronNote("Kritik stokta ürün var, satın alma kontrol edilmeli.", "stock-warning");
+  if (hasSalesActivity && hasCollection) return createPatronNote("Satış ve tahsilat hareketi oluşmuş, dönem aktif görünüyor.", "active");
+  return createPatronNote("Seçili dönem ticari hareketleri izleniyor.", "neutral");
+}
+
+function createPatronNote(message, tone) {
+  return {
+    patronNote: message,
+    patronNoteTone: `dashboard-decision-note-${tone}`,
+  };
 }
 
 function buildCurrencyTradeCards(summary) {
@@ -284,8 +296,8 @@ function buildCurrencyTradeReportRows(summary) {
 
 function buildCurrencyNote(summary) {
   return hasForeignCurrencyMovement(summary)
-    ? "Dövizli işlem hareketi var; kur çevrimi yapılmadan kendi para biriminde gösterilir."
-    : "Dövizli kayıt görünmüyor; TL varsayılan para birimidir.";
+    ? "Dövizli hareket var; kur çevrimi yapılmadan gösterilir."
+    : "Dövizli kayıt yok; TL varsayılan para birimidir.";
 }
 
 function hasForeignCurrencyMovement(summary) {
@@ -477,7 +489,7 @@ function buildRiskRows({ criticalProducts, customers }) {
     .sort((a, b) => toNumber(a.stockQuantity) - toNumber(b.stockQuantity))
     .slice(0, 2)
     .map((product) => ({
-      actionNote: toNumber(product.stockQuantity) <= 0 ? "Acil tedarik kontrolü" : "Satın alma planına alınmalı",
+      actionNote: toNumber(product.stockQuantity) <= 0 ? "Acil tedarik" : "Satın alma kontrolü",
       label: product.name || product.code || "Ürün",
       meta: `${formatNumber(product.stockQuantity)} adet`,
       status: toNumber(product.stockQuantity) <= 0 ? "Stok yok" : "Kritik",
@@ -485,7 +497,7 @@ function buildRiskRows({ criticalProducts, customers }) {
   const customerRows = buildRiskCustomers(customers)
     .slice(0, 1)
     .map((customer) => ({
-      actionNote: customer.riskLabel === "Limit Aşıldı" ? "Tahsilat veya risk limiti kontrol edilmeli" : "Cari limit yaklaşmış",
+      actionNote: customer.riskLabel === "Limit Aşıldı" ? "Tahsilat kontrolü" : "Limit yaklaşıyor",
       label: customer.name,
       meta: formatCurrency(customer.currentBalance),
       status: customer.riskLabel,
