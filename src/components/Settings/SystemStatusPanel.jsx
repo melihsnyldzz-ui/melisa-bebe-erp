@@ -12,10 +12,10 @@ const statusRows = [
 ];
 
 const maturityRows = [
-  { label: "ERP genel hazırlık", value: "%55-59" },
-  { label: "Canlı kullanım güvenliği", value: "%47-51" },
+  { label: "ERP genel hazırlık", value: "%58-62" },
+  { label: "Canlı kullanım güvenliği", value: "%50-54" },
   { label: "El terminali hazırlığı", value: "%45-50" },
-  { label: "Vega'dan geçiş hazırlığı", value: "%40-45" },
+  { label: "Vega'dan geçiş hazırlığı", value: "%43-48" },
 ];
 
 const goLiveChecklistGroups = [
@@ -55,6 +55,12 @@ export default function SystemStatusPanel() {
         Bu ekran, ERP'nin mevcut geliştirme seviyesini ve güvenli kullanım durumunu gösterir. Buradaki bilgiler sadece
         bilgilendirme amaçlıdır; herhangi bir ayar kaydetmez.
       </p>
+
+      <div className="system-status-focus-card">
+        <span>Bu Sürümde Test Edilecek Alan</span>
+        <strong>Ayarlar / Sistem Durumu ve Canlıya Hazırlık Kontrol Listesi</strong>
+        <p>Sol menüde mavi nokta görünen sayfa, bu sürümde özellikle kontrol edilmesi gereken alandır.</p>
+      </div>
 
       <div className="system-status-grid">
         {statusRows.map((row) => (

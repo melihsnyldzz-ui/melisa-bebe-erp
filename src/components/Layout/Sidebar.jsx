@@ -1,7 +1,7 @@
 import { PackageCheck } from "lucide-react";
 import melisaBabyLogo from "../../assets/melisa-baby-logo.jpg";
 import { useAuth } from "../../context/AuthContext.jsx";
-import { menuItems } from "../../data/mockData.js";
+import { menuItems, updatedMenuItemIds } from "../../data/mockData.js";
 
 const menuPermissions = {
   dashboard: "dashboard.view",
@@ -40,12 +40,13 @@ export default function Sidebar({ activeModule, onModuleChange }) {
         {visibleMenuItems.map((item) => {
           const Icon = item.icon;
           const isActive = activeModule === item.id;
+          const hasUpdate = updatedMenuItemIds.includes(item.id);
 
           return (
             <button className={`nav-item ${isActive ? "active" : ""}`} key={item.id} onClick={() => onModuleChange(item.id)}>
               <Icon size={19} />
               <span>{item.label}</span>
-              {item.hasUpdate && <i className="nav-update-dot" title="Bu sayfada yeni özellik var" aria-label="Bu sayfada yeni özellik var" />}
+              {hasUpdate && <i className="nav-update-dot" title="Bu sayfada yeni özellik var" aria-label="Bu sayfada yeni özellik var" />}
             </button>
           );
         })}

@@ -1805,6 +1805,33 @@ button {
   font-weight: 750;
 }
 
+.system-status-focus-card {
+  display: grid;
+  gap: 7px;
+  padding: 13px 14px;
+  border: 1px solid #d0ebff;
+  border-radius: 8px;
+  background: #f0f8ff;
+}
+
+.system-status-focus-card span {
+  color: #1864ab;
+  font-size: 0.78rem;
+  font-weight: 850;
+}
+
+.system-status-focus-card strong {
+  color: var(--text);
+  font-size: 0.98rem;
+  line-height: 1.35;
+}
+
+.system-status-focus-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
 .go-live-checklist {
   display: grid;
   gap: 12px;

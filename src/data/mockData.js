@@ -34,8 +34,10 @@ export const menuItems = [
   { id: "data-import", label: "Excel Aktarım", icon: FileSpreadsheet },
   { id: "data-export", label: "Excel Dışa Aktarım", icon: ArrowDownToLine },
   { id: "reports", label: "Raporlar", icon: ChartNoAxesColumnIncreasing },
-  { id: "settings", label: "Ayarlar", icon: Settings, hasUpdate: true },
+  { id: "settings", label: "Ayarlar", icon: Settings },
 ];
+
+export const updatedMenuItemIds = ["settings"];
 
 export const kpis = [
   { label: "Bugünkü Satış", value: "125.000 TL", icon: ShoppingBag, tone: "red" },
