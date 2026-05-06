@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.16.0";
+export const currentReleaseVersion = "v1.16.1";
 
-export const currentReleaseTitle = "Patron kokpiti Dashboard ana düzeni ve ticari analiz ekranı";
+export const currentReleaseTitle = "Dashboard Gün Sonu Raporu önizleme paneli";
 
 export const updatedSectionIds = ["latest-version-history", "project-maturity", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Dashboard patron kokpiti mantığıyla yeniden düzenlendi",
-  "Satış fişi, çıkan adet, satış ve tahsilat özeti güçlendirildi",
-  "Müşteri, ürün, risk ve son fiş analizleri kompakt grafiklerle desteklendi",
+  "Gün Sonu Raporu butonu güvenli önizleme paneli açacak hale getirildi",
+  "Seçili dönem satış, tahsilat ve ürün çıkış özeti rapor önizlemesine eklendi",
+  "Rapor önizlemesinin veri yazmadığı açıkça belirtildi",
 ];
 
 export const releaseJumpLinks = [

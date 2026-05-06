@@ -17,8 +17,10 @@ const dashboardPeriodOptions = [
 export default function Dashboard() {
   const erpData = useErpData();
   const [selectedPeriod, setSelectedPeriod] = useState("month");
+  const [isEndOfDayReportOpen, setIsEndOfDayReportOpen] = useState(false);
   const dashboardData = useMemo(() => buildDashboardData(erpData, selectedPeriod), [erpData, selectedPeriod]);
   const selectedPeriodLabel = dashboardPeriodOptions.find((option) => option.id === selectedPeriod)?.label || "Bu Ay";
+  const reportPreview = buildReportPreview(dashboardData, selectedPeriodLabel);
 
   return (
     <>
@@ -31,9 +33,9 @@ export default function Dashboard() {
           <h1>Melisa Bebe Yönetim Paneli</h1>
           <span>Satış, tahsilat, stok ve müşteri performansını tek ekrandan takip edin.</span>
         </div>
-        <button className="primary-action">
+        <button className="primary-action" onClick={() => setIsEndOfDayReportOpen((isOpen) => !isOpen)} type="button">
           <ClipboardList size={18} />
-          Gün Sonu Raporu
+          {isEndOfDayReportOpen ? "Raporu Gizle" : "Gün Sonu Raporu"}
         </button>
       </section>
 
@@ -64,8 +66,30 @@ export default function Dashboard() {
         ))}
       </section>
 
+      {isEndOfDayReportOpen && <EndOfDayReportPreview report={reportPreview} />}
+
       <CommerceInsights data={dashboardData.commerceInsights} />
     </>
+  );
+}
+
+function EndOfDayReportPreview({ report }) {
+  return (
+    <section className="dashboard-report-preview chart-panel" aria-live="polite">
+      <div>
+        <h2>Gün Sonu Raporu Önizleme</h2>
+        <p>Bu alan yalnızca önizlemedir. Dosya oluşturmaz, kayıt açmaz ve veri yazmaz.</p>
+      </div>
+
+      <div className="dashboard-report-grid">
+        {report.rows.map((row) => (
+          <div key={row.label}>
+            <span>{row.label}</span>
+            <strong>{row.value}</strong>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -109,6 +133,34 @@ function buildDashboardData({ collections, customers, products, purchaseSlips, s
       salesTotal: periodSales,
       soldQuantity: periodSoldQuantity,
     },
+  };
+}
+
+function buildReportPreview({ commerceInsights, periodSummary }, periodLabel) {
+  const topCustomer = commerceInsights.topCustomersByRevenue[0];
+  const topProduct = commerceInsights.monthlyTopProducts[0];
+  const riskNote = commerceInsights.riskRows[0];
+
+  return {
+    rows: [
+      { label: "Seçili dönem", value: periodLabel },
+      { label: "Satış fişi", value: formatNumber(periodSummary.salesSlipCount) },
+      { label: "Çıkan ürün", value: `${formatNumber(periodSummary.soldQuantity)} adet` },
+      { label: "Satış toplamı", value: formatCurrency(periodSummary.salesTotal) },
+      { label: "Tahsilat toplamı", value: formatCurrency(periodSummary.collectionsTotal) },
+      {
+        label: "En çok alan müşteri",
+        value: topCustomer ? `${topCustomer.name} · ${formatCurrency(topCustomer.revenue)}` : "Veri bekleniyor",
+      },
+      {
+        label: "En çok satan ürün",
+        value: topProduct ? `${topProduct.name} · ${formatNumber(topProduct.quantity)} adet` : "Veri bekleniyor",
+      },
+      {
+        label: "Risk notu",
+        value: riskNote ? `${riskNote.label} · ${riskNote.status}` : "Risk görünmüyor",
+      },
+    ],
   };
 }
 

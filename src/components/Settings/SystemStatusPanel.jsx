@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.16.1",
+    title: "Dashboard Gün Sonu Raporu önizleme paneli",
+    area: "Dashboard",
+    description: "Gün Sonu Raporu butonu güvenli önizleme paneli açacak hale getirildi; rapor önizlemesi veri yazmadan seçili dönem ticari özetini gösterir.",
+  },
+  {
     version: "v1.16.0",
     title: "Patron kokpiti Dashboard ana düzeni ve ticari analiz ekranı",
     area: "Dashboard",
@@ -166,12 +172,6 @@ const versionHistoryRows = [
     title: "Ana Panel sadeleştirme ve test alanlarını Ayarlar’a geri taşıma",
     area: "Dashboard / Ayarlar",
     description: "Ana Panel test rehberi kalabalığından arındırıldı; Dashboard yeniden ticari ve operasyonel özet odağına alındı.",
-  },
-  {
-    version: "v1.15.0",
-    title: "ERP hızlandırma paketi: ana sayfa canlı hazırlık özeti ve hızlı test kısayolları",
-    area: "Dashboard / Ayarlar",
-    description: "Ana sayfaya canlıya hazırlık özeti, hızlı test kısayolları ve bugün test edilecek öncelikler eklendi.",
   },
 ];
 
