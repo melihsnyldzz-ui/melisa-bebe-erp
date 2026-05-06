@@ -1,0 +1,284 @@
+.vega-import-title {
+  padding-top: 12px;
+}
+
+.vega-import-warning-panel,
+.vega-import-map-panel,
+.vega-import-table-panel,
+.vega-import-risk-panel {
+  margin-bottom: 14px;
+  border: 1px solid rgba(229, 231, 235, 0.92);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 18px 42px rgba(24, 26, 31, 0.07);
+}
+
+.vega-import-warning-panel {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  padding: 11px 12px;
+  border-color: rgba(215, 25, 32, 0.18);
+  background: rgba(255, 245, 245, 0.9);
+  color: var(--red-dark);
+  font-size: 0.86rem;
+}
+
+.vega-import-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.vega-import-summary-card {
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid rgba(229, 231, 235, 0.92);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 18px 42px rgba(24, 26, 31, 0.06);
+}
+
+.vega-import-summary-card span,
+.vega-import-summary-card strong {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vega-import-summary-card span {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 850;
+}
+
+.vega-import-summary-card strong {
+  margin-top: 3px;
+  color: var(--anthracite);
+  font-size: 0.95rem;
+}
+
+.vega-import-summary-card.danger {
+  border-color: rgba(215, 25, 32, 0.2);
+  background: rgba(255, 245, 245, 0.94);
+}
+
+.vega-import-summary-card.warning {
+  border-color: rgba(245, 158, 11, 0.22);
+  background: rgba(255, 251, 235, 0.94);
+}
+
+.vega-import-map-panel,
+.vega-import-table-panel,
+.vega-import-risk-panel {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+}
+
+.vega-import-map-header,
+.vega-import-table-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.vega-import-map-header h2,
+.vega-import-map-header p,
+.vega-import-table-heading h2,
+.vega-import-table-heading p,
+.vega-import-risk-panel h2,
+.vega-import-risk-panel p {
+  margin: 0;
+}
+
+.vega-import-map-header h2,
+.vega-import-table-heading h2,
+.vega-import-risk-panel h2 {
+  color: var(--anthracite);
+  font-size: 1rem;
+}
+
+.vega-import-map-header p,
+.vega-import-table-heading p,
+.vega-import-risk-panel p {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 750;
+}
+
+.vega-import-table-heading > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: #ecfdf5;
+  color: #047857;
+  font-size: 0.74rem;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.vega-import-map-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.vega-import-map-grid div {
+  min-width: 0;
+  padding: 8px;
+  border: 1px solid #edf0f4;
+  border-radius: 8px;
+  background: #f9fafb;
+}
+
+.vega-import-map-grid span,
+.vega-import-map-grid strong {
+  display: block;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.vega-import-map-grid span {
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 850;
+}
+
+.vega-import-map-grid strong {
+  margin-top: 3px;
+  color: var(--anthracite);
+  font-size: 0.76rem;
+}
+
+.vega-import-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 12px;
+}
+
+.vega-import-tabs button {
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid rgba(24, 100, 171, 0.16);
+  border-radius: 999px;
+  background: #f7fbff;
+  color: #1864ab;
+  font-size: 0.78rem;
+  font-weight: 850;
+}
+
+.vega-import-tabs button.active {
+  border-color: rgba(215, 25, 32, 0.26);
+  background: #fff1f2;
+  color: var(--red-dark);
+}
+
+.vega-import-tabs button:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+}
+
+.vega-import-table-wrap {
+  overflow-x: auto;
+  border: 1px solid #edf0f4;
+  border-radius: 8px;
+}
+
+.vega-import-table {
+  width: 100%;
+  min-width: 1280px;
+  border-collapse: collapse;
+  background: #ffffff;
+}
+
+.vega-import-table th,
+.vega-import-table td {
+  padding: 8px 9px;
+  border-bottom: 1px solid #edf0f4;
+  text-align: left;
+  vertical-align: top;
+  font-size: 0.74rem;
+}
+
+.vega-import-table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #f8fafc;
+  color: var(--muted);
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.vega-import-table td {
+  color: var(--anthracite);
+  font-weight: 760;
+}
+
+.vega-risk-chip-list,
+.vega-import-risk-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.vega-risk-chip {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  max-width: 220px;
+  padding: 4px 7px;
+  border-radius: 999px;
+  font-size: 0.66rem;
+  font-weight: 900;
+  line-height: 1.25;
+}
+
+.vega-risk-chip.high {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.vega-risk-chip.medium {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.vega-risk-chip.low {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+@media (max-width: 1180px) {
+  .vega-import-summary-grid,
+  .vega-import-map-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .vega-import-summary-grid,
+  .vega-import-map-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .vega-import-map-header,
+  .vega-import-table-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .vega-import-warning-panel {
+    grid-template-columns: 1fr;
+  }
+}
