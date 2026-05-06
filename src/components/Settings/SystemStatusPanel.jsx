@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.20.9",
+    title: "Vega Import Önizleme son kalite kontrol ve güvenlik metni sadeleştirme",
+    area: "Vega / Import Önizleme",
+    description: "Vega Import Önizleme güvenlik metinleri daha kısa ve net hale getirildi; Import Kilidi Aktif alanında canlı bağlantı, SQL/ODBC okuma, ERP’ye yazma ve import başlatma yapılmadığı güçlendirildi.",
+  },
+  {
     version: "v1.20.8",
     title: "Vega Import Önizleme sürüm geçmişi tamamlama ve build doğrulama",
     area: "Vega / Import Önizleme",

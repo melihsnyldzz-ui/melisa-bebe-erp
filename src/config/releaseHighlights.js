@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.20.9";
+export const currentReleaseVersion = "v1.21.0";
 
-export const currentReleaseTitle = "Vega Import Önizleme son kalite kontrol ve güvenlik metni sadeleştirme";
+export const currentReleaseTitle = "Vega Import Önizleme kapanış kontrolü ve read-only geçiş kapısı";
 
 export const updatedSectionIds = ["latest-version-history", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Vega Import Önizleme güvenlik metinleri daha kısa ve net hale getirildi",
-  "Import Kilidi Aktif alanındaki canlı bağlantı, SQL/ODBC, ERP yazma ve import kapalı mesajı güçlendirildi",
-  "Pasif mock önizleme akışı yeni özellik eklenmeden son kalite kontrolünden geçirildi",
+  "Vega Import Önizleme fazı read-only geçiş kapısı ile kapatıldı",
+  "Gerçek Vega read-only denemesi öncesi manuel yedek, minimum yetki, satır limiti ve timeout şartları görünür hale getirildi",
+  "Geçiş kapısı yalnızca pasif checklist olarak eklendi; bağlantı, SQL/ODBC, DB okuma ve import işlemi eklenmedi",
 ];
 
 export const releaseJumpLinks = [
