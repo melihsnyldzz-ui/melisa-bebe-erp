@@ -360,10 +360,23 @@ button {
 }
 
 .dashboard-period-summary {
+  display: inline-grid;
+  gap: 1px;
   color: var(--muted);
   font-size: 0.74rem;
   font-weight: 800;
   line-height: 1.35;
+}
+
+.dashboard-period-summary strong {
+  color: var(--anthracite);
+  font-size: 0.75rem;
+}
+
+.dashboard-period-summary small {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 800;
 }
 
 .page-title p {

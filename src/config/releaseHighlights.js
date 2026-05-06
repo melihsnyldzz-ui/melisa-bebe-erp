@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.15.6";
+export const currentReleaseVersion = "v1.16.0";
 
-export const currentReleaseTitle = "Ana Panel bugünkü satış fişi ve ürün çıkış detayı güçlendirme";
+export const currentReleaseTitle = "Patron kokpiti Dashboard ana düzeni ve ticari analiz ekranı";
 
 export const updatedSectionIds = ["latest-version-history", "project-maturity", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Satış fişi ve çıkan ürün adedi bilgileri daha net hale getirildi",
-  "Seçili dönem özeti kompakt şekilde gösterildi",
-  "En çok alan müşteri analizinde adet ve ciro ayrımı güçlendirildi",
+  "Dashboard patron kokpiti mantığıyla yeniden düzenlendi",
+  "Satış fişi, çıkan adet, satış ve tahsilat özeti güçlendirildi",
+  "Müşteri, ürün, risk ve son fiş analizleri kompakt grafiklerle desteklendi",
 ];
 
 export const releaseJumpLinks = [

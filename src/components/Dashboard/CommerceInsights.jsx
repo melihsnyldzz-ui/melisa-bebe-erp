@@ -86,7 +86,16 @@ export default function CommerceInsights({ data }) {
                 <XAxis dataKey="day" axisLine={false} interval={salesTrendInterval} tickLine={false} />
                 <YAxis axisLine={false} tickLine={false} tickFormatter={(value) => `${value / 1000}K`} />
                 <Tooltip content={<ShortTooltip />} />
-                <Area type="monotone" dataKey="value" name="Satış" stroke="#d71920" strokeWidth={3} fill="url(#monthlySalesFill)" />
+                <Area
+                  activeDot={{ r: 4 }}
+                  dataKey="value"
+                  dot={data.monthlySalesTrend.length <= 1 ? { r: 3 } : false}
+                  fill="url(#monthlySalesFill)"
+                  name="Satış"
+                  stroke="#d71920"
+                  strokeWidth={3}
+                  type="monotone"
+                />
               </AreaChart>
             </ResponsiveContainer>
           </div>

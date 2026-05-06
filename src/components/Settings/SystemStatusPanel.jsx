@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.16.0",
+    title: "Patron kokpiti Dashboard ana düzeni ve ticari analiz ekranı",
+    area: "Dashboard",
+    description: "Dashboard patron kokpiti mantığıyla düzenlendi; satış fişi, çıkan adet, müşteri, ürün, risk ve son fiş analizleri kompakt grafiklerle güçlendirildi.",
+  },
+  {
     version: "v1.15.6",
     title: "Ana Panel bugünkü satış fişi ve ürün çıkış detayı güçlendirme",
     area: "Dashboard",
@@ -166,12 +172,6 @@ const versionHistoryRows = [
     title: "ERP hızlandırma paketi: ana sayfa canlı hazırlık özeti ve hızlı test kısayolları",
     area: "Dashboard / Ayarlar",
     description: "Ana sayfaya canlıya hazırlık özeti, hızlı test kısayolları ve bugün test edilecek öncelikler eklendi.",
-  },
-  {
-    version: "v1.14.7",
-    title: "Sidebar menü sıkışıklığı ve Ayarlar görünürlüğü düzeltmesi",
-    area: "Genel Layout / Sidebar",
-    description: "Sol menüde Ayarlar alanının daha rahat görünmesi için sidebar üst boşlukları ve menü aralıkları kompakt hale getirildi.",
   },
 ];
 

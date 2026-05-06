@@ -29,7 +29,7 @@ export default function Dashboard() {
           </span>
           <p>Canlı özet</p>
           <h1>Melisa Bebe Yönetim Paneli</h1>
-          <span>Bugünkü satış, stok ve cari durumunuzu tek ekrandan takip edin.</span>
+          <span>Satış, tahsilat, stok ve müşteri performansını tek ekrandan takip edin.</span>
         </div>
         <button className="primary-action">
           <ClipboardList size={18} />
@@ -49,10 +49,12 @@ export default function Dashboard() {
             {option.label}
           </button>
         ))}
-        <span className="dashboard-period-summary">
-          Seçili dönem: {selectedPeriodLabel} · {formatNumber(dashboardData.periodSummary.salesSlipCount)} satış fişi ·{" "}
-          {formatNumber(dashboardData.periodSummary.soldQuantity)} adet ürün çıkışı · {formatCurrency(dashboardData.periodSummary.salesTotal)}
-          {" "}satış · {formatCurrency(dashboardData.periodSummary.collectionsTotal)} tahsilat
+        <span className="dashboard-period-summary" title="Seçili dönem ticari özeti">
+          <strong>Seçili dönem: {selectedPeriodLabel}</strong>
+          <small>
+            {formatNumber(dashboardData.periodSummary.salesSlipCount)} fiş · {formatNumber(dashboardData.periodSummary.soldQuantity)} adet ·{" "}
+            {formatCurrency(dashboardData.periodSummary.salesTotal)} satış · {formatCurrency(dashboardData.periodSummary.collectionsTotal)} tahsilat
+          </small>
         </span>
       </div>
 
