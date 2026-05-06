@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.10.9";
-export const APP_STAGE = "README Türkçe kalite düzeltmesi ve proje özeti";
+export const APP_VERSION = "v1.11.0";
+export const APP_STAGE = "Sistem ayarları ve güvenli mod bilgisi";

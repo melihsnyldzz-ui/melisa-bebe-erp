@@ -6,6 +6,7 @@ import DemoDataResetSettings from "../components/Settings/DemoDataResetSettings.
 import LiveModeSettings from "../components/Settings/LiveModeSettings.jsx";
 import SystemHealthSettings from "../components/Settings/SystemHealthSettings.jsx";
 import SystemSettings from "../components/Settings/SystemSettings.jsx";
+import SystemStatusPanel from "../components/Settings/SystemStatusPanel.jsx";
 import UserRoleSettings from "../components/Settings/UserRoleSettings.jsx";
 
 const initialCompanySettings = {
@@ -61,6 +62,7 @@ export default function Settings() {
       </p>
 
       <section className="settings-grid">
+        <SystemStatusPanel />
         <CompanySettings settings={companySettings} onChange={setCompanySettings} />
         <SystemSettings settings={systemSettings} onChange={setSystemSettings} />
         <DataStatusSettings />
