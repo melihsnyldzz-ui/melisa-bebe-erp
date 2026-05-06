@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.19.9",
+    title: "Vega read-only teknik hazırlık kilidi ve son geçiş özeti",
+    area: "Vega / Read-only",
+    description: "Vega Stok Deneme ekranına gerçek bağlantı, SQL/ODBC, Vega DB okuma, query çalıştırma ve onay kaydının kapalı olduğunu gösteren pasif teknik hazırlık kilidi ile v1.19.x hazırlık fazı son geçiş özeti eklendi.",
+  },
+  {
     version: "v1.19.8",
     title: "Vega read-only geçiş kapısı ve onay matrisi",
     area: "Vega / Read-only",

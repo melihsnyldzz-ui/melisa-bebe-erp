@@ -197,6 +197,23 @@ export default function VegaStockTrial() {
     { requirement: "İlk test sadece stok kartı okuma ile sınırlı mı?", status: "Bekliyor" },
     { requirement: "Cari, fiş, ürün mutasyonu kapalı mı?", status: "Bu sürümde pasif" },
   ];
+  const technicalLockRows = [
+    { label: "Gerçek bağlantı", value: "Kilitli" },
+    { label: "SQL / ODBC", value: "Kilitli" },
+    { label: "Vega DB okuma", value: "Kilitli" },
+    { label: "Veri yazma", value: "Kapalı" },
+    { label: "Query çalıştırma", value: "Kapalı" },
+    { label: "Onay kaydı", value: "Yok" },
+    { label: "Sonraki faz", value: "v1.20.0 read-only teknik hazırlık" },
+  ];
+  const finalTransitionSummary = [
+    "Demo veri ayrımı yapıldı.",
+    "Bağlantı hazırlığı pasif gösterildi.",
+    "Sorgu taslağı çalıştırılmadan gösterildi.",
+    "Güvenlik checklist'i eklendi.",
+    "Geçiş kapısı ve onay matrisi eklendi.",
+    "Gerçek bağlantı hâlâ kapalı.",
+  ];
   const normalizedQuery = query.trim().toLocaleLowerCase("tr-TR");
   const filteredRows = useMemo(() => {
     if (!normalizedQuery) {
@@ -460,6 +477,36 @@ export default function VegaStockTrial() {
                 <div className="vega-transition-gate-row" key={row.requirement}>
                   <strong>{row.requirement}</strong>
                   <span>{row.status}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="vega-technical-lock-panel">
+            <div>
+              <h2>Teknik Hazırlık Kilidi</h2>
+              <p>Bu kilit sadece bilgilendirme amaçlıdır; bağlantı açmaz, sorgu çalıştırmaz, ayar kaydetmez.</p>
+            </div>
+            <div className="vega-technical-lock-grid" aria-label="Vega read-only teknik hazırlık kilidi">
+              {technicalLockRows.map((row) => (
+                <div className="vega-technical-lock-row" key={row.label}>
+                  <span>{row.label}</span>
+                  <strong>{row.value}</strong>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="vega-final-summary-panel">
+            <div>
+              <h2>v1.19.x Hazırlık Fazı Son Özeti</h2>
+              <p>v1.20.0 öncesi pasif güvenlik hazırlığı kapanış özeti.</p>
+            </div>
+            <div className="vega-final-summary-grid" aria-label="v1.19.x hazırlık fazı son özeti">
+              {finalTransitionSummary.map((item) => (
+                <div className="vega-final-summary-item" key={item}>
+                  <span aria-hidden="true">•</span>
+                  <strong>{item}</strong>
                 </div>
               ))}
             </div>

@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.19.8";
+export const currentReleaseVersion = "v1.19.9";
 
-export const currentReleaseTitle = "Vega read-only geçiş kapısı ve onay matrisi";
+export const currentReleaseTitle = "Vega read-only teknik hazırlık kilidi ve son geçiş özeti";
 
 export const updatedSectionIds = ["latest-version-history", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Vega Stok Deneme ekranına pasif Read-only Geçiş Kapısı eklendi",
-  "Gerçek bağlantıya geçmeden önce gereken manuel kontrol şartları onay matrisiyle görünür hale getirildi",
-  "Onay kaydı, bağlantı açma ve sorgu çalıştırma olmadan güvenli karar rehberi korundu",
+  "Vega Stok Deneme ekranına pasif Teknik Hazırlık Kilidi eklendi",
+  "v1.19.x hazırlık fazının demo veri, bağlantı, sorgu ve güvenlik özeti görünür hale getirildi",
+  "Gerçek bağlantı, SQL/ODBC, query ve onay kaydı olmadan son geçiş özeti hazırlandı",
 ];
 
 export const releaseJumpLinks = [
