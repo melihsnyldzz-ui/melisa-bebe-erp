@@ -1883,6 +1883,66 @@ button {
   line-height: 1.35;
 }
 
+.version-history-panel {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(249, 250, 251, 0.88);
+}
+
+.version-history-panel h3,
+.version-history-panel p {
+  margin: 0;
+}
+
+.version-history-panel h3 {
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.version-history-panel p {
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.version-history-list {
+  display: grid;
+  gap: 10px;
+}
+
+.version-history-card {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.version-history-card div {
+  display: grid;
+  gap: 4px;
+}
+
+.version-history-card strong {
+  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+
+.version-history-card span {
+  color: #1864ab;
+  font-size: 0.8rem;
+  font-weight: 850;
+}
+
+.version-history-card p {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
 .go-live-checklist {
   display: grid;
   gap: 12px;

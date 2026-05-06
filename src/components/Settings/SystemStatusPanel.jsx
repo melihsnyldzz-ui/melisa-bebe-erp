@@ -12,10 +12,10 @@ const statusRows = [
 ];
 
 const maturityRows = [
-  { label: "ERP genel hazırlık", value: "%59-63" },
-  { label: "Canlı kullanım güvenliği", value: "%51-55" },
+  { label: "ERP genel hazırlık", value: "%60-64" },
+  { label: "Canlı kullanım güvenliği", value: "%52-56" },
   { label: "El terminali hazırlığı", value: "%45-50" },
-  { label: "Vega'dan geçiş hazırlığı", value: "%44-49" },
+  { label: "Vega'dan geçiş hazırlığı", value: "%45-50" },
 ];
 
 const goLiveChecklistGroups = [
@@ -40,6 +40,39 @@ const goLiveChecklistGroups = [
     title: "Bekliyor",
     tone: "waiting",
     items: ["Personel deneme kullanımı bekleniyor", "Vega karşılaştırmalı doğrulama bekleniyor"],
+  },
+];
+
+const versionHistoryRows = [
+  {
+    version: "v1.11.7",
+    title: "Ayarlar ekranı sürüm geçmişi özeti",
+    area: "Ayarlar",
+    description: "Son sürümlerde yapılan iyileştirmeler kullanıcıya anlaşılır şekilde gösterildi.",
+  },
+  {
+    version: "v1.11.6",
+    title: "Build sonucu görünürlüğü ve kalite durumu notu",
+    area: "Ayarlar",
+    description: "Build kontrolünün ne işe yaradığı ve nereden takip edileceği açıklandı.",
+  },
+  {
+    version: "v1.11.5",
+    title: "Yenilik noktası yönetimi ve test odağı bilgisi",
+    area: "Sol menü / Ayarlar",
+    description: "Yeni özellik noktası merkezi yönetilir hale getirildi ve test odağı belirtildi.",
+  },
+  {
+    version: "v1.11.4",
+    title: "Yenilik noktası açıklama balonu ve test notu",
+    area: "Sol menü / Ayarlar",
+    description: "Mavi yenilik noktasının anlamı kullanıcıya açıklandı.",
+  },
+  {
+    version: "v1.11.3",
+    title: "Menü yenilik noktası ve test yönlendirmesi",
+    area: "Sol menü",
+    description: "Son sürümde değişen sayfayı göstermek için mavi yenilik noktası eklendi.",
   },
 ];
 
@@ -82,6 +115,27 @@ export default function SystemStatusPanel() {
           Build status uygulama içinde görünmüyorsa GitHub Actions ekranından kontrol edilmelidir. Build kontrolü, kodun
           çalıştırılabilir olup olmadığını doğrulamak için kullanılır. Bu bilgi stok, cari veya fiş verilerini değiştirmez.
         </p>
+      </div>
+
+      <div className="version-history-panel">
+        <div>
+          <h3>Son Sürüm Geçmişi</h3>
+          <p>Bu alan, son sürümlerde hangi bölümde ne değiştiğini hızlıca görmeniz için hazırlanmıştır.</p>
+        </div>
+
+        <div className="version-history-list">
+          {versionHistoryRows.map((row) => (
+            <article className="version-history-card" key={row.version}>
+              <div>
+                <strong>
+                  {row.version} · {row.title}
+                </strong>
+                <span>Alan: {row.area}</span>
+              </div>
+              <p>Açıklama: {row.description}</p>
+            </article>
+          ))}
+        </div>
       </div>
 
       <div className="system-status-grid">
