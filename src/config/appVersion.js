@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.20.7";
-export const APP_STAGE = "Vega Import Önizleme güvenlik kilidi ve import butonsuz akış kontrolü";
+export const APP_VERSION = "v1.20.8";
+export const APP_STAGE = "Vega Import Önizleme sürüm geçmişi tamamlama ve build doğrulama";

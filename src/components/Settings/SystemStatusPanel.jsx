@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.20.7",
+    title: "Vega Import Önizleme güvenlik kilidi ve import butonsuz akış kontrolü",
+    area: "Vega / Import Önizleme",
+    description: "Vega Import Önizleme ekranında canlı bağlantı, SQL/ODBC okuma, ERP’ye yazma ve import başlatma işlemlerinin kapalı olduğu daha görünür hale getirildi; ekranın yalnızca pasif mock önizleme olduğu netleştirildi.",
+  },
+  {
     version: "v1.20.6",
     title: "Vega Import Önizleme build stabilizasyonu ve sürüm geçmişi düzeltmesi",
     area: "Vega / Import Önizleme",
