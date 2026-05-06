@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.13.4";
-export const APP_STAGE = "Yedek test sonucu değerlendirme ve risk özeti";
+export const APP_VERSION = "v1.13.5";
+export const APP_STAGE = "Yedek test kontrol geçmişi ve işlem öncesi onay notları";

@@ -91,6 +91,32 @@ const riskSummaryItems = [
   ["Kullanım amacı", "Test öncesi kontrol"],
 ];
 
+const backupTestHistoryItems = [
+  {
+    date: "06.05.2026",
+    description: "Test raporu şablonu eklendi",
+    status: "Tamamlandı",
+  },
+  {
+    date: "06.05.2026",
+    description: "Risk özeti kontrol edildi",
+    status: "Tamamlandı",
+  },
+  {
+    date: "Sonraki test",
+    description: "Test ortamında doğrulama bekleniyor",
+    status: "Bekliyor",
+  },
+];
+
+const preActionApprovalNotes = [
+  "Canlı veritabanı kullanılmayacak.",
+  "Test yedeği ile canlı yedek karıştırılmayacak.",
+  "Sonuç notu yazılmadan canlıya taşınmayacak.",
+  "Hata varsa işlem durdurulacak.",
+  "Sorumlu kişi onayı olmadan geri yükleme denenmeyecek.",
+];
+
 export default function BackupSafetyChecklist() {
   return (
     <section className="table-panel settings-panel backup-safety-panel">
@@ -228,6 +254,32 @@ export default function BackupSafetyChecklist() {
               </div>
             ))}
           </dl>
+        </div>
+      </div>
+
+      <div className="backup-test-history-panel">
+        <div>
+          <h3>Yedek Test Kontrol Geçmişi</h3>
+          <p>Bu geçmiş yalnızca örnek bilgilendirme alanıdır. Gerçek log, kayıt veya veritabanı işlemi yapmaz.</p>
+        </div>
+
+        <div className="backup-test-history-list">
+          {backupTestHistoryItems.map((item) => (
+            <article className="backup-test-history-row" key={`${item.date}-${item.description}`}>
+              <span>{item.date}</span>
+              <strong>{item.description}</strong>
+              <em>{item.status}</em>
+            </article>
+          ))}
+        </div>
+
+        <div className="pre-action-approval-panel">
+          <h3>İşlem Öncesi Onay Notları</h3>
+          <ul>
+            {preActionApprovalNotes.map((note) => (
+              <li key={note}>{note}</li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>
