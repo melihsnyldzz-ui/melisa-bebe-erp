@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.16.4",
+    title: "Dövizli ticaret özeti: alış/satış/cari kırılımına genişletme",
+    area: "Dashboard",
+    description: "Dövizli satış özeti alış ve cari kırılımıyla genişletildi; TL / USD / EUR bazında ticaret görünürlüğü artırıldı.",
+  },
+  {
     version: "v1.16.3",
     title: "Dashboard dövizli satış özetini kompaktlaştırma ve döviz veri hazırlığı",
     area: "Dashboard",
@@ -166,12 +172,6 @@ const versionHistoryRows = [
     title: "Ana Panel filtre ve dönem seçimi hazırlığı",
     area: "Dashboard",
     description: "Ana Panel’e kompakt dönem seçici eklendi ve ticari analizler seçilen dönem mantığına hazır hale getirildi.",
-  },
-  {
-    version: "v1.15.3",
-    title: "Ana Panel ticari grafiklerde adet/ciro ayrımı ve boşluk azaltma",
-    area: "Dashboard",
-    description: "Müşteri ve ürün grafiklerinde adet/ciro bilgisi daha anlaşılır hale getirildi; Dashboard boşlukları azaltılarak kompakt görünüm güçlendirildi.",
   },
 ];
 

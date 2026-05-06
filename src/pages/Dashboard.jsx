@@ -66,7 +66,7 @@ export default function Dashboard() {
         ))}
       </section>
 
-      <CurrencySalesSummary summary={dashboardData.currencySalesSummary} />
+      <CurrencyTradeSummary summary={dashboardData.currencyTradeSummary} />
 
       {isEndOfDayReportOpen && <EndOfDayReportPreview report={reportPreview} />}
 
@@ -75,16 +75,16 @@ export default function Dashboard() {
   );
 }
 
-function CurrencySalesSummary({ summary }) {
+function CurrencyTradeSummary({ summary }) {
   return (
     <section className="dashboard-currency-summary" id="dashboard-currency-summary">
       <div>
-        <h2>Dövizli Satış Özeti</h2>
-        <p>Seçili dönemdeki satışlar para birimine göre gösterilir.</p>
+        <h2>Dövizli Ticaret Özeti</h2>
+        <p>Seçili dönemde alış, satış ve cari tutarlar para birimine göre gösterilir.</p>
       </div>
 
       <div className="dashboard-currency-grid">
-        {buildCurrencySummaryRows(summary).map((row) => (
+        {buildCurrencyTradeCards(summary).map((row) => (
           <article className="dashboard-currency-card" key={row.label}>
             <span>{row.label}</span>
             <strong>{row.value}</strong>
@@ -116,7 +116,7 @@ function EndOfDayReportPreview({ report }) {
   );
 }
 
-function buildDashboardData({ collections, customers, products, purchaseSlips, salesSlips }, selectedPeriod) {
+function buildDashboardData({ collections, customers, products, purchaseSlips, salesSlips, suppliers }, selectedPeriod) {
   const today = getTodayISO();
   const periodRange = getPeriodRange(selectedPeriod, today);
   const activeSalesSlips = salesSlips.filter(isActiveRecord);
@@ -127,6 +127,7 @@ function buildDashboardData({ collections, customers, products, purchaseSlips, s
   const monthlySalesSlips = activeSalesSlips.filter((slip) => getRecordDate(slip).startsWith(monthKey));
   const monthlyCollections = activeCollections.filter((collection) => getRecordDate(collection).startsWith(monthKey));
   const periodSalesSlips = activeSalesSlips.filter((slip) => isDateInRange(getRecordDate(slip), periodRange));
+  const periodPurchaseSlips = activePurchaseSlips.filter((slip) => isDateInRange(getRecordDate(slip), periodRange));
   const periodCollections = activeCollections.filter((collection) => isDateInRange(getRecordDate(collection), periodRange));
   const periodSales = sumBy(periodSalesSlips, "grandTotal");
   const periodCollectionsTotal = sumBy(periodCollections, "amount");
@@ -150,7 +151,11 @@ function buildDashboardData({ collections, customers, products, purchaseSlips, s
       riskRows: buildRiskRows({ criticalProducts, customers }),
       latestSlips: buildLatestSlipRows({ activePurchaseSlips, activeSalesSlips }),
     },
-    currencySalesSummary: buildCurrencySalesSummary(periodSalesSlips),
+    currencyTradeSummary: {
+      current: buildCurrentCurrencyTotals(customers, suppliers),
+      purchases: buildCurrencyTotals(periodPurchaseSlips, "grandTotal"),
+      sales: buildCurrencyTotals(periodSalesSlips, "grandTotal"),
+    },
     periodSummary: {
       collectionsTotal: periodCollectionsTotal,
       salesSlipCount: periodSalesSlips.length,
@@ -160,7 +165,7 @@ function buildDashboardData({ collections, customers, products, purchaseSlips, s
   };
 }
 
-function buildReportPreview({ commerceInsights, currencySalesSummary, periodSummary }, periodLabel) {
+function buildReportPreview({ commerceInsights, currencyTradeSummary, periodSummary }, periodLabel) {
   const topCustomer = commerceInsights.topCustomersByRevenue[0];
   const topProduct = commerceInsights.monthlyTopProducts[0];
   const riskNote = commerceInsights.riskRows[0];
@@ -172,7 +177,7 @@ function buildReportPreview({ commerceInsights, currencySalesSummary, periodSumm
       { label: "Çıkan ürün", value: `${formatNumber(periodSummary.soldQuantity)} adet` },
       { label: "Satış toplamı", value: formatCurrency(periodSummary.salesTotal) },
       { label: "Tahsilat toplamı", value: formatCurrency(periodSummary.collectionsTotal) },
-      ...buildCurrencySummaryRows(currencySalesSummary).map((row) => ({
+      ...buildCurrencyTradeReportRows(currencyTradeSummary).map((row) => ({
         label: row.label,
         value: row.value,
       })),
@@ -192,44 +197,75 @@ function buildReportPreview({ commerceInsights, currencySalesSummary, periodSumm
   };
 }
 
-function buildCurrencySummaryRows(summary) {
+function buildCurrencyTradeCards(summary) {
   return [
-    {
-      label: "Satılan TL",
-      note: "TL satış",
-      value: formatCurrencyByCode(summary?.TRY || 0, "TRY"),
-    },
-    {
-      label: "Satılan USD",
-      note: (summary?.USD || 0) > 0 ? undefined : "Dövizli satış yok",
-      value: formatCurrencyByCode(summary?.USD || 0, "USD"),
-    },
-    {
-      label: "Satılan EUR",
-      note: (summary?.EUR || 0) > 0 ? undefined : "Dövizli satış yok",
-      value: formatCurrencyByCode(summary?.EUR || 0, "EUR"),
-    },
+    ...buildCurrencyGroupCards("Satış", summary?.sales),
+    ...buildCurrencyGroupCards("Alış", summary?.purchases),
+    ...buildCurrencyGroupCards("Cari", summary?.current),
   ];
 }
 
-function buildCurrencySalesSummary(salesSlips) {
-  return salesSlips.reduce(
-    (summary, slip) => {
-      const currency = getSlipCurrency(slip);
-      if (!currency) return summary;
-
-      summary[currency] += toNumber(slip.grandTotal);
-      if (hasCurrencyField(slip)) {
-        summary.hasCurrencyData = true;
-      }
-      return summary;
-    },
-    { EUR: 0, TRY: 0, USD: 0, hasCurrencyData: false },
-  );
+function buildCurrencyGroupCards(label, totals = createCurrencyTotals()) {
+  return ["TRY", "USD", "EUR"].map((currencyCode) => {
+    const value = totals[currencyCode] || 0;
+    return {
+      label: `${label} ${getCurrencyLabel(currencyCode)}`,
+      note: currencyCode === "TRY" || value !== 0 ? label : "Dövizli kayıt yok",
+      value: formatCurrencyByCode(value, currencyCode),
+    };
+  });
 }
 
-function getSlipCurrency(slip) {
-  const currencyValue = getCurrencyFieldValue(slip);
+function buildCurrencyTradeReportRows(summary) {
+  return [
+    { label: "Satış", value: formatCurrencyTradeLine(summary?.sales) },
+    { label: "Alış", value: formatCurrencyTradeLine(summary?.purchases) },
+    { label: "Cari", value: formatCurrencyTradeLine(summary?.current) },
+  ];
+}
+
+function formatCurrencyTradeLine(totals = createCurrencyTotals()) {
+  return ["TRY", "USD", "EUR"].map((currencyCode) => formatCurrencyByCode(totals[currencyCode] || 0, currencyCode)).join(" / ");
+}
+
+function buildCurrencyTotals(records = [], totalKey) {
+  return records.reduce((summary, record) => {
+    const currency = getRecordCurrency(record);
+    if (!currency) return summary;
+
+    summary[currency] += toNumber(record[totalKey] ?? record.grandTotal ?? record.total ?? record.amount);
+    if (hasCurrencyField(record)) {
+      summary.hasCurrencyData = true;
+    }
+    return summary;
+  }, createCurrencyTotals());
+}
+
+function buildCurrentCurrencyTotals(customers = [], suppliers = []) {
+  const summary = createCurrencyTotals();
+  addCurrentBalances(summary, customers, 1);
+  addCurrentBalances(summary, suppliers, -1);
+  return summary;
+}
+
+function addCurrentBalances(summary, records = [], direction) {
+  records.forEach((record) => {
+    const currency = getRecordCurrency(record);
+    if (!currency) return;
+
+    summary[currency] += toNumber(record.currentBalance) * direction;
+    if (hasCurrencyField(record)) {
+      summary.hasCurrencyData = true;
+    }
+  });
+}
+
+function createCurrencyTotals() {
+  return { EUR: 0, TRY: 0, USD: 0, hasCurrencyData: false };
+}
+
+function getRecordCurrency(record) {
+  const currencyValue = getCurrencyFieldValue(record);
   if (!currencyValue) return "TRY";
   return normalizeCurrency(currencyValue);
 }
@@ -251,6 +287,11 @@ function normalizeCurrency(value) {
   if (["USD", "$", "US DOLLAR", "DOLAR"].includes(normalized)) return "USD";
   if (["EUR", "€", "EURO"].includes(normalized)) return "EUR";
   return null;
+}
+
+function getCurrencyLabel(currencyCode) {
+  if (currencyCode === "TRY") return "TL";
+  return currencyCode;
 }
 
 function formatCurrencyByCode(value, currencyCode) {

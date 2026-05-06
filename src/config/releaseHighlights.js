@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.16.3";
+export const currentReleaseVersion = "v1.16.4";
 
-export const currentReleaseTitle = "Dashboard dövizli satış özetini kompaktlaştırma ve döviz veri hazırlığı";
+export const currentReleaseTitle = "Dövizli ticaret özeti: alış/satış/cari kırılımına genişletme";
 
 export const updatedSectionIds = ["latest-version-history", "project-maturity", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Dövizli satış kartları daha kompakt hale getirildi",
-  "USD ve EUR boş durumları 0 değer ve kısa notla sadeleştirildi",
-  "Gün Sonu Raporu döviz satırları daha okunur hale getirildi",
+  "Dövizli satış özeti alış ve cari kırılımıyla genişletildi",
+  "TL / USD / EUR satış, alış ve cari bilgileri Dashboard’da görünür hale getirildi",
+  "Kur çevirmeden para birimi bazlı ticaret takibi hazırlandı",
 ];
 
 export const releaseJumpLinks = [
@@ -28,7 +28,7 @@ export const releaseHighlightsByPage = {
     releaseHighlightItems,
     releaseJumpLinks: [
       { id: "dashboard-daily-operation", label: "Bugünkü Operasyon Özeti'ne git" },
-      { id: "dashboard-currency-summary", label: "Dövizli Satış Özeti'ne git" },
+      { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
     updatedSectionIds: ["dashboard-daily-operation", "dashboard-currency-summary", "dashboard-commerce-insights"],
