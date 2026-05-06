@@ -80,7 +80,7 @@ function CurrencyTradeSummary({ summary }) {
     <section className="dashboard-currency-summary" id="dashboard-currency-summary">
       <div>
         <h2>Dövizli Ticaret Özeti</h2>
-        <p>Seçili dönemde alış, satış ve cari tutarlar para birimine göre gösterilir.</p>
+        <p>Satış, alış ve net cari pozisyon seçili döneme göre para birimi bazında gösterilir.</p>
       </div>
 
       <div className="dashboard-currency-grid">
@@ -201,16 +201,16 @@ function buildCurrencyTradeCards(summary) {
   return [
     ...buildCurrencyGroupCards("Satış", summary?.sales),
     ...buildCurrencyGroupCards("Alış", summary?.purchases),
-    ...buildCurrencyGroupCards("Cari", summary?.current),
+    ...buildCurrencyGroupCards("Net Cari", summary?.current, "Müşteri - tedarikçi"),
   ];
 }
 
-function buildCurrencyGroupCards(label, totals = createCurrencyTotals()) {
+function buildCurrencyGroupCards(label, totals = createCurrencyTotals(), fixedNote) {
   return ["TRY", "USD", "EUR"].map((currencyCode) => {
     const value = totals[currencyCode] || 0;
     return {
       label: `${label} ${getCurrencyLabel(currencyCode)}`,
-      note: currencyCode === "TRY" || value !== 0 ? label : "Dövizli kayıt yok",
+      note: fixedNote || (currencyCode === "TRY" || value !== 0 ? label : "Dövizli kayıt yok"),
       value: formatCurrencyByCode(value, currencyCode),
     };
   });
@@ -220,7 +220,7 @@ function buildCurrencyTradeReportRows(summary) {
   return [
     { label: "Satış", value: formatCurrencyTradeLine(summary?.sales) },
     { label: "Alış", value: formatCurrencyTradeLine(summary?.purchases) },
-    { label: "Cari", value: formatCurrencyTradeLine(summary?.current) },
+    { label: "Net Cari", value: formatCurrencyTradeLine(summary?.current) },
   ];
 }
 

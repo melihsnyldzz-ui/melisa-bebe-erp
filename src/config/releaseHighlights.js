@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.16.4";
+export const currentReleaseVersion = "v1.16.5";
 
-export const currentReleaseTitle = "Dövizli ticaret özeti: alış/satış/cari kırılımına genişletme";
+export const currentReleaseTitle = "Dövizli ticaret özetinde Net Cari açıklaması ve müşteri/tedarikçi ayrımı hazırlığı";
 
 export const updatedSectionIds = ["latest-version-history", "project-maturity", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Dövizli satış özeti alış ve cari kırılımıyla genişletildi",
-  "TL / USD / EUR satış, alış ve cari bilgileri Dashboard’da görünür hale getirildi",
-  "Kur çevirmeden para birimi bazlı ticaret takibi hazırlandı",
+  "Dövizli Ticaret Özeti’nde Cari başlıkları Net Cari olarak netleştirildi",
+  "Net Cari kartlarında müşteri - tedarikçi açıklaması gösterildi",
+  "Gün Sonu Raporu Önizleme’de cari satırı Net Cari olarak güncellendi",
 ];
 
 export const releaseJumpLinks = [
