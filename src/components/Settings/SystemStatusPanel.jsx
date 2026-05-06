@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.18.4",
+    title: "Vega stok deneme ekranı test notu ve görsel sıkıştırma",
+    area: "Vega / Stok",
+    description: "Vega Stok Deneme ekranındaki kolon eşleştirme hazırlığı daha kompakt hale getirildi ve bu ekranda yalnızca demo stok görünümü, bağlantı durumu ve kolon eşleştirme hazırlığının kontrol edileceğini anlatan güvenli test notu eklendi.",
+  },
+  {
     version: "v1.18.3",
     title: "Vega stok kolon eşleştirme hazırlığı",
     area: "Vega / Stok",

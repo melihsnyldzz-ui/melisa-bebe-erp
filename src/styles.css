@@ -3404,6 +3404,32 @@ button {
   margin-top: 1px;
 }
 
+.vega-test-note {
+  display: grid;
+  gap: 3px;
+  padding: 9px 10px;
+  border: 1px solid rgba(51, 154, 240, 0.18);
+  border-radius: 8px;
+  color: #184e77;
+  background: #f4faff;
+}
+
+.vega-test-note strong,
+.vega-test-note span {
+  display: block;
+}
+
+.vega-test-note strong {
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+.vega-test-note span {
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.38;
+}
+
 .vega-connection-panel {
   display: grid;
   gap: 10px;
@@ -3466,8 +3492,8 @@ button {
 
 .vega-column-mapping-panel {
   display: grid;
-  gap: 10px;
-  padding: 12px;
+  gap: 8px;
+  padding: 10px;
   border: 1px solid #edf0f4;
   border-radius: 8px;
   background: #fff;
@@ -3480,30 +3506,30 @@ button {
 
 .vega-column-mapping-panel h2 {
   color: var(--anthracite);
-  font-size: 0.96rem;
+  font-size: 0.92rem;
 }
 
 .vega-column-mapping-panel p {
-  margin-top: 3px;
+  margin-top: 2px;
   color: var(--muted);
-  font-size: 0.8rem;
+  font-size: 0.76rem;
   font-weight: 800;
-  line-height: 1.4;
+  line-height: 1.32;
 }
 
 .vega-column-mapping-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 7px;
+  gap: 5px;
 }
 
 .vega-column-mapping-row {
   display: grid;
   grid-template-columns: minmax(0, 0.9fr) auto minmax(0, 1fr);
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   min-width: 0;
-  padding: 7px 8px;
+  padding: 5px 7px;
   border: 1px solid #f1f3f5;
   border-radius: 8px;
   background: #f9fafb;
@@ -3521,7 +3547,7 @@ button {
 .vega-column-mapping-row strong {
   min-width: 0;
   overflow-wrap: anywhere;
-  font-size: 0.78rem;
+  font-size: 0.72rem;
 }
 
 .vega-column-mapping-row span {
@@ -5387,7 +5413,7 @@ tr:last-child td {
   }
 
   .vega-column-mapping-panel {
-    padding: 10px;
+    padding: 9px;
   }
 
   .vega-column-mapping-grid {
@@ -5396,7 +5422,7 @@ tr:last-child td {
   }
 
   .vega-column-mapping-row {
-    padding: 7px;
+    padding: 6px;
   }
 
   th,

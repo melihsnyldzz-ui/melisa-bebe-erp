@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.18.3";
+export const currentReleaseVersion = "v1.18.4";
 
-export const currentReleaseTitle = "Vega stok kolon eşleştirme hazırlığı";
+export const currentReleaseTitle = "Vega stok deneme ekranı test notu ve görsel sıkıştırma";
 
 export const updatedSectionIds = ["latest-version-history", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Vega Stok Deneme ekranına kolon eşleştirme hazırlığı eklendi",
-  "Vega stok alanlarının ERP karşılıkları read-only şekilde gösterildi",
-  "Gerçek bağlantı kurulmadan stok okuma eşleştirme planı görünür hale getirildi",
+  "Vega Stok Deneme ekranındaki kolon eşleştirme alanı daha kompakt hale getirildi",
+  "Vega Stok Deneme ekranına güvenli test notu eklendi",
+  "Gerçek bağlantı kurulmadan test edilecek alanlar daha net anlatıldı",
 ];
 
 export const releaseJumpLinks = [

@@ -165,6 +165,14 @@ export default function VegaStockTrial() {
           </span>
         </div>
 
+        <div className="vega-test-note">
+          <strong>Test Notu</strong>
+          <span>
+            Bu ekranda yalnızca demo stok görünümü, bağlantı durumu ve kolon eşleştirme hazırlığı kontrol edilir. Gerçek Vega
+            bağlantısı açılmaz, veri çekilmez ve kayıt oluşturulmaz.
+          </span>
+        </div>
+
         <div className="vega-connection-panel">
           <div>
             <h2>Bağlantı Kontrolü</h2>
