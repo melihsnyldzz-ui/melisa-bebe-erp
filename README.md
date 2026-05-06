@@ -2,43 +2,52 @@
 
 ![Melisa Bebe ERP Build](https://github.com/melihsnyldzz-ui/melisa-bebe-erp/actions/workflows/build.yml/badge.svg)
 
-Melisa Bebe ERP, Vega'dan kademeli gecis icin gelistirilen bagimsiz ERP sistemidir.
+Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan kademeli geçiş amacıyla geliştirilen bağımsız ERP sistemidir.
 
-## Mevcut durum
+## Mevcut Durum
 
-- Guncel surum: v1.10.8
-- Asama: Build workflow durum rozeti ve kalite kontrol notu
-- El terminali: okuma, son okutulanlar, sayim sepeti, rapor/CSV/JSON onizleme hazirligi
-- Build kontrolu: GitHub Actions
+- Güncel sürüm: v1.10.9
+- Aşama: README Türkçe kalite düzeltmesi ve proje özeti
+- Build kontrolü: GitHub Actions
+- El terminali: okuma, son okutulanlar, sayım sepeti, rapor/CSV/JSON önizleme hazırlığı
 
-## Guvenli gelistirme notu
+## Güvenli Geliştirme Notu
 
-- Once okuma, rapor ve onizleme modulleri gelistirilir.
-- Veri yazan stok, cari, fis, yedek, import ve migration isleri kucuk ve kontrollu surumlere bolunur.
-- Build gecmeden main branch'e push yapilmamalidir.
+- Önce okuma, rapor ve önizleme modülleri geliştirilir.
+- Veri yazan stok, cari, fiş, yedek, import ve migration işleri küçük ve kontrollü sürümlere bölünür.
+- Build geçmeden main branch’e push yapılmamalıdır.
 
-Melisa Bebe Tekstil San. ve Tic. Ltd. Sti. icin gelistirilen Electron masaustu ERP prototipi.
+## Modül Durumu
 
-## Sirket bilgisayarinda tek komutla calistirma
+- Depo Terminali: okuma, son okutulanlar, sayım sepeti, rapor/CSV/JSON önizleme hazırlığı
+- Raporlar: yönetim özeti ve veri kalite kontrolü
+- Veri Aktarımı: import/export hazırlıkları
+- Build: GitHub Actions ile otomatik build kontrolü
 
-Proje klasorunde PowerShell veya Komut Istemi acin:
+## Build Kontrolü
+
+Her main push sonrası GitHub Actions üzerinden `npm ci` ve `npm run build` çalışır.
+
+## Şirket Bilgisayarında Tek Komutla Çalıştırma
+
+Proje klasöründe PowerShell veya Komut İstemi açın:
 
 ```bash
 npm run desktop
 ```
 
-`npm start` ve `npm run electron:dev` komutlari da ayni masaustu akisini calistirir.
+`npm start` ve `npm run electron:dev` komutları da aynı masaüstü akışını çalıştırır.
 
-Bu komut sunlari otomatik yapar:
+Bu komut şunları otomatik yapar:
 
-- `node_modules` eksikse `npm install` calistirir.
-- Electron kurulumu bozuk gorunuyorsa paketleri yeniler.
-- `better-sqlite3` gibi native paketleri Electron surumune gore yeniden hazirlar.
-- Bu projeden kalmis eski Node/Electron sureclerini temizler.
-- `5173` portu doluysa uygun baska bir port secip Electron'u o adrese baglar.
-- Vite hazir olmadan Electron penceresini acmaz.
+- `node_modules` eksikse `npm install` çalıştırır.
+- Electron kurulumu bozuk görünüyorsa paketleri yeniler.
+- `better-sqlite3` gibi native paketleri Electron sürümüne göre yeniden hazırlar.
+- Bu projeden kalmış eski Node/Electron süreçlerini temizler.
+- `5173` portu doluysa uygun başka bir port seçip Electron’u o adrese bağlar.
+- Vite hazır olmadan Electron penceresini açmaz.
 
-## Manuel paket kurulumu
+## Manuel Paket Kurulumu
 
 Normalde ilk komut bunu kendisi yapar. Yine de elle kurulum gerekirse:
 
@@ -46,31 +55,31 @@ Normalde ilk komut bunu kendisi yapar. Yine de elle kurulum gerekirse:
 npm install
 ```
 
-## Web gelistirme modu
+## Web Geliştirme Modu
 
-Sadece tarayicida Vite gelistirme sunucusu acmak icin:
+Sadece tarayıcıda Vite geliştirme sunucusu açmak için:
 
 ```bash
 npm run dev
 ```
 
-## Eski gelistirme sureclerini temizleme
+## Eski Geliştirme Süreçlerini Temizleme
 
-Bir onceki calismadan kalan surecleri kapatmak icin:
+Bir önceki çalışmadan kalan süreçleri kapatmak için:
 
 ```bash
 npm run kill:dev
 ```
 
-## Electron native paketlerini elle yenileme
+## Electron Native Paketlerini Elle Yenileme
 
-Normalde `npm run desktop` bunu otomatik yapar. `better-sqlite3` icin Node/Electron surum uyumsuzlugu gorulurse elle de calistirilabilir:
+Normalde `npm run desktop` bunu otomatik yapar. `better-sqlite3` için Node/Electron sürüm uyumsuzluğu görülürse elle de çalıştırılabilir:
 
 ```bash
 npm run electron:rebuild
 ```
 
-## Build alma
+## Build Alma
 
 Web build:
 
@@ -84,6 +93,6 @@ Electron installer build:
 npm run electron:build
 ```
 
-## GitHub'a gonderirken dikkat
+## GitHub’a Gönderirken Dikkat
 
-`node_modules`, `dist`, `build` ve gecici dosyalar GitHub'a gonderilmez. Bu dosyalar `.gitignore` ile haric tutulmustur.
+`node_modules`, `dist`, `build` ve geçici dosyalar GitHub’a gönderilmez. Bu dosyalar `.gitignore` ile hariç tutulmuştur.
