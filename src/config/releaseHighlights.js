@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.17.2";
+export const currentReleaseVersion = "v1.17.3";
 
-export const currentReleaseTitle = "Dashboard risk aksiyonlarını netleştirme";
+export const currentReleaseTitle = "Gün sonu raporu önizlemesini patron diline çekme";
 
 export const updatedSectionIds = ["latest-version-history", "project-maturity", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Risk satırları stok yok, limit aşımı, kritik stok ve limit yaklaşımı önceliğine göre sıralandı",
-  "Risk aksiyonları daha kısa ve patron gözüyle okunur hale getirildi",
-  "Risk satırlarına kompakt görsel tonlar eklendi",
+  "Gün Sonu Raporu Önizleme satırları patron diline çekildi",
+  "Satış, tahsilat, müşteri ve ürün alanları daha karar odaklı adlandırıldı",
+  "Risk notu ve Patron Notu rapor içinde daha okunur hale getirildi",
 ];
 
 export const releaseJumpLinks = [

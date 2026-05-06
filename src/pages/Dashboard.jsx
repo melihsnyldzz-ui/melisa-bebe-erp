@@ -201,32 +201,34 @@ function buildReportPreview({ commerceInsights, currencyTradeSummary, patronNote
   const topCustomer = commerceInsights.topCustomersByRevenue[0];
   const topProduct = commerceInsights.monthlyTopProducts[0];
   const riskNote = commerceInsights.riskRows[0];
+  const salesSlipText = `${formatNumber(periodSummary.salesSlipCount)} fiş`;
+  const soldQuantityText = `${formatNumber(periodSummary.soldQuantity)} adet`;
 
   return {
     rows: [
       { label: "Seçili dönem", value: periodLabel },
-      { label: "Satış fişi", value: formatNumber(periodSummary.salesSlipCount) },
-      { label: "Çıkan ürün", value: `${formatNumber(periodSummary.soldQuantity)} adet` },
-      { label: "Satış toplamı", value: formatCurrency(periodSummary.salesTotal) },
-      { label: "Tahsilat toplamı", value: formatCurrency(periodSummary.collectionsTotal) },
+      { label: "Satış hareketi", value: salesSlipText },
+      { label: "Çıkan ürün", value: soldQuantityText },
+      { label: "Satış cirosu", value: formatCurrency(periodSummary.salesTotal) },
+      { label: "Kasaya giren", value: formatCurrency(periodSummary.collectionsTotal) },
       ...buildCurrencyTradeReportRows(currencyTradeSummary).map((row) => ({
         label: row.label,
         value: row.value,
       })),
       {
-        label: "En çok alan müşteri",
-        value: topCustomer ? `${topCustomer.name} · ${formatCurrency(topCustomer.revenue)}` : "Veri bekleniyor",
+        label: "En güçlü müşteri",
+        value: topCustomer ? `${topCustomer.name} · ${formatCurrency(topCustomer.revenue)}` : "Müşteri hareketi yok",
       },
       {
-        label: "En çok satan ürün",
-        value: topProduct ? `${topProduct.name} · ${formatNumber(topProduct.quantity)} adet` : "Veri bekleniyor",
+        label: "En çok çıkan ürün",
+        value: topProduct ? `${topProduct.name} · ${formatNumber(topProduct.quantity)} adet` : "Ürün hareketi yok",
       },
       {
         label: "Risk notu",
         value: riskNote ? `${riskNote.label} · ${riskNote.actionNote}` : "Kritik risk görünmüyor.",
       },
       {
-        label: "Genel Not",
+        label: "Patron Notu",
         value: patronNote,
       },
     ],

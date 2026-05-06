@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.17.3",
+    title: "Gün sonu raporu önizlemesini patron diline çekme",
+    area: "Dashboard",
+    description: "Gün Sonu Raporu Önizleme satırları satış, tahsilat, müşteri, ürün, risk ve Patron Notu odağında daha kısa ve karar odaklı hale getirildi.",
+  },
+  {
     version: "v1.17.2",
     title: "Dashboard risk aksiyonlarını netleştirme",
     area: "Dashboard",
