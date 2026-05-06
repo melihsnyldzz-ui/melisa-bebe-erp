@@ -3783,7 +3783,8 @@ button {
 
 .vega-driver-guide-panel,
 .vega-db-guide-panel,
-.vega-stock-query-preview-panel {
+.vega-stock-query-preview-panel,
+.vega-security-checklist-panel {
   display: grid;
   gap: 8px;
   padding: 10px;
@@ -3797,20 +3798,24 @@ button {
 .vega-db-guide-panel h2,
 .vega-db-guide-panel p,
 .vega-stock-query-preview-panel h2,
-.vega-stock-query-preview-panel p {
+.vega-stock-query-preview-panel p,
+.vega-security-checklist-panel h2,
+.vega-security-checklist-panel p {
   margin: 0;
 }
 
 .vega-driver-guide-panel h2,
 .vega-db-guide-panel h2,
-.vega-stock-query-preview-panel h2 {
+.vega-stock-query-preview-panel h2,
+.vega-security-checklist-panel h2 {
   color: #166534;
   font-size: 0.96rem;
 }
 
 .vega-driver-guide-panel p,
 .vega-db-guide-panel p,
-.vega-stock-query-preview-panel p {
+.vega-stock-query-preview-panel p,
+.vega-security-checklist-panel p {
   margin-top: 3px;
   color: #166534;
   font-size: 0.78rem;
@@ -3879,6 +3884,40 @@ button {
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   font-size: 0.68rem;
   font-weight: 900;
+  overflow-wrap: anywhere;
+}
+
+.vega-security-checklist-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.vega-security-checklist-item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 6px;
+  min-width: 0;
+  padding: 7px 8px;
+  border: 1px solid rgba(22, 101, 52, 0.14);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.vega-security-checklist-item span {
+  color: #15803d;
+  font-size: 0.92rem;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.vega-security-checklist-item strong {
+  min-width: 0;
+  color: var(--anthracite);
+  font-size: 0.78rem;
+  font-weight: 900;
+  line-height: 1.3;
   overflow-wrap: anywhere;
 }
 
@@ -5882,7 +5921,8 @@ tr:last-child td {
 
   .vega-driver-guide-panel,
   .vega-db-guide-panel,
-  .vega-stock-query-preview-panel {
+  .vega-stock-query-preview-panel,
+  .vega-security-checklist-panel {
     padding: 10px;
   }
 
@@ -5896,6 +5936,15 @@ tr:last-child td {
   .vega-driver-guide-row,
   .vega-db-guide-row,
   .vega-stock-query-preview-row {
+    padding: 7px;
+  }
+
+  .vega-security-checklist-grid {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .vega-security-checklist-item {
     padding: 7px;
   }
 

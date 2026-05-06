@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.19.4";
+export const currentReleaseVersion = "v1.19.5";
 
-export const currentReleaseTitle = "Stok sorgusu taslak önizleme";
+export const currentReleaseTitle = "Read-only güvenlik checklist'i";
 
 export const updatedSectionIds = ["latest-version-history", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Vega read-only bağlantı hazırlığına stok sorgusu taslak önizleme alanı eklendi",
-  "Stok kartlarını sadece okuma mantığı gerçek sorgu çalıştırılmadan gösterildi",
-  "Sorgu çalıştırma, veri çekme ve kayıt oluşturma olmadan güvenli hazırlık görünümü korundu",
+  "Vega read-only bağlantı hazırlığına güvenlik checklist'i eklendi",
+  "Yazma izni, minimum yetki, küçük satır limiti ve demo/gerçek veri ayrımı şartları görünür hale getirildi",
+  "Gerçek bağlantı kurulmadan ve onay kaydı yapılmadan güvenli hazırlık görünümü korundu",
 ];
 
 export const releaseJumpLinks = [

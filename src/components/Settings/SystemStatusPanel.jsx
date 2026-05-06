@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.19.5",
+    title: "Read-only güvenlik checklist'i",
+    area: "Vega / Read-only",
+    description: "Vega read-only bağlantı hazırlığı kapsamında gerçek bağlantı açılmadan önce sadece okuma modu, yazma izninin kapalı kalması, minimum kullanıcı yetkisi, küçük satır limiti, demo/gerçek veri ayrımı ve manuel yedek kontrolü gibi güvenlik şartlarını gösteren pasif checklist paneli eklendi.",
+  },
+  {
     version: "v1.19.4",
     title: "Stok sorgusu taslak önizleme",
     area: "Vega / Read-only",

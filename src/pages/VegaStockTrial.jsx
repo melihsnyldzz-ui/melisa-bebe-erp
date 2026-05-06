@@ -177,6 +177,16 @@ export default function VegaStockTrial() {
     "purchasePrice",
     "salePrice",
   ];
+  const readOnlySecurityChecklist = [
+    "Vega bağlantısı sadece okuma modunda olacak",
+    "Yazma izni kapalı kalacak",
+    "Stok, cari, fiş ve ürün kayıtları değiştirilmeyecek",
+    "Bağlantı kullanıcı yetkisi minimum seviyede olacak",
+    "İlk gerçek okuma küçük satır limitiyle yapılacak",
+    "Demo veri ile gerçek Vega verisi ayrı gösterilecek",
+    "Hata durumunda Vega'ya tekrar deneme baskısı yapılmayacak",
+    "Gerçek okuma öncesi manuel yedek kontrolü yapılacak",
+  ];
   const normalizedQuery = query.trim().toLocaleLowerCase("tr-TR");
   const filteredRows = useMemo(() => {
     if (!normalizedQuery) {
@@ -367,6 +377,24 @@ export default function VegaStockTrial() {
           <div className="vega-stock-query-field-list" aria-label="Taslak stok okuma alan listesi">
             {stockQueryDraftFields.map((field) => (
               <span key={field}>{field}</span>
+            ))}
+          </div>
+        </div>
+
+        <div className="vega-security-checklist-panel">
+          <div>
+            <h2>Read-only Güvenlik Checklist'i</h2>
+            <p>
+              Bu checklist, gerçek Vega read-only bağlantısı açılmadan önce kontrol edilmesi gereken güvenlik şartlarını
+              gösterir. Bu sürümde bağlantı kurulmaz, sorgu çalıştırılmaz ve herhangi bir onay kaydedilmez.
+            </p>
+          </div>
+          <div className="vega-security-checklist-grid" aria-label="Read-only güvenlik checklist'i">
+            {readOnlySecurityChecklist.map((item) => (
+              <div className="vega-security-checklist-item" key={item}>
+                <span aria-hidden="true">•</span>
+                <strong>{item}</strong>
+              </div>
             ))}
           </div>
         </div>
