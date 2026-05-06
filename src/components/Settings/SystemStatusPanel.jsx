@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.19.1",
+    title: "Vega read-only bağlantı parametreleri önizleme hazırlığı",
+    area: "Vega / Read-only",
+    description: "Vega read-only bağlantı hazırlığı kapsamında sürücü türü, sunucu/dosya yolu, veritabanı adı, kullanıcı yetkisi, stok sorgusu ve yazma izni başlıklarını yalnızca okunur şekilde gösteren pasif bağlantı parametreleri önizleme alanı eklendi.",
+  },
+  {
     version: "v1.19.0",
     title: "Vega read-only bağlantı hazırlığı başlangıcı",
     area: "Vega / Read-only",

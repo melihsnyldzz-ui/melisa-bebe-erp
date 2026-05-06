@@ -3720,6 +3720,67 @@ button {
   font-weight: 900;
 }
 
+.vega-connection-preview-panel {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+.vega-connection-preview-panel h2,
+.vega-connection-preview-panel p {
+  margin: 0;
+}
+
+.vega-connection-preview-panel h2 {
+  color: var(--anthracite);
+  font-size: 0.96rem;
+}
+
+.vega-connection-preview-panel p {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.38;
+}
+
+.vega-connection-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.vega-connection-preview-row {
+  min-width: 0;
+  padding: 7px 8px;
+  border: 1px solid #edf0f4;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.vega-connection-preview-row span,
+.vega-connection-preview-row strong {
+  display: block;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.vega-connection-preview-row span {
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 900;
+}
+
+.vega-connection-preview-row strong {
+  margin-top: 3px;
+  color: var(--anthracite);
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
 .vega-column-mapping-panel {
   display: grid;
   gap: 8px;
@@ -5539,6 +5600,10 @@ tr:last-child td {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .vega-connection-preview-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .vega-column-mapping-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -5692,6 +5757,19 @@ tr:last-child td {
   }
 
   .vega-readonly-prep-row {
+    padding: 7px;
+  }
+
+  .vega-connection-preview-panel {
+    padding: 10px;
+  }
+
+  .vega-connection-preview-grid {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .vega-connection-preview-row {
     padding: 7px;
   }
 

@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.19.0";
+export const currentReleaseVersion = "v1.19.1";
 
-export const currentReleaseTitle = "Vega read-only bağlantı hazırlığı başlangıcı";
+export const currentReleaseTitle = "Vega read-only bağlantı parametreleri önizleme hazırlığı";
 
 export const updatedSectionIds = ["latest-version-history", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Vega Stok Deneme hazırlık fazı tamamlanarak read-only bağlantı hazırlığı başlatıldı",
-  "Gerçek bağlantı kurulmadan read-only bağlantı için gerekli pasif hazırlık başlıkları gösterildi",
-  "ODBC/SQL, veritabanı ve stok sorgusu hazırlık durumları güvenli şekilde ayrıldı",
+  "Vega read-only bağlantı parametreleri için sadece okunur önizleme alanı eklendi",
+  "Sürücü, sunucu, veritabanı ve stok sorgusu başlıkları gerçek bağlantı kurulmadan görünür hale getirildi",
+  "Bağlantı testi ve parametre kaydı olmadan güvenli hazırlık görünümü korundu",
 ];
 
 export const releaseJumpLinks = [

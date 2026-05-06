@@ -130,6 +130,15 @@ export default function VegaStockTrial() {
     { label: "Veri yazma izni", value: connectionMetadata.writeEnabled ? "Açık" : "Kapalı" },
     { label: "Sonraki kontrollü adım", value: "Bağlantı parametrelerinin sadece okunur önizlemesi" },
   ];
+  const connectionPreviewRows = [
+    { label: "Bağlantı modu", value: "Read-only" },
+    { label: "Sürücü türü", value: "ODBC / SQL" },
+    { label: "Sunucu / dosya yolu", value: "Tanımlı değil" },
+    { label: "Veritabanı adı", value: "Tanımlı değil" },
+    { label: "Kullanıcı yetkisi", value: "Sadece okuma için hazırlanacak" },
+    { label: "Stok sorgusu", value: "Hazırlanmadı" },
+    { label: "Yazma izni", value: "Kapalı" },
+  ];
   const normalizedQuery = query.trim().toLocaleLowerCase("tr-TR");
   const filteredRows = useMemo(() => {
     if (!normalizedQuery) {
@@ -240,6 +249,24 @@ export default function VegaStockTrial() {
           <div className="vega-readonly-prep-grid">
             {readOnlyPreparationRows.map((row) => (
               <div className="vega-readonly-prep-row" key={row.label}>
+                <span>{row.label}</span>
+                <strong>{row.value}</strong>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="vega-connection-preview-panel">
+          <div>
+            <h2>Bağlantı Parametreleri Önizleme</h2>
+            <p>
+              Bu alan ileride kullanılacak Vega read-only bağlantı parametrelerinin sadece okunur önizlemesidir. Bu
+              sürümde parametre girilmez, kaydedilmez ve bağlantı testi yapılmaz.
+            </p>
+          </div>
+          <div className="vega-connection-preview-grid">
+            {connectionPreviewRows.map((row) => (
+              <div className="vega-connection-preview-row" key={row.label}>
                 <span>{row.label}</span>
                 <strong>{row.value}</strong>
               </div>
