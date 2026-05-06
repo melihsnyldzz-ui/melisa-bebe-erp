@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.18.3",
+    title: "Vega stok kolon eşleştirme hazırlığı",
+    area: "Vega / Stok",
+    description: "Vega Stok Deneme ekranına stok kodu, barkod, ürün adı, marka, beden, renk, mevcut stok, alış fiyatı ve satış fiyatı alanlarının ERP karşılıklarını gösteren read-only kolon eşleştirme hazırlığı eklendi.",
+  },
+  {
     version: "v1.18.2",
     title: "Vega stok deneme ekranı bağlantı kontrol paneli hazırlığı",
     area: "Vega / Stok",

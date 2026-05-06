@@ -42,6 +42,18 @@ const defaultConnectionMetadata = {
   writeEnabled: false,
 };
 
+const columnMappings = [
+  { vegaField: "Stok Kodu", erpField: "stockCode" },
+  { vegaField: "Barkod", erpField: "barcode" },
+  { vegaField: "Ürün Adı", erpField: "productName" },
+  { vegaField: "Marka", erpField: "brand" },
+  { vegaField: "Beden", erpField: "size" },
+  { vegaField: "Renk", erpField: "color" },
+  { vegaField: "Mevcut Stok", erpField: "quantity" },
+  { vegaField: "Alış Fiyatı", erpField: "purchasePrice" },
+  { vegaField: "Satış Fiyatı", erpField: "salePrice" },
+];
+
 export default function VegaStockTrial() {
   const [query, setQuery] = useState("");
   const [stockState, setStockState] = useState({
@@ -163,6 +175,21 @@ export default function VegaStockTrial() {
               <div className="vega-connection-card" key={card.label}>
                 <span>{card.label}</span>
                 <strong>{card.value}</strong>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="vega-column-mapping-panel">
+          <div>
+            <h2>Kolon Eşleştirme Hazırlığı</h2>
+            <p>Bu alan yalnızca ileride yapılacak read-only stok okuma eşleştirmesini gösterir. Vega'dan veri çekmez ve kayıt oluşturmaz.</p>
+          </div>
+          <div className="vega-column-mapping-grid" aria-label="Vega stok kolon eşleştirme hazırlığı">
+            {columnMappings.map((mapping) => (
+              <div className="vega-column-mapping-row" key={mapping.erpField}>
+                <span>{mapping.vegaField}</span>
+                <strong>{mapping.erpField}</strong>
               </div>
             ))}
           </div>
