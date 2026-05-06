@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.16.6";
+export const currentReleaseVersion = "v1.16.7";
 
-export const currentReleaseTitle = "Dövizli ticaret özetinde müşteri/tedarikçi cari detayını ayırma";
+export const currentReleaseTitle = "Dövizli ticaret özetinde cari detay görünümünü sadeleştirme ve mobil denge kontrolü";
 
 export const updatedSectionIds = ["latest-version-history", "project-maturity", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Dövizli Ticaret Özeti’ne müşteri ve tedarikçi cari detayları eklendi",
-  "Net Cari hesabının müşteri - tedarikçi farkı olduğu daha anlaşılır hale getirildi",
-  "Cari detayları para birimi bazında okunabilir kompakt alanda gösterildi",
+  "Cari Detay alanı daha kompakt ve ikincil bilgi görünümüne alındı",
+  "Müşteri ve tedarikçi cari detaylarının mobil görünümü dengelendi",
+  "Dövizli Ticaret Özeti patron kokpitine daha uygun sade yapıya getirildi",
 ];
 
 export const releaseJumpLinks = [

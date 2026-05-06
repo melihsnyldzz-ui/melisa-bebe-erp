@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.16.7",
+    title: "Dövizli ticaret özetinde cari detay görünümünü sadeleştirme ve mobil denge kontrolü",
+    area: "Dashboard",
+    description: "Dövizli Ticaret Özeti altındaki Cari Detay alanı daha kompakt hale getirildi; müşteri ve tedarikçi cari detaylarının mobil görünümü dengelendi.",
+  },
+  {
     version: "v1.16.6",
     title: "Dövizli ticaret özetinde müşteri/tedarikçi cari detayını ayırma",
     area: "Dashboard",

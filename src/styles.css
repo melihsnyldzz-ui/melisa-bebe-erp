@@ -505,31 +505,31 @@ button {
 .dashboard-currency-detail {
   grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: minmax(130px, 0.36fr) minmax(0, 1.64fr);
-  gap: 6px;
+  grid-template-columns: minmax(118px, 0.32fr) minmax(0, 1.68fr);
+  gap: 5px;
   align-items: center;
-  padding-top: 6px;
+  padding-top: 4px;
   border-top: 1px solid rgba(24, 100, 171, 0.1);
 }
 
 .dashboard-currency-detail h3 {
   margin: 0;
   color: var(--anthracite);
-  font-size: 0.76rem;
+  font-size: 0.7rem;
 }
 
 .dashboard-currency-detail-grid {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 5px;
+  gap: 4px;
 }
 
 .dashboard-currency-detail-card {
   min-width: 0;
-  padding: 4px 6px;
+  padding: 3px 5px;
   border: 1px solid rgba(45, 47, 52, 0.08);
-  border-radius: 7px;
-  background: rgba(255, 255, 255, 0.62);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.48);
 }
 
 .dashboard-currency-detail-card span,
@@ -543,14 +543,14 @@ button {
 
 .dashboard-currency-detail-card span {
   color: var(--muted);
-  font-size: 0.62rem;
-  font-weight: 820;
+  font-size: 0.6rem;
+  font-weight: 780;
 }
 
 .dashboard-currency-detail-card strong {
   margin-top: 1px;
   color: var(--anthracite);
-  font-size: 0.72rem;
+  font-size: 0.68rem;
 }
 
 .page-title p {
@@ -4770,6 +4770,22 @@ tr:last-child td {
 }
 
 @media (max-width: 560px) {
+  .dashboard-currency-detail-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dashboard-currency-detail-card {
+    padding: 3px 4px;
+  }
+
+  .dashboard-currency-detail-card span {
+    font-size: 0.58rem;
+  }
+
+  .dashboard-currency-detail-card strong {
+    font-size: 0.66rem;
+  }
+
   .user-card div:last-child,
   .search-box input::placeholder {
     font-size: 0.82rem;

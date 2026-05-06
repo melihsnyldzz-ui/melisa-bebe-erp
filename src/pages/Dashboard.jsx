@@ -96,7 +96,7 @@ function CurrencyTradeSummary({ summary }) {
       <div className="dashboard-currency-detail" aria-label="Cari Detay">
         <div>
           <h3>Cari Detay</h3>
-          <p>Müşteri ve tedarikçi cari toplamları ayrı ayrı gösterilir; Net Cari bu iki tarafın farkıdır.</p>
+          <p>Müşteri ve tedarikçi cari toplamları ayrı gösterilir.</p>
         </div>
         <div className="dashboard-currency-detail-grid">
           {buildCurrencyCurrentDetailCards(summary).map((row) => (
