@@ -367,6 +367,10 @@ export default function VegaImportPreview() {
       <section className="vega-transition-gate-panel">
         <h2>Read-only Kullanıcı Yetki Rehberi</h2>
         <p>İlk gerçek denemede kullanılacak kullanıcı minimum yetkili ve sadece okuma amaçlı olmalıdır. Yazma, silme, güncelleme veya import yetkisi olmamalıdır.</p>
+        <div className="vega-transition-gate-note">
+          <strong>Statik yetki rehberi</strong>
+          <span>Bu bölüm yalnızca manuel yetki kontrol maddelerini gösterir; yetki almaz, bağlantı kurmaz ve işlem başlatmaz.</span>
+        </div>
         <div className="vega-transition-gate-grid">
           <div className="vega-transition-gate-row"><strong>SELECT dışı yetki verilmemeli</strong><span>Manuel kontrol</span></div>
           <div className="vega-transition-gate-row"><strong>INSERT / UPDATE / DELETE olmamalı</strong><span>Manuel kontrol</span></div>
@@ -380,6 +384,10 @@ export default function VegaImportPreview() {
       <section className="vega-transition-gate-panel">
         <h2>İlk Sorgu Kapsamı ve Sınırları</h2>
         <p>İlk gerçek read-only deneme yalnızca sınırlı stok kartı okuma amacıyla planlanmalıdır. Cari, fiş, hareket, ödeme, tahsilat, stok mutasyonu ve import kapsam dışıdır.</p>
+        <div className="vega-transition-gate-note">
+          <strong>Statik kapsam rehberi</strong>
+          <span>Bu bölüm yalnızca ilk deneme sınırlarını gösterir; query üretmez, sorgu çalıştırmaz ve veri okumaz.</span>
+        </div>
         <div className="vega-transition-gate-grid">
           <div className="vega-transition-gate-row"><strong>Kapsam: Sadece stok kartları</strong><span>Pasif rehber</span></div>
           <div className="vega-transition-gate-row"><strong>Satır sınırı: 20</strong><span>Pasif rehber</span></div>
@@ -395,6 +403,10 @@ export default function VegaImportPreview() {
       <section className="vega-transition-gate-panel">
         <h2>Operatör/Saha Hazırlık Özeti</h2>
         <p>İlk denemeden önce operatör ve saha tarafında manuel hazırlık yapılmalıdır. Bu panel veri almaz, onay toplamaz ve işlem başlatmaz.</p>
+        <div className="vega-transition-gate-note">
+          <strong>Statik saha rehberi</strong>
+          <span>Bu bölüm yalnızca operatör ve saha hazırlığını hatırlatır; not kaydetmez, onay toplamaz ve işlem başlatmaz.</span>
+        </div>
         <div className="vega-transition-gate-grid">
           <div className="vega-transition-gate-row"><strong>Manuel yedek alındı mı?</strong><span>Saha kontrolü</span></div>
           <div className="vega-transition-gate-row"><strong>Testi yapacak kişi belli mi?</strong><span>Saha kontrolü</span></div>
