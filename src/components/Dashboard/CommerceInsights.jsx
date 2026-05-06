@@ -48,7 +48,7 @@ function HorizontalBarCard({ title, icon: Icon, data, dataKey, valueLabel, empty
 
 export default function CommerceInsights({ data }) {
   return (
-    <section className="dashboard-commerce-insights">
+    <section className="dashboard-commerce-insights" id="dashboard-commerce-insights">
       <div className="dashboard-middle-grid">
         <div className="chart-panel dashboard-chart-card">
           <div className="section-heading">

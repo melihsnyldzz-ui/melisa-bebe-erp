@@ -307,6 +307,26 @@ button {
   padding: 26px 0 24px;
 }
 
+.dashboard-title {
+  padding: 14px 0 12px;
+}
+
+.dashboard-title h1 {
+  font-size: clamp(1.55rem, 2.7vw, 2.45rem);
+}
+
+.dashboard-title p {
+  margin-bottom: 5px;
+}
+
+.dashboard-title span {
+  margin-top: 6px;
+}
+
+.dashboard-title .version-badge {
+  margin-bottom: 4px;
+}
+
 .page-title p {
   margin: 0 0 8px;
   color: var(--red);
@@ -397,8 +417,8 @@ button {
 
 .dashboard-commerce-insights {
   display: grid;
-  gap: 10px;
-  margin-top: 10px;
+  gap: 8px;
+  margin-top: 8px;
 }
 
 .dashboard-mini-bar {
@@ -431,12 +451,12 @@ button {
 
 .dashboard-chart-card,
 .dashboard-list-card {
-  min-height: 244px;
+  min-height: 226px;
 }
 
 .dashboard-chart-wrap {
-  height: 220px;
-  margin-top: 10px;
+  height: 208px;
+  margin-top: 8px;
 }
 
 .dashboard-empty-note {
@@ -479,8 +499,8 @@ button {
 
 .dashboard-distribution-strip {
   display: grid;
-  gap: 8px;
-  padding: 12px;
+  gap: 6px;
+  padding: 10px 12px;
 }
 
 .dashboard-distribution-strip .dashboard-distribution-list {
@@ -493,14 +513,14 @@ button {
 
 .dashboard-compact-list {
   display: grid;
-  gap: 8px;
-  margin-top: 10px;
+  gap: 6px;
+  margin-top: 8px;
 }
 
 .dashboard-compact-row {
   display: grid;
   gap: 2px;
-  padding: 9px 10px;
+  padding: 7px 9px;
   border: 1px solid #edf0f4;
   border-radius: 8px;
   background: #f9fafb;
@@ -553,8 +573,8 @@ button {
 }
 
 .kpi-card {
-  min-height: 116px;
-  padding: 13px;
+  min-height: 104px;
+  padding: 11px;
   display: grid;
   align-content: space-between;
   opacity: 0;
@@ -569,8 +589,8 @@ button {
 }
 
 .kpi-icon {
-  width: 34px;
-  height: 34px;
+  width: 30px;
+  height: 30px;
   display: grid;
   place-items: center;
   border-radius: 8px;
@@ -582,7 +602,7 @@ button {
 }
 
 .kpi-card strong {
-  font-size: clamp(1.1rem, 1.55vw, 1.55rem);
+  font-size: clamp(1rem, 1.35vw, 1.35rem);
   letter-spacing: 0;
 }
 
@@ -626,7 +646,7 @@ button {
 
 .chart-panel,
 .table-panel {
-  padding: 14px;
+  padding: 12px;
 }
 
 .section-heading {
@@ -644,8 +664,8 @@ button {
 }
 
 .chart-wrap {
-  height: 230px;
-  margin-top: 10px;
+  height: 220px;
+  margin-top: 8px;
 }
 
 .tables-grid {
@@ -4504,7 +4524,7 @@ tr:last-child td {
   }
 
   .kpi-card {
-    min-height: 132px;
+    min-height: 112px;
   }
 
   .chart-panel,

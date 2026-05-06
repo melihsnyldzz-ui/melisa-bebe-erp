@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.15.2",
+    title: "Kompakt Ana Panel başlık ve grafik yerleşimi düzeltmesi",
+    area: "Dashboard",
+    description: "Dashboard başlık, KPI ve grafik alanları daha kompakt hale getirildi; özet ekranın tek ekrana yaklaşması sağlandı.",
+  },
+  {
     version: "v1.15.1",
     title: "Ana Panel sadeleştirme ve test alanlarını Ayarlar’a geri taşıma",
     area: "Dashboard / Ayarlar",
@@ -166,12 +172,6 @@ const versionHistoryRows = [
     title: "Yenilik merkezi panelini tüm sayfalara yaymaya hazırlık",
     area: "Ayarlar / Ortak Bileşen",
     description: "Bu Sürümde Yenilenen Alanlar paneli tekrar kullanılabilir ortak bileşene taşındı ve sayfa bazlı yenilik yapısı için hazırlık eklendi.",
-  },
-  {
-    version: "v1.14.2",
-    title: "Yenilik etiketlerini sayfa bazlı merkezi yönetme sistemi",
-    area: "Ayarlar",
-    description: "Sayfa içi yenilik paneli, YENİ etiketleri ve hızlı geçiş bilgileri merkezi konfigürasyonla yönetilebilir hale getirildi.",
   },
 ];
 

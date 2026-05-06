@@ -28,7 +28,7 @@ export default function Dashboard() {
         </button>
       </section>
 
-      <section className="kpi-grid dashboard-compact-kpis">
+      <section className="kpi-grid dashboard-compact-kpis" id="dashboard-daily-operation">
         {dashboardData.kpis.map((item, index) => (
           <KpiCard item={item} index={index} key={item.label} />
         ))}
@@ -189,14 +189,14 @@ function buildRiskRows({ criticalProducts, customers }) {
       status: toNumber(product.stockQuantity) <= 0 ? "Stok yok" : "Kritik",
     }));
   const customerRows = buildRiskCustomers(customers)
-    .slice(0, 2)
+    .slice(0, 1)
     .map((customer) => ({
       label: customer.name,
       meta: formatCurrency(customer.currentBalance),
       status: customer.riskLabel,
     }));
 
-  return [...stockRows, ...customerRows].slice(0, 4);
+  return [...stockRows, ...customerRows].slice(0, 3);
 }
 
 function buildLatestSlipRows({ activePurchaseSlips, activeSalesSlips }) {
@@ -217,7 +217,7 @@ function buildLatestSlipRows({ activePurchaseSlips, activeSalesSlips }) {
     })),
   ]
     .sort((a, b) => getSortTime(b) - getSortTime(a))
-    .slice(0, 4);
+    .slice(0, 3);
 }
 
 function buildProductLookup(products) {

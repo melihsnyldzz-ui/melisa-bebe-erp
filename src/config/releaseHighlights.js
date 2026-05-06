@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.15.1";
+export const currentReleaseVersion = "v1.15.2";
 
-export const currentReleaseTitle = "Ana Panel sadeleştirme ve test alanlarını Ayarlar’a geri taşıma";
+export const currentReleaseTitle = "Kompakt Ana Panel başlık ve grafik yerleşimi düzeltmesi";
 
 export const updatedSectionIds = ["latest-version-history", "project-maturity", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Ana Panel test rehberi kalabalığından arındırıldı",
-  "Dashboard tekrar ticari ve operasyonel özet odağına alındı",
-  "Canlı test detayları Ayarlar ekranında bırakıldı",
+  "Dashboard başlık ve KPI alanı daha kompakt hale getirildi",
+  "Grafik yükseklikleri tek ekrana yaklaşacak şekilde düzenlendi",
+  "Risk, son fiş ve kategori alanları özet ekrana uygun şekilde sıkılaştırıldı",
 ];
 
 export const releaseJumpLinks = [
@@ -24,6 +24,14 @@ export const releaseVisibilityChecklist = [
 ];
 
 export const releaseHighlightsByPage = {
+  dashboard: {
+    releaseHighlightItems,
+    releaseJumpLinks: [
+      { id: "dashboard-daily-operation", label: "Bugünkü Operasyon Özeti'ne git" },
+      { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
+    ],
+    updatedSectionIds: ["dashboard-daily-operation", "dashboard-commerce-insights"],
+  },
   settings: {
     releaseHighlightItems,
     releaseJumpLinks,
