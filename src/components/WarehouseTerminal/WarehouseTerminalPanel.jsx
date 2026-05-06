@@ -1,14 +1,19 @@
 import { Barcode, PackageSearch, RotateCcw } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { findProductByCodeOrBarcode, normalizeLookupValue } from "../../utils/productLookup.js";
+import { normalizeLookupValue } from "../../utils/productLookup.js";
 import { formatCurrency, formatNumber } from "../../utils/formatters.js";
 import { formatDateTR } from "../../utils/dateUtils.js";
-import { appendWarehouseScanHistory, buildWarehouseProductView } from "../../utils/warehouseTerminalUtils.js";
+import {
+  appendWarehouseScanHistory,
+  buildWarehouseProductView,
+  findWarehouseTerminalMatches,
+} from "../../utils/warehouseTerminalUtils.js";
 
 export default function WarehouseTerminalPanel({ products = [], stockMovements = [] }) {
   const [scanValue, setScanValue] = useState("");
   const [message, setMessage] = useState({ type: "info", text: "Barkod, ürün kodu veya varyant kodu okutun." });
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [matchedProducts, setMatchedProducts] = useState([]);
   const [scanHistory, setScanHistory] = useState([]);
   const inputRef = useRef(null);
 
@@ -26,16 +31,29 @@ export default function WarehouseTerminalPanel({ products = [], stockMovements =
       return;
     }
 
-    const product = findProductByCodeOrBarcode(products, normalizedValue);
-    if (!product) {
-      setMessage({ type: "error", text: "Ürün bulunamadı. Barkod veya ürün kodunu kontrol edin." });
+    const { exactProduct, partialProducts } = findWarehouseTerminalMatches(products, normalizedValue);
+    if (exactProduct) {
+      openProduct(exactProduct, scanValue);
+      return;
+    }
+
+    if (partialProducts.length > 0) {
+      setMatchedProducts(partialProducts);
+      setMessage({ type: "info", text: `${partialProducts.length} ürün eşleşti. Listeden ürün seçin.` });
       focusInput();
       return;
     }
 
+    setMatchedProducts([]);
+    setMessage({ type: "error", text: "Ürün bulunamadı. Barkod veya ürün kodunu kontrol edin." });
+    focusInput();
+  }
+
+  function openProduct(product, rawValue = scanValue) {
     const productView = buildWarehouseProductView(product, stockMovements);
     setSelectedProduct(productView);
-    setScanHistory((currentHistory) => appendWarehouseScanHistory(currentHistory, productView, scanValue));
+    setMatchedProducts([]);
+    setScanHistory((currentHistory) => appendWarehouseScanHistory(currentHistory, productView, rawValue));
     setMessage({ type: "success", text: `${productView.name || productView.code} okundu. Stok: ${formatNumber(productView.stockQuantity)}` });
     setScanValue("");
     focusInput();
@@ -46,6 +64,7 @@ export default function WarehouseTerminalPanel({ products = [], stockMovements =
 
     event.preventDefault();
     setScanValue("");
+    setMatchedProducts([]);
     setMessage({ type: "info", text: "Giriş temizlendi. Yeni barkod okutabilirsiniz." });
     focusInput();
   }
@@ -53,6 +72,7 @@ export default function WarehouseTerminalPanel({ products = [], stockMovements =
   function clearScreen() {
     setScanValue("");
     setSelectedProduct(null);
+    setMatchedProducts([]);
     setScanHistory([]);
     setMessage({ type: "info", text: "Ekran temizlendi. Bu işlem veritabanına yazmaz." });
     focusInput();
@@ -77,7 +97,7 @@ export default function WarehouseTerminalPanel({ products = [], stockMovements =
               value={scanValue}
               onChange={(event) => setScanValue(event.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Okut veya manuel yaz"
+              placeholder="Barkod, ürün kodu veya varyant kodu okutun..."
               autoComplete="off"
             />
           </label>
@@ -96,11 +116,56 @@ export default function WarehouseTerminalPanel({ products = [], stockMovements =
         </p>
       </section>
 
+      {matchedProducts.length > 0 && <MatchedProductsPanel products={matchedProducts} onSelect={openProduct} />}
+
       <section className="warehouse-terminal-grid">
         <ProductReadCard product={selectedProduct} />
         <ScanHistoryCard history={scanHistory} />
       </section>
     </>
+  );
+}
+
+function MatchedProductsPanel({ onSelect, products }) {
+  return (
+    <section className="table-panel warehouse-terminal-card">
+      <div className="section-heading">
+        <PackageSearch size={19} />
+        <h2>Eşleşen Ürünler</h2>
+      </div>
+      <div className="product-table-scroll">
+        <table className="product-table warehouse-terminal-table">
+          <thead>
+            <tr>
+              <th>Ürün adı</th>
+              <th>Barkod</th>
+              <th>Kod</th>
+              <th>Beden</th>
+              <th>Renk</th>
+              <th>Stok</th>
+              <th>Seç</th>
+            </tr>
+          </thead>
+          <tbody>
+            {products.map((product) => (
+              <tr key={product.id || product.code || product.barcode}>
+                <td className="strong-cell">{product.name || "-"}</td>
+                <td className="barcode-cell">{product.barcode || "-"}</td>
+                <td className="product-code-cell">{product.code || "-"}</td>
+                <td>{product.size || "-"}</td>
+                <td>{product.color || "-"}</td>
+                <td>{formatNumber(product.stockQuantity)}</td>
+                <td>
+                  <button className="secondary-action small-action" type="button" onClick={() => onSelect(product, product.barcode || product.code)}>
+                    Seç
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
   );
 }
 
@@ -173,9 +238,9 @@ function ProductReadCard({ product }) {
 function ScanHistoryCard({ history }) {
   return (
     <section className="table-panel warehouse-terminal-card">
-      <h2>Okuma Geçmişi</h2>
+      <h2>Son Okutulanlar</h2>
       {history.length === 0 ? (
-        <p className="empty-table-text">Henüz terminal okuması yok.</p>
+        <p className="empty-table-text">Henüz ürün okutulmadı.</p>
       ) : (
         <div className="warehouse-terminal-history">
           {history.map((item) => (

@@ -1,7 +1,27 @@
 import { normalizeLookupValue } from "./productLookup.js";
 
 const MAX_MOVEMENT_ROWS = 8;
-const MAX_SCAN_HISTORY = 12;
+const MAX_SCAN_HISTORY = 20;
+const MAX_PARTIAL_MATCHES = 10;
+
+export function findWarehouseTerminalMatches(products = [], value) {
+  const normalizedValue = normalizeLookupValue(value);
+  const sourceProducts = Array.isArray(products) ? products : [];
+  if (!normalizedValue) return { exactProduct: null, partialProducts: [] };
+
+  const exactProduct =
+    sourceProducts.find((product) =>
+      getWarehouseLookupValues(product).some((candidate) => candidate === normalizedValue),
+    ) || null;
+
+  if (exactProduct) return { exactProduct, partialProducts: [] };
+
+  const partialProducts = sourceProducts
+    .filter((product) => getWarehouseLookupValues(product).some((candidate) => candidate.includes(normalizedValue)))
+    .slice(0, MAX_PARTIAL_MATCHES);
+
+  return { exactProduct: null, partialProducts };
+}
 
 export function buildWarehouseProductView(product, stockMovements = []) {
   if (!product) return null;
@@ -47,6 +67,10 @@ export function buildWarehouseProductView(product, stockMovements = []) {
     status: resolveWarehouseStockStatus(stockQuantity, criticalStockLevel, product.isActive !== false),
     movements: relatedMovements,
   };
+}
+
+function getWarehouseLookupValues(product = {}) {
+  return [product.barcode, product.code, product.variantCode, product.modelCode].map(normalizeLookupValue).filter(Boolean);
 }
 
 export function appendWarehouseScanHistory(currentHistory, productView, rawValue) {
