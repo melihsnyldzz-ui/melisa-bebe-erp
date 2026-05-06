@@ -5,6 +5,7 @@ import {
   Boxes,
   ChartNoAxesColumnIncreasing,
   CreditCard,
+  FileSpreadsheet,
   LayoutDashboard,
   PackageSearch,
   ReceiptText,
@@ -28,6 +29,7 @@ export const menuItems = [
   { id: "payments", label: "Ödemeler", icon: CreditCard },
   { id: "stock-movements", label: "Stok Hareketleri", icon: Boxes },
   { id: "stock-count", label: "Barkodlu Sayım", icon: ScanBarcode },
+  { id: "data-import", label: "Excel Aktarım", icon: FileSpreadsheet },
   { id: "reports", label: "Raporlar", icon: ChartNoAxesColumnIncreasing },
   { id: "settings", label: "Ayarlar", icon: Settings },
 ];

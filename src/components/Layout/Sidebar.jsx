@@ -14,6 +14,7 @@ const menuPermissions = {
   payments: "payments.view",
   "stock-movements": "stockMovements.view",
   "stock-count": "stockMovements.view",
+  "data-import": "settings.view",
   reports: "reports.view",
   settings: "settings.view",
 };

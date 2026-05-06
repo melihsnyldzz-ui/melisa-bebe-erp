@@ -864,6 +864,131 @@ button {
   font-size: 1.02rem;
 }
 
+.import-type-panel,
+.data-import-upload-panel,
+.column-mapping-panel,
+.data-import-payload-panel {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.import-type-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.import-type-card {
+  display: grid;
+  gap: 8px;
+  min-height: 104px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--text);
+  text-align: left;
+  background: #fbfbfc;
+  cursor: pointer;
+}
+
+.import-type-card.active {
+  border-color: rgba(215, 25, 32, 0.42);
+  background: #fff5f6;
+  box-shadow: 0 14px 30px rgba(215, 25, 32, 0.08);
+}
+
+.import-type-card strong {
+  color: var(--anthracite);
+  font-size: 1rem;
+}
+
+.import-type-card span {
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.data-import-upload-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.file-upload-action input {
+  display: none;
+}
+
+.data-import-message,
+.data-import-note {
+  margin: 0;
+}
+
+.column-mapping-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.import-summary-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-bottom: 14px;
+}
+
+.import-summary-card {
+  min-height: 92px;
+}
+
+.import-summary-card span {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+.import-summary-card strong {
+  color: var(--anthracite);
+  font-size: 1.5rem;
+}
+
+.import-preview-panel {
+  margin-bottom: 14px;
+}
+
+.import-mapped-values {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-width: 780px;
+}
+
+.import-mapped-values span {
+  padding: 5px 7px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--muted);
+  background: #fbfbfc;
+  font-size: 0.76rem;
+}
+
+.import-mapped-values strong {
+  color: var(--anthracite);
+}
+
+.import-status-valid {
+  color: #0f6e52;
+  background: #e8f7f1;
+}
+
+.import-status-warning {
+  color: #8a5800;
+  background: #fff3da;
+}
+
+.import-status-error {
+  color: var(--red-dark);
+  background: #fdecee;
+}
+
 .stock-adjustment-modal {
   width: min(720px, 100%);
 }
@@ -2384,6 +2509,9 @@ tr:last-child td {
   .reports-grid,
   .stock-count-history-filters,
   .stock-count-report-summary,
+  .import-type-grid,
+  .column-mapping-grid,
+  .import-summary-grid,
   .settings-grid {
     grid-template-columns: 1fr;
   }
