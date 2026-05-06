@@ -109,6 +109,13 @@ export default function VegaStockTrial() {
   const dataSourceMessage = hasVegaRows
     ? "Vega read-only satırları gösteriliyor. Veri yazma kapalıdır."
     : "Şu anda demo stok verisi gösteriliyor. Gerçek Vega stoğu okunmuyor.";
+  const readinessSummaryRows = [
+    { label: "Vega read-only mod", value: connectionMetadata.readOnlyEnabled ? "Açık" : "Kapalı" },
+    { label: "Bağlantı sürücüsü", value: connectionMetadata.driverConfigured ? "Tanımlı" : "Tanımlı değil" },
+    { label: "Gerçek stok okuma", value: hasVegaRows ? "Açık" : "Kapalı" },
+    { label: "Veri yazma", value: connectionMetadata.writeEnabled ? "Açık" : "Kapalı" },
+    { label: "Gösterilen veri", value: hasVegaRows ? "Vega read-only" : "Demo veri" },
+  ];
   const normalizedQuery = query.trim().toLocaleLowerCase("tr-TR");
   const filteredRows = useMemo(() => {
     if (!normalizedQuery) {
@@ -196,6 +203,24 @@ export default function VegaStockTrial() {
               <div className="vega-connection-card" key={card.label}>
                 <span>{card.label}</span>
                 <strong>{card.value}</strong>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="vega-readiness-panel">
+          <div>
+            <h2>Hazır Değil Kontrol Özeti</h2>
+            <p>
+              Bu özet, gerçek Vega stok okuması açılmadan önce hangi güvenli hazırlıkların eksik olduğunu gösterir. Bu
+              ekrandan bağlantı açılmaz ve veri yazılmaz.
+            </p>
+          </div>
+          <div className="vega-readiness-grid">
+            {readinessSummaryRows.map((row) => (
+              <div className="vega-readiness-row" key={row.label}>
+                <span>{row.label}</span>
+                <strong>{row.value}</strong>
               </div>
             ))}
           </div>

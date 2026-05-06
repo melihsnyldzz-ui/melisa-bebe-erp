@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.18.6",
+    title: "Vega stok deneme hazır değil kontrol özeti",
+    area: "Vega / Stok",
+    description: "Vega Stok Deneme ekranına, gerçek Vega stok okuması açılmadan önce read-only mod, bağlantı sürücüsü, gerçek stok okuma, veri yazma ve gösterilen veri durumlarını özetleyen güvenli hazır değil kontrol alanı eklendi.",
+  },
+  {
     version: "v1.18.5",
     title: "Vega stok deneme veri kaynağı ayrımı",
     area: "Vega / Stok",
