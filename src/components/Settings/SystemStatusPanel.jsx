@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.16.3",
+    title: "Dashboard dövizli satış özetini kompaktlaştırma ve döviz veri hazırlığı",
+    area: "Dashboard",
+    description: "Dövizli satış kartları daha kompakt hale getirildi; USD/EUR boş durumları 0 değer ve kısa notla sadeleştirildi.",
+  },
+  {
     version: "v1.16.2",
     title: "Dashboard dövizli satış özeti ve para birimi görünürlüğü",
     area: "Dashboard",
@@ -166,12 +172,6 @@ const versionHistoryRows = [
     title: "Ana Panel ticari grafiklerde adet/ciro ayrımı ve boşluk azaltma",
     area: "Dashboard",
     description: "Müşteri ve ürün grafiklerinde adet/ciro bilgisi daha anlaşılır hale getirildi; Dashboard boşlukları azaltılarak kompakt görünüm güçlendirildi.",
-  },
-  {
-    version: "v1.15.2",
-    title: "Kompakt Ana Panel başlık ve grafik yerleşimi düzeltmesi",
-    area: "Dashboard",
-    description: "Dashboard başlık, KPI ve grafik alanları daha kompakt hale getirildi; özet ekranın tek ekrana yaklaşması sağlandı.",
   },
 ];
 

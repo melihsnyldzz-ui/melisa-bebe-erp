@@ -196,17 +196,18 @@ function buildCurrencySummaryRows(summary) {
   return [
     {
       label: "Satılan TL",
+      note: "TL satış",
       value: formatCurrencyByCode(summary?.TRY || 0, "TRY"),
     },
     {
       label: "Satılan USD",
       note: (summary?.USD || 0) > 0 ? undefined : "Dövizli satış yok",
-      value: (summary?.USD || 0) > 0 ? formatCurrencyByCode(summary.USD, "USD") : "Veri yok",
+      value: formatCurrencyByCode(summary?.USD || 0, "USD"),
     },
     {
       label: "Satılan EUR",
       note: (summary?.EUR || 0) > 0 ? undefined : "Dövizli satış yok",
-      value: (summary?.EUR || 0) > 0 ? formatCurrencyByCode(summary.EUR, "EUR") : "Veri yok",
+      value: formatCurrencyByCode(summary?.EUR || 0, "EUR"),
     },
   ];
 }

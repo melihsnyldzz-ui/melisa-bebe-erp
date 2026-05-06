@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.16.2";
+export const currentReleaseVersion = "v1.16.3";
 
-export const currentReleaseTitle = "Dashboard dövizli satış özeti ve para birimi görünürlüğü";
+export const currentReleaseTitle = "Dashboard dövizli satış özetini kompaktlaştırma ve döviz veri hazırlığı";
 
 export const updatedSectionIds = ["latest-version-history", "project-maturity", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Dashboard’a TL / USD / EUR dövizli satış özeti eklendi",
-  "Gün Sonu Raporu önizlemesine para birimi bazlı satış satırları eklendi",
-  "Dövizli satış görünümü kur çevirmeden mevcut fiş verilerine göre hazırlandı",
+  "Dövizli satış kartları daha kompakt hale getirildi",
+  "USD ve EUR boş durumları 0 değer ve kısa notla sadeleştirildi",
+  "Gün Sonu Raporu döviz satırları daha okunur hale getirildi",
 ];
 
 export const releaseJumpLinks = [
