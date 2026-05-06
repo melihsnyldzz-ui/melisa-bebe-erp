@@ -22,6 +22,14 @@ export function canUsePersistentDatabase() {
   return typeof window !== "undefined" && Boolean(window.electronAPI?.erp?.getInitialData);
 }
 
+export function canUseVegaReadOnlyBridge() {
+  return typeof window !== "undefined" && Boolean(window.electronAPI?.vegaReadOnly?.listStock);
+}
+
+export function listVegaStockReadOnly() {
+  return window.electronAPI.vegaReadOnly.listStock();
+}
+
 export function getDatabaseModeLabel() {
   return canUsePersistentDatabase() ? "Electron SQLite · Kalıcı veri" : "Tarayıcı modu · Geçici veri";
 }

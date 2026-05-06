@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.17.6";
-export const APP_STAGE = "Dashboard final kalite kontrol ve kapanış";
+export const APP_VERSION = "v1.18.0";
+export const APP_STAGE = "Vega stok okuma deneme ekranı";

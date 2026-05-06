@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.18.0",
+    title: "Vega stok okuma deneme ekranı",
+    area: "Vega / Stok",
+    description: "Vega'dan stok listesi okunabiliyor mu görmek için geçici, read-only deneme ekranı eklendi; veri yazma işlemi içermez.",
+  },
+  {
     version: "v1.17.6",
     title: "Dashboard final kalite kontrol ve kapanış",
     area: "Dashboard / Settings",

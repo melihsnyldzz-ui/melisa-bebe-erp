@@ -3,6 +3,9 @@ const { contextBridge, ipcRenderer } = require("electron");
 contextBridge.exposeInMainWorld("electronAPI", {
   openPurchaseSlipWindow: () => ipcRenderer.invoke("purchase-slip-window:open"),
   openSalesSlipWindow: () => ipcRenderer.invoke("sales-slip-window:open"),
+  vegaReadOnly: {
+    listStock: () => ipcRenderer.invoke("vega-read-only:list-stock"),
+  },
   erp: {
     getInitialData: () => ipcRenderer.invoke("erp:get-initial-data"),
     exportDatabaseBackup: (targetDirectory) => ipcRenderer.invoke("erp:export-database-backup", targetDirectory),

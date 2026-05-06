@@ -16,6 +16,7 @@ const menuPermissions = {
   "stock-movements": "stockMovements.view",
   "stock-count": "stockMovements.view",
   "warehouse-terminal": "stockMovements.view",
+  "vega-stock-trial": "settings.view",
   "data-import": "settings.view",
   "data-export": "reports.view",
   reports: "reports.view",

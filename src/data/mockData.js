@@ -5,6 +5,7 @@ import {
   Boxes,
   ChartNoAxesColumnIncreasing,
   CreditCard,
+  Database,
   FileSpreadsheet,
   LayoutDashboard,
   PackageSearch,
@@ -31,13 +32,14 @@ export const menuItems = [
   { id: "stock-movements", label: "Stok Hareketleri", icon: Boxes },
   { id: "stock-count", label: "Barkodlu Sayım", icon: ScanBarcode },
   { id: "warehouse-terminal", label: "Depo Terminali", icon: Smartphone },
+  { id: "vega-stock-trial", label: "Vega Stok Deneme", icon: Database },
   { id: "data-import", label: "Excel Aktarım", icon: FileSpreadsheet },
   { id: "data-export", label: "Excel Dışa Aktarım", icon: ArrowDownToLine },
   { id: "reports", label: "Raporlar", icon: ChartNoAxesColumnIncreasing },
   { id: "settings", label: "Ayarlar", icon: Settings },
 ];
 
-export const updatedMenuItemIds = ["dashboard"];
+export const updatedMenuItemIds = ["vega-stock-trial", "settings"];
 
 export const kpis = [
   { label: "Bugünkü Satış", value: "125.000 TL", icon: ShoppingBag, tone: "red" },
