@@ -17,6 +17,31 @@ const dashboardPeriodOptions = [
 
 const dashboardReleaseHighlights = releaseHighlightsByPage.dashboard;
 const dashboardUpdatedSectionIds = dashboardReleaseHighlights.updatedSectionIds;
+const ownerViewCards = [
+  { label: "Günlük operasyon durumu", value: "Takipte" },
+  { label: "Stok görünürlüğü", value: "Hazırlıkta" },
+  { label: "Cari kontrol", value: "Planlandı" },
+  { label: "Alış / satış özeti", value: "Geliştiriliyor" },
+  { label: "El terminali hazırlığı", value: "İlerliyor" },
+  { label: "Vega read-only geçişi", value: "Hazırlık kapısında" },
+];
+
+const ownerTodayItems = [
+  "Stok önizleme ve barkod riskleri kontrol edilecek",
+  "Read-only geçiş güvenlik şartları gözden geçirilecek",
+  "El terminali sayım akışı test edilecek",
+  "Personel kullanım notları toplanacak",
+  "Gerçek veri bağlantısı için yedek ve yetki kontrolü hazırlanacak",
+];
+
+const ownerDecisionItems = [
+  "Gerçek Vega bağlantısına geçilmedi",
+  "İlk gerçek deneme sadece read-only olacak",
+  "İlk kapsam sadece stok kartı olacak",
+  "Veri yazma ve import ayrı fazda değerlendirilecek",
+  "Ana hedef: güvenli geçiş, hızlı kontrol, hatasız stok görünürlüğü",
+];
+
 
 export default function Dashboard() {
   const erpData = useErpData();
@@ -69,6 +94,8 @@ export default function Dashboard() {
         <span>{dashboardData.patronNote}</span>
       </section>
 
+      <OwnerView />
+
       <section className={`kpi-grid dashboard-compact-kpis ${dashboardSectionClass("dashboard-daily-operation")}`} id="dashboard-daily-operation">
         <DashboardNewReleaseBadge sectionId="dashboard-daily-operation" />
         {dashboardData.kpis.map((item, index) => (
@@ -84,6 +111,48 @@ export default function Dashboard() {
         <DashboardNewReleaseBadge sectionId="dashboard-commerce-insights" />
       </CommerceInsights>
     </>
+  );
+}
+
+function OwnerView() {
+  return (
+    <section className={`dashboard-owner-view ${dashboardSectionClass("dashboard-owner-view")}`} id="dashboard-owner-view">
+      <DashboardNewReleaseBadge sectionId="dashboard-owner-view" />
+      <div className="dashboard-owner-heading">
+        <div>
+          <h2>Patron Bakışı</h2>
+          <p>Bugünkü operasyon, riskler, hazırlık seviyesi ve sonraki adımlar tek ekranda özetlenir.</p>
+        </div>
+        <span>Pasif yönetici özeti</span>
+      </div>
+
+      <div className="dashboard-owner-card-grid">
+        {ownerViewCards.map((card) => (
+          <article className="dashboard-owner-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+
+      <div className="dashboard-owner-panel-grid">
+        <OwnerChecklistPanel title="Bugün Bakılacaklar" items={ownerTodayItems} />
+        <OwnerChecklistPanel title="Patron Karar Alanı" items={ownerDecisionItems} tone="decision" />
+      </div>
+    </section>
+  );
+}
+
+function OwnerChecklistPanel({ items, title, tone = "today" }) {
+  return (
+    <article className={`dashboard-owner-list-panel ${tone}`}>
+      <h3>{title}</h3>
+      <ul>
+        {items.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+    </article>
   );
 }
 

@@ -8,6 +8,45 @@ import "../vegaImport.css";
 
 const riskRuleMap = Object.fromEntries(vegaImportMapping.riskRules.map((rule) => [rule.id, rule]));
 
+const readonlyRoadmapStages = [
+  {
+    title: "Aşama 1: Hazırlık tamamlandı",
+    items: [
+      "Import kilidi aktif",
+      "Mock önizleme hazır",
+      "Mapping referansı görünür",
+      "Güvenlik kartları kapalı durumda",
+    ],
+  },
+  {
+    title: "Aşama 2: İlk read-only deneme",
+    items: [
+      "Ayrı küçük sürümde yapılacak",
+      "Manuel yedek doğrulanacak",
+      "Sadece read-only kullanıcı kullanılacak",
+      "Sadece 20 stok kartı okunacak",
+      "Ham hata kullanıcıya gösterilmeyecek",
+    ],
+  },
+  {
+    title: "Aşama 3: Karşılaştırma",
+    items: [
+      "Sonuç Vega ekranıyla manuel karşılaştırılacak",
+      "Barkod, stok kodu, ürün adı ve aktif/pasif tahmini kontrol edilecek",
+      "Hatalar not alınacak",
+      "Herhangi bir yazma/import yapılmayacak",
+    ],
+  },
+  {
+    title: "Aşama 4: Sonraki genişleme",
+    items: [
+      "Cari, fiş, hareket ve rapor kapsamı ayrı ayrı planlanacak",
+      "Her kapsam ayrı küçük onaylı sürüm olacak",
+      "Veri yazma/import en son ve ayrıca onaylı fazda ele alınacak",
+    ],
+  },
+];
+
 function formatNumber(value) {
   return new Intl.NumberFormat("tr-TR").format(value);
 }
@@ -262,6 +301,25 @@ export default function VegaImportPreview() {
               <ShieldCheck size={14} />
               <span>{item}</span>
             </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="vega-readonly-roadmap-panel" id="vega-readonly-roadmap">
+        <div className="vega-readonly-roadmap-header">
+          <h2>Read-only Yol Haritası</h2>
+          <p>Gerçek bağlantıya geçmeden önce manuel ve küçük fazlı ilerleme sırası.</p>
+        </div>
+        <div className="vega-readonly-roadmap-grid">
+          {readonlyRoadmapStages.map((stage) => (
+            <article className="vega-readonly-roadmap-card" key={stage.title}>
+              <h3>{stage.title}</h3>
+              <ul>
+                {stage.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </article>
           ))}
         </div>
       </section>

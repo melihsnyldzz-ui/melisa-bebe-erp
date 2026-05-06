@@ -12,12 +12,18 @@ const updatedSectionIds = settingsReleaseHighlights.updatedSectionIds;
 const statusRows = [
   { label: "Uygulama sürümü", value: APP_VERSION },
   { label: "Geliştirme aşaması", value: APP_STAGE },
-  { label: "Build kontrolü", value: "GitHub Actions" },
-  { label: "Çalışma modu", value: "Güvenli geliştirme modu" },
-  { label: "Manuel çalışma modeli", value: "ChatGPT GitHub main'i kontrol eder, kullanıcı Codex promptunu manuel verir, Codex manuel uygulanır ve kullanıcı onayıyla ilerler." },
+  { label: "Build kontrolü", value: "GitHub Actions + npm run build" },
+  { label: "Çalışma modeli", value: "GitHub PR kontrollü manuel geliştirme" },
   { label: "Kritik işlem politikası", value: "Stok, cari, fiş, yedekleme, import ve migration işlemleri ayrı kontrollü sürümlerle açılır." },
   { label: "El terminali hazırlığı", value: "Okuma, son okutulanlar, sayım sepeti ve rapor/CSV/JSON önizleme hazır." },
-  { label: "Vega geçiş hazırlığı", value: "Kademeli geçiş hazırlığı devam ediyor." },
+  { label: "Vega geçiş hazırlığı", value: "Read-only yol haritası ile kademeli hazırlık sürüyor." },
+];
+
+const workflowRows = [
+  { label: "ChatGPT", value: "PR/diff kontrolü ve Codex prompt hazırlığı" },
+  { label: "Codex", value: "Branch üzerinde kodlama, build, commit, PR açma" },
+  { label: "Kullanıcı", value: "PR onayı ve merge kararı" },
+  { label: "Main branch", value: "Doğrudan push yapılmayacak" },
 ];
 
 const maturityRows = [
@@ -126,6 +132,12 @@ const goLiveChecklistGroups = [
 ];
 
 const versionHistoryRows = [
+  {
+    version: "v1.29.0",
+    title: "Yönetici Kokpiti ve Read-only Yol Haritası",
+    area: "Dashboard / Vega / Sistem Durumu",
+    description: "Patron Bakışı yönetici özeti, Vega read-only yol haritası ve GitHub PR kontrollü manuel çalışma modeli statik/pasif olarak güncellendi.",
+  },
   {
     version: "v1.27.0",
     title: "Vega read-only manuel kontrollü test kapısı",
@@ -559,6 +571,24 @@ export default function SystemStatusPanel() {
         <span>Bu Sürümde Test Edilecek Alan</span>
         <strong>Ayarlar / Sistem Durumu ve Canlıya Hazırlık Kontrol Listesi</strong>
         <p>Sol menüde mavi nokta görünen sayfa, bu sürümde özellikle kontrol edilmesi gereken alandır.</p>
+      </div>
+
+      <div className="system-workflow-panel" {...sectionHighlightProps("system-workflow-model")}>
+        <div>
+          <h3>GitHub PR Kontrollü Çalışma Modeli <NewReleaseBadge sectionId="system-workflow-model" /></h3>
+          <p>Geliştirme main branch'e dokunmadan, ayrı branch ve manuel PR onayıyla ilerler.</p>
+        </div>
+        <div className="system-workflow-grid">
+          {workflowRows.map((row) => (
+            <article className="system-workflow-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </article>
+          ))}
+        </div>
+        <p className="system-workflow-safety-note">
+          Gerçek veri bağlantısı, DB okuma, query, import ve veri yazma işlemleri yalnızca ayrı küçük ve açık onaylı sürümlerde ele alınır.
+        </p>
       </div>
 
       <div className="build-quality-card">
