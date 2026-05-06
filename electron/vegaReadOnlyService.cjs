@@ -2,7 +2,7 @@ const notConfiguredResult = {
   status: "not_configured",
   source: "none",
   items: [],
-  message: "Vega bağlantısı henüz yapılandırılmadı.",
+  message: "Vega bağlantısı henüz yapılandırılmadı. Gerçek stok okunmuyor.",
 };
 
 function listVegaStockReadOnly() {
@@ -16,7 +16,7 @@ function listVegaStockReadOnly() {
     status: "error",
     source: "vega-read-only",
     items: [],
-    message: "Vega read-only bağlantı sürücüsü bu geçici sürümde tanımlı değil.",
+    message: "Vega read-only bağlantısı açılmak istendi ancak bağlantı sürücüsü tanımlı değil.",
   };
 }
 

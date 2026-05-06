@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.18.1",
+    title: "Vega stok deneme ekranı güvenlik ve bağlantı durumu netleştirme",
+    area: "Vega / Stok",
+    description: "Vega Stok Deneme ekranında demo veri, bağlantı yok ve bağlantı hatası durumları daha açık hale getirildi; ekranın yalnızca read-only stok okuma hazırlığı olduğu netleştirildi.",
+  },
+  {
     version: "v1.18.0",
     title: "Vega stok okuma deneme ekranı",
     area: "Vega / Stok",

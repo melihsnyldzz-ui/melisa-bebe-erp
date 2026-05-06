@@ -30,17 +30,17 @@ const demoStockRows = [
 ];
 
 const statusLabels = {
-  not_configured: "Bağlantı yok",
+  not_configured: "Vega bağlantısı yok",
   demo: "Demo veri",
-  ready: "Vega read-only deneme",
-  error: "Hata",
+  ready: "Read-only bağlantı hazır",
+  error: "Bağlantı hatası",
 };
 
 export default function VegaStockTrial() {
   const [query, setQuery] = useState("");
   const [stockState, setStockState] = useState({
     status: "not_configured",
-    message: "Vega bağlantısı henüz yapılandırılmadı.",
+    message: "Vega bağlantısı henüz yapılandırılmadı. Gerçek stok okunmuyor.",
     items: [],
   });
 
@@ -105,6 +105,13 @@ export default function VegaStockTrial() {
 
       <section className="vega-stock-trial-panel section-updated-highlight" id="vega-stock-trial-panel">
         <span className="new-release-badge">YENİ · {currentReleaseVersion}</span>
+        <div className="vega-stock-safety-box">
+          <ShieldCheck size={18} />
+          <div>
+            <strong>Güvenli Deneme Modu</strong>
+            <span>Bu ekran yalnızca stok okuma hazırlığı içindir. Vega'ya veri yazmaz, stok değiştirmez, kayıt oluşturmaz.</span>
+          </div>
+        </div>
         <div className="vega-stock-trial-header">
           <div>
             <h2>Stok Okuma Denemesi</h2>
@@ -127,8 +134,7 @@ export default function VegaStockTrial() {
         <div className="vega-stock-warning">
           <AlertTriangle size={18} />
           <span>
-            {stockState.message} Gerçek Vega verisi ile demo veri aynı tabloda karıştırılmaz; bağlantı hazır olana kadar aşağıdaki
-            satırlar açıkça demo olarak gösterilir.
+            {stockState.message} {!hasVegaRows && "Gösterilen satırlar demo veridir; gerçek Vega stoğu değildir."}
           </span>
         </div>
 
