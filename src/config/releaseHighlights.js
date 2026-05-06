@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.22.2";
+export const currentReleaseVersion = "v1.23.0";
 
-export const currentReleaseTitle = "Read-only ilk deneme öncesi final güvenlik matrisi";
+export const currentReleaseTitle = "İlk gerçek read-only deneme öncesi teknik kontrol paketi";
 
 export const updatedSectionIds = ["latest-version-history", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Read-only ilk deneme öncesi final güvenlik matrisi eklendi",
-  "Manuel yedek, read-only yetki, satır limiti ve timeout şartları tek panelde toplandı",
-  "Gerçek Vega bağlantısı, SQL/ODBC, import ve ERP’ye yazma işlemlerinin kapsam dışı olduğu tekrar vurgulandı",
+  "İlk gerçek read-only deneme öncesi teknik kontrol paneli eklendi",
+  "Bağlantı, SQL/ODBC, DB okuma, query ve veri yazma durumlarının henüz kapalı olduğu netleştirildi",
+  "Gerçek ilk denemenin ayrı sürümde ve manuel yedek doğrulandıktan sonra ele alınacağı belirtildi",
 ];
 
 export const releaseJumpLinks = [

@@ -239,6 +239,25 @@ export default function VegaImportPreview() {
           <span>İlk deneme cari, fiş, hareket, ödeme, tahsilat, stok mutasyonu, import ve otomatik aktarım işlemlerini kapsamaz.</span>
         </div>
       </section>
+
+      <section className="vega-transition-gate-panel">
+        <h2>İlk Deneme Teknik Kontrolü</h2>
+        <p>Bu alan ilk gerçek read-only denemeye geçmeden önce teknik şartların yalnızca kontrol edilmesi için hazırlanmıştır. Bu sürümde bağlantı kurulmaz, sorgu hazırlanmaz, sorgu çalıştırılmaz ve veri yazılmaz.</p>
+        <div className="vega-transition-gate-grid">
+          <div className="vega-transition-gate-row"><strong>Bağlantı durumu</strong><span>Kurulmadı</span></div>
+          <div className="vega-transition-gate-row"><strong>SQL/ODBC durumu</strong><span>Açılmadı</span></div>
+          <div className="vega-transition-gate-row"><strong>DB okuma</strong><span>Yapılmadı</span></div>
+          <div className="vega-transition-gate-row"><strong>Query taslağı</strong><span>Hazırlanmadı</span></div>
+          <div className="vega-transition-gate-row"><strong>İlk test kapsamı</strong><span>Sadece stok kartları olacak</span></div>
+          <div className="vega-transition-gate-row"><strong>Veri yazma</strong><span>Kapalı</span></div>
+          <div className="vega-transition-gate-row"><strong>Import</strong><span>Kapalı</span></div>
+          <div className="vega-transition-gate-row"><strong>Hata politikası</strong><span>Ham hata kullanıcıya gösterilmeyecek</span></div>
+        </div>
+        <div className="vega-transition-gate-note">
+          <strong>Güvenli İlk Deneme Notu</strong>
+          <span>Gerçek ilk deneme ayrı sürümde, manuel yedek doğrulandıktan ve read-only kullanıcı yetkisi kesinleştirildikten sonra ele alınacaktır.</span>
+        </div>
+      </section>
     </>
   );
 }

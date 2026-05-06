@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.22.2",
+    title: "Read-only ilk deneme öncesi final güvenlik matrisi",
+    area: "Vega / Import Önizleme",
+    description: "İlk gerçek read-only deneme öncesi final güvenlik matrisi eklendi; yedek, read-only yetki, 20 satır limiti, timeout, retry kapalı ve ham hata gizleme şartları tek panelde toplandı; cari, fiş, hareket, ödeme, tahsilat, stok mutasyonu ve import işlemlerinin kapsam dışı olduğu netleştirildi.",
+  },
+  {
     version: "v1.22.1",
     title: "Read-only bağlantı hazırlık paneli kapanış kontrolü ve operatör rehberi",
     area: "Vega / Import Önizleme",

@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.22.2";
-export const APP_STAGE = "Read-only ilk deneme öncesi final güvenlik matrisi";
+export const APP_VERSION = "v1.23.0";
+export const APP_STAGE = "İlk gerçek read-only deneme öncesi teknik kontrol paketi";
