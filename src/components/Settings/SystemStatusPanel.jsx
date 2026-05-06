@@ -127,9 +127,9 @@ const goLiveChecklistGroups = [
 const versionHistoryRows = [
   {
     version: "v1.15.1",
-    title: "Dashboard test kartlarından sayfalara geçiş ve canlı hazırlık aksiyon merkezi",
-    area: "Dashboard / App",
-    description: "Dashboard hızlı test kartları ilgili sayfalara geçiş yapacak hale getirildi ve canlı hazırlık aksiyon merkezi eklendi.",
+    title: "Ana Panel sadeleştirme ve test alanlarını Ayarlar’a geri taşıma",
+    area: "Dashboard / Ayarlar",
+    description: "Ana Panel test rehberi kalabalığından arındırıldı; Dashboard yeniden ticari ve operasyonel özet odağına alındı.",
   },
   {
     version: "v1.15.0",

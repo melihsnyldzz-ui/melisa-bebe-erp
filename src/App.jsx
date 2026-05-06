@@ -77,7 +77,7 @@ export default function App() {
 
   return (
     <AppLayout activeModule={activeModule} onModuleChange={setActiveModule}>
-      {isDashboard && <Dashboard onModuleChange={setActiveModule} />}
+      {isDashboard && <Dashboard />}
       {isProducts && <Products />}
       {isCustomers && <Customers />}
       {isSuppliers && <Suppliers />}
