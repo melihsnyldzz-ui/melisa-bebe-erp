@@ -32,7 +32,7 @@ export default function VegaImportPreview() {
         </div>
       </section>
 
-      <section className="vega-import-warning-panel">
+      <section className="vega-import-warning-panel section-updated-highlight" id="vega-import-preview-panel">
         <AlertTriangle size={18} />
         <strong>Bu ekran sadece Vega yedek analizine göre önizleme amaçlıdır. Gerçek Vega verisine bağlanmaz, ERP’ye kayıt yazmaz.</strong>
       </section>

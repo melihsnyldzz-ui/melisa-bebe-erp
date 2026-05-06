@@ -16,6 +16,7 @@ import StockCount from "./pages/StockCount.jsx";
 import StockMovements from "./pages/StockMovements.jsx";
 import Suppliers from "./pages/Suppliers.jsx";
 import VegaStockTrial from "./pages/VegaStockTrial.jsx";
+import VegaImportPreview from "./pages/VegaImportPreview.jsx";
 import WarehouseTerminal from "./pages/WarehouseTerminal.jsx";
 import PurchaseSlipWindow from "./pages/windows/PurchaseSlipWindow.jsx";
 import SalesSlipWindow from "./pages/windows/SalesSlipWindow.jsx";
@@ -38,6 +39,7 @@ export default function App() {
       "stock-count": "stockMovements.view",
       "warehouse-terminal": "stockMovements.view",
       "vega-stock-trial": "settings.view",
+      "vega-import-preview": "settings.view",
       "data-import": "settings.view",
       "data-export": "reports.view",
       reports: "reports.view",
@@ -73,6 +75,7 @@ export default function App() {
   const isStockCount = activeModule === "stock-count";
   const isWarehouseTerminal = activeModule === "warehouse-terminal";
   const isVegaStockTrial = activeModule === "vega-stock-trial";
+  const isVegaImportPreview = activeModule === "vega-import-preview";
   const isDataImport = activeModule === "data-import";
   const isDataExport = activeModule === "data-export";
   const isReports = activeModule === "reports";
@@ -92,6 +95,7 @@ export default function App() {
       {isStockCount && <StockCount />}
       {isWarehouseTerminal && <WarehouseTerminal />}
       {isVegaStockTrial && <VegaStockTrial />}
+      {isVegaImportPreview && <VegaImportPreview />}
       {isDataImport && <DataImport />}
       {isDataExport && <DataExport />}
       {isReports && <Reports />}
@@ -108,6 +112,7 @@ export default function App() {
         !isStockCount &&
         !isWarehouseTerminal &&
         !isVegaStockTrial &&
+        !isVegaImportPreview &&
         !isDataImport &&
         !isDataExport &&
         !isReports &&

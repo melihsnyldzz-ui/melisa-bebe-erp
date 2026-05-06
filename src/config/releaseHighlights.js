@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.20.5";
+export const currentReleaseVersion = "v1.20.6";
 
-export const currentReleaseTitle = "Vega stok import önizleme altyapısı";
+export const currentReleaseTitle = "Vega Import Önizleme build stabilizasyonu ve sürüm geçmişi düzeltmesi";
 
 export const updatedSectionIds = ["latest-version-history", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Vega Import Önizleme alanı read-only demo/preview olarak Veri Aktarımı ekranına eklendi",
-  "F0102/F0103/F0104 tablo bilgileri ve stok/barkod/cari mapping merkezi dosyada toplandı",
-  "Mock stok verisiyle çalışan risk badge sistemi gerçek bağlantı, SQL ve ERP import olmadan hazırlandı",
+  "Vega Import Önizleme altyapısı sonrası build kontrolü tamamlandı",
+  "Ayarlar ekranındaki son sürüm geçmişi v1.20.6 ve v1.20.5 satırlarıyla düzeltildi",
+  "Vega Import Önizleme güvenli ve pasif menü bağlantısıyla görünür hale getirildi",
 ];
 
 export const releaseJumpLinks = [
@@ -36,6 +36,11 @@ export const releaseHighlightsByPage = {
     releaseHighlightItems,
     releaseJumpLinks: [{ id: "vega-stock-trial-panel", label: "Vega Stok Deneme alanına git" }],
     updatedSectionIds: ["vega-stock-trial-panel"],
+  },
+  vegaImportPreview: {
+    releaseHighlightItems,
+    releaseJumpLinks: [{ id: "vega-import-preview-panel", label: "Vega Import Önizleme alanına git" }],
+    updatedSectionIds: ["vega-import-preview-panel"],
   },
   settings: {
     releaseHighlightItems,

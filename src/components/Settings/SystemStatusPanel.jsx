@@ -126,6 +126,18 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.20.6",
+    title: "Vega Import Önizleme build stabilizasyonu ve sürüm geçmişi düzeltmesi",
+    area: "Vega / Import Önizleme",
+    description: "Vega Import Önizleme altyapısı sonrası build kontrolü, sürüm geçmişi görünürlüğü ve güvenli önizleme bağlantısı düzeltildi; gerçek Vega bağlantısı, SQL/ODBC, DB okuma ve ERP import işlemi eklenmedi.",
+  },
+  {
+    version: "v1.20.5",
+    title: "Vega stok import önizleme altyapısı",
+    area: "Vega / Import Önizleme",
+    description: "Vega yedek analizine göre F0102/F0103/F0104 tablo bilgileri, stok/barkod/cari mapping dosyası, mock stok önizleme tablosu ve risk badge sistemi gerçek bağlantı ve ERP import işlemi olmadan eklendi.",
+  },
+  {
     version: "v1.20.4",
     title: "Vega read-only ilk test prosedürü ve operatör kontrol rehberi",
     area: "Vega / Read-only",
