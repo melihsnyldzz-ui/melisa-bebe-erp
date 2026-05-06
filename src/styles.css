@@ -434,6 +434,74 @@ button {
   font-size: 0.82rem;
 }
 
+.dashboard-currency-summary {
+  display: grid;
+  grid-template-columns: minmax(170px, 0.7fr) minmax(0, 1.3fr);
+  gap: 8px;
+  align-items: center;
+  margin: 7px 0;
+  padding: 9px 10px;
+  border: 1px solid rgba(24, 100, 171, 0.12);
+  border-radius: 8px;
+  background: rgba(247, 251, 255, 0.82);
+}
+
+.dashboard-currency-summary h2 {
+  margin: 0;
+  color: var(--anthracite);
+  font-size: 0.96rem;
+}
+
+.dashboard-currency-summary p {
+  margin: 3px 0 0;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 750;
+}
+
+.dashboard-currency-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.dashboard-currency-card {
+  min-width: 0;
+  padding: 7px 8px;
+  border: 1px solid rgba(24, 100, 171, 0.12);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.86);
+}
+
+.dashboard-currency-card span,
+.dashboard-currency-card strong,
+.dashboard-currency-card small {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dashboard-currency-card span {
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 850;
+}
+
+.dashboard-currency-card strong {
+  margin-top: 2px;
+  color: var(--anthracite);
+  font-size: 0.92rem;
+}
+
+.dashboard-currency-card small {
+  margin-top: 1px;
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 750;
+}
+
 .page-title p {
   margin: 0 0 8px;
   color: var(--red);
@@ -4425,6 +4493,7 @@ tr:last-child td {
   .charts-grid,
   .tables-grid,
   .filters-grid,
+  .dashboard-currency-summary,
   .dashboard-middle-grid,
   .dashboard-bottom-grid,
   .dashboard-distribution-strip .dashboard-distribution-list,
@@ -4492,6 +4561,10 @@ tr:last-child td {
 
   .table-panel:last-child {
     grid-column: auto;
+  }
+
+  .dashboard-currency-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 

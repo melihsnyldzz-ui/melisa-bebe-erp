@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.16.1";
-export const APP_STAGE = "Dashboard Gün Sonu Raporu önizleme paneli";
+export const APP_VERSION = "v1.16.2";
+export const APP_STAGE = "Dashboard dövizli satış özeti ve para birimi görünürlüğü";

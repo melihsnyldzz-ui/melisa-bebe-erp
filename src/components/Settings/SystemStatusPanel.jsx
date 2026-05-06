@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.16.2",
+    title: "Dashboard dövizli satış özeti ve para birimi görünürlüğü",
+    area: "Dashboard",
+    description: "Ana Panel’e TL / USD / EUR dövizli satış özeti eklendi; Gün Sonu Raporu önizlemesinde para birimi bazlı satış bilgisi gösterilmeye başlandı.",
+  },
+  {
     version: "v1.16.1",
     title: "Dashboard Gün Sonu Raporu önizleme paneli",
     area: "Dashboard",
@@ -166,12 +172,6 @@ const versionHistoryRows = [
     title: "Kompakt Ana Panel başlık ve grafik yerleşimi düzeltmesi",
     area: "Dashboard",
     description: "Dashboard başlık, KPI ve grafik alanları daha kompakt hale getirildi; özet ekranın tek ekrana yaklaşması sağlandı.",
-  },
-  {
-    version: "v1.15.1",
-    title: "Ana Panel sadeleştirme ve test alanlarını Ayarlar’a geri taşıma",
-    area: "Dashboard / Ayarlar",
-    description: "Ana Panel test rehberi kalabalığından arındırıldı; Dashboard yeniden ticari ve operasyonel özet odağına alındı.",
   },
 ];
 

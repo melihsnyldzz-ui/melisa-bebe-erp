@@ -66,10 +66,33 @@ export default function Dashboard() {
         ))}
       </section>
 
+      <CurrencySalesSummary summary={dashboardData.currencySalesSummary} />
+
       {isEndOfDayReportOpen && <EndOfDayReportPreview report={reportPreview} />}
 
       <CommerceInsights data={dashboardData.commerceInsights} />
     </>
+  );
+}
+
+function CurrencySalesSummary({ summary }) {
+  return (
+    <section className="dashboard-currency-summary" id="dashboard-currency-summary">
+      <div>
+        <h2>Dövizli Satış Özeti</h2>
+        <p>Seçili dönemdeki satışlar para birimine göre gösterilir.</p>
+      </div>
+
+      <div className="dashboard-currency-grid">
+        {buildCurrencySummaryRows(summary).map((row) => (
+          <article className="dashboard-currency-card" key={row.label}>
+            <span>{row.label}</span>
+            <strong>{row.value}</strong>
+            {row.note && <small>{row.note}</small>}
+          </article>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -127,6 +150,7 @@ function buildDashboardData({ collections, customers, products, purchaseSlips, s
       riskRows: buildRiskRows({ criticalProducts, customers }),
       latestSlips: buildLatestSlipRows({ activePurchaseSlips, activeSalesSlips }),
     },
+    currencySalesSummary: buildCurrencySalesSummary(periodSalesSlips),
     periodSummary: {
       collectionsTotal: periodCollectionsTotal,
       salesSlipCount: periodSalesSlips.length,
@@ -136,7 +160,7 @@ function buildDashboardData({ collections, customers, products, purchaseSlips, s
   };
 }
 
-function buildReportPreview({ commerceInsights, periodSummary }, periodLabel) {
+function buildReportPreview({ commerceInsights, currencySalesSummary, periodSummary }, periodLabel) {
   const topCustomer = commerceInsights.topCustomersByRevenue[0];
   const topProduct = commerceInsights.monthlyTopProducts[0];
   const riskNote = commerceInsights.riskRows[0];
@@ -148,6 +172,10 @@ function buildReportPreview({ commerceInsights, periodSummary }, periodLabel) {
       { label: "Çıkan ürün", value: `${formatNumber(periodSummary.soldQuantity)} adet` },
       { label: "Satış toplamı", value: formatCurrency(periodSummary.salesTotal) },
       { label: "Tahsilat toplamı", value: formatCurrency(periodSummary.collectionsTotal) },
+      ...buildCurrencySummaryRows(currencySalesSummary).map((row) => ({
+        label: row.label,
+        value: row.value,
+      })),
       {
         label: "En çok alan müşteri",
         value: topCustomer ? `${topCustomer.name} · ${formatCurrency(topCustomer.revenue)}` : "Veri bekleniyor",
@@ -162,6 +190,75 @@ function buildReportPreview({ commerceInsights, periodSummary }, periodLabel) {
       },
     ],
   };
+}
+
+function buildCurrencySummaryRows(summary) {
+  return [
+    {
+      label: "Satılan TL",
+      value: formatCurrencyByCode(summary?.TRY || 0, "TRY"),
+    },
+    {
+      label: "Satılan USD",
+      note: (summary?.USD || 0) > 0 ? undefined : "Dövizli satış yok",
+      value: (summary?.USD || 0) > 0 ? formatCurrencyByCode(summary.USD, "USD") : "Veri yok",
+    },
+    {
+      label: "Satılan EUR",
+      note: (summary?.EUR || 0) > 0 ? undefined : "Dövizli satış yok",
+      value: (summary?.EUR || 0) > 0 ? formatCurrencyByCode(summary.EUR, "EUR") : "Veri yok",
+    },
+  ];
+}
+
+function buildCurrencySalesSummary(salesSlips) {
+  return salesSlips.reduce(
+    (summary, slip) => {
+      const currency = getSlipCurrency(slip);
+      if (!currency) return summary;
+
+      summary[currency] += toNumber(slip.grandTotal);
+      if (hasCurrencyField(slip)) {
+        summary.hasCurrencyData = true;
+      }
+      return summary;
+    },
+    { EUR: 0, TRY: 0, USD: 0, hasCurrencyData: false },
+  );
+}
+
+function getSlipCurrency(slip) {
+  const currencyValue = getCurrencyFieldValue(slip);
+  if (!currencyValue) return "TRY";
+  return normalizeCurrency(currencyValue);
+}
+
+function getCurrencyFieldValue(record) {
+  return record.currency || record.currencyCode || record.currencyType || record.paraBirimi || record.currencySymbol || "";
+}
+
+function hasCurrencyField(record) {
+  return Boolean(getCurrencyFieldValue(record));
+}
+
+function normalizeCurrency(value) {
+  const normalized = String(value || "")
+    .trim()
+    .toLocaleUpperCase("tr-TR");
+  if (!normalized) return "TRY";
+  if (["TRY", "TL", "₺", "TÜRK LİRASI", "TURK LIRASI"].includes(normalized)) return "TRY";
+  if (["USD", "$", "US DOLLAR", "DOLAR"].includes(normalized)) return "USD";
+  if (["EUR", "€", "EURO"].includes(normalized)) return "EUR";
+  return null;
+}
+
+function formatCurrencyByCode(value, currencyCode) {
+  const suffixMap = {
+    EUR: "€",
+    TRY: "₺",
+    USD: "$",
+  };
+  return `${formatNumber(value)} ${suffixMap[currencyCode] || ""}`.trim();
 }
 
 function buildKpi(label, currentValueRaw, monthValue, type, icon, tone, helperText) {

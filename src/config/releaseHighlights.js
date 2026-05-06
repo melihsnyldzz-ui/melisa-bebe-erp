@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.16.1";
+export const currentReleaseVersion = "v1.16.2";
 
-export const currentReleaseTitle = "Dashboard Gün Sonu Raporu önizleme paneli";
+export const currentReleaseTitle = "Dashboard dövizli satış özeti ve para birimi görünürlüğü";
 
 export const updatedSectionIds = ["latest-version-history", "project-maturity", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Gün Sonu Raporu butonu güvenli önizleme paneli açacak hale getirildi",
-  "Seçili dönem satış, tahsilat ve ürün çıkış özeti rapor önizlemesine eklendi",
-  "Rapor önizlemesinin veri yazmadığı açıkça belirtildi",
+  "Dashboard’a TL / USD / EUR dövizli satış özeti eklendi",
+  "Gün Sonu Raporu önizlemesine para birimi bazlı satış satırları eklendi",
+  "Dövizli satış görünümü kur çevirmeden mevcut fiş verilerine göre hazırlandı",
 ];
 
 export const releaseJumpLinks = [
@@ -28,9 +28,10 @@ export const releaseHighlightsByPage = {
     releaseHighlightItems,
     releaseJumpLinks: [
       { id: "dashboard-daily-operation", label: "Bugünkü Operasyon Özeti'ne git" },
+      { id: "dashboard-currency-summary", label: "Dövizli Satış Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-daily-operation", "dashboard-commerce-insights"],
+    updatedSectionIds: ["dashboard-daily-operation", "dashboard-currency-summary", "dashboard-commerce-insights"],
   },
   settings: {
     releaseHighlightItems,
