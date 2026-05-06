@@ -3,10 +3,11 @@ import ReleaseHighlightsPanel from "../Common/ReleaseHighlightsPanel.jsx";
 import { APP_STAGE, APP_VERSION } from "../../config/appVersion.js";
 import {
   currentReleaseVersion,
-  releaseHighlightItems,
-  releaseJumpLinks,
-  updatedSectionIds,
+  releaseHighlightsByPage,
 } from "../../config/releaseHighlights.js";
+
+const settingsReleaseHighlights = releaseHighlightsByPage.settings;
+const updatedSectionIds = settingsReleaseHighlights.updatedSectionIds;
 
 const statusRows = [
   { label: "Uygulama sürümü", value: APP_VERSION },
@@ -125,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.14.4",
+    title: "Yenilik sistemi için sayfa bazlı test ve görünürlük kontrolü",
+    area: "Ayarlar / Ortak Bileşen",
+    description: "Yenilik paneline görünürlük kontrol listesi eklendi ve Ayarlar sayfası releaseHighlightsByPage settings yapısından beslenecek hale getirildi.",
+  },
+  {
     version: "v1.14.3",
     title: "Yenilik merkezi panelini tüm sayfalara yaymaya hazırlık",
     area: "Ayarlar / Ortak Bileşen",
@@ -165,12 +172,6 @@ const versionHistoryRows = [
     title: "Canlıya geçiş test planı ve Vega karşılaştırma kontrol listesi",
     area: "Ayarlar",
     description: "Canlıya geçiş öncesi 5 günlük test planı ve Vega karşılaştırma kontrol listesi eklendi.",
-  },
-  {
-    version: "v1.13.6",
-    title: "Proje olgunluk oranlarını güncelleme ve canlıya geçiş eksik listesi",
-    area: "Ayarlar",
-    description: "Proje olgunluk oranları güncellendi ve canlıya geçiş öncesi eksik ana başlıklar görünür hale getirildi.",
   },
 ];
 
@@ -217,7 +218,11 @@ export default function SystemStatusPanel() {
         bilgilendirme amaçlıdır; herhangi bir ayar kaydetmez.
       </p>
 
-      <ReleaseHighlightsPanel releaseHighlightItems={releaseHighlightItems} releaseJumpLinks={releaseJumpLinks} />
+      <ReleaseHighlightsPanel
+        releaseHighlightItems={settingsReleaseHighlights.releaseHighlightItems}
+        releaseJumpLinks={settingsReleaseHighlights.releaseJumpLinks}
+        testChecklist={settingsReleaseHighlights.testChecklist}
+      />
 
       <div className="system-status-focus-card">
         <span>Bu Sürümde Test Edilecek Alan</span>

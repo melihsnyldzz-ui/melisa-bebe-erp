@@ -2,6 +2,7 @@ export default function ReleaseHighlightsPanel({
   description = "Sol menüdeki mavi nokta yenilik olan sayfayı gösterir. Bu panel ise sayfa içindeki yeni veya güncellenen bölümleri bulmanı kolaylaştırır.",
   releaseHighlightItems,
   releaseJumpLinks,
+  testChecklist,
   title = "Bu Sürümde Yenilenen Alanlar",
 }) {
   return (
@@ -24,6 +25,17 @@ export default function ReleaseHighlightsPanel({
           </a>
         ))}
       </nav>
+
+      {testChecklist?.length > 0 && (
+        <div className="release-visibility-checklist">
+          <h3>Yenilik Görünürlük Kontrolü</h3>
+          <ul>
+            {testChecklist.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }

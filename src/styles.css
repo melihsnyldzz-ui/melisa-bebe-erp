@@ -2623,6 +2623,30 @@ button {
   background: #e7f5ff;
 }
 
+.release-visibility-checklist {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.release-visibility-checklist h3 {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.98rem;
+}
+
+.release-visibility-checklist ul {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 19px;
+  color: var(--text);
+  line-height: 1.45;
+}
+
 .new-release-badge {
   display: inline-flex;
   align-items: center;
