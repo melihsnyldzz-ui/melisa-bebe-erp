@@ -3,6 +3,8 @@ import { useMemo, useState } from "react";
 import { useErpData } from "../../context/ErpDataContext.jsx";
 import { buildCsvContent, downloadCsvFile } from "../../utils/exportCsvUtils.js";
 import { buildExportFileName, buildExportRows, EXPORT_TYPES } from "../../utils/exportDataUtils.js";
+import { appendExportHistory, buildExportReference, readExportHistory } from "../../utils/exportHistoryUtils.js";
+import ExportHistoryPanel from "./ExportHistoryPanel.jsx";
 import ExportPreviewTable from "./ExportPreviewTable.jsx";
 import ExportResultPanel from "./ExportResultPanel.jsx";
 import ExportTypeSelector from "./ExportTypeSelector.jsx";
@@ -15,6 +17,7 @@ export default function DataExportPanel() {
   const [includeBom, setIncludeBom] = useState(true);
   const [message, setMessage] = useState(null);
   const [lastResult, setLastResult] = useState(null);
+  const [exportHistory, setExportHistory] = useState(() => readExportHistory());
 
   const config = EXPORT_TYPES[exportType] || EXPORT_TYPES.products;
   const rows = useMemo(
@@ -35,18 +38,30 @@ export default function DataExportPanel() {
     }
 
     const now = new Date();
+    const exportRef = buildExportReference(now);
     const fileName = buildExportFileName(exportType, now);
     const content = buildCsvContent({ columns: config.columns, rows, delimiter, includeBom });
+    const downloadResult = downloadCsvFile({ content, fileName });
 
-    downloadCsvFile({ content, fileName });
-    setLastResult({
+    if (!downloadResult.ok) {
+      setMessage({ type: "error", text: downloadResult.error || "CSV dosyası indirilemedi." });
+      return;
+    }
+
+    const record = {
+      exportRef,
       exportType,
       rowCount: rows.length,
       fileName,
+      delimiter,
+      bomEnabled: includeBom,
       createdAt: now.toISOString(),
       status: "success",
-    });
-    setMessage({ type: "success", text: `${config.label} CSV dosyası hazırlandı: ${fileName}` });
+    };
+
+    setLastResult(record);
+    setExportHistory(appendExportHistory(record));
+    setMessage({ type: "success", text: `${config.label} CSV dosyası hazırlandı. Referans: ${exportRef}` });
   }
 
   return (
@@ -86,12 +101,16 @@ export default function DataExportPanel() {
         </div>
         {message && <p className={`barcode-message barcode-message-${message.type} data-import-message`}>{message.text}</p>}
         <p className="form-note data-import-note">
+          CSV dosyaları Excel ile açılabilir. Türkçe karakter uyumu için BOM seçeneği varsayılan açık tutulur.
+        </p>
+        <p className="form-note data-import-note">
           CSV dışa aktarma yalnızca mevcut verileri okur. Ürün, cari, stok, satış veya alış kayıtlarında değişiklik yapmaz.
         </p>
       </section>
 
       <ExportPreviewTable columns={config.columns} rows={rows} totalRows={rows.length} />
       <ExportResultPanel result={lastResult} />
+      <ExportHistoryPanel history={exportHistory} />
     </>
   );
 }

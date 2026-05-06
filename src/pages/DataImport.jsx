@@ -1,4 +1,5 @@
 import DataImportPanel from "../components/DataImport/DataImportPanel.jsx";
+import ImportTemplateDownloadPanel from "../components/DataImport/ImportTemplateDownloadPanel.jsx";
 
 export default function DataImport() {
   return (
@@ -11,6 +12,7 @@ export default function DataImport() {
         </div>
       </section>
 
+      <ImportTemplateDownloadPanel />
       <DataImportPanel />
     </>
   );

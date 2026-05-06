@@ -866,6 +866,7 @@ button {
 
 .import-type-panel,
 .data-import-upload-panel,
+.import-template-panel,
 .column-mapping-panel,
 .data-import-payload-panel {
   display: grid;
@@ -952,7 +953,16 @@ button {
 }
 
 .export-result-summary {
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.export-history-panel,
+.import-template-panel {
+  margin-bottom: 14px;
+}
+
+.export-history-table td {
+  white-space: nowrap;
 }
 
 .file-upload-action input {

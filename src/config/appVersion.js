@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.9.8";
-export const APP_STAGE = "Excel dışa aktarma hazırlığı";
+export const APP_VERSION = "v1.9.9";
+export const APP_STAGE = "Export geçmişi ve şablon indirme";

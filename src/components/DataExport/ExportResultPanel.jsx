@@ -13,9 +13,12 @@ export default function ExportResultPanel({ result }) {
         <h2>Son Dışa Aktarma Sonucu</h2>
       </div>
       <div className="stock-count-report-summary export-result-summary">
+        <ResultMetric label="Referans No" value={result.exportRef} />
         <ResultMetric label="Export Tipi" value={exportLabel} />
         <ResultMetric label="Satır Sayısı" value={formatNumber(result.rowCount)} />
         <ResultMetric label="Dosya Adı" value={result.fileName} />
+        <ResultMetric label="Ayraç" value={result.delimiter} />
+        <ResultMetric label="BOM" value={result.bomEnabled ? "Açık" : "Kapalı"} />
         <ResultMetric label="Tarih / Saat" value={formatDateTime(result.createdAt)} />
         <ResultMetric label="Durum" value="Başarılı" />
       </div>

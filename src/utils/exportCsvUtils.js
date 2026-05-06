@@ -9,17 +9,31 @@ export function buildCsvContent({ columns = [], rows = [], delimiter = ";", incl
   return `${includeBom ? "\uFEFF" : ""}${content}`;
 }
 
-export function downloadCsvFile({ content, fileName }) {
-  const blob = new Blob([content], { type: "text/csv;charset=utf-8;" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
+export function buildCsvTemplateContent({ fields = [], delimiter = ";", includeBom = true }) {
+  const columns = fields.map((field) => ({ key: field, label: field }));
+  const emptyRow = fields.reduce((row, field) => ({ ...row, [field]: "" }), {});
 
-  link.href = url;
-  link.download = fileName;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  URL.revokeObjectURL(url);
+  return buildCsvContent({ columns, rows: [emptyRow], delimiter, includeBom });
+}
+
+export function downloadCsvFile({ content, fileName }) {
+  try {
+    const blob = new Blob([content], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = fileName || "melisa-bebe-export.csv";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+
+    return { ok: true };
+  } catch (error) {
+    console.error("CSV dosyası indirilemedi:", error);
+    return { ok: false, error: "CSV dosyası indirilemedi. Tarayıcı izinlerini veya dosya adını kontrol edin." };
+  }
 }
 
 function escapeCsvValue(value, delimiter) {
