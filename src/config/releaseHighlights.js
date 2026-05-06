@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.27.1";
+export const currentReleaseVersion = "v1.27.2";
 
-export const currentReleaseTitle = "Manuel çalışma modeli ve loop kalıntılarını temizleme";
+export const currentReleaseTitle = "Manuel read-only test kapısı kapanış kontrolü";
 
 export const updatedSectionIds = ["latest-version-history", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Harici araç ve tekrarlı işlem akışı ifadeleri projeden temizlendi",
-  "Çalışma modeli manuel Codex prompt akışına göre netleştirildi",
-  "Gerçek bağlantı, query, DB okuma ve veri yazma eklenmeden güvenli manuel süreç korundu",
+  "Manuel read-only test kapısı kapanış kontrolü eklendi",
+  "Gerçek bağlantı öncesi yedek, read-only kullanıcı, 20 satır sınırı ve ham hata gizleme şartları tekrar görünür hale getirildi",
+  "SQL/ODBC, DB okuma, query, import ve veri yazma eklenmeden güvenli hazırlık süreci korundu",
 ];
 
 export const releaseJumpLinks = [

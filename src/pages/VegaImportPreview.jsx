@@ -437,6 +437,27 @@ export default function VegaImportPreview() {
           <span>Gerçek read-only test yalnızca ayrı sürümde, manuel yedek ve read-only kullanıcı doğrulandıktan sonra ele alınacaktır. Bu panel karar kaydetmez ve işlem başlatmaz.</span>
         </div>
       </section>
+
+      <section className="vega-transition-gate-panel">
+        <h2>Manuel Read-only Test Kapısı Kapanış Kontrolü</h2>
+        <p>İlk gerçek read-only deneme öncesi son kontrol bu ekrandan yalnızca okunur. Bu ekrandan bağlantı kurulmaz, sorgu hazırlanmaz, sorgu çalıştırılmaz ve veri yazılmaz.</p>
+        <div className="vega-transition-gate-grid">
+          <div className="vega-transition-gate-row"><strong>Manuel yedek</strong><span>Gerçek denemeden önce ayrıca doğrulanacak</span></div>
+          <div className="vega-transition-gate-row"><strong>Read-only kullanıcı</strong><span>Sadece okuma yetkisiyle ayrıca doğrulanacak</span></div>
+          <div className="vega-transition-gate-row"><strong>İlk kapsam</strong><span>Sadece stok kartı okuma</span></div>
+          <div className="vega-transition-gate-row"><strong>İlk sınır</strong><span>20 satır</span></div>
+          <div className="vega-transition-gate-row"><strong>Timeout hedefi</strong><span>3000 ms</span></div>
+          <div className="vega-transition-gate-row"><strong>Retry politikası</strong><span>Kapalı</span></div>
+          <div className="vega-transition-gate-row"><strong>Ham hata gösterimi</strong><span>Kullanıcıya gösterilmeyecek</span></div>
+          <div className="vega-transition-gate-row"><strong>ERP’ye yazma</strong><span>Kapalı</span></div>
+          <div className="vega-transition-gate-row"><strong>Import işlemi</strong><span>Kapalı</span></div>
+          <div className="vega-transition-gate-row"><strong>Son karar</strong><span>Bu ekrandan verilmeyecek, ayrı küçük sürümde ele alınacak</span></div>
+        </div>
+        <div className="vega-transition-gate-note">
+          <strong>Kapanış Kontrol Notu</strong>
+          <span>Bu panel yalnızca manuel kapanış kontrolüdür. Bağlantı parametresi almaz, query üretmez, test başlatmaz, dosya okumaz ve ERP’ye kayıt yazmaz.</span>
+        </div>
+      </section>
     </>
   );
 }
