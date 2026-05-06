@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.25.0",
+    title: "İlk gerçek read-only deneme hazırlığına geçiş öncesi final karar ekranı",
+    area: "Vega / Import Önizleme",
+    description: "İlk read-only deneme öncesi final karar rehberi eklendi; hazırlık, manuel yedek, read-only kullanıcı ve 20 satır sınırı son kez görünür hale getirildi ve gerçek denemenin bu ekrandan başlatılmayacağı netleştirildi.",
+  },
+  {
     version: "v1.24.2",
     title: "İlk read-only deneme öncesi kapanış kontrolü ve final saha notu",
     area: "Vega / Import Önizleme",

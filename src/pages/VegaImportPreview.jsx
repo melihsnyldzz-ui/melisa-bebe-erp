@@ -339,6 +339,10 @@ export default function VegaImportPreview() {
           <div className="vega-transition-gate-row"><strong>Son karar</strong><span>Bu ekrandan verilmeyecek</span></div>
           <div className="vega-transition-gate-row"><strong>Gerçek deneme</strong><span>Ayrı sürümde yapılacak</span></div>
         </div>
+        <div className="vega-transition-gate-note">
+          <strong>Hazırlık Fazı Kapanış Notu</strong>
+          <span>Bu noktada hazırlık ve kontrol rehberleri tamamlanmıştır. Gerçek read-only deneme ancak ayrı sürümde, manuel yedek ve read-only kullanıcı doğrulandıktan sonra ele alınacaktır.</span>
+        </div>
       </section>
     </>
   );

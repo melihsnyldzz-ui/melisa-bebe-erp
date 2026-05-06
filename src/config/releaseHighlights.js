@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.25.0";
+export const currentReleaseVersion = "v1.25.1";
 
-export const currentReleaseTitle = "İlk gerçek read-only deneme hazırlığına geçiş öncesi final karar ekranı";
+export const currentReleaseTitle = "Vega read-only final karar ekranı kapanış özeti ve sadeleştirme";
 
 export const updatedSectionIds = ["latest-version-history", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "İlk read-only deneme öncesi final karar rehberi eklendi",
-  "Hazırlık, manuel yedek, read-only kullanıcı ve 20 satır sınırı son kez görünür hale getirildi",
-  "Gerçek denemenin bu ekrandan başlatılmayacağı ve ayrı sürümde yapılacağı netleştirildi",
+  "Final karar ekranına hazırlık fazı kapanış notu eklendi",
+  "Read-only hazırlık rehberlerinin tamamlandığı daha sade şekilde belirtildi",
+  "Gerçek denemenin ayrı sürümde ve manuel doğrulamalar sonrası ele alınacağı tekrar vurgulandı",
 ];
 
 export const releaseJumpLinks = [
