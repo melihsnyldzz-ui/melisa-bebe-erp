@@ -2,10 +2,54 @@
   padding-top: 12px;
 }
 
+.vega-operation-status-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.vega-operation-status-card,
+.vega-operation-group-card,
+.vega-owner-summary-panel {
+  border: 1px solid rgba(24, 100, 171, 0.14);
+  border-radius: 8px;
+  background: rgba(247, 251, 255, 0.96);
+  box-shadow: 0 18px 42px rgba(24, 26, 31, 0.06);
+}
+
+.vega-operation-status-card {
+  min-width: 0;
+  padding: 11px;
+}
+
+.vega-operation-status-card span,
+.vega-operation-status-card strong {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vega-operation-status-card span {
+  color: #1864ab;
+  font-size: 0.72rem;
+  font-weight: 900;
+}
+
+.vega-operation-status-card strong {
+  margin-top: 4px;
+  color: var(--anthracite);
+  font-size: 1rem;
+}
+
 .vega-import-warning-panel,
 .vega-import-map-panel,
 .vega-import-table-panel,
-.vega-import-risk-panel {
+.vega-import-risk-panel,
+.vega-operation-center-panel,
+.vega-owner-summary-panel {
   margin-bottom: 14px;
   border: 1px solid rgba(229, 231, 235, 0.92);
   border-radius: 8px;
@@ -74,14 +118,17 @@
 
 .vega-import-map-panel,
 .vega-import-table-panel,
-.vega-import-risk-panel {
+.vega-import-risk-panel,
+.vega-operation-center-panel,
+.vega-owner-summary-panel {
   display: grid;
   gap: 10px;
   padding: 12px;
 }
 
 .vega-import-map-header,
-.vega-import-table-heading {
+.vega-import-table-heading,
+.vega-operation-center-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -93,20 +140,26 @@
 .vega-import-table-heading h2,
 .vega-import-table-heading p,
 .vega-import-risk-panel h2,
-.vega-import-risk-panel p {
+.vega-import-risk-panel p,
+.vega-operation-center-header h2,
+.vega-operation-center-header p,
+.vega-owner-summary-panel h2 {
   margin: 0;
 }
 
 .vega-import-map-header h2,
 .vega-import-table-heading h2,
-.vega-import-risk-panel h2 {
+.vega-import-risk-panel h2,
+.vega-operation-center-header h2,
+.vega-owner-summary-panel h2 {
   color: var(--anthracite);
   font-size: 1rem;
 }
 
 .vega-import-map-header p,
 .vega-import-table-heading p,
-.vega-import-risk-panel p {
+.vega-import-risk-panel p,
+.vega-operation-center-header p {
   margin-top: 3px;
   color: var(--muted);
   font-size: 0.78rem;
@@ -259,21 +312,99 @@
   color: #047857;
 }
 
+.vega-operation-group-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.vega-operation-group-card {
+  min-width: 0;
+  padding: 11px;
+}
+
+.vega-operation-group-card h3 {
+  margin: 0 0 8px;
+  color: #1864ab;
+  font-size: 0.9rem;
+}
+
+.vega-operation-group-card ul {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.vega-operation-group-card li {
+  position: relative;
+  padding-left: 13px;
+  color: var(--anthracite);
+  font-size: 0.74rem;
+  font-weight: 780;
+  line-height: 1.35;
+}
+
+.vega-operation-group-card li::before {
+  position: absolute;
+  top: 0.5em;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: #1864ab;
+  content: "";
+}
+
+.vega-owner-summary-list {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.vega-owner-summary-row {
+  display: flex;
+  min-width: 0;
+  gap: 6px;
+  align-items: flex-start;
+  padding: 9px;
+  border: 1px solid rgba(5, 150, 105, 0.14);
+  border-radius: 8px;
+  background: #ecfdf5;
+  color: #047857;
+  font-size: 0.73rem;
+  font-weight: 850;
+  line-height: 1.35;
+}
+
+.vega-owner-summary-row svg {
+  flex: 0 0 auto;
+  margin-top: 1px;
+}
+
 @media (max-width: 1180px) {
   .vega-import-summary-grid,
-  .vega-import-map-grid {
+  .vega-import-map-grid,
+  .vega-operation-status-grid,
+  .vega-operation-group-grid,
+  .vega-owner-summary-list {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 720px) {
   .vega-import-summary-grid,
-  .vega-import-map-grid {
+  .vega-import-map-grid,
+  .vega-operation-status-grid,
+  .vega-operation-group-grid,
+  .vega-owner-summary-list {
     grid-template-columns: 1fr;
   }
 
   .vega-import-map-header,
-  .vega-import-table-heading {
+  .vega-import-table-heading,
+  .vega-operation-center-header {
     align-items: flex-start;
     flex-direction: column;
   }

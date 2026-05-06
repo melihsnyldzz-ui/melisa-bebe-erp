@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.27.3";
+export const currentReleaseVersion = "v1.28.0";
 
-export const currentReleaseTitle = "Read-only öncesi saha doğrulama özeti sadeleştirme";
+export const currentReleaseTitle = "Vega Read-only Operasyon Merkezi";
 
 export const updatedSectionIds = ["latest-version-history", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Read-only öncesi saha doğrulama özeti sadeleştirildi",
-  "Personelin kontrol edeceği yedek, read-only kullanıcı ve 20 satır sınırı daha net gösterildi",
-  "Gerçek bağlantı, query, DB okuma, import ve veri yazma eklenmeden güvenli hazırlık korundu",
+  "Vega Import Önizleme ekranı read-only operasyon merkezi olarak yeniden düzenlendi",
+  "Dağınık hazırlık panelleri tek bakışta anlaşılır operasyon, güvenlik ve saha kontrol gruplarına ayrıldı",
+  "Gerçek Vega bağlantısı, SQL/ODBC, DB okuma, query, import ve veri yazma eklenmeden güvenli hazırlık süreci korundu",
 ];
 
 export const releaseJumpLinks = [
