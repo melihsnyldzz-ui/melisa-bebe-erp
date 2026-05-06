@@ -3230,9 +3230,31 @@ button {
 }
 
 .section-updated-highlight {
+  position: relative;
+  border-color: rgba(51, 154, 240, 0.38) !important;
   border-left: 4px solid #339af0 !important;
-  background: linear-gradient(90deg, rgba(231, 245, 255, 0.75), rgba(255, 255, 255, 0));
+  background: linear-gradient(90deg, rgba(231, 245, 255, 0.72), rgba(255, 255, 255, 0.2));
   scroll-margin-top: 18px;
+}
+
+.dashboard-updated-section {
+  padding: 10px;
+  border: 1px solid rgba(51, 154, 240, 0.22);
+  border-radius: 10px;
+  box-shadow: 0 10px 26px rgba(24, 100, 171, 0.06);
+}
+
+.dashboard-release-badge {
+  grid-column: 1 / -1;
+  justify-self: end;
+  width: fit-content;
+  margin-left: 0;
+  box-shadow: 0 6px 18px rgba(24, 100, 171, 0.12);
+}
+
+.dashboard-compact-kpis.dashboard-updated-section,
+.dashboard-commerce-insights.dashboard-updated-section {
+  gap: 8px;
 }
 
 .version-history-panel {
@@ -4901,6 +4923,15 @@ tr:last-child td {
 }
 
 @media (max-width: 560px) {
+  .dashboard-updated-section {
+    padding: 9px 7px;
+  }
+
+  .dashboard-release-badge {
+    justify-self: start;
+    margin-bottom: 3px;
+  }
+
   .dashboard-decision-note {
     grid-template-columns: 1fr;
     gap: 3px;

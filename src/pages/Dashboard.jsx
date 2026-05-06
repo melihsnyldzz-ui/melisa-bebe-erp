@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import CommerceInsights from "../components/Dashboard/CommerceInsights.jsx";
 import KpiCard from "../components/Dashboard/KpiCard.jsx";
 import { APP_STAGE, APP_VERSION } from "../config/appVersion.js";
+import { currentReleaseVersion, releaseHighlightsByPage } from "../config/releaseHighlights.js";
 import { useErpData } from "../context/ErpDataContext.jsx";
 import { getTodayISO } from "../utils/dateUtils.js";
 import { formatCurrency, formatNumber } from "../utils/formatters.js";
@@ -13,6 +14,9 @@ const dashboardPeriodOptions = [
   { id: "last7", label: "Son 7 Gün" },
   { id: "last30", label: "Son 30 Gün" },
 ];
+
+const dashboardReleaseHighlights = releaseHighlightsByPage.dashboard;
+const dashboardUpdatedSectionIds = dashboardReleaseHighlights.updatedSectionIds;
 
 export default function Dashboard() {
   const erpData = useErpData();
@@ -65,7 +69,8 @@ export default function Dashboard() {
         <span>{dashboardData.patronNote}</span>
       </section>
 
-      <section className="kpi-grid dashboard-compact-kpis" id="dashboard-daily-operation">
+      <section className={`kpi-grid dashboard-compact-kpis ${dashboardSectionClass("dashboard-daily-operation")}`} id="dashboard-daily-operation">
+        <DashboardNewReleaseBadge sectionId="dashboard-daily-operation" />
         {dashboardData.kpis.map((item, index) => (
           <KpiCard item={item} index={index} key={item.label} />
         ))}
@@ -75,14 +80,17 @@ export default function Dashboard() {
 
       {isEndOfDayReportOpen && <EndOfDayReportPreview report={reportPreview} />}
 
-      <CommerceInsights data={dashboardData.commerceInsights} />
+      <CommerceInsights data={dashboardData.commerceInsights} sectionClass={dashboardSectionClass("dashboard-commerce-insights")}>
+        <DashboardNewReleaseBadge sectionId="dashboard-commerce-insights" />
+      </CommerceInsights>
     </>
   );
 }
 
 function CurrencyTradeSummary({ summary }) {
   return (
-    <section className="dashboard-currency-summary" id="dashboard-currency-summary">
+    <section className={`dashboard-currency-summary ${dashboardSectionClass("dashboard-currency-summary")}`} id="dashboard-currency-summary">
+      <DashboardNewReleaseBadge sectionId="dashboard-currency-summary" />
       <div>
         <h2>Dövizli Ticaret Özeti</h2>
         <p>Satış, alış ve net cari pozisyon seçili döneme göre para birimi bazında gösterilir.</p>
@@ -118,6 +126,15 @@ function CurrencyTradeSummary({ summary }) {
       </p>
     </section>
   );
+}
+
+function dashboardSectionClass(sectionId) {
+  return dashboardUpdatedSectionIds.includes(sectionId) ? "section-updated-highlight dashboard-updated-section" : "";
+}
+
+function DashboardNewReleaseBadge({ sectionId }) {
+  if (!dashboardUpdatedSectionIds.includes(sectionId)) return null;
+  return <span className="new-release-badge dashboard-release-badge">YENİ · {currentReleaseVersion}</span>;
 }
 
 function EndOfDayReportPreview({ report }) {

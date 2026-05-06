@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.17.5",
+    title: "Son sürüm değişikliklerini görsel vurgulama",
+    area: "Dashboard / Settings",
+    description: "Son sürümde güncellenen Dashboard ve Settings bölümleri hafif çerçeve, arka plan ve YENİ etiketiyle görsel olarak işaretlenebilir hale getirildi.",
+  },
+  {
     version: "v1.17.4",
     title: "Dashboard mobil ve kompakt görünüm son dengeleme",
     area: "Dashboard",

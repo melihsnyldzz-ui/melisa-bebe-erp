@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.17.4";
+export const currentReleaseVersion = "v1.17.5";
 
-export const currentReleaseTitle = "Dashboard mobil ve kompakt görünüm son dengeleme";
+export const currentReleaseTitle = "Son sürüm değişikliklerini görsel vurgulama";
 
 export const updatedSectionIds = ["latest-version-history", "project-maturity", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Dashboard rapor önizlemesi mobilde iki kolona dengelendi",
-  "Risk ve karar notu metinlerinin küçük ekranda taşmadan okunması güçlendirildi",
-  "Döviz, cari detay ve ticari özet kartlarının kompakt görünümü korundu",
+  "Son sürümde güncellenen Dashboard bölümleri hafif görsel vurgu ile işaretlendi",
+  "YENİ etiketi güncel sürüm numarasıyla ilgili alanların üzerinde gösterildi",
+  "Settings tarafındaki sürüm geçmişi ve canlı test alanı aynı vurgulama mantığıyla korundu",
 ];
 
 export const releaseJumpLinks = [

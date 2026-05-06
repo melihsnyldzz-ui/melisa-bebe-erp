@@ -65,11 +65,12 @@ function getXAxisInterval(length) {
   return 0;
 }
 
-export default function CommerceInsights({ data }) {
+export default function CommerceInsights({ children, data, sectionClass = "" }) {
   const salesTrendInterval = getXAxisInterval(data.monthlySalesTrend.length);
 
   return (
-    <section className="dashboard-commerce-insights" id="dashboard-commerce-insights">
+    <section className={`dashboard-commerce-insights ${sectionClass}`} id="dashboard-commerce-insights">
+      {children}
       <div className="dashboard-middle-grid">
         <div className="chart-panel dashboard-chart-card">
           <div className="section-heading">
