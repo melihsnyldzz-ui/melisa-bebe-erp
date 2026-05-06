@@ -915,6 +915,46 @@ button {
   gap: 10px;
 }
 
+.export-options-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  align-items: end;
+}
+
+.checkbox-row {
+  display: inline-flex;
+  gap: 9px;
+  color: var(--text);
+  font-size: 0.88rem;
+  font-weight: 750;
+}
+
+.checkbox-row input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--red);
+}
+
+.export-checkbox-row {
+  min-height: 54px;
+  align-items: center;
+  align-self: end;
+}
+
+.export-preview-panel,
+.import-result-panel {
+  margin-bottom: 14px;
+}
+
+.export-preview-table td {
+  white-space: nowrap;
+}
+
+.export-result-summary {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
 .file-upload-action input {
   display: none;
 }
@@ -2518,6 +2558,7 @@ tr:last-child td {
   .stock-count-history-filters,
   .stock-count-report-summary,
   .import-type-grid,
+  .export-options-grid,
   .import-confirm-summary,
   .column-mapping-grid,
   .import-summary-grid,

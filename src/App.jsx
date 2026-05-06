@@ -3,6 +3,7 @@ import AppLayout from "./components/Layout/AppLayout.jsx";
 import { useAuth } from "./context/AuthContext.jsx";
 import Collections from "./pages/Collections.jsx";
 import Customers from "./pages/Customers.jsx";
+import DataExport from "./pages/DataExport.jsx";
 import DataImport from "./pages/DataImport.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Payments from "./pages/Payments.jsx";
@@ -34,6 +35,7 @@ export default function App() {
       "stock-movements": "stockMovements.view",
       "stock-count": "stockMovements.view",
       "data-import": "settings.view",
+      "data-export": "reports.view",
       reports: "reports.view",
       settings: "settings.view",
     }),
@@ -66,6 +68,7 @@ export default function App() {
   const isStockMovements = activeModule === "stock-movements";
   const isStockCount = activeModule === "stock-count";
   const isDataImport = activeModule === "data-import";
+  const isDataExport = activeModule === "data-export";
   const isReports = activeModule === "reports";
   const isSettings = activeModule === "settings";
 
@@ -82,6 +85,7 @@ export default function App() {
       {isStockMovements && <StockMovements />}
       {isStockCount && <StockCount />}
       {isDataImport && <DataImport />}
+      {isDataExport && <DataExport />}
       {isReports && <Reports />}
       {isSettings && <Settings />}
       {!isDashboard &&
@@ -95,6 +99,7 @@ export default function App() {
         !isStockMovements &&
         !isStockCount &&
         !isDataImport &&
+        !isDataExport &&
         !isReports &&
         !isSettings && <ModulePlaceholder />}
     </AppLayout>

@@ -30,6 +30,7 @@ export const menuItems = [
   { id: "stock-movements", label: "Stok Hareketleri", icon: Boxes },
   { id: "stock-count", label: "Barkodlu Sayım", icon: ScanBarcode },
   { id: "data-import", label: "Excel Aktarım", icon: FileSpreadsheet },
+  { id: "data-export", label: "Excel Dışa Aktarım", icon: ArrowDownToLine },
   { id: "reports", label: "Raporlar", icon: ChartNoAxesColumnIncreasing },
   { id: "settings", label: "Ayarlar", icon: Settings },
 ];
