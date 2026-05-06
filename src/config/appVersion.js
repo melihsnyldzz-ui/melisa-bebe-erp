@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.10.6";
-export const APP_STAGE = "El terminali sayım sepeti dışa aktarma hazırlığı";
+export const APP_VERSION = "v1.10.7";
+export const APP_STAGE = "GitHub Actions build kontrolü";
