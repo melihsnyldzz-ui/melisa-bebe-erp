@@ -69,6 +69,28 @@ const vegaComparisonIssueTemplate = [
   "Not / ekran görüntüsü:",
 ];
 
+const liveTestChecklistItems = [
+  "Uygulama doğru adresten açıldı mı?",
+  "Sol menüde mavi yenilik noktası kontrol edildi mi?",
+  "Ayarlar ekranındaki sürüm bilgisi kontrol edildi mi?",
+  "Vega karşılaştırma test planı okundu mu?",
+  "Test edilecek ekran belirlendi mi?",
+  "Veri yazan işlem yapılmayacağı personele söylendi mi?",
+  "Hata görülürse ekran görüntüsü alınacağı söylendi mi?",
+  "Test sonunda notlar ChatGPT/Codex için hazırlanacak mı?",
+];
+
+const staffTrialNotesTemplate = [
+  "Personel adı:",
+  "Test tarihi:",
+  "Test edilen ekran:",
+  "Anlaşılan kısımlar:",
+  "Zorlanılan kısımlar:",
+  "Görülen hata:",
+  "Öneri:",
+  "Genel değerlendirme:",
+];
+
 const goLiveChecklistGroups = [
   {
     title: "Hazır",
@@ -95,6 +117,12 @@ const goLiveChecklistGroups = [
 ];
 
 const versionHistoryRows = [
+  {
+    version: "v1.13.9",
+    title: "Canlı test checklist sayfası ve personel deneme notları",
+    area: "Ayarlar",
+    description: "Personelin canlı test sırasında takip edeceği checklist ve deneme notları şablonu eklendi.",
+  },
   {
     version: "v1.13.8",
     title: "Vega karşılaştırma test sonuç şablonu ve hata kayıt formatı",
@@ -136,12 +164,6 @@ const versionHistoryRows = [
     title: "Yedek alma uyarıları ve son yedek görünürlüğü",
     area: "Ayarlar",
     description: "Son yedek görünürlüğü, yedek alınması gereken durumlar ve güvenlik uyarıları eklendi.",
-  },
-  {
-    version: "v1.13.1",
-    title: "Geri yükleme simülasyonu ve doğrulama listesi",
-    area: "Ayarlar",
-    description: "Test ortamında geri yükleme senaryosu ve canlıdan önce doğrulanacak maddeler eklendi.",
   },
 ];
 
@@ -239,6 +261,25 @@ export default function SystemStatusPanel() {
           Bu rehber test sırasında nereden başlayacağınızı göstermek için hazırlanmıştır. Gerçek veriyle işlem yapmadan
           önce yedekleme ve geri dönüş senaryosu ayrıca test edilmelidir.
         </p>
+
+        <div className="live-test-checklist-panel">
+          <h3>Canlı Test Checklist</h3>
+          <ul>
+            {liveTestChecklistItems.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+
+          <div className="staff-trial-notes-panel">
+            <h3>Personel Deneme Notları</h3>
+            <pre>{staffTrialNotesTemplate.join("\n")}</pre>
+          </div>
+
+          <p>
+            Bu alan yalnızca manuel test rehberidir. Personel notlarını kaydetmez, dosya oluşturmaz ve veritabanına
+            yazmaz.
+          </p>
+        </div>
       </div>
 
       <div className="test-feedback-panel">

@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.13.8";
-export const APP_STAGE = "Vega karşılaştırma test sonuç şablonu ve hata kayıt formatı";
+export const APP_VERSION = "v1.13.9";
+export const APP_STAGE = "Canlı test checklist sayfası ve personel deneme notları";
