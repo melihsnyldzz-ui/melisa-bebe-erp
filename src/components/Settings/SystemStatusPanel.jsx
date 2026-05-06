@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.20.8",
+    title: "Vega Import Önizleme sürüm geçmişi tamamlama ve build doğrulama",
+    area: "Vega / Import Önizleme",
+    description: "Ayarlar ekranındaki Son Sürüm Geçmişi v1.20.7 satırıyla tamamlandı; Vega Import Önizleme güvenlik kilidi sonrası sürüm kayıtları düzenlendi ve build doğrulaması yapıldı.",
+  },
+  {
     version: "v1.20.7",
     title: "Vega Import Önizleme güvenlik kilidi ve import butonsuz akış kontrolü",
     area: "Vega / Import Önizleme",

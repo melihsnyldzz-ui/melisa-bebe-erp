@@ -43,7 +43,7 @@ export default function VegaImportPreview() {
         <AlertTriangle size={18} />
         <div>
           <strong>Import Kilidi Aktif</strong>
-          <p>Bu ekran yalnızca mock önizleme ve mapping kontrolü içindir. Canlı Vega bağlantısı kurmaz, ERP’ye kayıt yazmaz, import başlatmaz.</p>
+          <p>Bu ekran sadece mock önizleme ve mapping kontrolü içindir. Canlı Vega bağlantısı kurmaz, SQL/ODBC okuması yapmaz, ERP’ye kayıt yazmaz ve import başlatmaz.</p>
         </div>
       </section>
 
@@ -97,7 +97,7 @@ export default function VegaImportPreview() {
         <div className="vega-import-table-heading">
           <div>
             <h2>Stok Önizleme</h2>
-            <p>Mock veri ile çalışan read-only önizleme tablosu. Bu sürümde SQL okuma yoktur; mapping mantığı yalnızca görsel önizleme olarak gösterilir.</p>
+            <p>Bu tablo mock veriyle çalışan pasif önizlemedir. Bu sürümde SQL okuma, canlı veri çekme veya kayıt yazma işlemi yoktur.</p>
           </div>
           <span><ShieldCheck size={14} /> Pasif önizleme · Gerçek import yok</span>
         </div>
@@ -158,7 +158,7 @@ export default function VegaImportPreview() {
 
       <section className="vega-import-risk-panel">
         <h2>Risk Kuralları</h2>
-        <p>Bu kurallar pasif önizleme kalite kontrolü içindir; bu sürümde kayıt oluşturmaz, veriyi değiştirmez ve import başlatmaz.</p>
+        <p>Bu kurallar yalnızca ön kontrol içindir; kayıt oluşturmaz, veriyi değiştirmez ve import başlatmaz.</p>
         <div className="vega-import-risk-grid">
           {vegaImportMapping.riskRules.map((rule) => (
             <span className={`vega-risk-chip ${rule.severity}`} key={rule.id}>{rule.label}</span>
