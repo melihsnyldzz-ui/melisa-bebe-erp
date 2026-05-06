@@ -4075,10 +4075,30 @@ button {
 }
 
 .vega-transition-gate-note {
+  display: grid;
+  gap: 3px;
   padding: 7px 8px;
   border: 1px solid rgba(154, 52, 18, 0.12);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.7);
+}
+
+.vega-transition-gate-note strong,
+.vega-transition-gate-note span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.vega-transition-gate-note strong {
+  color: #7c2d12;
+  font-size: 0.78rem;
+}
+
+.vega-transition-gate-note span {
+  color: #9a3412;
+  font-size: 0.76rem;
+  font-weight: 800;
+  line-height: 1.35;
 }
 
 .vega-transition-gate-grid {

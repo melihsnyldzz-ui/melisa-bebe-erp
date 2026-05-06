@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.21.1";
+export const currentReleaseVersion = "v1.21.2";
 
-export const currentReleaseTitle = "Read-only Geçiş Kapısı görsel denge ve son kontrol";
+export const currentReleaseTitle = "Vega read-only geçiş kapısı kapanış özeti ve hazırlık sınırı";
 
 export const updatedSectionIds = ["latest-version-history", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Read-only Geçiş Kapısı paneline pasif güvenlik notu eklendi",
-  "Geçiş checklist’i görsel okunabilirlik açısından dengelendi",
-  "Gerçek bağlantı, sorgu, DB okuma ve import işlemi eklenmeden son kontrol yapıldı",
+  "Read-only Geçiş Kapısı altına sonraki aşama sınırı eklendi",
+  "Gerçek Vega bağlantısının bu fazda başlamadığı daha net hale getirildi",
+  "Bağlantı parametreleri ve read-only kullanıcı hazırlığının ayrı güvenli sürümde yapılacağı belirtildi",
 ];
 
 export const releaseJumpLinks = [

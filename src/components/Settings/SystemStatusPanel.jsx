@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.21.1",
+    title: "Read-only Geçiş Kapısı görsel denge ve son kontrol",
+    area: "Vega / Import Önizleme",
+    description: "Read-only Geçiş Kapısı paneline pasif güvenlik notu eklendi; geçiş checklist’i görsel okunabilirlik açısından dengelendi ve gerçek bağlantı, sorgu, DB okuma veya import işlemi eklenmeden son kontrol yapıldı.",
+  },
+  {
     version: "v1.21.0",
     title: "Vega Import Önizleme kapanış kontrolü ve read-only geçiş kapısı",
     area: "Vega / Import Önizleme",

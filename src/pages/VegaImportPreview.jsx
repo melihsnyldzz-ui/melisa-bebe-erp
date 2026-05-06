@@ -179,6 +179,10 @@ export default function VegaImportPreview() {
           <div className="vega-transition-gate-row"><strong>Yazma yetkisi kapalı mı?</strong><span>Bekliyor</span></div>
           <div className="vega-transition-gate-row"><strong>Test canlı Vega dışında izole edilecek mi?</strong><span>Bekliyor</span></div>
         </div>
+        <div className="vega-transition-gate-note">
+          <strong>Sonraki Aşama Sınırı</strong>
+          <span>Bu faz gerçek Vega bağlantısı başlatmaz. Sonraki aşamada önce yalnızca bağlantı parametreleri, read-only kullanıcı bilgisi, 20 satır limiti, timeout ve ham hata gizleme politikası ayrı güvenli sürümde hazırlanacaktır.</span>
+        </div>
       </section>
     </>
   );
