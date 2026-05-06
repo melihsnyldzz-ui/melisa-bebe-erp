@@ -359,10 +359,11 @@ button {
   color: #0f4c81;
 }
 
-.dashboard-period-selector span {
+.dashboard-period-summary {
   color: var(--muted);
   font-size: 0.74rem;
   font-weight: 800;
+  line-height: 1.35;
 }
 
 .page-title p {

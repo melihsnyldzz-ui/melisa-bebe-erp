@@ -49,7 +49,11 @@ export default function Dashboard() {
             {option.label}
           </button>
         ))}
-        <span>Gösterilen dönem: {selectedPeriodLabel}</span>
+        <span className="dashboard-period-summary">
+          Seçili dönem: {selectedPeriodLabel} · {formatNumber(dashboardData.periodSummary.salesSlipCount)} satış fişi ·{" "}
+          {formatNumber(dashboardData.periodSummary.soldQuantity)} adet ürün çıkışı · {formatCurrency(dashboardData.periodSummary.salesTotal)}
+          {" "}satış · {formatCurrency(dashboardData.periodSummary.collectionsTotal)} tahsilat
+        </span>
       </div>
 
       <section className="kpi-grid dashboard-compact-kpis" id="dashboard-daily-operation">
@@ -84,8 +88,8 @@ function buildDashboardData({ collections, customers, products, purchaseSlips, s
 
   return {
     kpis: [
-      buildKpi("Fiş", periodSalesSlips.length, monthlySalesSlips.length, "count", ReceiptText, "dark"),
-      buildKpi("Çıkan adet", periodSoldQuantity, monthlySoldQuantity, "quantity", Boxes, "green"),
+      buildKpi(selectedPeriod === "today" ? "Bugünkü fiş" : "Satış fişi", periodSalesSlips.length, monthlySalesSlips.length, "count", ReceiptText, "dark"),
+      buildKpi("Çıkan adet", periodSoldQuantity, monthlySoldQuantity, "quantity", Boxes, "green", "Satış fişlerindeki ürün adedi"),
       buildKpi("Satış", periodSales, monthlySalesTotal, "currency", ShoppingBag, "red"),
       buildKpi("Tahsilat", periodCollectionsTotal, monthlyCollectionsTotal, "currency", Banknote, "amber"),
     ],
@@ -97,10 +101,16 @@ function buildDashboardData({ collections, customers, products, purchaseSlips, s
       riskRows: buildRiskRows({ criticalProducts, customers }),
       latestSlips: buildLatestSlipRows({ activePurchaseSlips, activeSalesSlips }),
     },
+    periodSummary: {
+      collectionsTotal: periodCollectionsTotal,
+      salesSlipCount: periodSalesSlips.length,
+      salesTotal: periodSales,
+      soldQuantity: periodSoldQuantity,
+    },
   };
 }
 
-function buildKpi(label, currentValueRaw, monthValue, type, icon, tone) {
+function buildKpi(label, currentValueRaw, monthValue, type, icon, tone, helperText) {
   const monthTotal = Math.max(toNumber(monthValue), 0);
   const currentValue = Math.max(toNumber(currentValueRaw), 0);
   const percent = monthTotal > 0 ? Math.min((currentValue / monthTotal) * 100, 100) : 0;
@@ -108,7 +118,7 @@ function buildKpi(label, currentValueRaw, monthValue, type, icon, tone) {
   return {
     icon,
     label,
-    monthValue: `Bu ay: ${formatInsightValue(monthTotal, type)}`,
+    monthValue: helperText || `Bu ay: ${formatInsightValue(monthTotal, type)}`,
     percent,
     tone,
     value: formatInsightValue(currentValue, type),

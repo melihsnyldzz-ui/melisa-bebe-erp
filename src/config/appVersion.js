@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.15.5";
-export const APP_STAGE = "Ana Panel dönem seçici hesaplama doğrulama ve görsel denge";
+export const APP_VERSION = "v1.15.6";
+export const APP_STAGE = "Ana Panel bugünkü satış fişi ve ürün çıkış detayı güçlendirme";

@@ -99,7 +99,7 @@ export default function CommerceInsights({ data }) {
           dataKey="revenue"
           valueLabel="Ciro"
           color="#1864ab"
-          emptyText="Seçili dönem için müşteri satışı bekleniyor."
+          emptyText="Seçili dönemde müşteri analizi için satış bekleniyor."
         />
       </div>
 

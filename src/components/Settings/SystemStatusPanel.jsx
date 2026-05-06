@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.15.6",
+    title: "Ana Panel bugünkü satış fişi ve ürün çıkış detayı güçlendirme",
+    area: "Dashboard",
+    description: "Satış fişi sayısı, çıkan ürün adedi ve en çok alan müşteri analizleri daha anlaşılır hale getirildi.",
+  },
+  {
     version: "v1.15.5",
     title: "Ana Panel dönem seçici hesaplama doğrulama ve görsel denge",
     area: "Dashboard",
@@ -166,12 +172,6 @@ const versionHistoryRows = [
     title: "Sidebar menü sıkışıklığı ve Ayarlar görünürlüğü düzeltmesi",
     area: "Genel Layout / Sidebar",
     description: "Sol menüde Ayarlar alanının daha rahat görünmesi için sidebar üst boşlukları ve menü aralıkları kompakt hale getirildi.",
-  },
-  {
-    version: "v1.14.6",
-    title: "Sol üst sürüm rozetini kısaltma ve okunabilirlik iyileştirmesi",
-    area: "Genel Layout / Ayarlar",
-    description: "Sol üst sürüm rozeti daha kompakt hale getirildi ve tam sürüm açıklaması erişilebilir bilgi olarak korundu.",
   },
 ];
 
