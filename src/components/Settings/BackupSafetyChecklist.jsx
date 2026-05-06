@@ -16,6 +16,25 @@ const checklistItems = [
   "Test yedeği ile canlı yedek ayrımı net mi?",
 ];
 
+const restoreSimulationSteps = [
+  "Test yedeği seçilir.",
+  "Canlı veri yerine test ortamında geri yükleme denenir.",
+  "Ürün sayısı kontrol edilir.",
+  "Stok toplamı kontrol edilir.",
+  "Cari sayısı kontrol edilir.",
+  "Satış/alış fişi sayısı kontrol edilir.",
+  "Geri yükleme sonrası rapor ekranları açılır.",
+  "Hata varsa işlem canlıya taşınmaz.",
+];
+
+const restoreValidationItems = [
+  "Yedek dosyası doğru tarihli mi?",
+  "Test ortamında açılıyor mu?",
+  "Ürün/stok/cari verileri beklenen sayıda mı?",
+  "Rapor ekranları hata vermeden açılıyor mu?",
+  "Eski veriye dönüş prosedürü yazılı mı?",
+];
+
 export default function BackupSafetyChecklist() {
   return (
     <section className="table-panel settings-panel backup-safety-panel">
@@ -52,6 +71,33 @@ export default function BackupSafetyChecklist() {
         Bu panel yalnızca bilgilendirme amaçlıdır. Gerçek yedek alma, geri yükleme, dosya silme veya migration işlemi
         yapmaz.
       </p>
+
+      <div className="restore-simulation-panel">
+        <div>
+          <h3>Geri Yükleme Simülasyonu</h3>
+          <p>Bu alan sadece simülasyon planıdır. Gerçek geri yükleme işlemi yapmaz.</p>
+        </div>
+
+        <div className="backup-safety-grid">
+          <div className="backup-safety-card">
+            <h3>Simülasyon adımları</h3>
+            <ul>
+              {restoreSimulationSteps.map((step) => (
+                <li key={step}>{step}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="backup-safety-card">
+            <h3>Canlıdan önce doğrulanacaklar</h3>
+            <ul>
+              {restoreValidationItems.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

@@ -1893,6 +1893,30 @@ button {
   line-height: 1.45;
 }
 
+.restore-simulation-panel {
+  display: grid;
+  gap: 12px;
+  padding: 13px;
+  border: 1px solid #d0ebff;
+  border-radius: 8px;
+  background: #f0f8ff;
+}
+
+.restore-simulation-panel h3,
+.restore-simulation-panel p {
+  margin: 0;
+}
+
+.restore-simulation-panel h3 {
+  color: var(--text);
+  font-size: 0.98rem;
+}
+
+.restore-simulation-panel p {
+  color: var(--muted);
+  line-height: 1.55;
+}
+
 .live-mode-summary {
   display: grid;
   gap: 10px;
