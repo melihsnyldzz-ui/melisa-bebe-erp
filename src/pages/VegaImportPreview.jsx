@@ -218,6 +218,27 @@ export default function VegaImportPreview() {
           <span>Bu hazırlık tamamlanmadan gerçek read-only bağlantı denemesi yapılmamalıdır. İlk gerçek deneme ayrı sürümde, sınırlı kapsamla ve manuel yedek doğrulandıktan sonra ele alınacaktır.</span>
         </div>
       </section>
+
+      <section className="vega-transition-gate-panel">
+        <h2>Final Güvenlik Matrisi</h2>
+        <p>İlk gerçek read-only denemeye geçmeden önce aşağıdaki güvenlik şartları ayrı sürümde tekrar doğrulanmalıdır. Bu panel yalnızca rehberdir; bağlantı kurmaz, sorgu çalıştırmaz ve veri yazmaz.</p>
+        <div className="vega-transition-gate-grid">
+          <div className="vega-transition-gate-row"><strong>Manuel yedek</strong><span>Zorunlu</span></div>
+          <div className="vega-transition-gate-row"><strong>Kullanıcı yetkisi</strong><span>Sadece read-only</span></div>
+          <div className="vega-transition-gate-row"><strong>İlk sorgu</strong><span>Sadece stok kartları</span></div>
+          <div className="vega-transition-gate-row"><strong>Satır limiti</strong><span>20 satır</span></div>
+          <div className="vega-transition-gate-row"><strong>Timeout</strong><span>3000 ms</span></div>
+          <div className="vega-transition-gate-row"><strong>Retry</strong><span>Kapalı</span></div>
+          <div className="vega-transition-gate-row"><strong>Ham hata mesajı</strong><span>Gizli</span></div>
+          <div className="vega-transition-gate-row"><strong>ERP’ye yazma</strong><span>Kapalı</span></div>
+          <div className="vega-transition-gate-row"><strong>Import</strong><span>Kapalı</span></div>
+          <div className="vega-transition-gate-row"><strong>Karşılaştırma</strong><span>Vega ekranı ile manuel</span></div>
+        </div>
+        <div className="vega-transition-gate-note">
+          <strong>Kapsam Dışı</strong>
+          <span>İlk deneme cari, fiş, hareket, ödeme, tahsilat, stok mutasyonu, import ve otomatik aktarım işlemlerini kapsamaz.</span>
+        </div>
+      </section>
     </>
   );
 }

@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.22.1",
+    title: "Read-only bağlantı hazırlık paneli kapanış kontrolü ve operatör rehberi",
+    area: "Vega / Import Önizleme",
+    description: "Read-only bağlantı hazırlığına operatör kontrol rehberi eklendi; ilk gerçek deneme öncesi manuel yedek, read-only yetki, 20 satır sınırı, ham hata gizleme ve manuel karşılaştırma gereklilikleri tekrar vurgulandı.",
+  },
+  {
     version: "v1.22.0",
     title: "Vega read-only bağlantı parametreleri pasif hazırlık paketi",
     area: "Vega / Import Önizleme",

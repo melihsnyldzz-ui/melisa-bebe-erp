@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.22.1";
+export const currentReleaseVersion = "v1.22.2";
 
-export const currentReleaseTitle = "Read-only bağlantı hazırlık paneli kapanış kontrolü ve operatör rehberi";
+export const currentReleaseTitle = "Read-only ilk deneme öncesi final güvenlik matrisi";
 
 export const updatedSectionIds = ["latest-version-history", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Read-only bağlantı hazırlığına operatör kontrol rehberi eklendi",
-  "İlk gerçek deneme öncesi manuel yedek, read-only yetki ve 20 satır sınırı tekrar vurgulandı",
-  "Bağlantı testi, sorgu çalıştırma ve veri aktarımı eklenmeden güvenli hazırlık notları tamamlandı",
+  "Read-only ilk deneme öncesi final güvenlik matrisi eklendi",
+  "Manuel yedek, read-only yetki, satır limiti ve timeout şartları tek panelde toplandı",
+  "Gerçek Vega bağlantısı, SQL/ODBC, import ve ERP’ye yazma işlemlerinin kapsam dışı olduğu tekrar vurgulandı",
 ];
 
 export const releaseJumpLinks = [
