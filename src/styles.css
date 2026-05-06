@@ -1945,6 +1945,47 @@ button {
   padding-top: 2px;
 }
 
+.backup-restore-report-panel {
+  display: grid;
+  gap: 12px;
+  padding: 13px;
+  border: 1px solid #ffe1a3;
+  border-radius: 8px;
+  background: #fff8e6;
+}
+
+.backup-restore-report-panel h3,
+.backup-restore-report-panel p {
+  margin: 0;
+}
+
+.backup-restore-report-panel h3 {
+  color: var(--text);
+  font-size: 0.98rem;
+}
+
+.backup-restore-report-panel p {
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.backup-restore-report-panel pre {
+  margin: 0;
+  padding: 12px;
+  overflow-x: auto;
+  border: 1px solid #ffe1a3;
+  border-radius: 8px;
+  color: var(--text);
+  background: #fff;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.backup-restore-report-note {
+  padding-top: 2px;
+}
+
 .live-mode-summary {
   display: grid;
   gap: 10px;

@@ -52,6 +52,22 @@ const lastBackupCheckNotes = [
   "Geri dönüş prosedürü hazır mı?",
 ];
 
+const backupRestoreReportTemplate = [
+  "Test tarihi:",
+  "Testi yapan kişi:",
+  "Yedek dosya adı:",
+  "Yedek tarihi:",
+  "Test ortamı:",
+  "Ürün sayısı kontrol edildi mi:",
+  "Stok toplamı kontrol edildi mi:",
+  "Cari sayısı kontrol edildi mi:",
+  "Satış/alış fişi sayısı kontrol edildi mi:",
+  "Rapor ekranları açıldı mı:",
+  "Geri dönüş prosedürü hazır mı:",
+  "Sonuç:",
+  "Notlar:",
+];
+
 export default function BackupSafetyChecklist() {
   return (
     <section className="table-panel settings-panel backup-safety-panel">
@@ -145,6 +161,19 @@ export default function BackupSafetyChecklist() {
             </ul>
           </div>
         </div>
+      </div>
+
+      <div className="backup-restore-report-panel">
+        <div>
+          <h3>Yedek / Geri Yükleme Test Raporu</h3>
+          <p>Bu şablon, yedekleme ve geri yükleme testinin sonucunu düzenli not almak için hazırlanmıştır.</p>
+        </div>
+
+        <pre>{backupRestoreReportTemplate.join("\n")}</pre>
+
+        <p className="backup-restore-report-note">
+          Bu alan yalnızca rapor şablonudur. Gerçek yedek oluşturmaz, geri yükleme yapmaz ve veritabanına yazmaz.
+        </p>
       </div>
     </section>
   );
