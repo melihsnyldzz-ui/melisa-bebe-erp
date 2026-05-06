@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.20.4";
+export const currentReleaseVersion = "v1.20.5";
 
-export const currentReleaseTitle = "Vega read-only ilk test prosedürü ve operatör kontrol rehberi";
+export const currentReleaseTitle = "Vega stok import önizleme altyapısı";
 
 export const updatedSectionIds = ["latest-version-history", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "İlk Vega read-only denemesi için pasif test prosedürü eklendi",
-  "Operatörün manuel not alacağı kontrol rehberi görünür hale getirildi",
-  "Bağlantı açma, veri okuma ve test notu kaydı olmadan güvenli test akışı netleştirildi",
+  "Vega Import Önizleme alanı read-only demo/preview olarak Veri Aktarımı ekranına eklendi",
+  "F0102/F0103/F0104 tablo bilgileri ve stok/barkod/cari mapping merkezi dosyada toplandı",
+  "Mock stok verisiyle çalışan risk badge sistemi gerçek bağlantı, SQL ve ERP import olmadan hazırlandı",
 ];
 
 export const releaseJumpLinks = [
