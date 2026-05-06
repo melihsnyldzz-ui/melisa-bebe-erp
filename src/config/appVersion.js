@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.17.5";
-export const APP_STAGE = "Son sürüm değişikliklerini görsel vurgulama";
+export const APP_VERSION = "v1.17.6";
+export const APP_STAGE = "Dashboard final kalite kontrol ve kapanış";

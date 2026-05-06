@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.17.6",
+    title: "Dashboard final kalite kontrol ve kapanış",
+    area: "Dashboard / Settings",
+    description: "Dashboard v1.17 kırılımı kapanış öncesi mobil görünüm, kompakt düzen, son sürüm vurguları ve release bilgileri açısından son kez kontrol edildi.",
+  },
+  {
     version: "v1.17.5",
     title: "Son sürüm değişikliklerini görsel vurgulama",
     area: "Dashboard / Settings",

@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.17.5";
+export const currentReleaseVersion = "v1.17.6";
 
-export const currentReleaseTitle = "Son sürüm değişikliklerini görsel vurgulama";
+export const currentReleaseTitle = "Dashboard final kalite kontrol ve kapanış";
 
 export const updatedSectionIds = ["latest-version-history", "project-maturity", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Son sürümde güncellenen Dashboard bölümleri hafif görsel vurgu ile işaretlendi",
-  "YENİ etiketi güncel sürüm numarasıyla ilgili alanların üzerinde gösterildi",
-  "Settings tarafındaki sürüm geçmişi ve canlı test alanı aynı vurgulama mantığıyla korundu",
+  "Dashboard final kalite kontrolünde mobil ve kompakt görünüm doğrulandı",
+  "Son sürüm YENİ etiketlerinin küçük ekranda taşmadan görünmesi güçlendirildi",
+  "v1.17 Dashboard kapanışı için sürüm geçmişi ve test alanı vurguları güncellendi",
 ];
 
 export const releaseJumpLinks = [
