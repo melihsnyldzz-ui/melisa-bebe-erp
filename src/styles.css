@@ -4074,6 +4074,13 @@ button {
   font-weight: 800;
 }
 
+.vega-transition-gate-note {
+  padding: 7px 8px;
+  border: 1px solid rgba(154, 52, 18, 0.12);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.7);
+}
+
 .vega-transition-gate-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.21.0",
+    title: "Vega Import Önizleme kapanış kontrolü ve read-only geçiş kapısı",
+    area: "Vega / Import Önizleme",
+    description: "Vega Import Önizleme fazı read-only geçiş kapısı ile kapatıldı; gerçek Vega read-only denemesi öncesi manuel yedek, minimum yetki, satır limiti, timeout ve yalnızca okuma sorgusu şartları pasif checklist olarak görünür hale getirildi.",
+  },
+  {
     version: "v1.20.9",
     title: "Vega Import Önizleme son kalite kontrol ve güvenlik metni sadeleştirme",
     area: "Vega / Import Önizleme",

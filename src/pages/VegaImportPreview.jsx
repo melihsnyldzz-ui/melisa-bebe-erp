@@ -169,6 +169,7 @@ export default function VegaImportPreview() {
       <section className="vega-transition-gate-panel">
         <h2>Read-only Geçiş Kapısı</h2>
         <p>Gerçek Vega read-only denemesi bu ekrandan başlamaz. Önce ayrı sürümde manuel yedek, minimum yetkili kullanıcı, satır limiti, timeout ve yalnızca okuma sorgusu doğrulanmalıdır.</p>
+        <p className="vega-transition-gate-note">Bu liste yalnızca kontrol rehberidir; bu ekrandan bağlantı kurulmaz, sorgu çalıştırılmaz ve işlem başlatılmaz.</p>
         <div className="vega-transition-gate-grid">
           <div className="vega-transition-gate-row"><strong>Manuel yedek doğrulandı mı?</strong><span>Bekliyor</span></div>
           <div className="vega-transition-gate-row"><strong>Minimum yetkili read-only kullanıcı hazır mı?</strong><span>Bekliyor</span></div>
