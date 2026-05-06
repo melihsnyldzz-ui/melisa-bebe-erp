@@ -1,9 +1,12 @@
 import DataImportPanel from "../components/DataImport/DataImportPanel.jsx";
 import ImportTemplateDownloadPanel from "../components/DataImport/ImportTemplateDownloadPanel.jsx";
+import VegaImportPreview from "./VegaImportPreview.jsx";
 
 export default function DataImport() {
   return (
     <>
+      <VegaImportPreview />
+
       <section className="page-title">
         <div>
           <p>Veri aktarımı</p>
