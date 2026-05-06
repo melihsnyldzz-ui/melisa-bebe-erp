@@ -42,6 +42,15 @@ function HorizontalBarCard({ title, icon: Icon, data, dataKey, valueLabel, empty
       ) : (
         <p className="dashboard-empty-note">{emptyText}</p>
       )}
+      {data.length > 0 && (
+        <div className="dashboard-chart-summary">
+          {data.slice(0, 3).map((item) => (
+            <span key={`${item.name}-${item.quantity}-${item.revenue}`}>
+              {item.name}: {formatNumber(item.quantity)} adet{item.revenue !== undefined ? ` · ${formatCurrency(item.revenue)}` : ""}
+            </span>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.15.3",
+    title: "Ana Panel ticari grafiklerde adet/ciro ayrımı ve boşluk azaltma",
+    area: "Dashboard",
+    description: "Müşteri ve ürün grafiklerinde adet/ciro bilgisi daha anlaşılır hale getirildi; Dashboard boşlukları azaltılarak kompakt görünüm güçlendirildi.",
+  },
+  {
     version: "v1.15.2",
     title: "Kompakt Ana Panel başlık ve grafik yerleşimi düzeltmesi",
     area: "Dashboard",
@@ -166,12 +172,6 @@ const versionHistoryRows = [
     title: "Yenilik sistemi için sayfa bazlı test ve görünürlük kontrolü",
     area: "Ayarlar / Ortak Bileşen",
     description: "Yenilik paneline görünürlük kontrol listesi eklendi ve Ayarlar sayfası releaseHighlightsByPage settings yapısından beslenecek hale getirildi.",
-  },
-  {
-    version: "v1.14.3",
-    title: "Yenilik merkezi panelini tüm sayfalara yaymaya hazırlık",
-    area: "Ayarlar / Ortak Bileşen",
-    description: "Bu Sürümde Yenilenen Alanlar paneli tekrar kullanılabilir ortak bileşene taşındı ve sayfa bazlı yenilik yapısı için hazırlık eklendi.",
   },
 ];
 

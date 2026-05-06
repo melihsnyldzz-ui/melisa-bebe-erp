@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.15.2";
+export const currentReleaseVersion = "v1.15.3";
 
-export const currentReleaseTitle = "Kompakt Ana Panel başlık ve grafik yerleşimi düzeltmesi";
+export const currentReleaseTitle = "Ana Panel ticari grafiklerde adet/ciro ayrımı ve boşluk azaltma";
 
 export const updatedSectionIds = ["latest-version-history", "project-maturity", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Dashboard başlık ve KPI alanı daha kompakt hale getirildi",
-  "Grafik yükseklikleri tek ekrana yaklaşacak şekilde düzenlendi",
-  "Risk, son fiş ve kategori alanları özet ekrana uygun şekilde sıkılaştırıldı",
+  "Müşteri ve ürün grafiklerinde adet/ciro bilgisi daha anlaşılır hale getirildi",
+  "Dashboard grafik ve kart boşlukları azaltıldı",
+  "Ana Panel tek ekrana daha yakın kompakt görünüme getirildi",
 ];
 
 export const releaseJumpLinks = [

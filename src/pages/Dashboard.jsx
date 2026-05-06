@@ -169,7 +169,7 @@ function buildCategoryAgeDistribution(salesSlips, products) {
   const rows = [...distributionMap.entries()]
     .map(([name, quantity]) => ({ name: shortenLabel(name, 34), quantity }))
     .sort((a, b) => b.quantity - a.quantity)
-    .slice(0, 4);
+    .slice(0, 3);
   const maxQuantity = Math.max(...rows.map((row) => row.quantity), 0);
 
   return rows.map((row) => ({
