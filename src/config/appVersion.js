@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.12.0";
-export const APP_STAGE = "Depo terminali test paketi ve barkod senaryoları";
+export const APP_VERSION = "v1.12.1";
+export const APP_STAGE = "Depo terminali hızlı okuma performans notları";

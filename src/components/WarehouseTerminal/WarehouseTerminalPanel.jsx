@@ -17,6 +17,7 @@ import {
   updateCountBasketQuantity,
 } from "../../utils/warehouseCountBasketUtils.js";
 import TerminalCountBasket from "./TerminalCountBasket.jsx";
+import TerminalFastScanNotes from "./TerminalFastScanNotes.jsx";
 import TerminalProductCard from "./TerminalProductCard.jsx";
 import TerminalScanHistory from "./TerminalScanHistory.jsx";
 import TerminalTestScenarios from "./TerminalTestScenarios.jsx";
@@ -139,6 +140,7 @@ export default function WarehouseTerminalPanel({ products = [], stockMovements =
               placeholder="Barkod, ürün kodu veya varyant kodu okutun..."
               autoComplete="off"
             />
+            <small className="warehouse-terminal-input-help">Okutma sonrası input otomatik tekrar odaklanır. Hızlı testlerde her barkodu ayrı okutun.</small>
           </label>
           <button className="primary-action warehouse-terminal-submit" type="submit">
             <PackageSearch size={20} />
@@ -155,6 +157,7 @@ export default function WarehouseTerminalPanel({ products = [], stockMovements =
         </p>
       </section>
 
+      <TerminalFastScanNotes />
       <TerminalTestScenarios />
 
       {matchedProducts.length > 0 && <MatchedProductsPanel products={matchedProducts} onSelect={openProduct} />}
