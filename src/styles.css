@@ -789,6 +789,81 @@ button {
   line-height: 1.45;
 }
 
+.stock-count-history-panel,
+.stock-count-report-section {
+  display: grid;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.stock-count-history-filters {
+  grid-template-columns: minmax(180px, 0.8fr) minmax(160px, 0.55fr) minmax(260px, 1fr) auto;
+  margin-top: 0;
+}
+
+.stock-count-history-table .selected-row td {
+  background: #fff7f7;
+}
+
+.stock-count-history-detail {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid rgba(215, 25, 32, 0.12);
+  border-radius: 8px;
+  background: #fffafa;
+}
+
+.stock-count-history-detail h3 {
+  margin: 0;
+  color: var(--anthracite);
+  font-size: 1rem;
+}
+
+.stock-count-history-detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.stock-count-history-detail-meta span {
+  padding: 7px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  background: var(--white);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.stock-count-report-summary {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.stock-count-report-metric {
+  display: grid;
+  gap: 7px;
+  min-height: 74px;
+  align-content: center;
+  padding: 13px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfbfc;
+}
+
+.stock-count-report-metric span {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.stock-count-report-metric strong {
+  color: var(--anthracite);
+  font-size: 1.02rem;
+}
+
 .stock-adjustment-modal {
   width: min(720px, 100%);
 }
@@ -2307,6 +2382,8 @@ tr:last-child td {
   .reports-summary-grid,
   .integrity-summary-grid,
   .reports-grid,
+  .stock-count-history-filters,
+  .stock-count-report-summary,
   .settings-grid {
     grid-template-columns: 1fr;
   }

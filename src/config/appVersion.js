@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.9.3";
-export const APP_STAGE = "Stok sayım düzeltme güvenlik testi";
+export const APP_VERSION = "v1.9.4";
+export const APP_STAGE = "Stok sayım geçmişi ve raporlama";

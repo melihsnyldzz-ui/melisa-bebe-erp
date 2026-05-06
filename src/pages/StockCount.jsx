@@ -1,8 +1,9 @@
 import StockCountPanel from "../components/StockCount/StockCountPanel.jsx";
+import StockCountHistoryPanel from "../components/StockCount/StockCountHistoryPanel.jsx";
 import { useErpData } from "../context/ErpDataContext.jsx";
 
 export default function StockCount() {
-  const { appSettings, applyStockCountAdjustment, products } = useErpData();
+  const { appSettings, applyStockCountAdjustment, products, stockMovements } = useErpData();
 
   return (
     <>
@@ -19,6 +20,7 @@ export default function StockCount() {
       </p>
 
       <StockCountPanel appSettings={appSettings} products={products} onApplyStockCountAdjustment={applyStockCountAdjustment} />
+      <StockCountHistoryPanel stockMovements={stockMovements} />
     </>
   );
 }

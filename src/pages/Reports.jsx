@@ -3,6 +3,7 @@ import CriticalStockReport from "../components/Reports/CriticalStockReport.jsx";
 import ReceivablePayableReport from "../components/Reports/ReceivablePayableReport.jsx";
 import ReportSummaryCards from "../components/Reports/ReportSummaryCards.jsx";
 import SalesPurchaseChart from "../components/Reports/SalesPurchaseChart.jsx";
+import StockCountReportPanel from "../components/Reports/StockCountReportPanel.jsx";
 import TopProductsReport from "../components/Reports/TopProductsReport.jsx";
 import { useErpData } from "../context/ErpDataContext.jsx";
 import { formatDateTR, getTodayISO } from "../utils/dateUtils.js";
@@ -32,6 +33,7 @@ export default function Reports() {
       </section>
 
       <DataIntegrityPanel integrity={reportData.integrity} />
+      <StockCountReportPanel stockMovements={erpData.stockMovements} />
 
       <section className="table-panel profitability-note">
         <h2>Kârlılık Ön Hazırlık Alanı</h2>
