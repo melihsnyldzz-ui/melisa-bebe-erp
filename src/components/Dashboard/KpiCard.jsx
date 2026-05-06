@@ -8,6 +8,14 @@ export default function KpiCard({ item, index }) {
       </div>
       <span>{item.label}</span>
       <strong>{item.value}</strong>
+      {item.monthValue && (
+        <div className="kpi-mini-trend">
+          <small>{item.monthValue}</small>
+          <div className="dashboard-mini-bar">
+            <i style={{ width: `${item.percent || 0}%` }} />
+          </div>
+        </div>
+      )}
     </article>
   );
 }

@@ -1,27 +1,10 @@
-import {
-  AlertTriangle,
-  ArrowDownToLine,
-  Banknote,
-  Boxes,
-  ClipboardList,
-  CreditCard,
-  ReceiptText,
-  ShoppingBag,
-  Truck,
-  UserRound,
-  WalletCards,
-} from "lucide-react";
+import { AlertTriangle, Banknote, Boxes, ClipboardList, ReceiptText, ShoppingBag } from "lucide-react";
 import { useMemo } from "react";
 import CommerceInsights from "../components/Dashboard/CommerceInsights.jsx";
-import DataTable from "../components/Dashboard/DataTable.jsx";
 import KpiCard from "../components/Dashboard/KpiCard.jsx";
-import SalesChart from "../components/Dashboard/SalesChart.jsx";
-import SystemHealthCard from "../components/Dashboard/SystemHealthCard.jsx";
-import TopProductsChart from "../components/Dashboard/TopProductsChart.jsx";
 import { APP_STAGE, APP_VERSION } from "../config/appVersion.js";
 import { useErpData } from "../context/ErpDataContext.jsx";
-import { formatDateTR, getTodayISO } from "../utils/dateUtils.js";
-import { buildDataIntegrityReport } from "../utils/dataIntegrity.js";
+import { getTodayISO } from "../utils/dateUtils.js";
 import { formatCurrency, formatNumber } from "../utils/formatters.js";
 
 export default function Dashboard() {
@@ -30,7 +13,7 @@ export default function Dashboard() {
 
   return (
     <>
-      <section className="page-title">
+      <section className="page-title dashboard-title">
         <div>
           <span className="version-badge">
             {APP_VERSION} · {APP_STAGE}
@@ -45,141 +28,64 @@ export default function Dashboard() {
         </button>
       </section>
 
-      <section className="dashboard-live-note table-panel">
-        <p>Canlıya geçiş hazırlığı Ayarlar &gt; Sistem Durumu ekranından takip edilir.</p>
-      </section>
-
-      <section className="kpi-grid">
+      <section className="kpi-grid dashboard-compact-kpis">
         {dashboardData.kpis.map((item, index) => (
           <KpiCard item={item} index={index} key={item.label} />
         ))}
       </section>
 
-      <section className="charts-grid">
-        <SalesChart data={dashboardData.salesChart} />
-        <TopProductsChart data={dashboardData.topProducts} />
-      </section>
-
       <CommerceInsights data={dashboardData.commerceInsights} />
-
-      <SystemHealthCard integrity={dashboardData.integrity} />
-
-      <section className="tables-grid">
-        <DataTable title="Son Satış Fişleri" icon={ReceiptText} rows={dashboardData.tables.sales} columns={["Fiş", "Müşteri", "Tutar", "Saat"]} />
-        <DataTable title="Son Alış Fişleri" icon={Truck} rows={dashboardData.tables.purchases} columns={["Fiş", "Tedarikçi", "Tutar", "Zaman"]} />
-        <DataTable title="Son Tahsilatlar" icon={Banknote} rows={dashboardData.tables.collections} columns={["No", "Cari", "Tutar", "Tip"]} />
-        <DataTable title="Kritik Stok Uyarıları" icon={AlertTriangle} rows={dashboardData.tables.stock} columns={["Kod", "Ürün", "Stok", "Durum"]} />
-        <DataTable title="Riskli Müşteriler" icon={UserRound} rows={dashboardData.tables.risk} columns={["Müşteri", "Alacak", "Limit", "Risk"]} />
-      </section>
     </>
   );
 }
 
-function buildDashboardData({ collections, customers, payments, products, purchaseSlips, salesSlips, stockMovements, suppliers }) {
+function buildDashboardData({ collections, customers, products, purchaseSlips, salesSlips }) {
   const today = getTodayISO();
   const activeSalesSlips = salesSlips.filter(isActiveRecord);
   const activePurchaseSlips = purchaseSlips.filter(isActiveRecord);
   const activeCollections = collections.filter(isActiveRecord);
-  const activePayments = payments.filter(isActiveRecord);
   const criticalProducts = products.filter((product) => toNumber(product.stockQuantity) <= toNumber(product.criticalStockLevel));
-
-  const todaySales = sumByDate(activeSalesSlips, today, "grandTotal");
-  const todayCollections = sumByDate(activeCollections, today, "amount");
-  const todayPurchases = sumByDate(activePurchaseSlips, today, "grandTotal");
-  const todayPayments = sumByDate(activePayments, today, "amount");
-  const customerReceivable = sumBy(customers, "currentBalance");
-  const supplierDebt = sumBy(suppliers, "currentBalance");
-  const totalStock = sumBy(products, "stockQuantity");
-
-  return {
-    kpis: [
-      { label: "Bugünkü Satış", value: formatCurrency(todaySales), icon: ShoppingBag, tone: "red" },
-      { label: "Bugünkü Tahsilat", value: formatCurrency(todayCollections), icon: Banknote, tone: "green" },
-      { label: "Bugünkü Alış", value: formatCurrency(todayPurchases), icon: Truck, tone: "dark" },
-      { label: "Bugünkü Tedarikçi Ödemesi", value: formatCurrency(todayPayments), icon: CreditCard, tone: "amber" },
-      { label: "Toplam Müşteri Alacağı", value: formatCurrency(customerReceivable), icon: WalletCards, tone: "red" },
-      { label: "Toplam Tedarikçi Borcu", value: formatCurrency(supplierDebt), icon: ArrowDownToLine, tone: "dark" },
-      { label: "Toplam Stok Adedi", value: formatNumber(totalStock), icon: Boxes, tone: "green" },
-      { label: "Kritik Stok Ürün Sayısı", value: formatNumber(criticalProducts.length), icon: AlertTriangle, tone: "amber" },
-    ],
-    salesChart: buildSalesChart(activeSalesSlips),
-    topProducts: buildTopProducts(activeSalesSlips),
-    commerceInsights: buildCommerceInsights({ activeCollections, activeSalesSlips, products, today, todayCollections, todaySales }),
-    integrity: buildDataIntegrityReport({ collections, customers, payments, products, purchaseSlips, salesSlips, stockMovements, suppliers }),
-    tables: {
-      sales: latestRows(activeSalesSlips).map((slip) => [
-        slip.slipNo,
-        slip.customerName,
-        formatCurrency(slip.grandTotal),
-        formatTimeOrDate(slip.createdAt || slip.date),
-      ]),
-      purchases: latestRows(activePurchaseSlips).map((slip) => [
-        slip.slipNo,
-        slip.supplierName,
-        formatCurrency(slip.grandTotal),
-        formatTimeOrDate(slip.createdAt || slip.date),
-      ]),
-      collections: latestRows(activeCollections).map((collection) => [
-        collection.collectionNo,
-        collection.customerName,
-        formatCurrency(collection.amount),
-        collection.paymentType || "-",
-      ]),
-      stock: criticalProducts
-        .slice()
-        .sort((a, b) => toNumber(a.stockQuantity) - toNumber(b.stockQuantity))
-        .slice(0, 5)
-        .map((product) => [
-          product.code,
-          product.name,
-          `${formatNumber(product.stockQuantity)} adet`,
-          buildStockRiskLabel(product),
-        ]),
-      risk: buildRiskCustomers(customers).map((customer) => [
-        customer.name,
-        formatCurrency(customer.currentBalance),
-        formatCurrency(customer.riskLimit),
-        customer.riskLabel,
-      ]),
-    },
-  };
-}
-
-function buildCommerceInsights({ activeCollections, activeSalesSlips, products, today, todayCollections, todaySales }) {
   const monthKey = today.slice(0, 7);
   const todaySalesSlips = activeSalesSlips.filter((slip) => getRecordDate(slip) === today);
   const monthlySalesSlips = activeSalesSlips.filter((slip) => getRecordDate(slip).startsWith(monthKey));
   const monthlyCollections = activeCollections.filter((collection) => getRecordDate(collection).startsWith(monthKey));
+  const todaySales = sumByDate(activeSalesSlips, today, "grandTotal");
+  const todayCollections = sumByDate(activeCollections, today, "amount");
   const monthlySalesTotal = sumBy(monthlySalesSlips, "grandTotal");
   const monthlyCollectionsTotal = sumBy(monthlyCollections, "amount");
   const todaySoldQuantity = sumSlipQuantity(todaySalesSlips);
   const monthlySoldQuantity = sumSlipQuantity(monthlySalesSlips);
 
   return {
-    todayOperation: [
-      buildOperationRow("Bugünkü satış fişi", todaySalesSlips.length, monthlySalesSlips.length, "count"),
-      buildOperationRow("Bugün çıkan ürün", todaySoldQuantity, monthlySoldQuantity, "quantity"),
-      buildOperationRow("Bugünkü satış tutarı", todaySales, monthlySalesTotal, "currency"),
-      buildOperationRow("Bugünkü tahsilat tutarı", todayCollections, monthlyCollectionsTotal, "currency"),
+    kpis: [
+      buildKpi("Bugünkü fiş", todaySalesSlips.length, monthlySalesSlips.length, "count", ReceiptText, "dark"),
+      buildKpi("Çıkan adet", todaySoldQuantity, monthlySoldQuantity, "quantity", Boxes, "green"),
+      buildKpi("Satış", todaySales, monthlySalesTotal, "currency", ShoppingBag, "red"),
+      buildKpi("Tahsilat", todayCollections, monthlyCollectionsTotal, "currency", Banknote, "amber"),
     ],
-    monthlySalesTrend: buildCurrentMonthSalesTrend(monthlySalesSlips, today),
-    monthlyTopProducts: buildMonthlyTopProducts(monthlySalesSlips),
-    topCustomersByRevenue: buildTopCustomers(monthlySalesSlips, "revenue"),
-    topCustomersByQuantity: buildTopCustomers(monthlySalesSlips, "quantity"),
-    categoryAgeDistribution: buildCategoryAgeDistribution(monthlySalesSlips, products),
+    commerceInsights: {
+      monthlySalesTrend: buildCurrentMonthSalesTrend(monthlySalesSlips, today),
+      monthlyTopProducts: buildMonthlyTopProducts(monthlySalesSlips),
+      topCustomersByRevenue: buildTopCustomers(monthlySalesSlips),
+      categoryAgeDistribution: buildCategoryAgeDistribution(monthlySalesSlips, products),
+      riskRows: buildRiskRows({ criticalProducts, customers }),
+      latestSlips: buildLatestSlipRows({ activePurchaseSlips, activeSalesSlips }),
+    },
   };
 }
 
-function buildOperationRow(label, todayValue, monthValue, type) {
+function buildKpi(label, todayValue, monthValue, type, icon, tone) {
   const monthTotal = Math.max(toNumber(monthValue), 0);
   const currentValue = Math.max(toNumber(todayValue), 0);
   const percent = monthTotal > 0 ? Math.min((currentValue / monthTotal) * 100, 100) : 0;
 
   return {
+    icon,
     label,
+    monthValue: `Ay: ${formatInsightValue(monthTotal, type)}`,
     percent,
+    tone,
     value: formatInsightValue(currentValue, type),
-    monthValue: formatInsightValue(monthTotal, type),
   };
 }
 
@@ -225,7 +131,7 @@ function buildMonthlyTopProducts(salesSlips) {
     .map((item) => ({ ...item, name: shortenLabel(item.name) }));
 }
 
-function buildTopCustomers(salesSlips, sortKey) {
+function buildTopCustomers(salesSlips) {
   const customerMap = new Map();
 
   salesSlips.forEach((slip) => {
@@ -239,7 +145,7 @@ function buildTopCustomers(salesSlips, sortKey) {
   });
 
   return [...customerMap.values()]
-    .sort((a, b) => b[sortKey] - a[sortKey])
+    .sort((a, b) => b.revenue - a.revenue)
     .slice(0, 5)
     .map((item) => ({ ...item, name: shortenLabel(item.name) }));
 }
@@ -263,13 +169,55 @@ function buildCategoryAgeDistribution(salesSlips, products) {
   const rows = [...distributionMap.entries()]
     .map(([name, quantity]) => ({ name: shortenLabel(name, 34), quantity }))
     .sort((a, b) => b.quantity - a.quantity)
-    .slice(0, 6);
+    .slice(0, 4);
   const maxQuantity = Math.max(...rows.map((row) => row.quantity), 0);
 
   return rows.map((row) => ({
     ...row,
     percent: maxQuantity > 0 ? Math.max((row.quantity / maxQuantity) * 100, 4) : 0,
   }));
+}
+
+function buildRiskRows({ criticalProducts, customers }) {
+  const stockRows = criticalProducts
+    .slice()
+    .sort((a, b) => toNumber(a.stockQuantity) - toNumber(b.stockQuantity))
+    .slice(0, 2)
+    .map((product) => ({
+      label: product.name || product.code || "Ürün",
+      meta: `${formatNumber(product.stockQuantity)} adet`,
+      status: toNumber(product.stockQuantity) <= 0 ? "Stok yok" : "Kritik",
+    }));
+  const customerRows = buildRiskCustomers(customers)
+    .slice(0, 2)
+    .map((customer) => ({
+      label: customer.name,
+      meta: formatCurrency(customer.currentBalance),
+      status: customer.riskLabel,
+    }));
+
+  return [...stockRows, ...customerRows].slice(0, 4);
+}
+
+function buildLatestSlipRows({ activePurchaseSlips, activeSalesSlips }) {
+  return [
+    ...activeSalesSlips.map((slip) => ({
+      no: slip.slipNo,
+      party: slip.customerName,
+      total: toNumber(slip.grandTotal),
+      type: "Satış",
+      when: slip.createdAt || slip.date,
+    })),
+    ...activePurchaseSlips.map((slip) => ({
+      no: slip.slipNo,
+      party: slip.supplierName,
+      total: toNumber(slip.grandTotal),
+      type: "Alış",
+      when: slip.createdAt || slip.date,
+    })),
+  ]
+    .sort((a, b) => getSortTime(b) - getSortTime(a))
+    .slice(0, 4);
 }
 
 function buildProductLookup(products) {
@@ -311,7 +259,7 @@ function shortenLabel(value, maxLength = 24) {
 }
 
 function sumByDate(items, date, key) {
-  return items.filter((item) => item.date === date).reduce((total, item) => total + toNumber(item[key]), 0);
+  return items.filter((item) => getRecordDate(item) === date).reduce((total, item) => total + toNumber(item[key]), 0);
 }
 
 function isActiveRecord(record) {
@@ -320,38 +268,6 @@ function isActiveRecord(record) {
 
 function sumBy(items, key) {
   return items.reduce((total, item) => total + toNumber(item[key]), 0);
-}
-
-function latestRows(items) {
-  return items
-    .slice()
-    .sort((a, b) => getSortTime(b) - getSortTime(a))
-    .slice(0, 5);
-}
-
-function getSortTime(item) {
-  return new Date(item.createdAt || item.date || 0).getTime();
-}
-
-function buildSalesChart(salesSlips) {
-  return buildLastDays(7).map((date) => ({
-    day: formatShortDay(date),
-    value: sumByDate(salesSlips, date, "grandTotal"),
-  }));
-}
-
-function buildTopProducts(salesSlips) {
-  const productMap = new Map();
-
-  salesSlips.forEach((slip) => {
-    (slip.items || []).forEach((item) => {
-      const key = item.productId || item.productCode || item.productName;
-      const current = productMap.get(key) || { name: item.productName || "-", adet: 0 };
-      productMap.set(key, { ...current, adet: current.adet + toNumber(item.quantity) });
-    });
-  });
-
-  return [...productMap.values()].sort((a, b) => b.adet - a.adet).slice(0, 5);
 }
 
 function buildRiskCustomers(customers) {
@@ -368,35 +284,11 @@ function buildRiskCustomers(customers) {
       };
     })
     .filter((customer) => toNumber(customer.riskLimit) > 0 && customer.riskRatio >= 0.8)
-    .sort((a, b) => b.riskRatio - a.riskRatio)
-    .slice(0, 5);
+    .sort((a, b) => b.riskRatio - a.riskRatio);
 }
 
-function buildStockRiskLabel(product) {
-  return toNumber(product.stockQuantity) <= 0 ? "Tükendi" : "Kritik";
-}
-
-function buildLastDays(dayCount) {
-  const today = new Date(getTodayISO());
-
-  return Array.from({ length: dayCount }, (_, index) => {
-    const date = new Date(today);
-    date.setDate(today.getDate() - (dayCount - 1 - index));
-    return date.toISOString().slice(0, 10);
-  });
-}
-
-function formatShortDay(value) {
-  return formatDateTR(value).slice(0, 5);
-}
-
-function formatTimeOrDate(value) {
-  if (!value) return "-";
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return "-";
-  return value.includes("T")
-    ? date.toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" })
-    : formatDateTR(value).slice(0, 5);
+function getSortTime(item) {
+  return new Date(item.when || item.createdAt || item.date || 0).getTime();
 }
 
 function toNumber(value) {
