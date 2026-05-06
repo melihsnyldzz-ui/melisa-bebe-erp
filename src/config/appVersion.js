@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.14.6";
-export const APP_STAGE = "Sol üst sürüm rozetini kısaltma ve okunabilirlik iyileştirmesi";
+export const APP_VERSION = "v1.14.7";
+export const APP_STAGE = "Sidebar menü sıkışıklığı ve Ayarlar görünürlüğü düzeltmesi";

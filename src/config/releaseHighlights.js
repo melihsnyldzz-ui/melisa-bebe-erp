@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.14.6";
+export const currentReleaseVersion = "v1.14.7";
 
-export const currentReleaseTitle = "Sol üst sürüm rozetini kısaltma ve okunabilirlik iyileştirmesi";
+export const currentReleaseTitle = "Sidebar menü sıkışıklığı ve Ayarlar görünürlüğü düzeltmesi";
 
 export const updatedSectionIds = ["latest-version-history", "project-maturity", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Sol üst sürüm rozeti daha kompakt hale getirildi",
-  "Tam sürüm açıklaması erişilebilir bilgi olarak korundu",
-  "Sidebar görünümü daha sade ve okunaklı hale getirildi",
+  "Sidebar üst alanı daha kompakt hale getirildi",
+  "Menü aralıkları Ayarlar daha rahat görünecek şekilde düzenlendi",
+  "Sol menü görünürlüğü korunarak sürüm rozetiyle uyumlu hale getirildi",
 ];
 
 export const releaseJumpLinks = [

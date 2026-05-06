@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.14.7",
+    title: "Sidebar menü sıkışıklığı ve Ayarlar görünürlüğü düzeltmesi",
+    area: "Genel Layout / Sidebar",
+    description: "Sol menüde Ayarlar alanının daha rahat görünmesi için sidebar üst boşlukları ve menü aralıkları kompakt hale getirildi.",
+  },
+  {
     version: "v1.14.6",
     title: "Sol üst sürüm rozetini kısaltma ve okunabilirlik iyileştirmesi",
     area: "Genel Layout / Ayarlar",
@@ -166,12 +172,6 @@ const versionHistoryRows = [
     title: "Ayarlar ekranı sadeleştirme ve canlı test merkezi düzeni",
     area: "Ayarlar",
     description: "Canlı test, Vega karşılaştırma ve personel deneme alanları Canlı Test Merkezi altında daha düzenli hale getirildi.",
-  },
-  {
-    version: "v1.13.9",
-    title: "Canlı test checklist sayfası ve personel deneme notları",
-    area: "Ayarlar",
-    description: "Personelin canlı test sırasında takip edeceği checklist ve deneme notları şablonu eklendi.",
   },
 ];
 
