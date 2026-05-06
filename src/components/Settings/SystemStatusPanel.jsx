@@ -15,7 +15,11 @@ const statusRows = [
   { label: "Build kontrolü", value: "GitHub Actions + npm run build" },
   { label: "Çalışma modeli", value: "GitHub PR kontrollü manuel geliştirme" },
   { label: "Kritik işlem politikası", value: "Stok, cari, fiş, yedekleme, import ve migration işlemleri ayrı kontrollü sürümlerle açılır." },
-  { label: "El terminali hazırlığı", value: "Okuma, son okutulanlar, sayım sepeti ve rapor/CSV/JSON önizleme hazır." },
+  { label: "El terminali operasyonu", value: "Pasif/mock hazırlık" },
+  { label: "Gerçek cihaz bağlantısı", value: "Kapalı" },
+  { label: "Barkod okutma entegrasyonu", value: "Gerçek cihazla bağlı değil" },
+  { label: "Sayım raporu", value: "Önizleme" },
+  { label: "ERP’ye stok yazma", value: "Kapalı" },
   { label: "Vega geçiş hazırlığı", value: "Read-only yol haritası ile kademeli hazırlık sürüyor." },
 ];
 
@@ -131,7 +135,21 @@ const goLiveChecklistGroups = [
   },
 ];
 
+const handheldBarcodeStatusRows = [
+  { label: "El terminali operasyonu", value: "Pasif/mock hazırlık" },
+  { label: "Gerçek cihaz bağlantısı", value: "Kapalı" },
+  { label: "Barkod okutma entegrasyonu", value: "Gerçek cihazla bağlı değil" },
+  { label: "Sayım raporu", value: "Önizleme" },
+  { label: "ERP’ye stok yazma", value: "Kapalı" },
+];
+
 const versionHistoryRows = [
+  {
+    version: "v1.30.0",
+    title: "El Terminali ve Barkod Operasyon Merkezi",
+    area: "Depo Terminali / Dashboard / Sistem Durumu",
+    description: "El terminali ve barkod operasyonu pasif/mock modda netleştirildi; sayım akışı, son okutulanlar, barkod riskleri ve saha rehberi gerçek cihaz bağlantısı veya veri yazma eklenmeden görünür hale getirildi.",
+  },
   {
     version: "v1.29.0",
     title: "Yönetici Kokpiti ve Read-only Yol Haritası",
@@ -569,8 +587,8 @@ export default function SystemStatusPanel() {
 
       <div className="system-status-focus-card">
         <span>Bu Sürümde Test Edilecek Alan</span>
-        <strong>Ayarlar / Sistem Durumu ve Canlıya Hazırlık Kontrol Listesi</strong>
-        <p>Sol menüde mavi nokta görünen sayfa, bu sürümde özellikle kontrol edilmesi gereken alandır.</p>
+        <strong>Depo Terminali / El Terminali ve Barkod Operasyon Merkezi</strong>
+        <p>Bu sürümde el terminali operasyon özeti, barkod riskleri, sayım akışı ve sistem durumu özellikle kontrol edilmelidir.</p>
       </div>
 
       <div className="system-workflow-panel" {...sectionHighlightProps("system-workflow-model")}>
@@ -588,6 +606,25 @@ export default function SystemStatusPanel() {
         </div>
         <p className="system-workflow-safety-note">
           Gerçek veri bağlantısı, DB okuma, query, import ve veri yazma işlemleri yalnızca ayrı küçük ve açık onaylı sürümlerde ele alınır.
+        </p>
+      </div>
+
+
+      <div className="handheld-barcode-status-panel" {...sectionHighlightProps("handheld-barcode-status")}>
+        <div>
+          <h3>El Terminali ve Barkod Operasyonu <NewReleaseBadge sectionId="handheld-barcode-status" /></h3>
+          <p>Bu sürümde saha kullanımı için el terminali, barkod, sayım ve rapor önizleme durumu tek güvenli özet altında gösterilir.</p>
+        </div>
+        <div className="system-status-grid">
+          {handheldBarcodeStatusRows.map((row) => (
+            <div className="system-status-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </div>
+          ))}
+        </div>
+        <p className="handheld-barcode-safety-note">
+          El terminali ve barkod modülü bu sürümde gerçek stok güncellemesi, cihaz bağlantısı veya veri yazma işlemi yapmaz.
         </p>
       </div>
 

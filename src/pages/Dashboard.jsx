@@ -22,14 +22,18 @@ const ownerViewCards = [
   { label: "Stok görünürlüğü", value: "Hazırlıkta" },
   { label: "Cari kontrol", value: "Planlandı" },
   { label: "Alış / satış özeti", value: "Geliştiriliyor" },
-  { label: "El terminali hazırlığı", value: "İlerliyor" },
+  { label: "Barkod operasyonu", value: "Hazırlıkta" },
+  { label: "Sayım akışı", value: "Önizleme" },
+  { label: "El terminali bağlantısı", value: "Kapalı" },
+  { label: "Stok güncelleme", value: "Kapalı" },
   { label: "Vega read-only geçişi", value: "Hazırlık kapısında" },
 ];
 
 const ownerTodayItems = [
-  "Stok önizleme ve barkod riskleri kontrol edilecek",
+  "El terminali sayım akışı gözden geçirilecek",
+  "Barkodsuz ve duplicate barkod riskleri kontrol edilecek",
+  "Personelin okutma sonrası kontrol adımları netleştirilecek",
   "Read-only geçiş güvenlik şartları gözden geçirilecek",
-  "El terminali sayım akışı test edilecek",
   "Personel kullanım notları toplanacak",
   "Gerçek veri bağlantısı için yedek ve yetki kontrolü hazırlanacak",
 ];

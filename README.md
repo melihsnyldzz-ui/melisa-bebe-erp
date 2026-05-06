@@ -6,8 +6,8 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 
 ## Mevcut Durum
 
-- Güncel sürüm: v1.29.0
-- Aşama: Yönetici Kokpiti ve Read-only Yol Haritası
+- Güncel sürüm: v1.30.0
+- Aşama: El Terminali ve Barkod Operasyon Merkezi
 - Build kontrolü: GitHub Actions
 - El terminali: okuma, son okutulanlar, sayım sepeti, rapor/CSV/JSON önizleme hazırlığı
 
@@ -36,6 +36,14 @@ Bu proje manuel kontrollü geliştirme modeliyle ilerler. ChatGPT GitHub main’
 - Raporlar: yönetim özeti ve veri kalite kontrolü
 - Veri Aktarımı: import/export hazırlıkları
 - Build: GitHub Actions ile otomatik build kontrolü
+
+## El Terminali ve Barkod Operasyon Fazı
+
+- Bu faz personel kullanımı için barkod/sayım ekranlarını netleştirir.
+- Gerçek cihaz bağlantısı yapılmaz.
+- Gerçek stok güncellemesi yapılmaz.
+- Sayım ve rapor alanları önizleme mantığıyla geliştirilir.
+- Gerçek entegrasyon ileride ayrı küçük onaylı fazda ele alınır.
 
 ## Build Kontrolü
 
