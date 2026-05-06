@@ -1,4 +1,5 @@
 import { useState } from "react";
+import BackupSafetyChecklist from "../components/Settings/BackupSafetyChecklist.jsx";
 import CompanySettings from "../components/Settings/CompanySettings.jsx";
 import DatabaseBackupSettings from "../components/Settings/DatabaseBackupSettings.jsx";
 import DataStatusSettings from "../components/Settings/DataStatusSettings.jsx";
@@ -69,6 +70,7 @@ export default function Settings() {
         <LiveModeSettings />
         <DemoDataResetSettings />
         <SystemHealthSettings />
+        <BackupSafetyChecklist />
         <DatabaseBackupSettings />
         <UserRoleSettings />
       </section>
