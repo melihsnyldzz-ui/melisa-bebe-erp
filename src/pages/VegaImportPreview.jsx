@@ -292,6 +292,23 @@ export default function VegaImportPreview() {
           <span>Test tarihi: · Operatör: · Okunan kayıt türü: · Okunan satır sayısı: · Vega ekranındaki karşılık: · ERP önizleme sonucu: · Sonuç: Uyumlu / Fark var / Kontrol edilecek · Not:</span>
         </div>
       </section>
+
+      <section className="vega-transition-gate-panel">
+        <h2>Saha Kontrol Özeti</h2>
+        <p>İlk gerçek read-only deneme öncesinde saha/personel tarafında aşağıdaki bilgiler manuel olarak hazır edilmelidir. Bu bölüm sadece rehberdir; veri almaz, bağlantı kurmaz ve işlem başlatmaz.</p>
+        <div className="vega-transition-gate-grid">
+          <div className="vega-transition-gate-row"><strong>Testi yapacak kişi belirlendi mi?</strong><span>Manuel hazırlanacak</span></div>
+          <div className="vega-transition-gate-row"><strong>Vega ekranında karşılaştırılacak stok listesi hazır mı?</strong><span>Manuel hazırlanacak</span></div>
+          <div className="vega-transition-gate-row"><strong>Manuel yedek alındığı teyit edildi mi?</strong><span>Manuel doğrulanacak</span></div>
+          <div className="vega-transition-gate-row"><strong>Read-only kullanıcı bilgisi yetkili kişi tarafından doğrulandı mı?</strong><span>Manuel doğrulanacak</span></div>
+          <div className="vega-transition-gate-row"><strong>İlk denemede sadece 20 stok kartı okunacağı personele söylendi mi?</strong><span>Manuel aktarılacak</span></div>
+          <div className="vega-transition-gate-row"><strong>Hata görülürse ekran görüntüsü ve not alınacağı söylendi mi?</strong><span>Manuel aktarılacak</span></div>
+        </div>
+        <div className="vega-transition-gate-note">
+          <strong>Personel Notu Şablonu</strong>
+          <span>Personel: · Test ekranı: · Beklenen sonuç: · Görülen sonuç: · Vega karşılığı: · Not:</span>
+        </div>
+      </section>
     </>
   );
 }

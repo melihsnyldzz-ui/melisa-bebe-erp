@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.24.0";
+export const currentReleaseVersion = "v1.24.1";
 
-export const currentReleaseTitle = "İlk gerçek read-only deneme öncesi onay matrisi ve test prosedürü";
+export const currentReleaseTitle = "İlk read-only deneme öncesi saha kontrol özeti ve personel notu";
 
 export const updatedSectionIds = ["latest-version-history", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "İlk read-only deneme öncesi pasif onay matrisi eklendi",
-  "İlk test prosedürü ve test sonucu not şablonu hazırlandı",
-  "Gerçek bağlantı, query, DB okuma ve veri yazma eklenmeden manuel kontrol akışı netleştirildi",
+  "İlk read-only deneme öncesi saha kontrol özeti eklendi",
+  "Personel notu şablonu statik rehber olarak hazırlandı",
+  "Gerçek bağlantı, query, DB okuma ve veri yazma eklenmeden saha hazırlık akışı netleştirildi",
 ];
 
 export const releaseJumpLinks = [

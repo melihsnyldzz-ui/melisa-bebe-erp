@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.24.0",
+    title: "İlk gerçek read-only deneme öncesi onay matrisi ve test prosedürü",
+    area: "Vega / Import Önizleme",
+    description: "İlk read-only deneme öncesi pasif onay matrisi eklendi; ilk test prosedürü ve test sonucu not şablonu hazırlandı; gerçek bağlantı, query, DB okuma ve veri yazma eklenmeden manuel kontrol akışı netleştirildi.",
+  },
+  {
     version: "v1.23.1",
     title: "Teknik kontrol paneli görsel düzen ve son güvenlik kontrolü",
     area: "Vega / Import Önizleme",
