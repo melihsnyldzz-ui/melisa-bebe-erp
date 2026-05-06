@@ -45,6 +45,42 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.13.5",
+    title: "Son sürüm geçmişi güncelleme ve yedek test kontrol geçmişi",
+    area: "Ayarlar",
+    description: "Son Sürüm Geçmişi v1.13.x kayıtlarıyla güncellendi ve yedek test kontrol geçmişi görünür hale getirildi.",
+  },
+  {
+    version: "v1.13.4",
+    title: "Yedek test sonucu değerlendirme ve risk özeti",
+    area: "Ayarlar",
+    description: "Yedek/geri yükleme hazırlık seviyesi, canlı sistem uyarısı ve risk özeti eklendi.",
+  },
+  {
+    version: "v1.13.3",
+    title: "Yedek ve geri yükleme test raporu",
+    area: "Ayarlar",
+    description: "Yedek ve geri yükleme testi için rapor şablonu eklendi.",
+  },
+  {
+    version: "v1.13.2",
+    title: "Yedek alma uyarıları ve son yedek görünürlüğü",
+    area: "Ayarlar",
+    description: "Son yedek görünürlüğü, yedek alınması gereken durumlar ve güvenlik uyarıları eklendi.",
+  },
+  {
+    version: "v1.13.1",
+    title: "Geri yükleme simülasyonu ve doğrulama listesi",
+    area: "Ayarlar",
+    description: "Test ortamında geri yükleme senaryosu ve canlıdan önce doğrulanacak maddeler eklendi.",
+  },
+  {
+    version: "v1.13.0",
+    title: "Yedekleme güvenlik kontrolü",
+    area: "Ayarlar",
+    description: "Canlı kullanıma geçmeden önce yedekleme güvenlik kontrol listesi eklendi.",
+  },
+  {
     version: "v1.11.9",
     title: "Canlı test hata notu ve geri bildirim alanı",
     area: "Ayarlar",
@@ -55,36 +91,6 @@ const versionHistoryRows = [
     title: "Ayarlar ekranı canlı test rehberi",
     area: "Ayarlar",
     description: "Canlı test sırasında izlenecek kontrol sırası kullanıcıya gösterildi.",
-  },
-  {
-    version: "v1.11.7",
-    title: "Ayarlar ekranı sürüm geçmişi özeti",
-    area: "Ayarlar",
-    description: "Son sürümlerde yapılan iyileştirmeler kullanıcıya anlaşılır şekilde gösterildi.",
-  },
-  {
-    version: "v1.11.6",
-    title: "Build sonucu görünürlüğü ve kalite durumu notu",
-    area: "Ayarlar",
-    description: "Build kontrolünün ne işe yaradığı ve nereden takip edileceği açıklandı.",
-  },
-  {
-    version: "v1.11.5",
-    title: "Yenilik noktası yönetimi ve test odağı bilgisi",
-    area: "Sol menü / Ayarlar",
-    description: "Yeni özellik noktası merkezi yönetilir hale getirildi ve test odağı belirtildi.",
-  },
-  {
-    version: "v1.11.4",
-    title: "Yenilik noktası açıklama balonu ve test notu",
-    area: "Sol menü / Ayarlar",
-    description: "Mavi yenilik noktasının anlamı kullanıcıya açıklandı.",
-  },
-  {
-    version: "v1.11.3",
-    title: "Menü yenilik noktası ve test yönlendirmesi",
-    area: "Sol menü",
-    description: "Son sürümde değişen sayfayı göstermek için mavi yenilik noktası eklendi.",
   },
 ];
 
@@ -145,7 +151,10 @@ export default function SystemStatusPanel() {
       <div className="version-history-panel">
         <div>
           <h3>Son Sürüm Geçmişi</h3>
-          <p>Bu alan, son sürümlerde hangi bölümde ne değiştiğini hızlıca görmeniz için hazırlanmıştır.</p>
+          <p>
+            Bu alan, son sürümlerde hangi bölümde ne değiştiğini gösterir. Sürüm numarası değiştiğinde bu liste de
+            güncel tutulmalıdır.
+          </p>
         </div>
 
         <div className="version-history-list">
