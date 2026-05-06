@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.15.0";
+export const currentReleaseVersion = "v1.15.1";
 
-export const currentReleaseTitle = "ERP hızlandırma paketi: ana sayfa canlı hazırlık özeti ve hızlı test kısayolları";
+export const currentReleaseTitle = "Dashboard test kartlarından sayfalara geçiş ve canlı hazırlık aksiyon merkezi";
 
 export const updatedSectionIds = ["latest-version-history", "project-maturity", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Ana sayfaya canlıya hazırlık özeti eklendi",
-  "Hızlı test kısayolları görünür hale getirildi",
-  "Bugün test edilecek öncelikler Dashboard'a eklendi",
+  "Dashboard test kartları tıklanabilir hale getirildi",
+  "Canlı Hazırlık Aksiyon Merkezi eklendi",
+  "Hızlı Test Notu ile güvenli kullanım uyarıları görünür hale getirildi",
 ];
 
 export const releaseJumpLinks = [
@@ -26,15 +26,16 @@ export const releaseVisibilityChecklist = [
 export const releaseHighlightsByPage = {
   dashboard: {
     releaseHighlightItems: [
-      "Ana sayfaya canlıya hazırlık özeti eklendi",
-      "Hızlı test kısayolları eklendi",
-      "Bugün test edilecek öncelikler görünür hale getirildi",
+      "Dashboard test kartları tıklanabilir hale getirildi",
+      "Canlı Hazırlık Aksiyon Merkezi eklendi",
+      "Hızlı Test Notu ile güvenli kullanım uyarıları görünür hale getirildi",
     ],
     releaseJumpLinks: [
       { id: "dashboard-live-summary", label: "Canlıya Hazırlık Özeti'ne git" },
       { id: "dashboard-test-shortcuts", label: "Hızlı Test Kısayolları'na git" },
+      { id: "dashboard-action-center", label: "Canlı Hazırlık Aksiyon Merkezi'ne git" },
     ],
-    updatedSectionIds: ["dashboard-live-summary", "dashboard-test-shortcuts"],
+    updatedSectionIds: ["dashboard-live-summary", "dashboard-test-shortcuts", "dashboard-action-center"],
   },
   settings: {
     releaseHighlightItems,

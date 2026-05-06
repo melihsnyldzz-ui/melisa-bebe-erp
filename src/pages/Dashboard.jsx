@@ -35,11 +35,25 @@ const liveReadinessRows = [
 ];
 
 const quickTestShortcuts = [
-  { title: "Ayarlar kontrolüne git", path: "Sol menü > Ayarlar" },
-  { title: "Depo Terminali testine git", path: "Sol menü > Depo Terminali" },
-  { title: "Stok Sayım ekranına git", path: "Sol menü > Barkodlu Sayım" },
-  { title: "Raporları kontrol et", path: "Sol menü > Raporlar" },
-  { title: "Veri içe aktarma hazırlığına git", path: "Sol menü > Excel Aktarım" },
+  { title: "Ayarlar kontrolüne git", path: "Sol menü > Ayarlar", moduleId: "settings" },
+  { title: "Depo Terminali testine git", path: "Sol menü > Depo Terminali", moduleId: "warehouse-terminal" },
+  { title: "Stok Sayım ekranına git", path: "Sol menü > Barkodlu Sayım", moduleId: "stock-count" },
+  { title: "Raporları kontrol et", path: "Sol menü > Raporlar", moduleId: "reports" },
+  { title: "Veri içe aktarma hazırlığına git", path: "Sol menü > Excel Aktarım", moduleId: "data-import" },
+];
+
+const liveActionCenterItems = [
+  { title: "İlk kontrol", description: "Dashboard özetini incele" },
+  { title: "Veri güvenliği", description: "Ayarlar > Yedekleme güvenlik kontrolünü oku" },
+  { title: "Saha testi", description: "Depo Terminali'nde örnek barkod okut" },
+  { title: "Rapor doğrulama", description: "Raporlar ekranını Vega çıktılarıyla karşılaştır" },
+];
+
+const quickTestNotes = [
+  "Test sırasında gerçek stok/cari/fiş işlemi yapma.",
+  "Hata görürsen ekran adı ve işlem adımını not al.",
+  "Vega karşılaştırması manuel yapılmalıdır.",
+  "Yedek/geri yükleme testi yalnızca test ortamında denenmelidir.",
 ];
 
 const todayTestPriorities = [
@@ -50,7 +64,7 @@ const todayTestPriorities = [
   "Hata varsa ekran adı ve işlem notunu kaydet",
 ];
 
-export default function Dashboard() {
+export default function Dashboard({ onModuleChange }) {
   const erpData = useErpData();
   const dashboardData = useMemo(() => buildDashboardData(erpData), [erpData]);
 
@@ -111,12 +125,50 @@ export default function Dashboard() {
 
         <div className="dashboard-shortcut-grid">
           {quickTestShortcuts.map((shortcut) => (
-            <article className="dashboard-shortcut-card" key={shortcut.title}>
+            <button className="dashboard-shortcut-card" key={shortcut.title} type="button" onClick={() => onModuleChange(shortcut.moduleId)}>
               <strong>{shortcut.title}</strong>
               <span>{shortcut.path}</span>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <section className="dashboard-action-center-panel table-panel" id="dashboard-action-center">
+        <div className="dashboard-panel-heading">
+          <div>
+            <h2>
+              Canlı Hazırlık Aksiyon Merkezi <span className="new-release-badge">YENİ · {currentReleaseVersion}</span>
+            </h2>
+            <p>Canlı kullanıma geçmeden önce izlenecek güvenli test sırası.</p>
+          </div>
+        </div>
+
+        <div className="dashboard-action-grid">
+          {liveActionCenterItems.map((item) => (
+            <article className="dashboard-action-card" key={item.title}>
+              <span>{item.title}</span>
+              <strong>{item.description}</strong>
             </article>
           ))}
         </div>
+
+        <p className="dashboard-safety-note">
+          Bu aksiyon merkezi yalnızca test sırasını gösterir. Veri yazmaz, kayıt oluşturmaz ve otomatik kontrol yapmaz.
+        </p>
+      </section>
+
+      <section className="dashboard-quick-note-panel table-panel">
+        <div className="dashboard-panel-heading">
+          <div>
+            <h2>Hızlı Test Notu</h2>
+            <p>Canlı hazırlık denemelerinde güvenli kalmak için kısa hatırlatma.</p>
+          </div>
+        </div>
+        <ul>
+          {quickTestNotes.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
       </section>
 
       <section className="dashboard-priority-panel table-panel">

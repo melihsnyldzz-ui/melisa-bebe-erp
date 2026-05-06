@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.15.1",
+    title: "Dashboard test kartlarından sayfalara geçiş ve canlı hazırlık aksiyon merkezi",
+    area: "Dashboard / App",
+    description: "Dashboard hızlı test kartları ilgili sayfalara geçiş yapacak hale getirildi ve canlı hazırlık aksiyon merkezi eklendi.",
+  },
+  {
     version: "v1.15.0",
     title: "ERP hızlandırma paketi: ana sayfa canlı hazırlık özeti ve hızlı test kısayolları",
     area: "Dashboard / Ayarlar",
@@ -166,12 +172,6 @@ const versionHistoryRows = [
     title: "Yenilik etiketlerini sayfa bazlı merkezi yönetme sistemi",
     area: "Ayarlar",
     description: "Sayfa içi yenilik paneli, YENİ etiketleri ve hızlı geçiş bilgileri merkezi konfigürasyonla yönetilebilir hale getirildi.",
-  },
-  {
-    version: "v1.14.1",
-    title: "Sayfa içi yenilik vurgusu, YENİ etiketi ve hızlı geçiş paneli",
-    area: "Ayarlar",
-    description: "Kullanıcının yeni eklenen alanları kolay bulması için sayfa içi yenilik paneli, YENİ etiketi ve hızlı geçiş linkleri eklendi.",
   },
 ];
 
