@@ -9,6 +9,14 @@ import {
   findWarehouseTerminalMatches,
   readWarehouseScanHistory,
 } from "../../utils/warehouseTerminalUtils.js";
+import {
+  addProductToCountBasket,
+  clearWarehouseCountBasket,
+  readWarehouseCountBasket,
+  removeCountBasketItem,
+  updateCountBasketQuantity,
+} from "../../utils/warehouseCountBasketUtils.js";
+import TerminalCountBasket from "./TerminalCountBasket.jsx";
 import TerminalProductCard from "./TerminalProductCard.jsx";
 import TerminalScanHistory from "./TerminalScanHistory.jsx";
 
@@ -18,6 +26,7 @@ export default function WarehouseTerminalPanel({ products = [], stockMovements =
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [matchedProducts, setMatchedProducts] = useState([]);
   const [scanHistory, setScanHistory] = useState(() => readWarehouseScanHistory());
+  const [countBasket, setCountBasket] = useState(() => readWarehouseCountBasket());
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -86,6 +95,27 @@ export default function WarehouseTerminalPanel({ products = [], stockMovements =
     focusInput();
   }
 
+  function addToBasket(productView) {
+    setCountBasket((currentBasket) => addProductToCountBasket(currentBasket, productView));
+    setMessage({ type: "success", text: `${productView?.name || "Ürün"} sayım sepetine eklendi. Stoklar değişmedi.` });
+    focusInput();
+  }
+
+  function updateBasketQuantity(productId, value) {
+    setCountBasket((currentBasket) => updateCountBasketQuantity(currentBasket, productId, value));
+  }
+
+  function removeBasketItem(productId) {
+    setCountBasket((currentBasket) => removeCountBasketItem(currentBasket, productId));
+    focusInput();
+  }
+
+  function clearBasket() {
+    setCountBasket(clearWarehouseCountBasket());
+    setMessage({ type: "info", text: "Sayım sepeti temizlendi. Veritabanına yazılmadı." });
+    focusInput();
+  }
+
   function focusInput() {
     window.requestAnimationFrame(() => inputRef.current?.focus());
   }
@@ -127,9 +157,11 @@ export default function WarehouseTerminalPanel({ products = [], stockMovements =
       {matchedProducts.length > 0 && <MatchedProductsPanel products={matchedProducts} onSelect={openProduct} />}
 
       <section className="warehouse-terminal-grid">
-        <TerminalProductCard product={selectedProduct} />
+        <TerminalProductCard product={selectedProduct} onAddToBasket={addToBasket} />
         <TerminalScanHistory history={scanHistory} onClear={clearHistory} />
       </section>
+
+      <TerminalCountBasket basket={countBasket} onClear={clearBasket} onRemove={removeBasketItem} onUpdateQuantity={updateBasketQuantity} />
     </>
   );
 }

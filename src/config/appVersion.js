@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.10.3";
-export const APP_STAGE = "El terminali ürün kartı ve geçmiş kalıcılığı";
+export const APP_VERSION = "v1.10.4";
+export const APP_STAGE = "El terminali sayım hazırlığı ve sepet önizleme";

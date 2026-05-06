@@ -1,7 +1,8 @@
+import { ShoppingBasket } from "lucide-react";
 import { formatDateTR } from "../../utils/dateUtils.js";
 import { formatCurrency, formatNumber } from "../../utils/formatters.js";
 
-export default function TerminalProductCard({ product }) {
+export default function TerminalProductCard({ onAddToBasket, product }) {
   if (!product) {
     return (
       <section className="table-panel warehouse-terminal-card warehouse-terminal-empty">
@@ -19,7 +20,13 @@ export default function TerminalProductCard({ product }) {
           <h2>{product.name || "-"}</h2>
           <p>{[product.brand, product.season, product.category, product.size, product.color].filter(Boolean).join(" / ") || "-"}</p>
         </div>
-        <strong className={`warehouse-terminal-status ${product.status === "Sağlıklı" ? "status-ok" : "status-warn"}`}>{product.status}</strong>
+        <div className="warehouse-terminal-product-actions">
+          <strong className={`warehouse-terminal-status ${product.status === "Sağlıklı" ? "status-ok" : "status-warn"}`}>{product.status}</strong>
+          <button className="primary-action" type="button" onClick={() => onAddToBasket?.(product)}>
+            <ShoppingBasket size={18} />
+            Sepete Ekle
+          </button>
+        </div>
       </div>
 
       <div className="warehouse-terminal-metrics">
