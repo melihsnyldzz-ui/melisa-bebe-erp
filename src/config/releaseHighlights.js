@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.19.1";
+export const currentReleaseVersion = "v1.19.2";
 
-export const currentReleaseTitle = "Vega read-only bağlantı parametreleri önizleme hazırlığı";
+export const currentReleaseTitle = "ODBC / SQL sürücü gereksinim rehberi";
 
 export const updatedSectionIds = ["latest-version-history", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Vega read-only bağlantı parametreleri için sadece okunur önizleme alanı eklendi",
-  "Sürücü, sunucu, veritabanı ve stok sorgusu başlıkları gerçek bağlantı kurulmadan görünür hale getirildi",
-  "Bağlantı testi ve parametre kaydı olmadan güvenli hazırlık görünümü korundu",
+  "Vega read-only bağlantı hazırlığına ODBC / SQL sürücü gereksinim rehberi eklendi",
+  "Sadece okuma yetkisi, minimum kullanıcı yetkisi ve yazma izni kapalı kalması gerektiği netleştirildi",
+  "Gerçek bağlantı kurulmadan sürücü ve erişim hazırlıkları pasif şekilde gösterildi",
 ];
 
 export const releaseJumpLinks = [

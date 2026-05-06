@@ -3781,6 +3781,66 @@ button {
   font-weight: 900;
 }
 
+.vega-driver-guide-panel {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid rgba(22, 101, 52, 0.18);
+  border-radius: 8px;
+  background: #f0fdf4;
+}
+
+.vega-driver-guide-panel h2,
+.vega-driver-guide-panel p {
+  margin: 0;
+}
+
+.vega-driver-guide-panel h2 {
+  color: #166534;
+  font-size: 0.96rem;
+}
+
+.vega-driver-guide-panel p {
+  margin-top: 3px;
+  color: #166534;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.vega-driver-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.vega-driver-guide-row {
+  min-width: 0;
+  padding: 7px 8px;
+  border: 1px solid rgba(22, 101, 52, 0.14);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.vega-driver-guide-row span,
+.vega-driver-guide-row strong {
+  display: block;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.vega-driver-guide-row span {
+  color: #15803d;
+  font-size: 0.68rem;
+  font-weight: 900;
+}
+
+.vega-driver-guide-row strong {
+  margin-top: 3px;
+  color: var(--anthracite);
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
 .vega-column-mapping-panel {
   display: grid;
   gap: 8px;
@@ -5604,6 +5664,10 @@ tr:last-child td {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .vega-driver-guide-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .vega-column-mapping-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -5770,6 +5834,19 @@ tr:last-child td {
   }
 
   .vega-connection-preview-row {
+    padding: 7px;
+  }
+
+  .vega-driver-guide-panel {
+    padding: 10px;
+  }
+
+  .vega-driver-guide-grid {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .vega-driver-guide-row {
     padding: 7px;
   }
 

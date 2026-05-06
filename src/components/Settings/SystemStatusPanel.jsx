@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.19.2",
+    title: "ODBC / SQL sürücü gereksinim rehberi",
+    area: "Vega / Read-only",
+    description: "Vega read-only bağlantı hazırlığı kapsamında ODBC / SQL uyumlu bağlantı sürücüsü, sadece okuma erişimi, minimum yetkili kullanıcı, yazma izninin kapalı olması ve stok sorgusunun ayrı kontrollü sürümde hazırlanacağı bilgisini gösteren pasif rehber eklendi.",
+  },
+  {
     version: "v1.19.1",
     title: "Vega read-only bağlantı parametreleri önizleme hazırlığı",
     area: "Vega / Read-only",

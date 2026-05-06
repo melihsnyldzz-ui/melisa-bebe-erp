@@ -139,6 +139,15 @@ export default function VegaStockTrial() {
     { label: "Stok sorgusu", value: "Hazırlanmadı" },
     { label: "Yazma izni", value: "Kapalı" },
   ];
+  const driverRequirementRows = [
+    { label: "Gerekli sürücü", value: "ODBC / SQL uyumlu bağlantı sürücüsü" },
+    { label: "Erişim türü", value: "Sadece okuma" },
+    { label: "Yazma izni", value: "Kapalı olmalı" },
+    { label: "Kullanıcı yetkisi", value: "Minimum yetkili read-only kullanıcı" },
+    { label: "Bağlantı testi", value: "Bu sürümde yapılmaz" },
+    { label: "Stok sorgusu", value: "Ayrı kontrollü sürümde hazırlanacak" },
+    { label: "Güvenlik notu", value: "Gerçek Vega verisine yazma işlemi kesinlikle açılmayacak" },
+  ];
   const normalizedQuery = query.trim().toLocaleLowerCase("tr-TR");
   const filteredRows = useMemo(() => {
     if (!normalizedQuery) {
@@ -267,6 +276,24 @@ export default function VegaStockTrial() {
           <div className="vega-connection-preview-grid">
             {connectionPreviewRows.map((row) => (
               <div className="vega-connection-preview-row" key={row.label}>
+                <span>{row.label}</span>
+                <strong>{row.value}</strong>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="vega-driver-guide-panel">
+          <div>
+            <h2>ODBC / SQL Sürücü Gereksinim Rehberi</h2>
+            <p>
+              Bu alan ileride yapılacak Vega read-only bağlantısı için gereken sürücü ve erişim hazırlıklarını gösterir.
+              Bu sürümde sürücü kurulmaz, bağlantı açılmaz ve sorgu çalıştırılmaz.
+            </p>
+          </div>
+          <div className="vega-driver-guide-grid">
+            {driverRequirementRows.map((row) => (
+              <div className="vega-driver-guide-row" key={row.label}>
                 <span>{row.label}</span>
                 <strong>{row.value}</strong>
               </div>
