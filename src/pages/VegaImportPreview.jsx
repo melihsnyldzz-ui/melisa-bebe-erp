@@ -201,6 +201,22 @@ export default function VegaImportPreview() {
           <strong>İlk Sorgu Kapsamı Taslak Notu</strong>
           <span>İlk gerçek read-only testte hedef yalnızca stok kartlarını sınırlı sayıda okumaktır. Cari, fiş, hareket, ödeme, tahsilat ve import işlemleri bu kapsamda değildir.</span>
         </div>
+        <div className="vega-transition-gate-note">
+          <strong>Operatör Hazırlık Rehberi</strong>
+          <span>İlk gerçek read-only deneme öncesinde operatör yalnızca hazırlık bilgilerini kontrol eder. Bu ekranda bağlantı testi, sorgu çalıştırma veya veri aktarımı yapılmaz.</span>
+        </div>
+        <div className="vega-transition-gate-grid">
+          <div className="vega-transition-gate-row"><strong>Manuel yedek</strong><span>Testten önce manuel yedek alındığını doğrula.</span></div>
+          <div className="vega-transition-gate-row"><strong>Read-only yetki</strong><span>Kullanıcının sadece okuma yetkisi olduğunu doğrula.</span></div>
+          <div className="vega-transition-gate-row"><strong>20 stok kartı</strong><span>İlk denemede yalnızca 20 stok kartı okunacağını doğrula.</span></div>
+          <div className="vega-transition-gate-row"><strong>Ham hata</strong><span>Ham hata mesajlarının kullanıcıya gösterilmeyeceğini doğrula.</span></div>
+          <div className="vega-transition-gate-row"><strong>Manuel karşılaştırma</strong><span>Test sonucunun Vega ekranıyla manuel karşılaştırılacağını doğrula.</span></div>
+          <div className="vega-transition-gate-row"><strong>Hata notu</strong><span>Hata görülürse ekran adı, işlem ve hata notu hazırlanacağını doğrula.</span></div>
+        </div>
+        <div className="vega-transition-gate-note">
+          <strong>Güvenli Deneme Öncesi Uyarı</strong>
+          <span>Bu hazırlık tamamlanmadan gerçek read-only bağlantı denemesi yapılmamalıdır. İlk gerçek deneme ayrı sürümde, sınırlı kapsamla ve manuel yedek doğrulandıktan sonra ele alınacaktır.</span>
+        </div>
       </section>
     </>
   );

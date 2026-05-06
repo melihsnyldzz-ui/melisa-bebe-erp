@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.22.0",
+    title: "Vega read-only bağlantı parametreleri pasif hazırlık paketi",
+    area: "Vega / Import Önizleme",
+    description: "Read-only bağlantı parametreleri yalnızca pasif hazırlık olarak görünür hale getirildi; ilk deneme için 20 satır limiti, 3000 ms timeout, retry kapalı ve ham hata gizleme politikası not edildi; ilk read-only sorgu kapsamının sadece stok kartı okuma taslağı olduğu netleştirildi.",
+  },
+  {
     version: "v1.21.2",
     title: "Vega read-only geçiş kapısı kapanış özeti ve hazırlık sınırı",
     area: "Vega / Import Önizleme",
