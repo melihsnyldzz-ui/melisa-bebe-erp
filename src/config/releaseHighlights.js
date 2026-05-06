@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.16.7";
+export const currentReleaseVersion = "v1.17.0";
 
-export const currentReleaseTitle = "Dövizli ticaret özetinde cari detay görünümünü sadeleştirme ve mobil denge kontrolü";
+export const currentReleaseTitle = "Dashboard ticari karar ekranı güçlendirme";
 
 export const updatedSectionIds = ["latest-version-history", "project-maturity", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Cari Detay alanı daha kompakt ve ikincil bilgi görünümüne alındı",
-  "Müşteri ve tedarikçi cari detaylarının mobil görünümü dengelendi",
-  "Dövizli Ticaret Özeti patron kokpitine daha uygun sade yapıya getirildi",
+  "Dashboard’a seçili dönem için Patron Notu eklendi",
+  "Risk, müşteri ve ürün alanları kısa ticari yorumlarla güçlendirildi",
+  "Dövizli Ticaret Özeti’ne kur çevrimi yapmadan bilgilendirici Döviz Notu eklendi",
 ];
 
 export const releaseJumpLinks = [

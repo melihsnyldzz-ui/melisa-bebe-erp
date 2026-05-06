@@ -60,6 +60,11 @@ export default function Dashboard() {
         </span>
       </div>
 
+      <section className="dashboard-decision-note" aria-label="Patron Notu">
+        <strong>Patron Notu</strong>
+        <span>{dashboardData.patronNote}</span>
+      </section>
+
       <section className="kpi-grid dashboard-compact-kpis" id="dashboard-daily-operation">
         {dashboardData.kpis.map((item, index) => (
           <KpiCard item={item} index={index} key={item.label} />
@@ -107,6 +112,10 @@ function CurrencyTradeSummary({ summary }) {
           ))}
         </div>
       </div>
+
+      <p className="dashboard-currency-note">
+        <strong>Döviz Notu:</strong> {summary?.currencyNote}
+      </p>
     </section>
   );
 }
@@ -150,13 +159,26 @@ function buildDashboardData({ collections, customers, products, purchaseSlips, s
   const monthlyCollectionsTotal = sumBy(monthlyCollections, "amount");
   const periodSoldQuantity = sumSlipQuantity(periodSalesSlips);
   const monthlySoldQuantity = sumSlipQuantity(monthlySalesSlips);
+  const periodSummary = {
+    collectionsTotal: periodCollectionsTotal,
+    salesSlipCount: periodSalesSlips.length,
+    salesTotal: periodSales,
+    soldQuantity: periodSoldQuantity,
+  };
+  const currencyTradeSummary = {
+    current: buildCurrentCurrencyTotals(customers, suppliers),
+    customerCurrent: buildCurrencyTotals(customers, "currentBalance"),
+    purchases: buildCurrencyTotals(periodPurchaseSlips, "grandTotal"),
+    sales: buildCurrencyTotals(periodSalesSlips, "grandTotal"),
+    supplierCurrent: buildCurrencyTotals(suppliers, "currentBalance"),
+  };
 
   return {
     kpis: [
-      buildKpi(selectedPeriod === "today" ? "Bugünkü fiş" : "Satış fişi", periodSalesSlips.length, monthlySalesSlips.length, "count", ReceiptText, "dark"),
-      buildKpi("Çıkan adet", periodSoldQuantity, monthlySoldQuantity, "quantity", Boxes, "green", "Satış fişlerindeki ürün adedi"),
-      buildKpi("Satış", periodSales, monthlySalesTotal, "currency", ShoppingBag, "red"),
-      buildKpi("Tahsilat", periodCollectionsTotal, monthlyCollectionsTotal, "currency", Banknote, "amber"),
+      buildKpi(selectedPeriod === "today" ? "Bugünkü fiş" : "Satış fişi", periodSalesSlips.length, monthlySalesSlips.length, "count", ReceiptText, "dark", "Seçili dönemde açılan satış fişi"),
+      buildKpi("Çıkan adet", periodSoldQuantity, monthlySoldQuantity, "quantity", Boxes, "green", "Satış fişlerindeki toplam ürün adedi"),
+      buildKpi("Satış", periodSales, monthlySalesTotal, "currency", ShoppingBag, "red", "Seçili dönem satış toplamı"),
+      buildKpi("Tahsilat", periodCollectionsTotal, monthlyCollectionsTotal, "currency", Banknote, "amber", "Seçili dönem tahsilat toplamı"),
     ],
     commerceInsights: {
       monthlySalesTrend: buildSalesTrend(periodSalesSlips, periodRange),
@@ -167,22 +189,15 @@ function buildDashboardData({ collections, customers, products, purchaseSlips, s
       latestSlips: buildLatestSlipRows({ activePurchaseSlips, activeSalesSlips }),
     },
     currencyTradeSummary: {
-      current: buildCurrentCurrencyTotals(customers, suppliers),
-      customerCurrent: buildCurrencyTotals(customers, "currentBalance"),
-      purchases: buildCurrencyTotals(periodPurchaseSlips, "grandTotal"),
-      sales: buildCurrencyTotals(periodSalesSlips, "grandTotal"),
-      supplierCurrent: buildCurrencyTotals(suppliers, "currentBalance"),
+      ...currencyTradeSummary,
+      currencyNote: buildCurrencyNote(currencyTradeSummary),
     },
-    periodSummary: {
-      collectionsTotal: periodCollectionsTotal,
-      salesSlipCount: periodSalesSlips.length,
-      salesTotal: periodSales,
-      soldQuantity: periodSoldQuantity,
-    },
+    patronNote: buildPatronNote(periodSummary, criticalProducts),
+    periodSummary,
   };
 }
 
-function buildReportPreview({ commerceInsights, currencyTradeSummary, periodSummary }, periodLabel) {
+function buildReportPreview({ commerceInsights, currencyTradeSummary, patronNote, periodSummary }, periodLabel) {
   const topCustomer = commerceInsights.topCustomersByRevenue[0];
   const topProduct = commerceInsights.monthlyTopProducts[0];
   const riskNote = commerceInsights.riskRows[0];
@@ -210,8 +225,20 @@ function buildReportPreview({ commerceInsights, currencyTradeSummary, periodSumm
         label: "Risk notu",
         value: riskNote ? `${riskNote.label} · ${riskNote.status}` : "Risk görünmüyor",
       },
+      {
+        label: "Genel Not",
+        value: patronNote,
+      },
     ],
   };
+}
+
+function buildPatronNote(periodSummary, criticalProducts = []) {
+  if (periodSummary.salesSlipCount <= 0) return "Seçili dönemde satış fişi görünmüyor.";
+  if (periodSummary.salesTotal > 0 && periodSummary.collectionsTotal <= 0) return "Satış var, tahsilat takibi kontrol edilmeli.";
+  if (criticalProducts.length > 0) return "Kritik stokta ürün var, satın alma kontrol edilmeli.";
+  if (periodSummary.salesTotal > 0 && periodSummary.collectionsTotal > 0) return "Satış ve tahsilat hareketi oluşmuş, dönem aktif görünüyor.";
+  return "Seçili dönem ticari hareketleri izleniyor.";
 }
 
 function buildCurrencyTradeCards(summary) {
@@ -253,6 +280,18 @@ function buildCurrencyTradeReportRows(summary) {
     { label: "Alış", value: formatCurrencyTradeLine(summary?.purchases) },
     { label: "Net Cari", value: formatCurrencyTradeLine(summary?.current) },
   ];
+}
+
+function buildCurrencyNote(summary) {
+  return hasForeignCurrencyMovement(summary)
+    ? "Dövizli işlem hareketi var; kur çevrimi yapılmadan kendi para biriminde gösterilir."
+    : "Dövizli kayıt görünmüyor; TL varsayılan para birimidir.";
+}
+
+function hasForeignCurrencyMovement(summary) {
+  return [summary?.sales, summary?.purchases, summary?.current, summary?.customerCurrent, summary?.supplierCurrent].some((totals) =>
+    ["USD", "EUR"].some((currencyCode) => Math.abs(toNumber(totals?.[currencyCode])) > 0)
+  );
 }
 
 function formatCurrencyTradeLine(totals = createCurrencyTotals()) {
@@ -438,6 +477,7 @@ function buildRiskRows({ criticalProducts, customers }) {
     .sort((a, b) => toNumber(a.stockQuantity) - toNumber(b.stockQuantity))
     .slice(0, 2)
     .map((product) => ({
+      actionNote: toNumber(product.stockQuantity) <= 0 ? "Acil tedarik kontrolü" : "Satın alma planına alınmalı",
       label: product.name || product.code || "Ürün",
       meta: `${formatNumber(product.stockQuantity)} adet`,
       status: toNumber(product.stockQuantity) <= 0 ? "Stok yok" : "Kritik",
@@ -445,6 +485,7 @@ function buildRiskRows({ criticalProducts, customers }) {
   const customerRows = buildRiskCustomers(customers)
     .slice(0, 1)
     .map((customer) => ({
+      actionNote: customer.riskLabel === "Limit Aşıldı" ? "Tahsilat veya risk limiti kontrol edilmeli" : "Cari limit yaklaşmış",
       label: customer.name,
       meta: formatCurrency(customer.currentBalance),
       status: customer.riskLabel,

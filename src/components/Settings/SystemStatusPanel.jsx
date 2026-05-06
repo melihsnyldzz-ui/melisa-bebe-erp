@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.17.0",
+    title: "Dashboard ticari karar ekranı güçlendirme",
+    area: "Dashboard",
+    description: "Dashboard seçili dönem verilerinden kısa patron notu, risk aksiyonları, müşteri/ürün yorumları ve döviz bilgilendirme notuyla daha güçlü ticari karar ekranına dönüştürüldü.",
+  },
+  {
     version: "v1.16.7",
     title: "Dövizli ticaret özetinde cari detay görünümünü sadeleştirme ve mobil denge kontrolü",
     area: "Dashboard",

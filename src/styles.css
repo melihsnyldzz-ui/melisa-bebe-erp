@@ -379,6 +379,37 @@ button {
   font-weight: 800;
 }
 
+.dashboard-decision-note {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+  margin: 5px 0 6px;
+  padding: 7px 9px;
+  border: 1px solid rgba(215, 25, 32, 0.13);
+  border-radius: 8px;
+  background: rgba(255, 246, 247, 0.82);
+}
+
+.dashboard-decision-note strong,
+.dashboard-decision-note span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dashboard-decision-note strong {
+  color: var(--red);
+  font-size: 0.74rem;
+}
+
+.dashboard-decision-note span {
+  color: var(--anthracite);
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
 .dashboard-report-preview {
   display: grid;
   gap: 8px;
@@ -553,6 +584,23 @@ button {
   font-size: 0.68rem;
 }
 
+.dashboard-currency-note {
+  grid-column: 1 / -1;
+  min-width: 0;
+  margin: 0;
+  padding-top: 2px;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 0.66rem;
+  font-weight: 760;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dashboard-currency-note strong {
+  color: var(--anthracite);
+}
+
 .page-title p {
   margin: 0 0 8px;
   color: var(--red);
@@ -712,6 +760,20 @@ button {
   white-space: nowrap;
 }
 
+.dashboard-card-comment {
+  min-width: 0;
+  margin: 5px 0 0;
+  padding: 4px 6px;
+  overflow: hidden;
+  border-radius: 6px;
+  background: rgba(247, 248, 250, 0.9);
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 820;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .dashboard-distribution-list {
   display: grid;
   gap: 6px;
@@ -770,11 +832,13 @@ button {
 }
 
 .dashboard-compact-row span,
-.dashboard-compact-row small {
+.dashboard-compact-row small,
+.dashboard-compact-row em {
   min-width: 0;
   overflow: hidden;
   color: var(--muted);
   font-size: 0.78rem;
+  font-style: normal;
   font-weight: 750;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -783,6 +847,12 @@ button {
 .dashboard-compact-row strong {
   color: var(--anthracite);
   font-size: 0.92rem;
+}
+
+.dashboard-compact-row em {
+  color: #8a5a00;
+  font-size: 0.7rem;
+  font-weight: 820;
 }
 
 .dashboard-tooltip {
@@ -4770,6 +4840,17 @@ tr:last-child td {
 }
 
 @media (max-width: 560px) {
+  .dashboard-decision-note {
+    grid-template-columns: 1fr;
+    gap: 3px;
+  }
+
+  .dashboard-decision-note span,
+  .dashboard-currency-note,
+  .dashboard-card-comment {
+    white-space: normal;
+  }
+
   .dashboard-currency-detail-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }

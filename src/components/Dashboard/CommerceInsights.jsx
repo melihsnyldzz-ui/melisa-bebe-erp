@@ -20,7 +20,9 @@ function ShortTooltip({ active, payload, label }) {
   );
 }
 
-function HorizontalBarCard({ title, icon: Icon, data, dataKey, valueLabel, emptyText, color = "#2d2f34" }) {
+function HorizontalBarCard({ title, icon: Icon, data, dataKey, valueLabel, emptyText, commentText, emptyCommentText, color = "#2d2f34" }) {
+  const cardComment = data.length > 0 ? commentText : emptyCommentText;
+
   return (
     <div className="chart-panel dashboard-chart-card">
       <div className="section-heading">
@@ -51,6 +53,7 @@ function HorizontalBarCard({ title, icon: Icon, data, dataKey, valueLabel, empty
           ))}
         </div>
       )}
+      <p className="dashboard-card-comment">{cardComment}</p>
     </div>
   );
 }
@@ -109,6 +112,8 @@ export default function CommerceInsights({ data }) {
           valueLabel="Ciro"
           color="#1864ab"
           emptyText="Seçili dönemde müşteri analizi için satış bekleniyor."
+          commentText="Dönemin en güçlü müşterisi"
+          emptyCommentText="Müşteri hareketi bekleniyor"
         />
       </div>
 
@@ -121,6 +126,8 @@ export default function CommerceInsights({ data }) {
           valueLabel="Adet"
           color="#2d2f34"
           emptyText="Seçili dönem için ürün satışı bekleniyor."
+          commentText="Dönemin öne çıkan ürünü"
+          emptyCommentText="Ürün hareketi bekleniyor"
         />
 
         <div className="chart-panel dashboard-list-card">
@@ -135,6 +142,7 @@ export default function CommerceInsights({ data }) {
                   <span>{row.label}</span>
                   <strong>{row.meta}</strong>
                   <small>{row.status}</small>
+                  {row.actionNote && <em>{row.actionNote}</em>}
                 </div>
               ))}
             </div>
