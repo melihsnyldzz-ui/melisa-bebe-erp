@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.25.1",
+    title: "Vega read-only final karar ekranı kapanış özeti ve sadeleştirme",
+    area: "Vega / Import Önizleme",
+    description: "Final karar ekranına hazırlık fazı kapanış notu eklendi; read-only hazırlık rehberlerinin tamamlandığı daha sade şekilde belirtildi ve gerçek denemenin ayrı sürümde, manuel doğrulamalar sonrası ele alınacağı tekrar vurgulandı.",
+  },
+  {
     version: "v1.25.0",
     title: "İlk gerçek read-only deneme hazırlığına geçiş öncesi final karar ekranı",
     area: "Vega / Import Önizleme",

@@ -344,6 +344,25 @@ export default function VegaImportPreview() {
           <span>Bu noktada hazırlık ve kontrol rehberleri tamamlanmıştır. Gerçek read-only deneme ancak ayrı sürümde, manuel yedek ve read-only kullanıcı doğrulandıktan sonra ele alınacaktır.</span>
         </div>
       </section>
+
+      <section className="vega-transition-gate-panel">
+        <h2>Read-only Bağlantı Bilgisi Manuel Hazırlığı</h2>
+        <p>Bu alan yalnızca ilerideki read-only denemede gerekecek bilgilerin manuel olarak hazırlanması içindir. Bu ekranda bağlantı kurulmaz, bilgi girilmez, query hazırlanmaz ve veri okunmaz.</p>
+        <div className="vega-transition-gate-grid">
+          <div className="vega-transition-gate-row"><strong>SQL sunucu / DB yolu</strong><span>Manuel tespit edilecek</span></div>
+          <div className="vega-transition-gate-row"><strong>Veritabanı adı</strong><span>Manuel tespit edilecek</span></div>
+          <div className="vega-transition-gate-row"><strong>Kullanıcı tipi</strong><span>Sadece read-only olmalı</span></div>
+          <div className="vega-transition-gate-row"><strong>Yazma yetkisi</strong><span>Kapalı olmalı</span></div>
+          <div className="vega-transition-gate-row"><strong>İlk kapsam</strong><span>Sadece stok kartı</span></div>
+          <div className="vega-transition-gate-row"><strong>İlk sınır</strong><span>20 satır</span></div>
+          <div className="vega-transition-gate-row"><strong>Hata politikası</strong><span>Ham hata gizli</span></div>
+          <div className="vega-transition-gate-row"><strong>Deneme ortamı</strong><span>Mümkünse canlı dışı/kopya ortam</span></div>
+        </div>
+        <div className="vega-transition-gate-note">
+          <strong>Bağlantı Hazırlık Notu</strong>
+          <span>Bu panel bilgi toplamaz. Bağlantı testi ve ilk okuma ayrı sürümde ele alınacaktır.</span>
+        </div>
+      </section>
     </>
   );
 }

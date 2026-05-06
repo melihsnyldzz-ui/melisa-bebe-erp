@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.25.1";
+export const currentReleaseVersion = "v1.26.0";
 
-export const currentReleaseTitle = "Vega read-only final karar ekranı kapanış özeti ve sadeleştirme";
+export const currentReleaseTitle = "Vega read-only bağlantı bilgisi manuel hazırlık ekranı";
 
 export const updatedSectionIds = ["latest-version-history", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Final karar ekranına hazırlık fazı kapanış notu eklendi",
-  "Read-only hazırlık rehberlerinin tamamlandığı daha sade şekilde belirtildi",
-  "Gerçek denemenin ayrı sürümde ve manuel doğrulamalar sonrası ele alınacağı tekrar vurgulandı",
+  "Read-only deneme için bağlantı bilgisi manuel hazırlık paneli eklendi",
+  "SQL sunucu, veritabanı adı, kullanıcı tipi ve ilk kapsam bilgileri statik rehber olarak listelendi",
+  "Bağlantı testi ve ilk okumanın ayrı sürümde ele alınacağı netleştirildi",
 ];
 
 export const releaseJumpLinks = [
