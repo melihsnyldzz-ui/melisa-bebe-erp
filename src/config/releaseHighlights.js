@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.19.7";
+export const currentReleaseVersion = "v1.19.8";
 
-export const currentReleaseTitle = "Vega Stok Deneme görsel denge ve son kalite kontrol";
+export const currentReleaseTitle = "Vega read-only geçiş kapısı ve onay matrisi";
 
 export const updatedSectionIds = ["latest-version-history", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Vega Stok Deneme panel gruplarının görsel boşlukları dengelendi",
-  "Read-only bağlantı hazırlığı alanındaki tekrar eden başlık dili sadeleştirildi",
-  "Mobil görünüm ve demo stok tablosu hizası son kalite kontrolünden geçirildi",
+  "Vega Stok Deneme ekranına pasif Read-only Geçiş Kapısı eklendi",
+  "Gerçek bağlantıya geçmeden önce gereken manuel kontrol şartları onay matrisiyle görünür hale getirildi",
+  "Onay kaydı, bağlantı açma ve sorgu çalıştırma olmadan güvenli karar rehberi korundu",
 ];
 
 export const releaseJumpLinks = [

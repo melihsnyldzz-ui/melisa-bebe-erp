@@ -187,6 +187,16 @@ export default function VegaStockTrial() {
     "Hata durumunda Vega'ya tekrar deneme baskısı yapılmayacak",
     "Gerçek okuma öncesi manuel yedek kontrolü yapılacak",
   ];
+  const readOnlyTransitionGateRows = [
+    { requirement: "Manuel Vega yedeği kontrol edildi mi?", status: "Manuel kontrol gerekli" },
+    { requirement: "Read-only kullanıcı yetkisi hazır mı?", status: "Bekliyor" },
+    { requirement: "Yazma yetkisi kapalı mı?", status: "Manuel kontrol gerekli" },
+    { requirement: "İlk okuma satır limiti belirlendi mi?", status: "Bekliyor" },
+    { requirement: "Demo veri / gerçek veri ayrımı korunacak mı?", status: "Bu sürümde pasif" },
+    { requirement: "Hata durumunda tekrar deneme baskısı engellenecek mi?", status: "Bu sürümde pasif" },
+    { requirement: "İlk test sadece stok kartı okuma ile sınırlı mı?", status: "Bekliyor" },
+    { requirement: "Cari, fiş, ürün mutasyonu kapalı mı?", status: "Bu sürümde pasif" },
+  ];
   const normalizedQuery = query.trim().toLocaleLowerCase("tr-TR");
   const filteredRows = useMemo(() => {
     if (!normalizedQuery) {
@@ -438,6 +448,21 @@ export default function VegaStockTrial() {
           <div className="vega-panel-group-header">
             <h2>Güvenlik Checklist'i</h2>
             <p>Gerçek bağlantı öncesi şartlar pasif liste olarak korunur; onay kaydı yapılmaz.</p>
+          </div>
+
+          <div className="vega-transition-gate-panel">
+            <div>
+              <h2>Read-only Geçiş Kapısı</h2>
+              <p>Bu geçiş kapısı sadece rehberdir; onay kaydetmez, bağlantı açmaz, sorgu çalıştırmaz.</p>
+            </div>
+            <div className="vega-transition-gate-grid" aria-label="Read-only geçiş kapısı onay matrisi">
+              {readOnlyTransitionGateRows.map((row) => (
+                <div className="vega-transition-gate-row" key={row.requirement}>
+                  <strong>{row.requirement}</strong>
+                  <span>{row.status}</span>
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className="vega-security-checklist-panel">

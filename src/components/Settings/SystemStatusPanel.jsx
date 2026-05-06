@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.19.8",
+    title: "Vega read-only geçiş kapısı ve onay matrisi",
+    area: "Vega / Read-only",
+    description: "Vega Stok Deneme ekranına gerçek read-only bağlantı fazına geçmeden önce manuel yedek, minimum yetki, yazma izni, satır limiti, demo/gerçek veri ayrımı ve mutasyon kapalı şartlarını pasif onay matrisiyle gösteren geçiş kapısı eklendi.",
+  },
+  {
     version: "v1.19.7",
     title: "Vega Stok Deneme görsel denge ve son kalite kontrol",
     area: "Vega / Read-only",
