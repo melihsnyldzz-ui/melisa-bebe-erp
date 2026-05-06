@@ -12,10 +12,20 @@ const statusRows = [
 ];
 
 const maturityRows = [
-  { label: "ERP genel hazırlık", value: "%62-66" },
-  { label: "Canlı kullanım güvenliği", value: "%54-58" },
-  { label: "El terminali hazırlığı", value: "%45-50" },
-  { label: "Vega'dan geçiş hazırlığı", value: "%47-52" },
+  { label: "ERP genel hazırlık", value: "%72-76" },
+  { label: "Canlı kullanım güvenliği", value: "%65-70" },
+  { label: "El terminali hazırlığı", value: "%60-65" },
+  { label: "Vega'dan geçiş hazırlığı", value: "%58-63" },
+];
+
+const goLiveMissingItems = [
+  "Gerçek Vega verisiyle karşılaştırmalı ürün/stok testi",
+  "Yedek alma ve geri yükleme gerçek test ortamı doğrulaması",
+  "Personel ile en az 1 günlük deneme kullanımı",
+  "Hatalı işlem geri alma / rollback prosedürü",
+  "Vega'dan bağımsız rapor doğrulama",
+  "Yetki ve kullanıcı rol testleri",
+  "El terminaliyle gerçek barkod/stok sayım testi",
 ];
 
 const goLiveChecklistGroups = [
@@ -44,6 +54,12 @@ const goLiveChecklistGroups = [
 ];
 
 const versionHistoryRows = [
+  {
+    version: "v1.13.6",
+    title: "Proje olgunluk oranlarını güncelleme ve canlıya geçiş eksik listesi",
+    area: "Ayarlar",
+    description: "Proje olgunluk oranları güncellendi ve canlıya geçiş öncesi eksik ana başlıklar görünür hale getirildi.",
+  },
   {
     version: "v1.13.5",
     title: "Son sürüm geçmişi güncelleme ve yedek test kontrol geçmişi",
@@ -85,12 +101,6 @@ const versionHistoryRows = [
     title: "Canlı test hata notu ve geri bildirim alanı",
     area: "Ayarlar",
     description: "Canlı testte hata görülürse not alınacak bilgiler için sade bir şablon eklendi.",
-  },
-  {
-    version: "v1.11.8",
-    title: "Ayarlar ekranı canlı test rehberi",
-    area: "Ayarlar",
-    description: "Canlı test sırasında izlenecek kontrol sırası kullanıcıya gösterildi.",
   },
 ];
 
@@ -224,6 +234,19 @@ export default function SystemStatusPanel() {
               <strong>{row.value}</strong>
             </div>
           ))}
+        </div>
+
+        <div className="go-live-missing-panel">
+          <h3>Canlıya Geçiş İçin Eksik Ana Başlıklar</h3>
+          <ul>
+            {goLiveMissingItems.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+          <p>
+            Bu liste yalnızca canlıya geçiş hazırlığını takip etmek için hazırlanmıştır. Gerçek veri işlemi veya sistem
+            değişikliği yapmaz.
+          </p>
         </div>
       </div>
 
