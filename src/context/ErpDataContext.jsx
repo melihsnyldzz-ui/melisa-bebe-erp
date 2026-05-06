@@ -42,6 +42,7 @@ export function ErpDataProvider({ children }) {
   const [priceLists, setPriceLists] = useState([]);
   const [priceListItems, setPriceListItems] = useState([]);
   const [documentNumbers, setDocumentNumbers] = useState([]);
+  const [importLogs, setImportLogs] = useState([]);
   const [appSettings, setAppSettings] = useState(fallbackAppSettings);
 
   useEffect(() => {
@@ -497,13 +498,20 @@ export function ErpDataProvider({ children }) {
     if (importPayload.importType === "customers") setCustomers((currentCustomers) => [...records, ...currentCustomers]);
     if (importPayload.importType === "suppliers") setSuppliers((currentSuppliers) => [...records, ...currentSuppliers]);
 
-    const record = buildImportResult({
-      importType: importPayload.importType,
-      totalRows: importPayload.rows.length,
-      insertedCount: records.length,
-      skippedCount: 0,
-      errors: [],
-    });
+    const record = {
+      ...buildImportResult({
+        importType: importPayload.importType,
+        totalRows: importPayload.totalRows || importPayload.rows.length,
+        insertedCount: records.length,
+        skippedCount: importPayload.errorCount || 0,
+        errors: [],
+      }),
+      importRef: importPayload.importRef,
+      warningCount: importPayload.warningCount || 0,
+      errorCount: importPayload.errorCount || 0,
+      status: "success",
+    };
+    setImportLogs((currentLogs) => [{ ...record, id: Date.now(), summaryJson: JSON.stringify(record) }, ...currentLogs]);
 
     return { ok: true, data: record, record };
   }
@@ -582,6 +590,7 @@ export function ErpDataProvider({ children }) {
       priceLists,
       priceListItems,
       documentNumbers,
+      importLogs,
       appSettings,
       savePurchaseSlip,
       saveSalesSlip,
@@ -617,6 +626,7 @@ export function ErpDataProvider({ children }) {
       customers,
       documentNumbers,
       exchangeRates,
+      importLogs,
       payments,
       priceListItems,
       priceLists,
@@ -653,6 +663,7 @@ export function ErpDataProvider({ children }) {
     setPriceLists(data.priceLists || []);
     setPriceListItems(data.priceListItems || []);
     setDocumentNumbers(data.documentNumbers || []);
+    setImportLogs(data.importLogs || []);
     setAppSettings(data.appSettings || fallbackAppSettings);
   }
 }

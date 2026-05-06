@@ -112,6 +112,7 @@ function registerErpHandlers() {
   ipcMain.handle("erp:get-all-price-lists", () => repositories.getAllPriceLists());
   ipcMain.handle("erp:get-all-price-list-items", () => repositories.getAllPriceListItems());
   ipcMain.handle("erp:get-all-document-numbers", () => repositories.getAllDocumentNumbers());
+  ipcMain.handle("erp:get-all-import-logs", () => repositories.getAllImportLogs());
   ipcMain.handle("erp:save-purchase-slip", (_event, payload) => repositories.savePurchaseSlip(payload));
   ipcMain.handle("erp:save-sales-slip", (_event, payload) => repositories.saveSalesSlip(payload));
   ipcMain.handle("erp:save-collection", (_event, payload) => repositories.saveCollection(payload));

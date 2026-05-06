@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.9.6";
-export const APP_STAGE = "Onaylı Excel içe aktarma";
+export const APP_VERSION = "v1.9.7";
+export const APP_STAGE = "Excel import güvenlik ve geçmiş kaydı";

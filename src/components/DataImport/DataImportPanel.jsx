@@ -4,9 +4,7 @@ import { IMPORT_TYPES } from "../../data/importTemplates.js";
 import { useErpData } from "../../context/ErpDataContext.jsx";
 import {
   buildApplyImportPayload,
-  buildImportResult,
   buildApplicableImportRows,
-  getImportTypeLabel,
   validateApplyImportPayload,
 } from "../../utils/importApplyUtils.js";
 import {
@@ -17,11 +15,13 @@ import {
 } from "../../utils/importPreviewUtils.js";
 import ColumnMappingPanel from "./ColumnMappingPanel.jsx";
 import ImportConfirmModal from "./ImportConfirmModal.jsx";
+import ImportHistoryPanel from "./ImportHistoryPanel.jsx";
 import ImportPreviewTable from "./ImportPreviewTable.jsx";
+import ImportResultPanel from "./ImportResultPanel.jsx";
 import ImportTypeSelector from "./ImportTypeSelector.jsx";
 
 export default function DataImportPanel() {
-  const { appSettings, applyDataImport } = useErpData();
+  const { appSettings, applyDataImport, importLogs } = useErpData();
   const [importType, setImportType] = useState("products");
   const [headers, setHeaders] = useState([]);
   const [rows, setRows] = useState([]);
@@ -32,9 +32,12 @@ export default function DataImportPanel() {
   const [isImporting, setIsImporting] = useState(false);
   const [importError, setImportError] = useState("");
   const [lastImportResult, setLastImportResult] = useState(null);
+  const [appliedPayloadHash, setAppliedPayloadHash] = useState("");
 
   const preview = useMemo(() => buildImportPreview({ importType, mapping, rows }), [importType, mapping, rows]);
   const importableRows = useMemo(() => buildApplicableImportRows(preview.rows), [preview.rows]);
+  const currentImportPayload = useMemo(() => buildApplyImportPayload({ importType, previewRows: preview.rows }), [importType, preview.rows]);
+  const isCurrentPayloadApplied = Boolean(appliedPayloadHash && appliedPayloadHash === currentImportPayload.payloadHash);
 
   function changeImportType(nextImportType) {
     setImportType(nextImportType);
@@ -42,6 +45,7 @@ export default function DataImportPanel() {
     setMapping(nextMapping);
     setPayload(null);
     setLastImportResult(null);
+    setAppliedPayloadHash("");
     setMessage(null);
   }
 
@@ -69,6 +73,7 @@ export default function DataImportPanel() {
     setMapping(buildInitialColumnMapping(parsed.headers, importType));
     setPayload(null);
     setLastImportResult(null);
+    setAppliedPayloadHash("");
     setMessage(
       parsed.rows.length
         ? { type: "success", text: successMessage }
@@ -80,6 +85,7 @@ export default function DataImportPanel() {
     setMapping((currentMapping) => ({ ...currentMapping, [field]: sourceColumn }));
     setPayload(null);
     setLastImportResult(null);
+    setAppliedPayloadHash("");
   }
 
   function preparePayload() {
@@ -94,6 +100,10 @@ export default function DataImportPanel() {
       setMessage({ type: "error", text: validationError });
       return;
     }
+    if (appliedPayloadHash && appliedPayloadHash === importPayload.payloadHash) {
+      setMessage({ type: "error", text: "Bu aktarım zaten uygulandı. Yeni aktarım başlatın veya veriyi değiştirin." });
+      return;
+    }
 
     setImportError("");
     setIsConfirmOpen(true);
@@ -106,6 +116,10 @@ export default function DataImportPanel() {
       setImportError(validationError);
       return;
     }
+    if (appliedPayloadHash && appliedPayloadHash === importPayload.payloadHash) {
+      setImportError("Bu aktarım zaten uygulandı. Yeni aktarım başlatın veya veriyi değiştirin.");
+      return;
+    }
 
     setIsImporting(true);
     const result = await applyDataImport(importPayload);
@@ -116,20 +130,10 @@ export default function DataImportPanel() {
       return;
     }
 
-    const record = {
-      ...buildImportResult({
-        importType,
-        totalRows: preview.summary.totalRows,
-        insertedCount: importPayload.rows.length,
-        skippedCount: preview.summary.errorRows,
-        errors: [],
-      }),
-      ...(result.record || {}),
-      totalRows: preview.summary.totalRows,
-      skippedCount: preview.summary.errorRows,
-    };
+    const record = result.record || {};
     setLastImportResult(record);
-    setMessage({ type: "success", text: `${record.insertedCount} satır başarıyla içe aktarıldı.` });
+    setAppliedPayloadHash(importPayload.payloadHash);
+    setMessage({ type: "success", text: `${record.insertedCount} satır başarıyla içe aktarıldı. Referans: ${record.importRef}` });
     setIsConfirmOpen(false);
     setImportError("");
   }
@@ -181,10 +185,20 @@ export default function DataImportPanel() {
             <FileJson size={18} />
             İçe Aktarma Payload’ını Hazırla
           </button>
-          <button className="primary-action" type="button" onClick={openConfirmModal} disabled={importableRows.length === 0 || isImporting}>
+          <button
+            className="primary-action"
+            type="button"
+            onClick={openConfirmModal}
+            disabled={importableRows.length === 0 || isImporting || isCurrentPayloadApplied}
+          >
             <Upload size={18} />
             İçe Aktarmayı Onayla
           </button>
+          {appliedPayloadHash && (
+            <button className="secondary-action" type="button" onClick={startNewImport}>
+              Yeni Aktarım Başlat
+            </button>
+          )}
         </div>
         {payload ? (
           <pre className="stock-count-report-preview">{JSON.stringify(payload, null, 2)}</pre>
@@ -193,20 +207,8 @@ export default function DataImportPanel() {
         )}
       </section>
 
-      {lastImportResult && (
-        <section className="table-panel import-result-panel">
-          <div className="section-heading">
-            <h2>Son Import Sonucu</h2>
-          </div>
-          <div className="stock-count-report-summary">
-            <ResultMetric label="Import Tipi" value={getImportTypeLabel(lastImportResult.importType)} />
-            <ResultMetric label="Toplam Satır" value={lastImportResult.totalRows} />
-            <ResultMetric label="Eklenen Satır" value={lastImportResult.insertedCount} />
-            <ResultMetric label="Atlanan / Hatalı" value={lastImportResult.skippedCount} />
-            <ResultMetric label="Tarih" value={new Date(lastImportResult.createdAt).toLocaleString("tr-TR")} />
-          </div>
-        </section>
-      )}
+      <ImportResultPanel result={lastImportResult} />
+      <ImportHistoryPanel logs={importLogs} />
 
       <ImportConfirmModal
         open={isConfirmOpen}
@@ -224,6 +226,17 @@ export default function DataImportPanel() {
       />
     </>
   );
+
+  function startNewImport() {
+    setHeaders([]);
+    setRows([]);
+    setMapping({});
+    setPayload(null);
+    setLastImportResult(null);
+    setAppliedPayloadHash("");
+    setImportError("");
+    setMessage({ type: "success", text: "Yeni aktarım için ekran temizlendi." });
+  }
 }
 
 function ImportSummaryCard({ label, value }) {
@@ -232,14 +245,5 @@ function ImportSummaryCard({ label, value }) {
       <span>{label}</span>
       <strong>{value}</strong>
     </article>
-  );
-}
-
-function ResultMetric({ label, value }) {
-  return (
-    <div className="stock-count-report-metric">
-      <span>{label}</span>
-      <strong>{value}</strong>
-    </div>
   );
 }

@@ -50,7 +50,7 @@ export default function ImportConfirmModal({
         </div>
 
         <p className="form-note stock-adjustment-warning">
-          Bu işlem veritabanına kayıt ekler. Hatalı satırlar aktarılmayacak, uyarılı satırlar onayınızla aktarılacaktır.
+          Bu işlem veritabanına yeni kayıtlar ekler. Hatalı satırlar aktarılmayacak, uyarılı satırlar onayınızla aktarılacaktır.
         </p>
         <p className="form-note stock-adjustment-backup-note">
           İşlem öncesinde veritabanı yedeği almanız önerilir. {lastBackupAt ? `Son yedek: ${new Date(lastBackupAt).toLocaleDateString("tr-TR")}` : "Son yedek bilgisi bulunamadı."}

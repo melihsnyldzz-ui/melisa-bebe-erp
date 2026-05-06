@@ -41,6 +41,7 @@ function createRepositories(db, options = {}) {
     getAllPriceLists: () => rowsToBooleanFields(db.prepare("SELECT * FROM price_lists ORDER BY isDefault DESC, id ASC").all()),
     getAllPriceListItems: () => rowsToBooleanFields(db.prepare("SELECT * FROM price_list_items ORDER BY id DESC").all()),
     getAllDocumentNumbers: () => rowsToBooleanFields(db.prepare("SELECT * FROM document_numbers ORDER BY documentType ASC").all()),
+    getAllImportLogs: () => db.prepare("SELECT * FROM data_import_logs ORDER BY id DESC LIMIT 20").all(),
     getAppSettings: () => getAppSettings(db),
     recordBackupResult: (result) => recordBackupResult(db, result),
     updateAppSetting: (key, value) => wrapMutation(() => updateAppSettingTx(db, key, value), db),
@@ -89,6 +90,7 @@ function getInitialErpData(db) {
     priceLists: rowsToBooleanFields(db.prepare("SELECT * FROM price_lists ORDER BY isDefault DESC, id ASC").all()),
     priceListItems: rowsToBooleanFields(db.prepare("SELECT * FROM price_list_items ORDER BY id DESC").all()),
     documentNumbers: rowsToBooleanFields(db.prepare("SELECT * FROM document_numbers ORDER BY documentType ASC").all()),
+    importLogs: db.prepare("SELECT * FROM data_import_logs ORDER BY id DESC LIMIT 20").all(),
     appSettings: getAppSettings(db),
   };
 }
@@ -510,14 +512,25 @@ function applyDataImportTx(db, payload) {
   assertDataImportDuplicates(db, payload);
   payload.rows.forEach((row) => insertFns[payload.importType](row));
 
-  return {
+  const record = {
+    importRef: payload.importRef || buildImportReference(now),
     importType: payload.importType,
-    totalRows: payload.rows.length,
+    totalRows: payload.totalRows || payload.rows.length,
     insertedCount: payload.rows.length,
-    skippedCount: 0,
+    skippedCount: payload.errorCount || 0,
+    errorCount: payload.errorCount || 0,
+    warningCount: payload.warningCount || 0,
+    status: "success",
     errors: [],
     createdAt: now,
   };
+
+  db.prepare(`
+    INSERT INTO data_import_logs (importRef, importType, totalRows, insertedCount, skippedCount, errorCount, warningCount, status, createdAt, summaryJson)
+    VALUES (@importRef, @importType, @totalRows, @insertedCount, @skippedCount, @errorCount, @warningCount, @status, @createdAt, @summaryJson)
+  `).run({ ...record, summaryJson: JSON.stringify(record) });
+
+  return record;
 }
 
 function addProductTx(db, payload) {
@@ -655,6 +668,7 @@ function wrapMutation(fn, db) {
 function mapDatabaseError(error) {
   const message = error.message || "Veritabanı işlemi tamamlanamadı.";
   if (message.includes("sales_slips.slipNo") || message.includes("purchase_slips.slipNo")) return "Fiş numarası çakıştı. Lütfen tekrar kaydedin.";
+  if (message.includes("data_import_logs.importRef")) return "Import referansı çakıştı. Lütfen tekrar deneyin.";
   if (message.includes("products.barcode")) return "Bu barkod başka bir üründe kullanılıyor.";
   if (message.includes("products.code")) return "Bu ürün kodu başka bir üründe kullanılıyor.";
   if (message.includes("products.variantCode")) return "Bu varyant kodu başka bir üründe kullanılıyor.";
@@ -937,6 +951,11 @@ function buildStockCountReference(value = new Date().toISOString()) {
   const datePart = digits.slice(0, 8);
   const timePart = digits.slice(8, 14);
   return `SAYIM-${datePart}-${timePart}`;
+}
+
+function buildImportReference(value = new Date().toISOString()) {
+  const digits = value.replace(/\D/g, "");
+  return `IMPORT-${digits.slice(0, 8)}-${digits.slice(8, 14)}`;
 }
 
 function parseItemsJson(value) {

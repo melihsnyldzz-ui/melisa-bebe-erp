@@ -356,6 +356,20 @@ function runMigrations(db) {
       createdAt TEXT
     );
 
+    CREATE TABLE IF NOT EXISTS data_import_logs (
+      id INTEGER PRIMARY KEY,
+      importRef TEXT UNIQUE,
+      importType TEXT,
+      totalRows INTEGER DEFAULT 0,
+      insertedCount INTEGER DEFAULT 0,
+      skippedCount INTEGER DEFAULT 0,
+      errorCount INTEGER DEFAULT 0,
+      warningCount INTEGER DEFAULT 0,
+      status TEXT,
+      createdAt TEXT,
+      summaryJson TEXT
+    );
+
     CREATE INDEX IF NOT EXISTS idx_current_account_movements_account
       ON current_account_movements(accountId, movementDate);
 
@@ -367,6 +381,9 @@ function runMigrations(db) {
 
     CREATE INDEX IF NOT EXISTS idx_price_list_items_product
       ON price_list_items(productId, priceListId);
+
+    CREATE INDEX IF NOT EXISTS idx_data_import_logs_created
+      ON data_import_logs(createdAt);
   `);
 
   ensureColumn(db, "collections", "status", "TEXT DEFAULT 'Kayıtlı'");

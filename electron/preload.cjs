@@ -20,6 +20,7 @@ contextBridge.exposeInMainWorld("electronAPI", {
     getAllPriceLists: () => ipcRenderer.invoke("erp:get-all-price-lists"),
     getAllPriceListItems: () => ipcRenderer.invoke("erp:get-all-price-list-items"),
     getAllDocumentNumbers: () => ipcRenderer.invoke("erp:get-all-document-numbers"),
+    getAllImportLogs: () => ipcRenderer.invoke("erp:get-all-import-logs"),
     savePurchaseSlip: (payload) => ipcRenderer.invoke("erp:save-purchase-slip", payload),
     saveSalesSlip: (payload) => ipcRenderer.invoke("erp:save-sales-slip", payload),
     saveCollection: (payload) => ipcRenderer.invoke("erp:save-collection", payload),
