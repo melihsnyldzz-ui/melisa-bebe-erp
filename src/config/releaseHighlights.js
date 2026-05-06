@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.14.5";
+export const currentReleaseVersion = "v1.14.6";
 
-export const currentReleaseTitle = "Sol üst yönetim paneli altında güncel sürüm rozeti";
+export const currentReleaseTitle = "Sol üst sürüm rozetini kısaltma ve okunabilirlik iyileştirmesi";
 
 export const updatedSectionIds = ["latest-version-history", "project-maturity", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Güncel sürüm bilgisi sol üst yönetim paneli alanına eklendi",
-  "Yönetim paneli altında açık mavi sürüm rozeti gösterilmeye başlandı",
-  "Sürüm bilgisi tüm sayfalarda daha kolay görünür hale getirildi",
+  "Sol üst sürüm rozeti daha kompakt hale getirildi",
+  "Tam sürüm açıklaması erişilebilir bilgi olarak korundu",
+  "Sidebar görünümü daha sade ve okunaklı hale getirildi",
 ];
 
 export const releaseJumpLinks = [

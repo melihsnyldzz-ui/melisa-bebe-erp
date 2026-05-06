@@ -35,8 +35,9 @@ export default function Sidebar({ activeModule, onModuleChange }) {
         <div>
           <strong>Melisa Bebe ERP</strong>
           <span>Yönetim paneli</span>
-          <span className="sidebar-version-badge">
-            {APP_VERSION} · {APP_STAGE}
+          <span className="sidebar-version-badge" title={`${APP_VERSION} · ${APP_STAGE}`} aria-label={`${APP_VERSION} · ${APP_STAGE}`}>
+            <strong>{APP_VERSION}</strong>
+            <small>Güncel sürüm</small>
           </span>
         </div>
       </div>

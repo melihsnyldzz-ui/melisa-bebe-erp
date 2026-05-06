@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.14.6",
+    title: "Sol üst sürüm rozetini kısaltma ve okunabilirlik iyileştirmesi",
+    area: "Genel Layout / Ayarlar",
+    description: "Sol üst sürüm rozeti daha kompakt hale getirildi ve tam sürüm açıklaması erişilebilir bilgi olarak korundu.",
+  },
+  {
     version: "v1.14.5",
     title: "Sol üst yönetim paneli altında güncel sürüm rozeti",
     area: "Genel Layout / Ayarlar",
@@ -166,12 +172,6 @@ const versionHistoryRows = [
     title: "Canlı test checklist sayfası ve personel deneme notları",
     area: "Ayarlar",
     description: "Personelin canlı test sırasında takip edeceği checklist ve deneme notları şablonu eklendi.",
-  },
-  {
-    version: "v1.13.8",
-    title: "Vega karşılaştırma test sonuç şablonu ve hata kayıt formatı",
-    area: "Ayarlar",
-    description: "Vega karşılaştırma testleri için sonuç şablonu ve hata kayıt formatı eklendi.",
   },
 ];
 
