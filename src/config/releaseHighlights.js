@@ -5,9 +5,9 @@ export const currentReleaseTitle = "Vega Read-only Operasyon Merkezi";
 export const updatedSectionIds = ["latest-version-history", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Vega Import Önizleme ekranı read-only operasyon merkezi olarak yeniden düzenlendi",
-  "Dağınık hazırlık panelleri tek bakışta anlaşılır operasyon, güvenlik ve saha kontrol gruplarına ayrıldı",
-  "Gerçek Vega bağlantısı, SQL/ODBC, DB okuma, query, import ve veri yazma eklenmeden güvenli hazırlık süreci korundu",
+  "Vega Import Önizleme ekranı read-only operasyon merkezi olarak yeniden düzenlendi.",
+  "Dağınık hazırlık panelleri operasyon, güvenlik, saha kontrolü ve sonraki faz gruplarına ayrıldı.",
+  "Gerçek Vega bağlantısı, SQL/ODBC, DB okuma, query, import ve veri yazma eklenmeden güvenli hazırlık süreci korundu.",
 ];
 
 export const releaseJumpLinks = [

@@ -139,7 +139,7 @@ export default function VegaImportPreview() {
           <Database size={18} />
           <div>
             <h2>Doğrulanmış Vega Kaynak Bilgisi</h2>
-            <p>Mapping bilgileri yalnızca teknik referanstır. Bu bilgiler query çalıştırmaz, bağlantı açmaz ve canlı veri çekmez.</p>
+            <p>Mapping bilgileri yalnızca teknik referanstır. Bu bilgiler query çalıştırmaz ve bağlantı açmaz.</p>
           </div>
         </div>
         <div className="vega-import-map-grid">
