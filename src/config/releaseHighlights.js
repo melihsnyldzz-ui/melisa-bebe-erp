@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.20.6";
+export const currentReleaseVersion = "v1.20.7";
 
-export const currentReleaseTitle = "Vega Import Önizleme build stabilizasyonu ve sürüm geçmişi düzeltmesi";
+export const currentReleaseTitle = "Vega Import Önizleme güvenlik kilidi ve import butonsuz akış kontrolü";
 
 export const updatedSectionIds = ["latest-version-history", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Vega Import Önizleme altyapısı sonrası build kontrolü tamamlandı",
-  "Ayarlar ekranındaki son sürüm geçmişi v1.20.6 ve v1.20.5 satırlarıyla düzeltildi",
-  "Vega Import Önizleme güvenli ve pasif menü bağlantısıyla görünür hale getirildi",
+  "Vega Import Önizleme ekranına Import Kilidi Aktif güvenlik kutusu eklendi",
+  "Canlı bağlantı, SQL/ODBC okuma, ERP yazma ve import işlemi kapalı durumları görünür hale getirildi",
+  "Import başlatıyor gibi anlaşılabilecek metin ve akışlar pasif önizleme mantığıyla netleştirildi",
 ];
 
 export const releaseJumpLinks = [
