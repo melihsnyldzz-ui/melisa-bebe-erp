@@ -1,4 +1,5 @@
 import { ShieldCheck } from "lucide-react";
+import ReleaseHighlightsPanel from "../Common/ReleaseHighlightsPanel.jsx";
 import { APP_STAGE, APP_VERSION } from "../../config/appVersion.js";
 import {
   currentReleaseVersion,
@@ -124,6 +125,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.14.3",
+    title: "Yenilik merkezi panelini tüm sayfalara yaymaya hazırlık",
+    area: "Ayarlar / Ortak Bileşen",
+    description: "Bu Sürümde Yenilenen Alanlar paneli tekrar kullanılabilir ortak bileşene taşındı ve sayfa bazlı yenilik yapısı için hazırlık eklendi.",
+  },
+  {
     version: "v1.14.2",
     title: "Yenilik etiketlerini sayfa bazlı merkezi yönetme sistemi",
     area: "Ayarlar",
@@ -164,12 +171,6 @@ const versionHistoryRows = [
     title: "Proje olgunluk oranlarını güncelleme ve canlıya geçiş eksik listesi",
     area: "Ayarlar",
     description: "Proje olgunluk oranları güncellendi ve canlıya geçiş öncesi eksik ana başlıklar görünür hale getirildi.",
-  },
-  {
-    version: "v1.13.5",
-    title: "Son sürüm geçmişi güncelleme ve yedek test kontrol geçmişi",
-    area: "Ayarlar",
-    description: "Son Sürüm Geçmişi v1.13.x kayıtlarıyla güncellendi ve yedek test kontrol geçmişi görünür hale getirildi.",
   },
 ];
 
@@ -216,29 +217,7 @@ export default function SystemStatusPanel() {
         bilgilendirme amaçlıdır; herhangi bir ayar kaydetmez.
       </p>
 
-      <div className="release-highlights-panel">
-        <div>
-          <h3>Bu Sürümde Yenilenen Alanlar</h3>
-          <p>
-            Sol menüdeki mavi nokta yenilik olan sayfayı gösterir. Bu panel ise sayfa içindeki yeni veya güncellenen
-            bölümleri bulmanı kolaylaştırır.
-          </p>
-        </div>
-
-        <ul className="release-highlight-list">
-          {releaseHighlightItems.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-
-        <nav className="release-jump-links" aria-label="Bu sürümde yenilenen alanlara hızlı geçiş">
-          {releaseJumpLinks.map((link) => (
-            <a href={`#${link.id}`} key={link.id}>
-              {link.label}
-            </a>
-          ))}
-        </nav>
-      </div>
+      <ReleaseHighlightsPanel releaseHighlightItems={releaseHighlightItems} releaseJumpLinks={releaseJumpLinks} />
 
       <div className="system-status-focus-card">
         <span>Bu Sürümde Test Edilecek Alan</span>

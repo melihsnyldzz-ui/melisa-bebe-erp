@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.14.2";
+export const currentReleaseVersion = "v1.14.3";
 
-export const currentReleaseTitle = "Yenilik etiketlerini sayfa bazlı merkezi yönetme sistemi";
+export const currentReleaseTitle = "Yenilik merkezi panelini tüm sayfalara yaymaya hazırlık";
 
 export const updatedSectionIds = ["latest-version-history", "project-maturity", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Yenilik bilgileri merkezi konfigürasyona taşındı",
-  "YENİ etiketleri tek yerden yönetilebilir hale getirildi",
-  "Hızlı geçiş linkleri merkezi listeyle beslenecek hale getirildi",
+  "Bu Sürümde Yenilenen Alanlar paneli ortak bileşene taşındı",
+  "Sayfa bazlı yenilik yapısı için merkezi hazırlık eklendi",
+  "Ayarlar sayfasındaki mevcut görünüm korunarak tekrar kullanılabilir yapı hazırlandı",
 ];
 
 export const releaseJumpLinks = [
@@ -15,3 +15,11 @@ export const releaseJumpLinks = [
   { id: "project-maturity", label: "Proje Olgunluk Bilgisi'ne git" },
   { id: "live-test-center", label: "Canlı Test Merkezi'ne git" },
 ];
+
+export const releaseHighlightsByPage = {
+  settings: {
+    updatedSectionIds,
+    releaseHighlightItems,
+    releaseJumpLinks,
+  },
+};
