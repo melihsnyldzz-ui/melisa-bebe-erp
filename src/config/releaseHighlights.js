@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.17.0";
+export const currentReleaseVersion = "v1.17.1";
 
-export const currentReleaseTitle = "Dashboard ticari karar ekranı güçlendirme";
+export const currentReleaseTitle = "Dashboard karar notlarını daha isabetli hale getirme ve öncelik sırası düzeltmesi";
 
 export const updatedSectionIds = ["latest-version-history", "project-maturity", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Dashboard’a seçili dönem için Patron Notu eklendi",
-  "Risk, müşteri ve ürün alanları kısa ticari yorumlarla güçlendirildi",
-  "Dövizli Ticaret Özeti’ne kur çevrimi yapmadan bilgilendirici Döviz Notu eklendi",
+  "Patron Notu ticari öncelik sırasına göre daha isabetli hale getirildi",
+  "Döviz Notu ve risk aksiyonları daha kısa ve okunur hale getirildi",
+  "Dashboard karar sinyalleri patron kokpitine daha uygun şekilde dengelendi",
 ];
 
 export const releaseJumpLinks = [

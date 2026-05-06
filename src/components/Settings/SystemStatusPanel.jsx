@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.17.1",
+    title: "Dashboard karar notlarını daha isabetli hale getirme ve öncelik sırası düzeltmesi",
+    area: "Dashboard",
+    description: "Dashboard’daki Patron Notu, Döviz Notu ve risk aksiyonları daha kısa, daha öncelikli ve patron kokpitine uygun karar sinyalleri verecek şekilde düzenlendi.",
+  },
+  {
     version: "v1.17.0",
     title: "Dashboard ticari karar ekranı güçlendirme",
     area: "Dashboard",
