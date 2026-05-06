@@ -950,6 +950,14 @@ button {
   font-size: 1.5rem;
 }
 
+.import-confirm-modal {
+  width: min(820px, 100%);
+}
+
+.import-confirm-summary {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
 .import-preview-panel {
   margin-bottom: 14px;
 }
@@ -2510,6 +2518,7 @@ tr:last-child td {
   .stock-count-history-filters,
   .stock-count-report-summary,
   .import-type-grid,
+  .import-confirm-summary,
   .column-mapping-grid,
   .import-summary-grid,
   .settings-grid {

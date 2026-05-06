@@ -9,6 +9,7 @@ import {
   stockMovements as initialStockMovements,
   suppliers as initialSuppliers,
 } from "../data/mockData.js";
+import { buildImportResult, validateApplyImportPayload } from "../utils/importApplyUtils.js";
 import { buildStockCountReference, validateStockAdjustmentPayload } from "../utils/stockAdjustmentUtils.js";
 
 const ErpDataContext = createContext(null);
@@ -475,6 +476,38 @@ export function ErpDataProvider({ children }) {
     return { ok: true, data: { referenceNo, adjustedCount: movementRows.length }, record: { referenceNo, adjustedCount: movementRows.length } };
   }
 
+  async function applyDataImport(importPayload) {
+    const erp = getDesktopErp();
+    if (erp?.applyDataImport) {
+      const result = await erp.applyDataImport(importPayload);
+      if (result.ok) applyInitialData(result.data);
+      return result;
+    }
+
+    const validationError = validateApplyImportPayload(importPayload);
+    if (validationError) return { ok: false, error: validationError };
+
+    const duplicateError = getMemoryImportDuplicateError(importPayload, { products, customers, suppliers });
+    if (duplicateError) return { ok: false, error: duplicateError };
+
+    const now = new Date().toISOString();
+    const records = importPayload.rows.map((row, index) => buildImportRecord(importPayload.importType, row.values, now, index));
+
+    if (importPayload.importType === "products") setProducts((currentProducts) => [...records, ...currentProducts]);
+    if (importPayload.importType === "customers") setCustomers((currentCustomers) => [...records, ...currentCustomers]);
+    if (importPayload.importType === "suppliers") setSuppliers((currentSuppliers) => [...records, ...currentSuppliers]);
+
+    const record = buildImportResult({
+      importType: importPayload.importType,
+      totalRows: importPayload.rows.length,
+      insertedCount: records.length,
+      skippedCount: 0,
+      errors: [],
+    });
+
+    return { ok: true, data: record, record };
+  }
+
   async function exportDatabaseBackup(targetDirectory) {
     const erp = getDesktopErp();
     if (!erp?.exportDatabaseBackup) {
@@ -568,6 +601,7 @@ export function ErpDataProvider({ children }) {
       addSupplier,
       toggleSupplierStatus,
       applyStockCountAdjustment,
+      applyDataImport,
       exportDatabaseBackup,
       refreshAppSettings,
       startLiveMode,
@@ -784,4 +818,134 @@ function buildSalesCancelStockMovements(slip, products) {
       createdBy: "İptal",
     };
   });
+}
+
+function buildImportRecord(importType, values, now, index) {
+  const baseRecord = {
+    id: Date.now() + index,
+    isActive: true,
+    createdAt: now,
+    updatedAt: now,
+  };
+
+  if (importType === "products") {
+    return {
+      ...baseRecord,
+      barcode: values.barcode || "",
+      code: values.code || "",
+      modelCode: values.modelCode || "",
+      variantCode: values.variantCode || "",
+      name: values.name || "",
+      brand: values.brand || "",
+      season: values.season || "",
+      ageGroup: values.ageGroup || "",
+      gender: values.gender || "",
+      category: values.category || "",
+      size: values.size || "",
+      color: values.color || "",
+      purchasePrice: parseImportNumber(values.purchasePrice),
+      salePrice: parseImportNumber(values.salePrice),
+      stockQuantity: parseImportNumber(values.stockQuantity),
+      criticalStockLevel: parseImportNumber(values.criticalStockLevel),
+      supplier: values.supplier || "",
+      imageUrl: "",
+    };
+  }
+
+  if (importType === "customers") {
+    const openingBalance = parseImportNumber(values.openingBalance);
+    return {
+      ...baseRecord,
+      name: values.name || "",
+      companyName: values.companyName || "",
+      phone: values.phone || "",
+      whatsapp: values.whatsapp || "",
+      country: values.country || "",
+      city: values.city || "",
+      customerType: values.customerType || "",
+      openingBalance,
+      totalSales: 0,
+      totalPayments: 0,
+      currentBalance: openingBalance,
+      riskLimit: parseImportNumber(values.riskLimit),
+      lastPurchaseDate: "",
+      notes: values.notes || "",
+    };
+  }
+
+  const openingBalance = parseImportNumber(values.openingBalance);
+  return {
+    ...baseRecord,
+    name: values.name || "",
+    companyTitle: values.companyTitle || "",
+    phone: values.phone || "",
+    whatsapp: values.whatsapp || "",
+    contactPerson: values.contactPerson || "",
+    city: values.city || "",
+    country: values.country || "",
+    address: values.address || "",
+    taxInfo: values.taxInfo || "",
+    iban: values.iban || "",
+    openingBalance,
+    totalPurchases: 0,
+    totalPayments: 0,
+    currentBalance: openingBalance,
+    lastTransactionDate: "",
+    notes: values.notes || "",
+  };
+}
+
+function getMemoryImportDuplicateError(importPayload, currentData) {
+  if (importPayload.importType === "products") {
+    for (const row of importPayload.rows) {
+      const values = row.values;
+      if (values.barcode && currentData.products.some((product) => normalizeImportKey(product.barcode) === normalizeImportKey(values.barcode))) {
+        return "Bu barkod başka bir üründe kullanılıyor.";
+      }
+      if (values.code && currentData.products.some((product) => normalizeImportKey(product.code) === normalizeImportKey(values.code))) {
+        return "Bu ürün kodu başka bir üründe kullanılıyor.";
+      }
+      if (
+        values.variantCode &&
+        currentData.products.some((product) => normalizeImportKey(product.variantCode) === normalizeImportKey(values.variantCode))
+      ) {
+        return "Bu varyant kodu başka bir üründe kullanılıyor.";
+      }
+    }
+  }
+
+  if (importPayload.importType === "customers") {
+    for (const row of importPayload.rows) {
+      const values = row.values;
+      const hasDuplicate = currentData.customers.some(
+        (customer) =>
+          (values.phone && normalizeImportKey(customer.name) === normalizeImportKey(values.name) && normalizeImportKey(customer.phone) === normalizeImportKey(values.phone)) ||
+          (values.companyName && normalizeImportKey(customer.companyName) === normalizeImportKey(values.companyName)),
+      );
+      if (hasDuplicate) return "Bu müşteri bilgileri zaten kayıtlı görünüyor.";
+    }
+  }
+
+  if (importPayload.importType === "suppliers") {
+    for (const row of importPayload.rows) {
+      const values = row.values;
+      const hasDuplicate = currentData.suppliers.some(
+        (supplier) =>
+          normalizeImportKey(supplier.name) === normalizeImportKey(values.name) ||
+          (values.companyTitle && normalizeImportKey(supplier.companyTitle) === normalizeImportKey(values.companyTitle)),
+      );
+      if (hasDuplicate) return "Bu tedarikçi bilgileri zaten kayıtlı görünüyor.";
+    }
+  }
+
+  return "";
+}
+
+function parseImportNumber(value) {
+  const numberValue = Number(String(value || "0").replace(",", "."));
+  return Number.isFinite(numberValue) ? numberValue : 0;
+}
+
+function normalizeImportKey(value) {
+  return String(value || "").trim().toLocaleLowerCase("tr-TR");
 }

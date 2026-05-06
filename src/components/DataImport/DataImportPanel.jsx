@@ -1,6 +1,14 @@
 import { FileJson, FileText, Upload } from "lucide-react";
 import { useMemo, useState } from "react";
 import { IMPORT_TYPES } from "../../data/importTemplates.js";
+import { useErpData } from "../../context/ErpDataContext.jsx";
+import {
+  buildApplyImportPayload,
+  buildImportResult,
+  buildApplicableImportRows,
+  getImportTypeLabel,
+  validateApplyImportPayload,
+} from "../../utils/importApplyUtils.js";
 import {
   buildImportPayload,
   buildImportPreview,
@@ -8,25 +16,33 @@ import {
   parseDelimitedText,
 } from "../../utils/importPreviewUtils.js";
 import ColumnMappingPanel from "./ColumnMappingPanel.jsx";
+import ImportConfirmModal from "./ImportConfirmModal.jsx";
 import ImportPreviewTable from "./ImportPreviewTable.jsx";
 import ImportTypeSelector from "./ImportTypeSelector.jsx";
 
 export default function DataImportPanel() {
+  const { appSettings, applyDataImport } = useErpData();
   const [importType, setImportType] = useState("products");
   const [headers, setHeaders] = useState([]);
   const [rows, setRows] = useState([]);
   const [mapping, setMapping] = useState({});
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState(null);
   const [payload, setPayload] = useState(null);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [isImporting, setIsImporting] = useState(false);
+  const [importError, setImportError] = useState("");
+  const [lastImportResult, setLastImportResult] = useState(null);
 
   const preview = useMemo(() => buildImportPreview({ importType, mapping, rows }), [importType, mapping, rows]);
+  const importableRows = useMemo(() => buildApplicableImportRows(preview.rows), [preview.rows]);
 
   function changeImportType(nextImportType) {
     setImportType(nextImportType);
     const nextMapping = buildInitialColumnMapping(headers, nextImportType);
     setMapping(nextMapping);
     setPayload(null);
-    setMessage("");
+    setLastImportResult(null);
+    setMessage(null);
   }
 
   async function handleFileChange(event) {
@@ -38,7 +54,7 @@ export default function DataImportPanel() {
       loadCsvText(text, `${file.name} dosyası yüklendi.`);
     } catch (error) {
       console.error("CSV dosyası okunamadı:", error);
-      setMessage("Dosya okunamadı. CSV veya TXT dosyasını kontrol edin.");
+      setMessage({ type: "error", text: "Dosya okunamadı. CSV veya TXT dosyasını kontrol edin." });
     }
   }
 
@@ -52,17 +68,70 @@ export default function DataImportPanel() {
     setRows(parsed.rows);
     setMapping(buildInitialColumnMapping(parsed.headers, importType));
     setPayload(null);
-    setMessage(parsed.rows.length ? successMessage : "CSV boş görünüyor. Başlık ve satırları kontrol edin.");
+    setLastImportResult(null);
+    setMessage(
+      parsed.rows.length
+        ? { type: "success", text: successMessage }
+        : { type: "error", text: "CSV boş görünüyor. Başlık ve satırları kontrol edin." },
+    );
   }
 
   function updateMapping(field, sourceColumn) {
     setMapping((currentMapping) => ({ ...currentMapping, [field]: sourceColumn }));
     setPayload(null);
+    setLastImportResult(null);
   }
 
   function preparePayload() {
     setPayload(buildImportPayload({ importType, previewRows: preview.rows, summary: preview.summary }));
-    setMessage("İçe aktarma payload’ı hazırlandı. Gerçek kayıt işlemi bu sürümde yapılmaz.");
+    setMessage({ type: "success", text: "İçe aktarma payload’ı hazırlandı." });
+  }
+
+  function openConfirmModal() {
+    const importPayload = buildApplyImportPayload({ importType, previewRows: preview.rows });
+    const validationError = validateApplyImportPayload(importPayload);
+    if (validationError) {
+      setMessage({ type: "error", text: validationError });
+      return;
+    }
+
+    setImportError("");
+    setIsConfirmOpen(true);
+  }
+
+  async function confirmImport() {
+    const importPayload = buildApplyImportPayload({ importType, previewRows: preview.rows });
+    const validationError = validateApplyImportPayload(importPayload);
+    if (validationError) {
+      setImportError(validationError);
+      return;
+    }
+
+    setIsImporting(true);
+    const result = await applyDataImport(importPayload);
+    setIsImporting(false);
+
+    if (!result?.ok) {
+      setImportError(result?.error || "İçe aktarma sırasında hata oluştu. Hiçbir kayıt eklenmedi.");
+      return;
+    }
+
+    const record = {
+      ...buildImportResult({
+        importType,
+        totalRows: preview.summary.totalRows,
+        insertedCount: importPayload.rows.length,
+        skippedCount: preview.summary.errorRows,
+        errors: [],
+      }),
+      ...(result.record || {}),
+      totalRows: preview.summary.totalRows,
+      skippedCount: preview.summary.errorRows,
+    };
+    setLastImportResult(record);
+    setMessage({ type: "success", text: `${record.insertedCount} satır başarıyla içe aktarıldı.` });
+    setIsConfirmOpen(false);
+    setImportError("");
   }
 
   return (
@@ -85,9 +154,9 @@ export default function DataImportPanel() {
             Örnek Veri Yükle
           </button>
         </div>
-        {message && <p className="barcode-message barcode-message-success data-import-message">{message}</p>}
+        {message && <p className={`barcode-message barcode-message-${message.type} data-import-message`}>{message.text}</p>}
         <p className="form-note data-import-note">
-          Bu sürüm yalnızca içe aktarma önizlemesi hazırlar. Gerçek kayıt işlemi sonraki sürümde onaylı şekilde eklenecektir.
+          Hatalı satırlar içe aktarılmaz. Uyarılı satırlar yalnızca onayınızla veritabanına eklenir.
         </p>
       </section>
 
@@ -112,8 +181,9 @@ export default function DataImportPanel() {
             <FileJson size={18} />
             İçe Aktarma Payload’ını Hazırla
           </button>
-          <button className="secondary-action" type="button" disabled>
-            Gerçek Import Sonraki Sürümde
+          <button className="primary-action" type="button" onClick={openConfirmModal} disabled={importableRows.length === 0 || isImporting}>
+            <Upload size={18} />
+            İçe Aktarmayı Onayla
           </button>
         </div>
         {payload ? (
@@ -122,6 +192,36 @@ export default function DataImportPanel() {
           <p className="empty-table-text">Payload oluşturmak için veri yükleyip kolonları eşleştirin.</p>
         )}
       </section>
+
+      {lastImportResult && (
+        <section className="table-panel import-result-panel">
+          <div className="section-heading">
+            <h2>Son Import Sonucu</h2>
+          </div>
+          <div className="stock-count-report-summary">
+            <ResultMetric label="Import Tipi" value={getImportTypeLabel(lastImportResult.importType)} />
+            <ResultMetric label="Toplam Satır" value={lastImportResult.totalRows} />
+            <ResultMetric label="Eklenen Satır" value={lastImportResult.insertedCount} />
+            <ResultMetric label="Atlanan / Hatalı" value={lastImportResult.skippedCount} />
+            <ResultMetric label="Tarih" value={new Date(lastImportResult.createdAt).toLocaleString("tr-TR")} />
+          </div>
+        </section>
+      )}
+
+      <ImportConfirmModal
+        open={isConfirmOpen}
+        importType={importType}
+        summary={preview.summary}
+        importableCount={importableRows.length}
+        lastBackupAt={appSettings?.lastBackupAt}
+        isSaving={isImporting}
+        errorMessage={importError}
+        onCancel={() => {
+          setImportError("");
+          setIsConfirmOpen(false);
+        }}
+        onConfirm={confirmImport}
+      />
     </>
   );
 }
@@ -132,5 +232,14 @@ function ImportSummaryCard({ label, value }) {
       <span>{label}</span>
       <strong>{value}</strong>
     </article>
+  );
+}
+
+function ResultMetric({ label, value }) {
+  return (
+    <div className="stock-count-report-metric">
+      <span>{label}</span>
+      <strong>{value}</strong>
+    </div>
   );
 }

@@ -20,6 +20,7 @@ function createRepositories(db, options = {}) {
   const cancelCollectionTransaction = db.transaction((id) => cancelCollectionTx(db, id));
   const cancelPaymentTransaction = db.transaction((id) => cancelPaymentTx(db, id));
   const stockCountAdjustmentTransaction = db.transaction((payload) => applyStockCountAdjustmentTx(db, payload));
+  const dataImportTransaction = db.transaction((payload) => applyDataImportTx(db, payload));
 
   return {
     getAllProducts: () => rowsToBooleans(db.prepare("SELECT * FROM products ORDER BY id DESC").all()),
@@ -55,6 +56,7 @@ function createRepositories(db, options = {}) {
     cancelCollection: (id) => wrapMutation(() => cancelCollectionTransaction(id), db),
     cancelPayment: (id) => wrapMutation(() => cancelPaymentTransaction(id), db),
     applyStockCountAdjustment: (payload) => wrapMutation(() => stockCountAdjustmentTransaction(payload), db),
+    applyDataImport: (payload) => wrapMutation(() => dataImportTransaction(payload), db),
     addProduct: (payload) => wrapMutation(() => addProductTx(db, payload), db),
     updateProduct: (payload) => wrapMutation(() => updateProductTx(db, payload), db),
     toggleProductStatus: (id) => wrapMutation(() => toggleStatusTx(db, "products", id), db),
@@ -494,6 +496,30 @@ function applyStockCountAdjustmentTx(db, payload) {
   return { referenceNo, adjustedCount };
 }
 
+function applyDataImportTx(db, payload) {
+  const validationError = validateDataImportPayload(payload);
+  if (validationError) throw new Error(validationError);
+
+  const now = new Date().toISOString();
+  const insertFns = {
+    products: (row) => addProductTx(db, normalizeImportProduct(row.values, now)),
+    customers: (row) => addCustomerTx(db, normalizeImportCustomer(row.values, now)),
+    suppliers: (row) => addSupplierTx(db, normalizeImportSupplier(row.values, now)),
+  };
+
+  assertDataImportDuplicates(db, payload);
+  payload.rows.forEach((row) => insertFns[payload.importType](row));
+
+  return {
+    importType: payload.importType,
+    totalRows: payload.rows.length,
+    insertedCount: payload.rows.length,
+    skippedCount: 0,
+    errors: [],
+    createdAt: now,
+  };
+}
+
 function addProductTx(db, payload) {
   const now = new Date().toISOString();
   const product = normalizeProductPayload(payload, { now });
@@ -749,6 +775,161 @@ function validateStockAdjustmentPayload(payload) {
   }
 
   return "";
+}
+
+function validateDataImportPayload(payload) {
+  if (!["products", "customers", "suppliers"].includes(payload?.importType)) return "İçe aktarma tipi geçersiz.";
+  if (!Array.isArray(payload.rows) || payload.rows.length === 0) return "İçe aktarılacak geçerli satır bulunamadı.";
+
+  const seenProductKeys = {
+    barcode: new Set(),
+    code: new Set(),
+    variantCode: new Set(),
+  };
+
+  for (const row of payload.rows) {
+    if (row.status === "error") return "Hatalı satırlar içe aktarılamaz.";
+    const values = row.values || {};
+
+    if (payload.importType === "products") {
+      if (!normalizeNullableText(values.name)) return "Zorunlu alanlar eksik.";
+      if (!normalizeNullableText(values.code) && !normalizeNullableText(values.barcode)) return "Zorunlu alanlar eksik.";
+      for (const field of ["purchasePrice", "salePrice", "stockQuantity", "criticalStockLevel"]) {
+        if (!isImportNumber(values[field])) return "Sayısal alanlar hatalı.";
+      }
+      for (const field of ["barcode", "code", "variantCode"]) {
+        const value = normalizeNullableText(values[field]);
+        if (!value) continue;
+        const key = value.toLocaleLowerCase("tr-TR");
+        if (seenProductKeys[field].has(key)) return field === "barcode" ? "Bu barkod başka bir üründe kullanılıyor." : field === "code" ? "Bu ürün kodu başka bir üründe kullanılıyor." : "Bu varyant kodu başka bir üründe kullanılıyor.";
+        seenProductKeys[field].add(key);
+      }
+    }
+
+    if (payload.importType === "customers" && !normalizeNullableText(values.name)) return "Zorunlu alanlar eksik.";
+    if (payload.importType === "customers") {
+      for (const field of ["openingBalance", "riskLimit"]) {
+        if (!isImportNumber(values[field])) return "Sayısal alanlar hatalı.";
+      }
+    }
+
+    if (payload.importType === "suppliers" && !normalizeNullableText(values.name)) return "Zorunlu alanlar eksik.";
+    if (payload.importType === "suppliers" && !isImportNumber(values.openingBalance)) return "Sayısal alanlar hatalı.";
+  }
+
+  return "";
+}
+
+function assertDataImportDuplicates(db, payload) {
+  if (payload.importType === "products") {
+    payload.rows.forEach((row) => assertUniqueProductFields(db, normalizeImportProduct(row.values, new Date().toISOString())));
+    return;
+  }
+
+  if (payload.importType === "customers") {
+    payload.rows.forEach((row) => {
+      const values = row.values || {};
+      const name = normalizeNullableText(values.name);
+      const phone = normalizeNullableText(values.phone);
+      const companyName = normalizeNullableText(values.companyName);
+      const duplicate = db
+        .prepare(
+          "SELECT id FROM customers WHERE (TRIM(COALESCE(name, '')) = ? AND TRIM(COALESCE(phone, '')) = ?) OR (? IS NOT NULL AND TRIM(COALESCE(companyName, '')) = ?) LIMIT 1",
+        )
+        .get(name, phone || "", companyName, companyName || "");
+      if (duplicate) throw new Error("Bu müşteri bilgileri zaten kayıtlı görünüyor.");
+    });
+  }
+
+  if (payload.importType === "suppliers") {
+    payload.rows.forEach((row) => {
+      const values = row.values || {};
+      const name = normalizeNullableText(values.name);
+      const companyTitle = normalizeNullableText(values.companyTitle);
+      const duplicate = db
+        .prepare("SELECT id FROM suppliers WHERE TRIM(COALESCE(name, '')) = ? OR (? IS NOT NULL AND TRIM(COALESCE(companyTitle, '')) = ?) LIMIT 1")
+        .get(name, companyTitle, companyTitle || "");
+      if (duplicate) throw new Error("Bu tedarikçi bilgileri zaten kayıtlı görünüyor.");
+    });
+  }
+}
+
+function normalizeImportProduct(values, now) {
+  return {
+    barcode: values.barcode || "",
+    code: values.code || "",
+    modelCode: values.modelCode || "",
+    variantCode: values.variantCode || "",
+    name: values.name || "",
+    brand: values.brand || "",
+    season: values.season || "",
+    ageGroup: values.ageGroup || "",
+    gender: values.gender || "",
+    category: values.category || "",
+    size: values.size || "",
+    color: values.color || "",
+    purchasePrice: parseImportNumber(values.purchasePrice),
+    salePrice: parseImportNumber(values.salePrice),
+    stockQuantity: parseImportNumber(values.stockQuantity),
+    criticalStockLevel: parseImportNumber(values.criticalStockLevel),
+    supplier: values.supplier || "",
+    imageUrl: "",
+    now,
+  };
+}
+
+function normalizeImportCustomer(values, now) {
+  const openingBalance = parseImportNumber(values.openingBalance);
+  return {
+    name: values.name || "",
+    companyName: values.companyName || "",
+    phone: values.phone || "",
+    whatsapp: values.whatsapp || "",
+    country: values.country || "",
+    city: values.city || "",
+    customerType: values.customerType || "",
+    openingBalance,
+    totalSales: 0,
+    totalPayments: 0,
+    currentBalance: openingBalance,
+    riskLimit: parseImportNumber(values.riskLimit),
+    lastPurchaseDate: "",
+    notes: values.notes || "",
+    now,
+  };
+}
+
+function normalizeImportSupplier(values, now) {
+  const openingBalance = parseImportNumber(values.openingBalance);
+  return {
+    name: values.name || "",
+    companyTitle: values.companyTitle || "",
+    phone: values.phone || "",
+    whatsapp: values.whatsapp || "",
+    contactPerson: values.contactPerson || "",
+    city: values.city || "",
+    country: values.country || "",
+    address: values.address || "",
+    taxInfo: values.taxInfo || "",
+    iban: values.iban || "",
+    openingBalance,
+    totalPurchases: 0,
+    totalPayments: 0,
+    currentBalance: openingBalance,
+    lastTransactionDate: "",
+    notes: values.notes || "",
+    now,
+  };
+}
+
+function parseImportNumber(value) {
+  const numberValue = Number(String(value || "0").replace(",", "."));
+  return Number.isFinite(numberValue) ? numberValue : 0;
+}
+
+function isImportNumber(value) {
+  if (value === undefined || value === null || String(value).trim() === "") return true;
+  return Number.isFinite(Number(String(value).replace(",", ".")));
 }
 
 function buildStockCountReference(value = new Date().toISOString()) {

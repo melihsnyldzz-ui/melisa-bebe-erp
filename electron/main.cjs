@@ -121,6 +121,7 @@ function registerErpHandlers() {
   ipcMain.handle("erp:cancel-collection", (_event, id) => repositories.cancelCollection(id));
   ipcMain.handle("erp:cancel-payment", (_event, id) => repositories.cancelPayment(id));
   ipcMain.handle("erp:apply-stock-count-adjustment", (_event, payload) => repositories.applyStockCountAdjustment(payload));
+  ipcMain.handle("erp:apply-data-import", (_event, payload) => repositories.applyDataImport(payload));
   ipcMain.handle("erp:add-product", (_event, payload) => repositories.addProduct(payload));
   ipcMain.handle("erp:update-product", (_event, payload) => repositories.updateProduct(payload));
   ipcMain.handle("erp:toggle-product-status", (_event, id) => repositories.toggleProductStatus(id));
