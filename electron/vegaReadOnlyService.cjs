@@ -26,6 +26,12 @@ function listVegaStockReadOnly() {
     safeErrorMessageEnabled: true,
     rawErrorExposeEnabled: false,
     lastConnectionAttempt: null,
+    manualApprovalStatus: "required",
+    approvalRecordEnabled: false,
+    connectionUnlockAllowed: false,
+    unlockReasonRequired: true,
+    operatorNameRequired: true,
+    backupCheckRequired: true,
   };
 
   if (!isEnabled) {

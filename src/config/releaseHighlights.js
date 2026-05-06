@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.20.2";
+export const currentReleaseVersion = "v1.20.3";
 
-export const currentReleaseTitle = "Vega read-only timeout ve bağlantı denemesi kapalı hazırlığı";
+export const currentReleaseTitle = "Vega read-only manuel onay ve bağlantı kilidi görünürlüğü";
 
 export const updatedSectionIds = ["latest-version-history", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Vega read-only hazırlığına bağlantı denemesi kapalı metadata’sı eklendi",
-  "Timeout politikası, güvenli hata mesajı ve ham hata gizleme durumları görünür hale getirildi",
-  "Gerçek bağlantı, sorgu çalıştırma ve Vega verisi okuma olmadan timeout güvenliği paneli eklendi",
+  "Vega read-only hazırlığında manuel onay gerekliliği daha görünür hale getirildi",
+  "Bağlantı kilidi, kilit açma izni ve operatör/yedek kontrol şartları pasif metadata ile netleştirildi",
+  "Onay kaydı, kilit açma ve bağlantı başlatma olmadan manuel onay paneli eklendi",
 ];
 
 export const releaseJumpLinks = [

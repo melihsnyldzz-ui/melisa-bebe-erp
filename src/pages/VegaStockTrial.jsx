@@ -62,6 +62,12 @@ const defaultConnectionMetadata = {
   safeErrorMessageEnabled: true,
   rawErrorExposeEnabled: false,
   lastConnectionAttempt: null,
+  manualApprovalStatus: "required",
+  approvalRecordEnabled: false,
+  connectionUnlockAllowed: false,
+  unlockReasonRequired: true,
+  operatorNameRequired: true,
+  backupCheckRequired: true,
 };
 
 const columnMappings = [
@@ -253,6 +259,14 @@ export default function VegaStockTrial() {
     { label: "Ham hata gösterimi", value: connectionMetadata.rawErrorExposeEnabled ? "Açık" : "Kapalı" },
     { label: "Son bağlantı denemesi", value: connectionMetadata.lastConnectionAttempt || "Yok" },
   ];
+  const manualApprovalLockRows = [
+    { label: "Manuel onay", value: connectionMetadata.manualApprovalStatus === "required" ? "Gerekli" : "Bekliyor" },
+    { label: "Onay kaydı", value: connectionMetadata.approvalRecordEnabled ? "Açık" : "Kapalı" },
+    { label: "Kilit açma izni", value: connectionMetadata.connectionUnlockAllowed ? "Açık" : "Kapalı" },
+    { label: "Kilit açma gerekçesi", value: connectionMetadata.unlockReasonRequired ? "Zorunlu" : "Zorunlu değil" },
+    { label: "Operatör adı", value: connectionMetadata.operatorNameRequired ? "Zorunlu" : "Zorunlu değil" },
+    { label: "Yedek kontrolü", value: connectionMetadata.backupCheckRequired ? "Zorunlu" : "Zorunlu değil" },
+  ];
   const finalTransitionSummary = [
     "Demo veri ayrımı yapıldı.",
     "Bağlantı hazırlığı pasif gösterildi.",
@@ -428,6 +442,21 @@ export default function VegaStockTrial() {
           <div className="vega-timeout-safety-grid" aria-label="Timeout ve bağlantı denemesi güvenliği">
             {timeoutConnectionSafetyRows.map((row) => (
               <div className="vega-timeout-safety-row" key={row.label}>
+                <span>{row.label}</span>
+                <strong>{row.value}</strong>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="vega-manual-approval-panel">
+          <div>
+            <h2>Manuel Onay ve Bağlantı Kilidi</h2>
+            <p>Bu panel sadece manuel onay ve bağlantı kilidi şartlarını gösterir; onay kaydetmez, kilit açmaz, bağlantı başlatmaz.</p>
+          </div>
+          <div className="vega-manual-approval-grid" aria-label="Manuel onay ve bağlantı kilidi">
+            {manualApprovalLockRows.map((row) => (
+              <div className="vega-manual-approval-row" key={row.label}>
                 <span>{row.label}</span>
                 <strong>{row.value}</strong>
               </div>

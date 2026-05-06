@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.20.2";
-export const APP_STAGE = "Vega read-only timeout ve bağlantı denemesi kapalı hazırlığı";
+export const APP_VERSION = "v1.20.3";
+export const APP_STAGE = "Vega read-only manuel onay ve bağlantı kilidi görünürlüğü";

@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.20.3",
+    title: "Vega read-only manuel onay ve bağlantı kilidi görünürlüğü",
+    area: "Vega / Read-only",
+    description: "Vega read-only teknik hazırlığı kapsamında gerçek bağlantı açılmadan manuel onay gerekliliği, onay kaydının kapalı olması, bağlantı kilidinin açılamaması, kilit açma gerekçesi, operatör adı ve yedek kontrolü şartları pasif metadata ve UI düzeyinde görünür hale getirildi.",
+  },
+  {
     version: "v1.20.2",
     title: "Vega read-only timeout ve bağlantı denemesi kapalı hazırlığı",
     area: "Vega / Read-only",
