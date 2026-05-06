@@ -223,7 +223,7 @@ function buildReportPreview({ commerceInsights, currencyTradeSummary, patronNote
       },
       {
         label: "Risk notu",
-        value: riskNote ? `${riskNote.label} · ${riskNote.status}` : "Risk görünmüyor",
+        value: riskNote ? `${riskNote.label} · ${riskNote.actionNote}` : "Kritik risk görünmüyor.",
       },
       {
         label: "Genel Not",
@@ -487,23 +487,26 @@ function buildRiskRows({ criticalProducts, customers }) {
   const stockRows = criticalProducts
     .slice()
     .sort((a, b) => toNumber(a.stockQuantity) - toNumber(b.stockQuantity))
-    .slice(0, 2)
     .map((product) => ({
       actionNote: toNumber(product.stockQuantity) <= 0 ? "Acil tedarik" : "Satın alma kontrolü",
       label: product.name || product.code || "Ürün",
       meta: `${formatNumber(product.stockQuantity)} adet`,
+      priority: toNumber(product.stockQuantity) <= 0 ? 0 : 2,
+      riskTone: toNumber(product.stockQuantity) <= 0 ? "risk-stock-empty" : "risk-stock-critical",
       status: toNumber(product.stockQuantity) <= 0 ? "Stok yok" : "Kritik",
     }));
   const customerRows = buildRiskCustomers(customers)
-    .slice(0, 1)
+    .slice(0, 2)
     .map((customer) => ({
       actionNote: customer.riskLabel === "Limit Aşıldı" ? "Tahsilat kontrolü" : "Limit yaklaşıyor",
       label: customer.name,
       meta: formatCurrency(customer.currentBalance),
+      priority: customer.riskLabel === "Limit Aşıldı" ? 1 : 3,
+      riskTone: customer.riskLabel === "Limit Aşıldı" ? "risk-limit-exceeded" : "risk-limit-near",
       status: customer.riskLabel,
     }));
 
-  return [...stockRows, ...customerRows].slice(0, 3);
+  return [...stockRows, ...customerRows].sort((a, b) => a.priority - b.priority).slice(0, 3);
 }
 
 function buildLatestSlipRows({ activePurchaseSlips, activeSalesSlips }) {

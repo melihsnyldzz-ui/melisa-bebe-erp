@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.17.1";
+export const currentReleaseVersion = "v1.17.2";
 
-export const currentReleaseTitle = "Dashboard karar notlarını daha isabetli hale getirme ve öncelik sırası düzeltmesi";
+export const currentReleaseTitle = "Dashboard risk aksiyonlarını netleştirme";
 
 export const updatedSectionIds = ["latest-version-history", "project-maturity", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Patron Notu ticari öncelik sırasına göre daha isabetli hale getirildi",
-  "Döviz Notu ve risk aksiyonları daha kısa ve okunur hale getirildi",
-  "Dashboard karar sinyalleri patron kokpitine daha uygun şekilde dengelendi",
+  "Risk satırları stok yok, limit aşımı, kritik stok ve limit yaklaşımı önceliğine göre sıralandı",
+  "Risk aksiyonları daha kısa ve patron gözüyle okunur hale getirildi",
+  "Risk satırlarına kompakt görsel tonlar eklendi",
 ];
 
 export const releaseJumpLinks = [

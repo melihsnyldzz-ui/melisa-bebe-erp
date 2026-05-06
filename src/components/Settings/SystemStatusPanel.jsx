@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.17.2",
+    title: "Dashboard risk aksiyonlarını netleştirme",
+    area: "Dashboard",
+    description: "Dashboard risk satırları stok yok, limit aşımı, kritik stok ve limit yaklaşımı önceliğine göre sıralandı; aksiyon notları daha kısa ve okunur hale getirildi.",
+  },
+  {
     version: "v1.17.1",
     title: "Dashboard karar notlarını daha isabetli hale getirme ve öncelik sırası düzeltmesi",
     area: "Dashboard",

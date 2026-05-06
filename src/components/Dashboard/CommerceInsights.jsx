@@ -138,7 +138,7 @@ export default function CommerceInsights({ data }) {
           {data.riskRows.length > 0 ? (
             <div className="dashboard-compact-list">
               {data.riskRows.map((row) => (
-                <div className="dashboard-compact-row" key={`${row.label}-${row.status}`}>
+                <div className={`dashboard-compact-row ${row.riskTone || ""}`} key={`${row.label}-${row.status}`}>
                   <span>{row.label}</span>
                   <strong>{row.meta}</strong>
                   <small>{row.status}</small>
@@ -147,7 +147,7 @@ export default function CommerceInsights({ data }) {
               ))}
             </div>
           ) : (
-            <p className="dashboard-empty-note">Risk veya kritik stok kaydı görünmüyor.</p>
+            <p className="dashboard-empty-note">Kritik risk görünmüyor.</p>
           )}
         </div>
 

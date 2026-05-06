@@ -880,6 +880,26 @@ button {
   font-size: 0.92rem;
 }
 
+.dashboard-compact-row.risk-stock-empty {
+  border-color: rgba(215, 25, 32, 0.18);
+  background: rgba(255, 235, 238, 0.72);
+}
+
+.dashboard-compact-row.risk-limit-exceeded {
+  border-color: rgba(215, 25, 32, 0.14);
+  background: rgba(255, 245, 245, 0.72);
+}
+
+.dashboard-compact-row.risk-stock-critical {
+  border-color: rgba(245, 159, 0, 0.18);
+  background: rgba(255, 249, 219, 0.72);
+}
+
+.dashboard-compact-row.risk-limit-near {
+  border-color: rgba(24, 100, 171, 0.12);
+  background: rgba(247, 251, 255, 0.78);
+}
+
 .dashboard-compact-row em {
   color: #8a5a00;
   font-size: 0.7rem;
