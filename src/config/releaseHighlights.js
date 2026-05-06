@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.21.2";
+export const currentReleaseVersion = "v1.22.0";
 
-export const currentReleaseTitle = "Vega read-only geçiş kapısı kapanış özeti ve hazırlık sınırı";
+export const currentReleaseTitle = "Vega read-only bağlantı parametreleri pasif hazırlık paketi";
 
 export const updatedSectionIds = ["latest-version-history", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Read-only Geçiş Kapısı altına sonraki aşama sınırı eklendi",
-  "Gerçek Vega bağlantısının bu fazda başlamadığı daha net hale getirildi",
-  "Bağlantı parametreleri ve read-only kullanıcı hazırlığının ayrı güvenli sürümde yapılacağı belirtildi",
+  "Read-only bağlantı parametreleri yalnızca pasif hazırlık olarak görünür hale getirildi",
+  "İlk deneme için 20 satır limiti, 3000 ms timeout, retry kapalı ve ham hata gizleme politikası not edildi",
+  "İlk read-only sorgu kapsamının sadece stok kartı okuma taslağı olduğu netleştirildi",
 ];
 
 export const releaseJumpLinks = [

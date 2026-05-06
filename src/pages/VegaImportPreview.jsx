@@ -184,6 +184,24 @@ export default function VegaImportPreview() {
           <span>Bu faz gerçek Vega bağlantısı başlatmaz. Sonraki aşamada önce yalnızca bağlantı parametreleri, read-only kullanıcı bilgisi, 20 satır limiti, timeout ve ham hata gizleme politikası ayrı güvenli sürümde hazırlanacaktır.</span>
         </div>
       </section>
+
+      <section className="vega-transition-gate-panel">
+        <h2>Read-only Bağlantı Parametreleri Hazırlığı</h2>
+        <p>Bu alan yalnızca ilerideki read-only bağlantı için gereken bilgileri gösterir. Bu sürümde bağlantı kurulmaz, SQL/ODBC açılmaz, DB okunmaz ve sorgu çalıştırılmaz.</p>
+        <div className="vega-transition-gate-grid">
+          <div className="vega-transition-gate-row"><strong>Bağlantı modu</strong><span>Kapalı / Hazırlık</span></div>
+          <div className="vega-transition-gate-row"><strong>Kullanıcı tipi</strong><span>Minimum yetkili read-only kullanıcı hazırlanacak</span></div>
+          <div className="vega-transition-gate-row"><strong>Satır limiti</strong><span>İlk deneme için 20 satır</span></div>
+          <div className="vega-transition-gate-row"><strong>Timeout</strong><span>3000 ms hedef</span></div>
+          <div className="vega-transition-gate-row"><strong>Retry politikası</strong><span>Kapalı</span></div>
+          <div className="vega-transition-gate-row"><strong>Ham hata gösterimi</strong><span>Gizlenecek</span></div>
+          <div className="vega-transition-gate-row"><strong>İlk kapsam</strong><span>Sadece stok kartı okuma taslağı</span></div>
+        </div>
+        <div className="vega-transition-gate-note">
+          <strong>İlk Sorgu Kapsamı Taslak Notu</strong>
+          <span>İlk gerçek read-only testte hedef yalnızca stok kartlarını sınırlı sayıda okumaktır. Cari, fiş, hareket, ödeme, tahsilat ve import işlemleri bu kapsamda değildir.</span>
+        </div>
+      </section>
     </>
   );
 }

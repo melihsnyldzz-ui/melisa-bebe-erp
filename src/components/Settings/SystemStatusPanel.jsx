@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.21.2",
+    title: "Vega read-only geçiş kapısı kapanış özeti ve hazırlık sınırı",
+    area: "Vega / Import Önizleme",
+    description: "Read-only Geçiş Kapısı altına sonraki aşama sınırı eklendi; gerçek Vega bağlantısının bu fazda başlamadığı ve bağlantı parametreleri ile read-only kullanıcı hazırlığının ayrı güvenli sürümde yapılacağı netleştirildi.",
+  },
+  {
     version: "v1.21.1",
     title: "Read-only Geçiş Kapısı görsel denge ve son kontrol",
     area: "Vega / Import Önizleme",
