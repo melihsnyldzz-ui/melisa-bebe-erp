@@ -12,10 +12,10 @@ const statusRows = [
 ];
 
 const maturityRows = [
-  { label: "ERP genel hazırlık", value: "%61-65" },
-  { label: "Canlı kullanım güvenliği", value: "%53-57" },
+  { label: "ERP genel hazırlık", value: "%62-66" },
+  { label: "Canlı kullanım güvenliği", value: "%54-58" },
   { label: "El terminali hazırlığı", value: "%45-50" },
-  { label: "Vega'dan geçiş hazırlığı", value: "%46-51" },
+  { label: "Vega'dan geçiş hazırlığı", value: "%47-52" },
 ];
 
 const goLiveChecklistGroups = [
@@ -44,6 +44,12 @@ const goLiveChecklistGroups = [
 ];
 
 const versionHistoryRows = [
+  {
+    version: "v1.11.9",
+    title: "Canlı test hata notu ve geri bildirim alanı",
+    area: "Ayarlar",
+    description: "Canlı testte hata görülürse not alınacak bilgiler için sade bir şablon eklendi.",
+  },
   {
     version: "v1.11.8",
     title: "Ayarlar ekranı canlı test rehberi",
@@ -92,6 +98,8 @@ const liveTestGuideSteps = [
   "Veri yazan işlem yoksa sadece ekran kontrolü yap; stok/cari/fiş işlemi deneme.",
   "Hata görürsen ekran adını, yaptığın işlemi ve hata mesajını not al.",
 ];
+
+const testFeedbackTemplate = ["Ekran:", "Yaptığım işlem:", "Beklenen sonuç:", "Gördüğüm hata:", "Tekrar oluyor mu:", "Not / ekran görüntüsü:"];
 
 export default function SystemStatusPanel() {
   return (
@@ -170,6 +178,22 @@ export default function SystemStatusPanel() {
         <p className="live-test-guide-note">
           Bu rehber test sırasında nereden başlayacağınızı göstermek için hazırlanmıştır. Gerçek veriyle işlem yapmadan
           önce yedekleme ve geri dönüş senaryosu ayrıca test edilmelidir.
+        </p>
+      </div>
+
+      <div className="test-feedback-panel">
+        <div>
+          <h3>Testte Hata Görürsen</h3>
+          <p>
+            Test sırasında hata görürseniz, hatayı tekrar üretebilmek için ekran adını, yaptığınız işlemi ve görünen hata
+            mesajını not alın.
+          </p>
+        </div>
+
+        <pre>{testFeedbackTemplate.join("\n")}</pre>
+
+        <p className="test-feedback-note">
+          Bu bilgileri ChatGPT'ye gönderirseniz, sorun için daha net Codex promptu hazırlanabilir.
         </p>
       </div>
 
