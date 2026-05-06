@@ -235,6 +235,20 @@ export default function VegaStockTrial() {
           <span>Demo stok görünümü, bağlantı durumu ve kolon eşleştirme hazırlığı kontrol edilir; veri çekilmez, veri yazılmaz, kayıt oluşturulmaz.</span>
         </div>
 
+        <div className="vega-closing-note">
+          <div>
+            <strong>Hazırlık Kapanış Notu</strong>
+            <span>
+              Bu hazırlık ekranı, gerçek Vega bağlantısı açılmadan önce demo veri, veri kaynağı, bağlantı güvenliği ve
+              kolon eşleştirme kontrollerini tamamlamak için hazırlanmıştır. Gerçek Vega read-only bağlantısı ayrı ve
+              kontrollü bir sürümde açılacaktır.
+            </span>
+          </div>
+          <p>
+            Sonraki Faz: <strong>v1.19.x · Vega read-only bağlantı hazırlığı</strong>
+          </p>
+        </div>
+
         <label className="vega-stock-search">
           <Search size={18} />
           <input

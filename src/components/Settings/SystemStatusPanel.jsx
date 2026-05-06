@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.18.8",
+    title: "Vega stok deneme hazırlık kapanışı ve read-only geçiş notu",
+    area: "Vega / Stok",
+    description: "Vega Stok Deneme ekranına hazırlık kapanış notu eklendi; demo veri, veri kaynağı, bağlantı güvenliği ve kolon eşleştirme kontrollerinden sonra gerçek Vega read-only bağlantısının ayrı ve kontrollü v1.19.x fazında ele alınacağı netleştirildi.",
+  },
+  {
     version: "v1.18.7",
     title: "Vega stok deneme final kalite kontrol ve ekran sadeleştirme",
     area: "Vega / Stok",
