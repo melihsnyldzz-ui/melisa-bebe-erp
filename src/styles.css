@@ -1112,6 +1112,48 @@ button {
   margin-top: 14px;
 }
 
+.management-report-panel {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.management-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.management-alert-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.management-quality-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.management-quality-grid small {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.management-balance-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.management-report-table th,
+.management-report-table td {
+  white-space: nowrap;
+}
+
 .integrity-summary-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -2564,6 +2606,10 @@ tr:last-child td {
   .quick-sale-totals,
   .reports-summary-grid,
   .integrity-summary-grid,
+  .management-summary-grid,
+  .management-alert-grid,
+  .management-quality-grid,
+  .management-balance-grid,
   .reports-grid,
   .stock-count-history-filters,
   .stock-count-report-summary,

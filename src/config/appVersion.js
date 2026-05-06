@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.9.9";
-export const APP_STAGE = "Export geçmişi ve şablon indirme";
+export const APP_VERSION = "v1.10.0";
+export const APP_STAGE = "Yönetim raporları ve veri kalite özeti";
