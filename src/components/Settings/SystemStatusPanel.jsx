@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.19.4",
+    title: "Stok sorgusu taslak önizleme",
+    area: "Vega / Read-only",
+    description: "Vega read-only bağlantı hazırlığı kapsamında stok kartlarını yalnızca okumaya yönelik sorgu mantığını, döndürülecek alanları ve çalıştırma durumunun kapalı olduğunu gösteren pasif stok sorgusu taslak önizleme paneli eklendi.",
+  },
+  {
     version: "v1.19.3",
     title: "Vega DB yolu / sunucu bilgisi kontrol rehberi",
     area: "Vega / Read-only",

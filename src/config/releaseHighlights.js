@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.19.3";
+export const currentReleaseVersion = "v1.19.4";
 
-export const currentReleaseTitle = "Vega DB yolu / sunucu bilgisi kontrol rehberi";
+export const currentReleaseTitle = "Stok sorgusu taslak önizleme";
 
 export const updatedSectionIds = ["latest-version-history", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Vega read-only bağlantı hazırlığına DB yolu / sunucu bilgisi kontrol rehberi eklendi",
-  "DB yolu veya SQL sunucu bilgisinin gerçek bağlantı kurulmadan kontrol edileceği netleştirildi",
-  "Dosya seçme, sunucu girme ve bağlantı testi olmadan güvenli hazırlık görünümü korundu",
+  "Vega read-only bağlantı hazırlığına stok sorgusu taslak önizleme alanı eklendi",
+  "Stok kartlarını sadece okuma mantığı gerçek sorgu çalıştırılmadan gösterildi",
+  "Sorgu çalıştırma, veri çekme ve kayıt oluşturma olmadan güvenli hazırlık görünümü korundu",
 ];
 
 export const releaseJumpLinks = [

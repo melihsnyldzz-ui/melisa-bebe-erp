@@ -3782,7 +3782,8 @@ button {
 }
 
 .vega-driver-guide-panel,
-.vega-db-guide-panel {
+.vega-db-guide-panel,
+.vega-stock-query-preview-panel {
   display: grid;
   gap: 8px;
   padding: 10px;
@@ -3794,18 +3795,22 @@ button {
 .vega-driver-guide-panel h2,
 .vega-driver-guide-panel p,
 .vega-db-guide-panel h2,
-.vega-db-guide-panel p {
+.vega-db-guide-panel p,
+.vega-stock-query-preview-panel h2,
+.vega-stock-query-preview-panel p {
   margin: 0;
 }
 
 .vega-driver-guide-panel h2,
-.vega-db-guide-panel h2 {
+.vega-db-guide-panel h2,
+.vega-stock-query-preview-panel h2 {
   color: #166534;
   font-size: 0.96rem;
 }
 
 .vega-driver-guide-panel p,
-.vega-db-guide-panel p {
+.vega-db-guide-panel p,
+.vega-stock-query-preview-panel p {
   margin-top: 3px;
   color: #166534;
   font-size: 0.78rem;
@@ -3813,14 +3818,16 @@ button {
 }
 
 .vega-driver-guide-grid,
-.vega-db-guide-grid {
+.vega-db-guide-grid,
+.vega-stock-query-preview-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 6px;
 }
 
 .vega-driver-guide-row,
-.vega-db-guide-row {
+.vega-db-guide-row,
+.vega-stock-query-preview-row {
   min-width: 0;
   padding: 7px 8px;
   border: 1px solid rgba(22, 101, 52, 0.14);
@@ -3831,25 +3838,48 @@ button {
 .vega-driver-guide-row span,
 .vega-driver-guide-row strong,
 .vega-db-guide-row span,
-.vega-db-guide-row strong {
+.vega-db-guide-row strong,
+.vega-stock-query-preview-row span,
+.vega-stock-query-preview-row strong {
   display: block;
   min-width: 0;
   overflow-wrap: anywhere;
 }
 
 .vega-driver-guide-row span,
-.vega-db-guide-row span {
+.vega-db-guide-row span,
+.vega-stock-query-preview-row span {
   color: #15803d;
   font-size: 0.68rem;
   font-weight: 900;
 }
 
 .vega-driver-guide-row strong,
-.vega-db-guide-row strong {
+.vega-db-guide-row strong,
+.vega-stock-query-preview-row strong {
   margin-top: 3px;
   color: var(--anthracite);
   font-size: 0.78rem;
   font-weight: 900;
+}
+
+.vega-stock-query-field-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.vega-stock-query-field-list span {
+  min-width: 0;
+  padding: 4px 6px;
+  border: 1px solid rgba(22, 101, 52, 0.14);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--anthracite);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.68rem;
+  font-weight: 900;
+  overflow-wrap: anywhere;
 }
 
 .vega-column-mapping-panel {
@@ -5676,7 +5706,8 @@ tr:last-child td {
   }
 
   .vega-driver-guide-grid,
-  .vega-db-guide-grid {
+  .vega-db-guide-grid,
+  .vega-stock-query-preview-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -5850,18 +5881,21 @@ tr:last-child td {
   }
 
   .vega-driver-guide-panel,
-  .vega-db-guide-panel {
+  .vega-db-guide-panel,
+  .vega-stock-query-preview-panel {
     padding: 10px;
   }
 
   .vega-driver-guide-grid,
-  .vega-db-guide-grid {
+  .vega-db-guide-grid,
+  .vega-stock-query-preview-grid {
     grid-template-columns: 1fr;
     gap: 6px;
   }
 
   .vega-driver-guide-row,
-  .vega-db-guide-row {
+  .vega-db-guide-row,
+  .vega-stock-query-preview-row {
     padding: 7px;
   }
 

@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.19.3";
-export const APP_STAGE = "Vega DB yolu / sunucu bilgisi kontrol rehberi";
+export const APP_VERSION = "v1.19.4";
+export const APP_STAGE = "Stok sorgusu taslak önizleme";

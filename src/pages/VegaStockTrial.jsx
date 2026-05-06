@@ -157,6 +157,26 @@ export default function VegaStockTrial() {
     { label: "Güvenlik notu", value: "Gerçek Vega verisine yazma yetkisi açılmayacak" },
     { label: "Sonraki adım", value: "Stok sorgusu taslak önizleme" },
   ];
+  const stockQueryPreviewRows = [
+    { label: "Sorgu amacı", value: "Stok kartlarını sadece okumak" },
+    { label: "Çalışma modu", value: "Read-only" },
+    { label: "Yazma işlemi", value: "Yok" },
+    { label: "Mutasyon", value: "Yok" },
+    { label: "Filtre hazırlığı", value: "Stok kodu / barkod / ürün adı" },
+    { label: "Döndürülecek alanlar", value: "Stok kodu, barkod, ürün adı, marka, beden, renk, mevcut stok, alış fiyatı, satış fiyatı" },
+    { label: "Çalıştırma durumu", value: "Bu sürümde çalıştırılmaz" },
+  ];
+  const stockQueryDraftFields = [
+    "stockCode",
+    "barcode",
+    "productName",
+    "brand",
+    "size",
+    "color",
+    "quantity",
+    "purchasePrice",
+    "salePrice",
+  ];
   const normalizedQuery = query.trim().toLocaleLowerCase("tr-TR");
   const filteredRows = useMemo(() => {
     if (!normalizedQuery) {
@@ -324,6 +344,29 @@ export default function VegaStockTrial() {
                 <span>{row.label}</span>
                 <strong>{row.value}</strong>
               </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="vega-stock-query-preview-panel">
+          <div>
+            <h2>Stok Sorgusu Taslak Önizleme</h2>
+            <p>
+              Bu alan ileride yapılacak read-only stok okuma sorgusunun taslak mantığını gösterir. Bu sürümde sorgu
+              çalıştırılmaz, Vega verisi okunmaz ve kayıt oluşturulmaz.
+            </p>
+          </div>
+          <div className="vega-stock-query-preview-grid">
+            {stockQueryPreviewRows.map((row) => (
+              <div className="vega-stock-query-preview-row" key={row.label}>
+                <span>{row.label}</span>
+                <strong>{row.value}</strong>
+              </div>
+            ))}
+          </div>
+          <div className="vega-stock-query-field-list" aria-label="Taslak stok okuma alan listesi">
+            {stockQueryDraftFields.map((field) => (
+              <span key={field}>{field}</span>
             ))}
           </div>
         </div>
