@@ -1341,6 +1341,55 @@ button {
   padding: 7px 10px;
 }
 
+.warehouse-last-scan-panel {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 14px;
+  border-color: #c3fae8;
+  background: #f4fcf8;
+}
+
+.warehouse-last-scan-panel.not-found {
+  border-color: #ffc9c9;
+  background: #fff5f5;
+}
+
+.warehouse-last-scan-empty {
+  margin: 0;
+  color: var(--muted);
+  font-weight: 750;
+}
+
+.warehouse-last-scan-content {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.warehouse-last-scan-item {
+  display: grid;
+  gap: 6px;
+  min-height: 66px;
+  align-content: center;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.warehouse-last-scan-item span {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 900;
+}
+
+.warehouse-last-scan-item strong {
+  overflow-wrap: anywhere;
+  color: var(--text);
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+
 .warehouse-terminal-fast-scan-panel {
   display: grid;
   gap: 14px;
@@ -3320,6 +3369,7 @@ tr:last-child td {
   .warehouse-terminal-metrics,
   .warehouse-terminal-detail-grid,
   .warehouse-terminal-scan-form,
+  .warehouse-last-scan-content,
   .warehouse-terminal-fast-scan-list,
   .warehouse-terminal-test-grid,
   .warehouse-count-summary-grid,

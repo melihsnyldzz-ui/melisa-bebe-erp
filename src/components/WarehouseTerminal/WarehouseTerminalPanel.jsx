@@ -18,6 +18,7 @@ import {
 } from "../../utils/warehouseCountBasketUtils.js";
 import TerminalCountBasket from "./TerminalCountBasket.jsx";
 import TerminalFastScanNotes from "./TerminalFastScanNotes.jsx";
+import TerminalLastScanSummary from "./TerminalLastScanSummary.jsx";
 import TerminalProductCard from "./TerminalProductCard.jsx";
 import TerminalScanHistory from "./TerminalScanHistory.jsx";
 import TerminalTestScenarios from "./TerminalTestScenarios.jsx";
@@ -29,6 +30,7 @@ export default function WarehouseTerminalPanel({ products = [], stockMovements =
   const [matchedProducts, setMatchedProducts] = useState([]);
   const [scanHistory, setScanHistory] = useState(() => readWarehouseScanHistory());
   const [countBasket, setCountBasket] = useState(() => readWarehouseCountBasket());
+  const [lastScanSummary, setLastScanSummary] = useState(null);
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -59,6 +61,12 @@ export default function WarehouseTerminalPanel({ products = [], stockMovements =
     }
 
     setMatchedProducts([]);
+    setLastScanSummary({
+      type: "not-found",
+      scannedValue: scanValue,
+      status: "Ürün bulunamadı",
+      scannedAt: new Date().toISOString(),
+    });
     setMessage({ type: "error", text: "Ürün bulunamadı. Barkod veya ürün kodunu kontrol edin." });
     focusInput();
   }
@@ -68,6 +76,16 @@ export default function WarehouseTerminalPanel({ products = [], stockMovements =
     setSelectedProduct(productView);
     setMatchedProducts([]);
     setScanHistory((currentHistory) => appendWarehouseScanHistory(currentHistory, productView, rawValue));
+    setLastScanSummary({
+      type: "success",
+      scannedValue: rawValue || "",
+      productName: productView.name || "",
+      barcode: productView.barcode || "",
+      productCode: productView.code || "",
+      stockQuantity: productView.stockQuantity,
+      status: productView.status || "-",
+      scannedAt: new Date().toISOString(),
+    });
     setMessage({ type: "success", text: `${productView.name || productView.code} okundu. Stok: ${formatNumber(productView.stockQuantity)}` });
     setScanValue("");
     focusInput();
@@ -87,6 +105,7 @@ export default function WarehouseTerminalPanel({ products = [], stockMovements =
     setScanValue("");
     setSelectedProduct(null);
     setMatchedProducts([]);
+    setLastScanSummary(null);
     setMessage({ type: "info", text: "Ekran temizlendi. Bu işlem veritabanına yazmaz." });
     focusInput();
   }
@@ -157,6 +176,7 @@ export default function WarehouseTerminalPanel({ products = [], stockMovements =
         </p>
       </section>
 
+      <TerminalLastScanSummary summary={lastScanSummary} />
       <TerminalFastScanNotes />
       <TerminalTestScenarios />
 
