@@ -12,10 +12,10 @@ const statusRows = [
 ];
 
 const maturityRows = [
-  { label: "ERP genel hazırlık", value: "%58-62" },
-  { label: "Canlı kullanım güvenliği", value: "%50-54" },
+  { label: "ERP genel hazırlık", value: "%59-63" },
+  { label: "Canlı kullanım güvenliği", value: "%51-55" },
   { label: "El terminali hazırlığı", value: "%45-50" },
-  { label: "Vega'dan geçiş hazırlığı", value: "%43-48" },
+  { label: "Vega'dan geçiş hazırlığı", value: "%44-49" },
 ];
 
 const goLiveChecklistGroups = [
@@ -60,6 +60,28 @@ export default function SystemStatusPanel() {
         <span>Bu Sürümde Test Edilecek Alan</span>
         <strong>Ayarlar / Sistem Durumu ve Canlıya Hazırlık Kontrol Listesi</strong>
         <p>Sol menüde mavi nokta görünen sayfa, bu sürümde özellikle kontrol edilmesi gereken alandır.</p>
+      </div>
+
+      <div className="build-quality-card">
+        <h3>Build ve Kalite Durumu</h3>
+        <div className="build-quality-grid">
+          <div>
+            <span>Build kontrolü</span>
+            <strong>GitHub Actions</strong>
+          </div>
+          <div>
+            <span>Lokal kontrol</span>
+            <strong>npm run build</strong>
+          </div>
+          <div>
+            <span>Durum notu</span>
+            <strong>Build sonucu GitHub Actions üzerinden takip edilir.</strong>
+          </div>
+        </div>
+        <p>
+          Build status uygulama içinde görünmüyorsa GitHub Actions ekranından kontrol edilmelidir. Build kontrolü, kodun
+          çalıştırılabilir olup olmadığını doğrulamak için kullanılır. Bu bilgi stok, cari veya fiş verilerini değiştirmez.
+        </p>
       </div>
 
       <div className="system-status-grid">

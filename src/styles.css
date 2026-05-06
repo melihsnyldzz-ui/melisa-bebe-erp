@@ -1832,6 +1832,57 @@ button {
   line-height: 1.5;
 }
 
+.build-quality-card {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid #d8dee9;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+.build-quality-card h3,
+.build-quality-card p {
+  margin: 0;
+}
+
+.build-quality-card h3 {
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.build-quality-card p {
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.build-quality-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.build-quality-grid div {
+  display: grid;
+  gap: 6px;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.build-quality-grid span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.build-quality-grid strong {
+  color: var(--text);
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+
 .go-live-checklist {
   display: grid;
   gap: 12px;
@@ -3042,6 +3093,10 @@ tr:last-child td {
   }
 
   .go-live-checklist-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .build-quality-grid {
     grid-template-columns: 1fr;
   }
 
