@@ -502,6 +502,57 @@ button {
   font-weight: 750;
 }
 
+.dashboard-currency-detail {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(130px, 0.36fr) minmax(0, 1.64fr);
+  gap: 6px;
+  align-items: center;
+  padding-top: 6px;
+  border-top: 1px solid rgba(24, 100, 171, 0.1);
+}
+
+.dashboard-currency-detail h3 {
+  margin: 0;
+  color: var(--anthracite);
+  font-size: 0.76rem;
+}
+
+.dashboard-currency-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.dashboard-currency-detail-card {
+  min-width: 0;
+  padding: 4px 6px;
+  border: 1px solid rgba(45, 47, 52, 0.08);
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.dashboard-currency-detail-card span,
+.dashboard-currency-detail-card strong {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dashboard-currency-detail-card span {
+  color: var(--muted);
+  font-size: 0.62rem;
+  font-weight: 820;
+}
+
+.dashboard-currency-detail-card strong {
+  margin-top: 1px;
+  color: var(--anthracite);
+  font-size: 0.72rem;
+}
+
 .page-title p {
   margin: 0 0 8px;
   color: var(--red);
@@ -4564,6 +4615,14 @@ tr:last-child td {
   }
 
   .dashboard-currency-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .dashboard-currency-detail {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-currency-detail-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }

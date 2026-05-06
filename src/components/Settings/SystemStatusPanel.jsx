@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.16.6",
+    title: "Dövizli ticaret özetinde müşteri/tedarikçi cari detayını ayırma",
+    area: "Dashboard",
+    description: "Dövizli Ticaret Özeti’nde müşteri cari ve tedarikçi cari toplamları ayrı ayrı gösterilmeye hazırlandı; Net Cari hesabının iki taraf arasındaki fark olduğu daha anlaşılır hale getirildi.",
+  },
+  {
     version: "v1.16.5",
     title: "Dövizli ticaret özetinde Net Cari açıklaması ve müşteri/tedarikçi ayrımı hazırlığı",
     area: "Dashboard",

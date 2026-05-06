@@ -92,6 +92,21 @@ function CurrencyTradeSummary({ summary }) {
           </article>
         ))}
       </div>
+
+      <div className="dashboard-currency-detail" aria-label="Cari Detay">
+        <div>
+          <h3>Cari Detay</h3>
+          <p>Müşteri ve tedarikçi cari toplamları ayrı ayrı gösterilir; Net Cari bu iki tarafın farkıdır.</p>
+        </div>
+        <div className="dashboard-currency-detail-grid">
+          {buildCurrencyCurrentDetailCards(summary).map((row) => (
+            <article className="dashboard-currency-detail-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </article>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }
@@ -153,8 +168,10 @@ function buildDashboardData({ collections, customers, products, purchaseSlips, s
     },
     currencyTradeSummary: {
       current: buildCurrentCurrencyTotals(customers, suppliers),
+      customerCurrent: buildCurrencyTotals(customers, "currentBalance"),
       purchases: buildCurrencyTotals(periodPurchaseSlips, "grandTotal"),
       sales: buildCurrencyTotals(periodSalesSlips, "grandTotal"),
+      supplierCurrent: buildCurrencyTotals(suppliers, "currentBalance"),
     },
     periodSummary: {
       collectionsTotal: periodCollectionsTotal,
@@ -203,6 +220,20 @@ function buildCurrencyTradeCards(summary) {
     ...buildCurrencyGroupCards("Alış", summary?.purchases),
     ...buildCurrencyGroupCards("Net Cari", summary?.current, "Müşteri - tedarikçi"),
   ];
+}
+
+function buildCurrencyCurrentDetailCards(summary) {
+  return [
+    ...buildCurrencyDetailGroupCards("Müşteri Cari", summary?.customerCurrent),
+    ...buildCurrencyDetailGroupCards("Tedarikçi Cari", summary?.supplierCurrent),
+  ];
+}
+
+function buildCurrencyDetailGroupCards(label, totals = createCurrencyTotals()) {
+  return ["TRY", "USD", "EUR"].map((currencyCode) => ({
+    label: `${label} ${getCurrencyLabel(currencyCode)}`,
+    value: formatCurrencyByCode(totals[currencyCode] || 0, currencyCode),
+  }));
 }
 
 function buildCurrencyGroupCards(label, totals = createCurrencyTotals(), fixedNote) {

@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.16.5";
+export const currentReleaseVersion = "v1.16.6";
 
-export const currentReleaseTitle = "Dövizli ticaret özetinde Net Cari açıklaması ve müşteri/tedarikçi ayrımı hazırlığı";
+export const currentReleaseTitle = "Dövizli ticaret özetinde müşteri/tedarikçi cari detayını ayırma";
 
 export const updatedSectionIds = ["latest-version-history", "project-maturity", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Dövizli Ticaret Özeti’nde Cari başlıkları Net Cari olarak netleştirildi",
-  "Net Cari kartlarında müşteri - tedarikçi açıklaması gösterildi",
-  "Gün Sonu Raporu Önizleme’de cari satırı Net Cari olarak güncellendi",
+  "Dövizli Ticaret Özeti’ne müşteri ve tedarikçi cari detayları eklendi",
+  "Net Cari hesabının müşteri - tedarikçi farkı olduğu daha anlaşılır hale getirildi",
+  "Cari detayları para birimi bazında okunabilir kompakt alanda gösterildi",
 ];
 
 export const releaseJumpLinks = [
