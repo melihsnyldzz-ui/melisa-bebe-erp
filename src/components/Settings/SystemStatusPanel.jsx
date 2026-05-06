@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.14.5",
+    title: "Sol üst yönetim paneli altında güncel sürüm rozeti",
+    area: "Genel Layout / Ayarlar",
+    description: "Güncel sürüm bilgisi sol üstte Yönetim paneli yazısının altında açık mavi bilgi rozeti olarak görünür hale getirildi.",
+  },
+  {
     version: "v1.14.4",
     title: "Yenilik sistemi için sayfa bazlı test ve görünürlük kontrolü",
     area: "Ayarlar / Ortak Bileşen",
@@ -166,12 +172,6 @@ const versionHistoryRows = [
     title: "Vega karşılaştırma test sonuç şablonu ve hata kayıt formatı",
     area: "Ayarlar",
     description: "Vega karşılaştırma testleri için sonuç şablonu ve hata kayıt formatı eklendi.",
-  },
-  {
-    version: "v1.13.7",
-    title: "Canlıya geçiş test planı ve Vega karşılaştırma kontrol listesi",
-    area: "Ayarlar",
-    description: "Canlıya geçiş öncesi 5 günlük test planı ve Vega karşılaştırma kontrol listesi eklendi.",
   },
 ];
 

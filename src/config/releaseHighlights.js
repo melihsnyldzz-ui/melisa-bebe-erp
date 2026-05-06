@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.14.4";
+export const currentReleaseVersion = "v1.14.5";
 
-export const currentReleaseTitle = "Yenilik sistemi için sayfa bazlı test ve görünürlük kontrolü";
+export const currentReleaseTitle = "Sol üst yönetim paneli altında güncel sürüm rozeti";
 
 export const updatedSectionIds = ["latest-version-history", "project-maturity", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Yenilik paneline görünürlük kontrol listesi eklendi",
-  "Ayarlar sayfası sayfa bazlı release config üzerinden beslenecek hale getirildi",
-  "YENİ etiketi ve hızlı geçiş sistemi test edilebilir hale getirildi",
+  "Güncel sürüm bilgisi sol üst yönetim paneli alanına eklendi",
+  "Yönetim paneli altında açık mavi sürüm rozeti gösterilmeye başlandı",
+  "Sürüm bilgisi tüm sayfalarda daha kolay görünür hale getirildi",
 ];
 
 export const releaseJumpLinks = [

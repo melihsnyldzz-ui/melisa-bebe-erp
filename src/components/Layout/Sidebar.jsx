@@ -1,5 +1,6 @@
 import { PackageCheck } from "lucide-react";
 import melisaBabyLogo from "../../assets/melisa-baby-logo.jpg";
+import { APP_STAGE, APP_VERSION } from "../../config/appVersion.js";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { menuItems, updatedMenuItemIds } from "../../data/mockData.js";
 
@@ -34,6 +35,9 @@ export default function Sidebar({ activeModule, onModuleChange }) {
         <div>
           <strong>Melisa Bebe ERP</strong>
           <span>Yönetim paneli</span>
+          <span className="sidebar-version-badge">
+            {APP_VERSION} · {APP_STAGE}
+          </span>
         </div>
       </div>
       <nav className="nav-list">
