@@ -259,6 +259,39 @@ export default function VegaImportPreview() {
           <span>Gerçek ilk deneme ayrı sürümde, manuel yedek doğrulandıktan ve read-only kullanıcı yetkisi kesinleştirildikten sonra ele alınacaktır.</span>
         </div>
       </section>
+
+      <section className="vega-transition-gate-panel">
+        <h2>İlk Read-only Deneme Onay Matrisi</h2>
+        <p>Bu matris yalnızca manuel kontrol rehberidir. Bu ekrandan onay alınmaz, bağlantı kurulmaz, query hazırlanmaz, sorgu çalıştırılmaz ve veri yazılmaz.</p>
+        <div className="vega-transition-gate-grid">
+          <div className="vega-transition-gate-row"><strong>Manuel yedek alındı</strong><span>Manuel doğrulanacak</span></div>
+          <div className="vega-transition-gate-row"><strong>Kullanıcı sadece read-only</strong><span>Manuel doğrulanacak</span></div>
+          <div className="vega-transition-gate-row"><strong>Yazma yetkisi kapalı</strong><span>Manuel doğrulanacak</span></div>
+          <div className="vega-transition-gate-row"><strong>İlk kapsam sadece stok kartı</strong><span>Manuel doğrulanacak</span></div>
+          <div className="vega-transition-gate-row"><strong>20 satır sınırı kabul edildi</strong><span>Manuel doğrulanacak</span></div>
+          <div className="vega-transition-gate-row"><strong>Timeout 3000 ms hedef</strong><span>Manuel doğrulanacak</span></div>
+          <div className="vega-transition-gate-row"><strong>Retry kapalı</strong><span>Manuel doğrulanacak</span></div>
+          <div className="vega-transition-gate-row"><strong>Ham hata gizlenecek</strong><span>Manuel doğrulanacak</span></div>
+          <div className="vega-transition-gate-row"><strong>Sonuç Vega ekranıyla karşılaştırılacak</strong><span>Manuel doğrulanacak</span></div>
+        </div>
+        <div className="vega-transition-gate-note">
+          <strong>İlk Test Prosedürü</strong>
+          <span>İlk gerçek read-only test ayrı sürümde yapılacaktır. Bu alandaki prosedür yalnızca hazırlık sırasını gösterir.</span>
+        </div>
+        <div className="vega-transition-gate-grid">
+          <div className="vega-transition-gate-row"><strong>1.</strong><span>Manuel yedeği doğrula.</span></div>
+          <div className="vega-transition-gate-row"><strong>2.</strong><span>Read-only kullanıcı yetkisini doğrula.</span></div>
+          <div className="vega-transition-gate-row"><strong>3.</strong><span>Test kapsamını yalnızca stok kartı olarak sınırla.</span></div>
+          <div className="vega-transition-gate-row"><strong>4.</strong><span>İlk okuma sınırını 20 satır olarak koru.</span></div>
+          <div className="vega-transition-gate-row"><strong>5.</strong><span>Ham hataları kullanıcıya göstermeme politikasını uygula.</span></div>
+          <div className="vega-transition-gate-row"><strong>6.</strong><span>Sonucu Vega ekranıyla manuel karşılaştır.</span></div>
+          <div className="vega-transition-gate-row"><strong>7.</strong><span>Hata varsa ekran adı, işlem ve hata notunu hazırla.</span></div>
+        </div>
+        <div className="vega-transition-gate-note">
+          <strong>Test Sonucu Not Şablonu</strong>
+          <span>Test tarihi: · Operatör: · Okunan kayıt türü: · Okunan satır sayısı: · Vega ekranındaki karşılık: · ERP önizleme sonucu: · Sonuç: Uyumlu / Fark var / Kontrol edilecek · Not:</span>
+        </div>
+      </section>
     </>
   );
 }

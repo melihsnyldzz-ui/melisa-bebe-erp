@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.23.1",
+    title: "Teknik kontrol paneli görsel düzen ve son güvenlik kontrolü",
+    area: "Vega / Import Önizleme",
+    description: "İlk Deneme Teknik Kontrolü paneline pasif güvenlik notu eklendi; bağlantı, SQL/ODBC, DB okuma, query ve veri yazma durumları daha net gösterildi ve gerçek bağlantı veya sorgu davranışı eklenmeden teknik kontrol paneli son kez düzenlendi.",
+  },
+  {
     version: "v1.23.0",
     title: "İlk gerçek read-only deneme öncesi teknik kontrol paketi",
     area: "Vega / Import Önizleme",
