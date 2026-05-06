@@ -3,19 +3,19 @@ import { APP_STAGE, APP_VERSION } from "../../config/appVersion.js";
 
 const statusRows = [
   { label: "Uygulama sürümü", value: APP_VERSION },
-  { label: "Uygulama aşaması", value: APP_STAGE },
+  { label: "Geliştirme aşaması", value: APP_STAGE },
   { label: "Build kontrolü", value: "GitHub Actions" },
   { label: "Çalışma modu", value: "Güvenli geliştirme modu" },
-  { label: "Veri yazan kritik işlemler", value: "Kontrollü sürüm gerektirir" },
-  { label: "El terminali durumu", value: "Okuma + sayım sepeti + rapor/CSV/JSON önizleme hazırlığı" },
-  { label: "Vega geçiş durumu", value: "Kademeli geçiş hazırlığı" },
+  { label: "Kritik işlem politikası", value: "Stok, cari, fiş, yedekleme, import ve migration işlemleri ayrı kontrollü sürümlerle açılır." },
+  { label: "El terminali hazırlığı", value: "Okuma, son okutulanlar, sayım sepeti ve rapor/CSV/JSON önizleme hazır." },
+  { label: "Vega geçiş hazırlığı", value: "Kademeli geçiş hazırlığı devam ediyor." },
 ];
 
 const maturityRows = [
-  { label: "ERP genel olgunluk", value: "%53-57" },
-  { label: "Canlı kullanım güvenliği", value: "%45-49" },
+  { label: "ERP genel hazırlık", value: "%54-58" },
+  { label: "Canlı kullanım güvenliği", value: "%46-50" },
   { label: "El terminali hazırlığı", value: "%45-50" },
-  { label: "Vega'dan geçiş hazırlığı", value: "%38-43" },
+  { label: "Vega'dan geçiş hazırlığı", value: "%39-44" },
 ];
 
 export default function SystemStatusPanel() {
@@ -27,8 +27,8 @@ export default function SystemStatusPanel() {
       </div>
 
       <p className="settings-panel-description">
-        Bu ERP halen kademeli geliştirme aşamasındadır. Stok, cari, fiş, import, yedekleme ve migration gibi veri yazan
-        işlemler küçük ve kontrollü sürümlerle ilerletilmelidir.
+        Bu ekran, ERP'nin mevcut geliştirme seviyesini ve güvenli kullanım durumunu gösterir. Buradaki bilgiler sadece
+        bilgilendirme amaçlıdır; herhangi bir ayar kaydetmez.
       </p>
 
       <div className="system-status-grid">
@@ -50,6 +50,14 @@ export default function SystemStatusPanel() {
             </div>
           ))}
         </div>
+      </div>
+
+      <div className="system-status-guide">
+        <h3>Kullanım Notu</h3>
+        <p>
+          Bu oranlar canlı kullanıma geçiş için yaklaşık takip değerleridir. Veri yazan işlemler devreye alınmadan önce
+          yedekleme, rollback, gerçek veri testi ve personel denemesi yapılmalıdır.
+        </p>
       </div>
     </section>
   );
