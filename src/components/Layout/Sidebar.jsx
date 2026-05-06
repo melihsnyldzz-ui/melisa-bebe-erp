@@ -45,6 +45,7 @@ export default function Sidebar({ activeModule, onModuleChange }) {
             <button className={`nav-item ${isActive ? "active" : ""}`} key={item.id} onClick={() => onModuleChange(item.id)}>
               <Icon size={19} />
               <span>{item.label}</span>
+              {item.hasUpdate && <i className="nav-update-dot" aria-label={`${item.label} sayfasında yenilik var`} />}
             </button>
           );
         })}
