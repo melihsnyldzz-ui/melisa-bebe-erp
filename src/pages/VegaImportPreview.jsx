@@ -4,6 +4,7 @@ import {
   vegaImportSummary,
   vegaStockImportPreviewRows,
 } from "../data/vegaImportMapping.js";
+import "../vegaImport.css";
 
 const riskRuleMap = Object.fromEntries(vegaImportMapping.riskRules.map((rule) => [rule.id, rule]));
 
