@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.18.5",
+    title: "Vega stok deneme veri kaynağı ayrımı",
+    area: "Vega / Stok",
+    description: "Vega Stok Deneme ekranında gösterilen verinin demo veri mi yoksa ileride açılacak Vega read-only verisi mi olduğunu anlatan veri kaynağı bilgilendirmesi eklendi; gerçek bağlantı açılmadan modül hazırlık durumu daha net hale getirildi.",
+  },
+  {
     version: "v1.18.4",
     title: "Vega stok deneme ekranı test notu ve görsel sıkıştırma",
     area: "Vega / Stok",

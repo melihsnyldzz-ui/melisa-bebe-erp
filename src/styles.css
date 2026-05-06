@@ -3404,6 +3404,63 @@ button {
   margin-top: 1px;
 }
 
+.vega-data-source-panel {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 11px;
+  border: 1px solid #fed7aa;
+  border-radius: 8px;
+  color: #7c2d12;
+  background: #fff7ed;
+}
+
+.vega-data-source-panel div {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.vega-data-source-panel strong,
+.vega-data-source-panel span,
+.vega-data-source-panel small {
+  display: block;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.vega-data-source-panel strong {
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+.vega-data-source-panel span {
+  font-size: 0.8rem;
+  font-weight: 900;
+  line-height: 1.35;
+}
+
+.vega-data-source-panel small {
+  color: #9a3412;
+  font-size: 0.74rem;
+  font-weight: 800;
+  line-height: 1.32;
+}
+
+.vega-data-source-panel em {
+  flex: 0 0 auto;
+  padding: 5px 8px;
+  border: 1px solid #fed7aa;
+  border-radius: 999px;
+  color: #9a3412;
+  background: #fff;
+  font-size: 0.72rem;
+  font-style: normal;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
 .vega-test-note {
   display: grid;
   gap: 3px;
@@ -5398,6 +5455,16 @@ tr:last-child td {
 
   .vega-stock-warning {
     font-size: 0.78rem;
+  }
+
+  .vega-data-source-panel {
+    display: grid;
+    padding: 9px;
+  }
+
+  .vega-data-source-panel em {
+    justify-self: start;
+    white-space: normal;
   }
 
   .vega-connection-panel {

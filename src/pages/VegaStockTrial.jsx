@@ -105,6 +105,10 @@ export default function VegaStockTrial() {
     { label: "Veri yazma", value: connectionMetadata.writeEnabled ? "Açık" : "Kapalı" },
     { label: "Gösterilen veri", value: hasVegaRows ? "Vega read-only" : "Demo veri" },
   ];
+  const dataSourceLabel = hasVegaRows ? "Vega read-only" : "Demo veri";
+  const dataSourceMessage = hasVegaRows
+    ? "Vega read-only satırları gösteriliyor. Veri yazma kapalıdır."
+    : "Şu anda demo stok verisi gösteriliyor. Gerçek Vega stoğu okunmuyor.";
   const normalizedQuery = query.trim().toLocaleLowerCase("tr-TR");
   const filteredRows = useMemo(() => {
     if (!normalizedQuery) {
@@ -126,7 +130,7 @@ export default function VegaStockTrial() {
         <div>
           <p>Deneme Modu</p>
           <h1>Vega Stok Deneme</h1>
-          <span>Geçici test ekranıdır. Vega'dan sadece stok okunur, veri yazılmaz.</span>
+          <span>Bu ekran gerçek Vega bağlantısı açılmadan stok okuma modülünün hazırlık ve kontrol alanıdır.</span>
         </div>
       </section>
 
@@ -163,6 +167,15 @@ export default function VegaStockTrial() {
           <span>
             {stockState.message} {!hasVegaRows && "Gösterilen satırlar demo veridir; gerçek Vega stoğu değildir."}
           </span>
+        </div>
+
+        <div className="vega-data-source-panel">
+          <div>
+            <strong>Veri Kaynağı</strong>
+            <span>{dataSourceMessage}</span>
+            <small>Vega read-only bağlantısı ileride ayrı kontrollü sürümde açılacaktır.</small>
+          </div>
+          <em>{dataSourceLabel}</em>
         </div>
 
         <div className="vega-test-note">
