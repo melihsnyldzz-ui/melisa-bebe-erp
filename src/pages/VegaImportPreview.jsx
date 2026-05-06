@@ -243,6 +243,7 @@ export default function VegaImportPreview() {
       <section className="vega-transition-gate-panel">
         <h2>İlk Deneme Teknik Kontrolü</h2>
         <p>Bu alan ilk gerçek read-only denemeye geçmeden önce teknik şartların yalnızca kontrol edilmesi için hazırlanmıştır. Bu sürümde bağlantı kurulmaz, sorgu hazırlanmaz, sorgu çalıştırılmaz ve veri yazılmaz.</p>
+        <p>Bu panel yalnızca teknik hazırlık durumunu gösterir. Bağlantı parametresi almaz, query üretmez, bağlantı testi yapmaz ve veri okumaz.</p>
         <div className="vega-transition-gate-grid">
           <div className="vega-transition-gate-row"><strong>Bağlantı durumu</strong><span>Kurulmadı</span></div>
           <div className="vega-transition-gate-row"><strong>SQL/ODBC durumu</strong><span>Açılmadı</span></div>

@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.23.0";
+export const currentReleaseVersion = "v1.23.1";
 
-export const currentReleaseTitle = "İlk gerçek read-only deneme öncesi teknik kontrol paketi";
+export const currentReleaseTitle = "Teknik kontrol paneli görsel düzen ve son güvenlik kontrolü";
 
 export const updatedSectionIds = ["latest-version-history", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "İlk gerçek read-only deneme öncesi teknik kontrol paneli eklendi",
-  "Bağlantı, SQL/ODBC, DB okuma, query ve veri yazma durumlarının henüz kapalı olduğu netleştirildi",
-  "Gerçek ilk denemenin ayrı sürümde ve manuel yedek doğrulandıktan sonra ele alınacağı belirtildi",
+  "İlk Deneme Teknik Kontrolü paneline pasif güvenlik notu eklendi",
+  "Bağlantı, SQL/ODBC, DB okuma, query ve veri yazma durumları daha net gösterildi",
+  "Gerçek bağlantı veya sorgu davranışı eklenmeden teknik kontrol paneli son kez düzenlendi",
 ];
 
 export const releaseJumpLinks = [

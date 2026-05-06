@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.23.0",
+    title: "İlk gerçek read-only deneme öncesi teknik kontrol paketi",
+    area: "Vega / Import Önizleme",
+    description: "İlk gerçek read-only deneme öncesi teknik kontrol paneli eklendi; bağlantı, SQL/ODBC, DB okuma, query ve veri yazma durumlarının henüz kapalı olduğu netleştirildi ve gerçek ilk denemenin ayrı sürümde, manuel yedek doğrulandıktan sonra ele alınacağı belirtildi.",
+  },
+  {
     version: "v1.22.2",
     title: "Read-only ilk deneme öncesi final güvenlik matrisi",
     area: "Vega / Import Önizleme",
