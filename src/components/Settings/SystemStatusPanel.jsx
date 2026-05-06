@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.26.1",
+    title: "Read-only kullanıcı yetki rehberi ve ilk sorgu kapsam sınırı genişletme",
+    area: "Vega / Import Önizleme",
+    description: "Read-only kullanıcı yetki rehberi, ilk sorgu kapsamı ve operatör/saha hazırlık özeti ayrı statik panellerle tamamlandı; gerçek bağlantı, SQL/ODBC, DB okuma, query veya veri yazma eklenmeden manuel hazırlık görünürlüğü artırıldı.",
+  },
+  {
     version: "v1.26.0",
     title: "Vega read-only bağlantı bilgisi manuel hazırlık ekranı",
     area: "Vega / Import Önizleme",

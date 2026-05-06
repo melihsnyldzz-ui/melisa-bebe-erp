@@ -416,6 +416,27 @@ export default function VegaImportPreview() {
           <div className="vega-transition-gate-row"><strong>Hata görülürse ekran görüntüsü ve not alınacağı bildirildi mi?</strong><span>Saha kontrolü</span></div>
         </div>
       </section>
+
+      <section className="vega-transition-gate-panel">
+        <h2>Read-only Manuel Kontrollü Test Kapısı</h2>
+        <p>Bu kapı yalnızca ilk gerçek read-only denemeye geçmeden önce manuel şartların gözden geçirilmesi için hazırlanmıştır. Bu ekrandan bağlantı kurulmaz, SQL/ODBC açılmaz, DB okunmaz, query hazırlanmaz, sorgu çalıştırılmaz ve veri yazılmaz.</p>
+        <div className="vega-transition-gate-grid">
+          <div className="vega-transition-gate-row"><strong>Kapı durumu</strong><span>Pasif rehber</span></div>
+          <div className="vega-transition-gate-row"><strong>Manuel yedek</strong><span>Doğrulanmadan ilerlenmez</span></div>
+          <div className="vega-transition-gate-row"><strong>Read-only kullanıcı</strong><span>Doğrulanmadan ilerlenmez</span></div>
+          <div className="vega-transition-gate-row"><strong>İlk kapsam</strong><span>Sadece stok kartları</span></div>
+          <div className="vega-transition-gate-row"><strong>Satır limiti</strong><span>20 satır</span></div>
+          <div className="vega-transition-gate-row"><strong>SQL/ODBC</strong><span>Bu sürümde açılmaz</span></div>
+          <div className="vega-transition-gate-row"><strong>DB okuma</strong><span>Yapılmaz</span></div>
+          <div className="vega-transition-gate-row"><strong>Query</strong><span>Hazırlanmaz ve çalıştırılmaz</span></div>
+          <div className="vega-transition-gate-row"><strong>Veri yazma / import</strong><span>Kapalı</span></div>
+          <div className="vega-transition-gate-row"><strong>Sonraki adım</strong><span>Ayrı sürümde değerlendirilecek</span></div>
+        </div>
+        <div className="vega-transition-gate-note">
+          <strong>Manuel Kapı Notu</strong>
+          <span>Gerçek read-only test yalnızca ayrı sürümde, manuel yedek ve read-only kullanıcı doğrulandıktan sonra ele alınacaktır. Bu panel karar kaydetmez ve işlem başlatmaz.</span>
+        </div>
+      </section>
     </>
   );
 }
