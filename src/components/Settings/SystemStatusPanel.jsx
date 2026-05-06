@@ -12,10 +12,10 @@ const statusRows = [
 ];
 
 const maturityRows = [
-  { label: "ERP genel hazırlık", value: "%60-64" },
-  { label: "Canlı kullanım güvenliği", value: "%52-56" },
+  { label: "ERP genel hazırlık", value: "%61-65" },
+  { label: "Canlı kullanım güvenliği", value: "%53-57" },
   { label: "El terminali hazırlığı", value: "%45-50" },
-  { label: "Vega'dan geçiş hazırlığı", value: "%45-50" },
+  { label: "Vega'dan geçiş hazırlığı", value: "%46-51" },
 ];
 
 const goLiveChecklistGroups = [
@@ -44,6 +44,12 @@ const goLiveChecklistGroups = [
 ];
 
 const versionHistoryRows = [
+  {
+    version: "v1.11.8",
+    title: "Ayarlar ekranı canlı test rehberi",
+    area: "Ayarlar",
+    description: "Canlı test sırasında izlenecek kontrol sırası kullanıcıya gösterildi.",
+  },
   {
     version: "v1.11.7",
     title: "Ayarlar ekranı sürüm geçmişi özeti",
@@ -74,6 +80,17 @@ const versionHistoryRows = [
     area: "Sol menü",
     description: "Son sürümde değişen sayfayı göstermek için mavi yenilik noktası eklendi.",
   },
+];
+
+const liveTestGuideSteps = [
+  "Sol menüde mavi nokta olan sayfayı aç.",
+  "Ayarlar ekranında Sistem Durumu panelini kontrol et.",
+  "Canlıya Hazırlık Kontrol Listesi'ndeki hazır / hazırlıkta / bekliyor maddelerini incele.",
+  "Son Sürüm Geçmişi bölümünden bu sürümde ne değiştiğini oku.",
+  "Build ve Kalite Durumu kartından build kontrolünün GitHub Actions üzerinden takip edildiğini doğrula.",
+  "Eğer değişiklik depo terminaliyle ilgiliyse Depo Terminali ekranında barkod/ürün kodu testini yap.",
+  "Veri yazan işlem yoksa sadece ekran kontrolü yap; stok/cari/fiş işlemi deneme.",
+  "Hata görürsen ekran adını, yaptığın işlemi ve hata mesajını not al.",
 ];
 
 export default function SystemStatusPanel() {
@@ -136,6 +153,24 @@ export default function SystemStatusPanel() {
             </article>
           ))}
         </div>
+      </div>
+
+      <div className="live-test-guide-panel">
+        <div>
+          <h3>Canlı Test Rehberi</h3>
+          <p>Canlı test sırasında nereden başlayacağınızı ve hangi sırayla kontrol yapacağınızı gösterir.</p>
+        </div>
+
+        <ol>
+          {liveTestGuideSteps.map((step) => (
+            <li key={step}>{step}</li>
+          ))}
+        </ol>
+
+        <p className="live-test-guide-note">
+          Bu rehber test sırasında nereden başlayacağınızı göstermek için hazırlanmıştır. Gerçek veriyle işlem yapmadan
+          önce yedekleme ve geri dönüş senaryosu ayrıca test edilmelidir.
+        </p>
       </div>
 
       <div className="system-status-grid">
