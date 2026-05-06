@@ -267,6 +267,25 @@ export default function VegaStockTrial() {
     { label: "Operatör adı", value: connectionMetadata.operatorNameRequired ? "Zorunlu" : "Zorunlu değil" },
     { label: "Yedek kontrolü", value: connectionMetadata.backupCheckRequired ? "Zorunlu" : "Zorunlu değil" },
   ];
+  const firstReadOnlyTestSteps = [
+    "Manuel Vega yedeğinin alındığını kontrol et.",
+    "Read-only kullanıcı yetkisinin hazır olduğunu doğrula.",
+    "Bağlantı kilidinin açık olduğunu kontrol et.",
+    "İlk test kapsamının sadece stok kartları olduğunu doğrula.",
+    "Satır limitinin 20 olduğunu kontrol et.",
+    "Retry’nin kapalı olduğunu kontrol et.",
+    "Fail-closed davranışının açık olduğunu kontrol et.",
+    "Ham hata mesajının gizli olduğunu kontrol et.",
+    "Test sonucunu manuel olarak not al.",
+  ];
+  const operatorControlGuideItems = [
+    "Testi yapan kişi adı manuel not alınmalı.",
+    "Test tarihi manuel not alınmalı.",
+    "Vega ekranı ve ERP ekranı karşılaştırılmalı.",
+    "Beklenen sonuç ve görülen sonuç manuel yazılmalı.",
+    "Hata varsa ekran görüntüsü alınmalı.",
+    "Bu uygulama içinde hiçbir test notu kaydedilmez.",
+  ];
   const finalTransitionSummary = [
     "Demo veri ayrımı yapıldı.",
     "Bağlantı hazırlığı pasif gösterildi.",
@@ -638,9 +657,36 @@ export default function VegaStockTrial() {
               <h2>Read-only Güvenlik Checklist'i</h2>
               <p>Bu sürümde bağlantı kurulmaz, sorgu çalıştırılmaz ve herhangi bir onay kaydedilmez.</p>
             </div>
-            <div className="vega-security-checklist-grid" aria-label="Read-only güvenlik checklist'i">
-              {readOnlySecurityChecklist.map((item) => (
-                <div className="vega-security-checklist-item" key={item}>
+          <div className="vega-security-checklist-grid" aria-label="Read-only güvenlik checklist'i">
+            {readOnlySecurityChecklist.map((item) => (
+              <div className="vega-security-checklist-item" key={item}>
+                <span aria-hidden="true">•</span>
+                <strong>{item}</strong>
+              </div>
+            ))}
+          </div>
+        </div>
+
+          <div className="vega-first-test-procedure-panel">
+            <div>
+              <h2>İlk Read-only Test Prosedürü</h2>
+              <p>Bu panel sadece manuel test adımlarını gösterir; bağlantı açmaz, sorgu çalıştırmaz, veri okumaz.</p>
+            </div>
+            <ol className="vega-first-test-procedure-list" aria-label="İlk read-only test prosedürü">
+              {firstReadOnlyTestSteps.map((step) => (
+                <li key={step}>{step}</li>
+              ))}
+            </ol>
+          </div>
+
+          <div className="vega-operator-guide-panel">
+            <div>
+              <h2>Operatör Kontrol Rehberi</h2>
+              <p>Bu rehber sadece manuel test prosedürüdür; bağlantı açmaz, veri okumaz, test notu kaydetmez.</p>
+            </div>
+            <div className="vega-operator-guide-list" aria-label="Operatör kontrol rehberi">
+              {operatorControlGuideItems.map((item) => (
+                <div className="vega-operator-guide-item" key={item}>
                   <span aria-hidden="true">•</span>
                   <strong>{item}</strong>
                 </div>

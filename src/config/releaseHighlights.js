@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.20.3";
+export const currentReleaseVersion = "v1.20.4";
 
-export const currentReleaseTitle = "Vega read-only manuel onay ve bağlantı kilidi görünürlüğü";
+export const currentReleaseTitle = "Vega read-only ilk test prosedürü ve operatör kontrol rehberi";
 
 export const updatedSectionIds = ["latest-version-history", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Vega read-only hazırlığında manuel onay gerekliliği daha görünür hale getirildi",
-  "Bağlantı kilidi, kilit açma izni ve operatör/yedek kontrol şartları pasif metadata ile netleştirildi",
-  "Onay kaydı, kilit açma ve bağlantı başlatma olmadan manuel onay paneli eklendi",
+  "İlk Vega read-only denemesi için pasif test prosedürü eklendi",
+  "Operatörün manuel not alacağı kontrol rehberi görünür hale getirildi",
+  "Bağlantı açma, veri okuma ve test notu kaydı olmadan güvenli test akışı netleştirildi",
 ];
 
 export const releaseJumpLinks = [

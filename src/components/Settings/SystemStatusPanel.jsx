@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.20.4",
+    title: "Vega read-only ilk test prosedürü ve operatör kontrol rehberi",
+    area: "Vega / Read-only",
+    description: "İlk Vega read-only denemesi öncesinde operatörün manuel yedek, read-only yetki, bağlantı kilidi, stok kartı kapsamı, 20 satır limiti, retry kapalı, fail-closed açık ve ham hata gizli şartlarını kontrol etmesini sağlayan pasif test prosedürü ve operatör rehberi eklendi.",
+  },
+  {
     version: "v1.20.3",
     title: "Vega read-only manuel onay ve bağlantı kilidi görünürlüğü",
     area: "Vega / Read-only",
