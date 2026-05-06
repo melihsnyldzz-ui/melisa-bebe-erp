@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.18.8";
-export const APP_STAGE = "Vega stok deneme hazırlık kapanışı ve read-only geçiş notu";
+export const APP_VERSION = "v1.19.0";
+export const APP_STAGE = "Vega read-only bağlantı hazırlığı başlangıcı";

@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.18.8";
+export const currentReleaseVersion = "v1.19.0";
 
-export const currentReleaseTitle = "Vega stok deneme hazırlık kapanışı ve read-only geçiş notu";
+export const currentReleaseTitle = "Vega read-only bağlantı hazırlığı başlangıcı";
 
 export const updatedSectionIds = ["latest-version-history", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Vega Stok Deneme ekranına hazırlık kapanış notu eklendi",
-  "Gerçek Vega read-only bağlantısının ayrı kontrollü sürümde açılacağı netleştirildi",
-  "Vega stok deneme paneli hazırlık fazı kapanışa hazır hale getirildi",
+  "Vega Stok Deneme hazırlık fazı tamamlanarak read-only bağlantı hazırlığı başlatıldı",
+  "Gerçek bağlantı kurulmadan read-only bağlantı için gerekli pasif hazırlık başlıkları gösterildi",
+  "ODBC/SQL, veritabanı ve stok sorgusu hazırlık durumları güvenli şekilde ayrıldı",
 ];
 
 export const releaseJumpLinks = [

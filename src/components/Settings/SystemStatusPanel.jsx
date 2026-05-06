@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.19.0",
+    title: "Vega read-only bağlantı hazırlığı başlangıcı",
+    area: "Vega / Read-only",
+    description: "Vega Stok Deneme hazırlık fazı kapatıldıktan sonra gerçek bağlantı kurulmadan read-only bağlantı için gerekli ODBC/SQL sürücüsü, veritabanı yolu/sunucusu, stok okuma sorgusu ve veri yazma izni durumlarını gösteren pasif hazırlık alanı eklendi.",
+  },
+  {
     version: "v1.18.8",
     title: "Vega stok deneme hazırlık kapanışı ve read-only geçiş notu",
     area: "Vega / Stok",

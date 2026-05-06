@@ -3659,6 +3659,67 @@ button {
   font-weight: 900;
 }
 
+.vega-readonly-prep-panel {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid rgba(51, 154, 240, 0.2);
+  border-radius: 8px;
+  background: #f4faff;
+}
+
+.vega-readonly-prep-panel h2,
+.vega-readonly-prep-panel p {
+  margin: 0;
+}
+
+.vega-readonly-prep-panel h2 {
+  color: var(--anthracite);
+  font-size: 0.96rem;
+}
+
+.vega-readonly-prep-panel p {
+  margin-top: 3px;
+  color: #184e77;
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.38;
+}
+
+.vega-readonly-prep-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.vega-readonly-prep-row {
+  min-width: 0;
+  padding: 7px 8px;
+  border: 1px solid rgba(51, 154, 240, 0.18);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.vega-readonly-prep-row span,
+.vega-readonly-prep-row strong {
+  display: block;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.vega-readonly-prep-row span {
+  color: #1864ab;
+  font-size: 0.68rem;
+  font-weight: 900;
+}
+
+.vega-readonly-prep-row strong {
+  margin-top: 3px;
+  color: #184e77;
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
 .vega-column-mapping-panel {
   display: grid;
   gap: 8px;
@@ -5474,6 +5535,10 @@ tr:last-child td {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .vega-readonly-prep-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .vega-column-mapping-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -5614,6 +5679,19 @@ tr:last-child td {
   }
 
   .vega-readiness-row {
+    padding: 7px;
+  }
+
+  .vega-readonly-prep-panel {
+    padding: 10px;
+  }
+
+  .vega-readonly-prep-grid {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .vega-readonly-prep-row {
     padding: 7px;
   }
 

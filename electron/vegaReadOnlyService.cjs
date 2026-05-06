@@ -3,6 +3,9 @@ function listVegaStockReadOnly() {
   const metadata = {
     readOnlyEnabled: isEnabled,
     driverConfigured: false,
+    serverConfigured: false,
+    databaseConfigured: false,
+    stockQueryPrepared: false,
     writeEnabled: false,
   };
 

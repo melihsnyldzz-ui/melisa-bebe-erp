@@ -39,6 +39,9 @@ const statusLabels = {
 const defaultConnectionMetadata = {
   readOnlyEnabled: false,
   driverConfigured: false,
+  serverConfigured: false,
+  databaseConfigured: false,
+  stockQueryPrepared: false,
   writeEnabled: false,
 };
 
@@ -115,6 +118,17 @@ export default function VegaStockTrial() {
     { label: "Gerçek stok okuma", value: hasVegaRows ? "Açık" : "Kapalı" },
     { label: "Veri yazma", value: connectionMetadata.writeEnabled ? "Açık" : "Kapalı" },
     { label: "Gösterilen veri", value: hasVegaRows ? "Vega read-only" : "Demo veri" },
+  ];
+  const readOnlyPreparationRows = [
+    { label: "Read-only bağlantı modu", value: connectionMetadata.readOnlyEnabled ? "Açık" : "Kapalı" },
+    { label: "ODBC / SQL sürücüsü", value: connectionMetadata.driverConfigured ? "Tanımlı" : "Tanımlı değil" },
+    {
+      label: "Vega veritabanı yolu / sunucusu",
+      value: connectionMetadata.serverConfigured || connectionMetadata.databaseConfigured ? "Tanımlı" : "Tanımlı değil",
+    },
+    { label: "Stok okuma sorgusu", value: connectionMetadata.stockQueryPrepared ? "Hazır" : "Hazırlanmadı" },
+    { label: "Veri yazma izni", value: connectionMetadata.writeEnabled ? "Açık" : "Kapalı" },
+    { label: "Sonraki kontrollü adım", value: "Bağlantı parametrelerinin sadece okunur önizlemesi" },
   ];
   const normalizedQuery = query.trim().toLocaleLowerCase("tr-TR");
   const filteredRows = useMemo(() => {
@@ -210,6 +224,24 @@ export default function VegaStockTrial() {
               <div className="vega-connection-card" key={card.label}>
                 <span>{card.label}</span>
                 <strong>{card.value}</strong>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="vega-readonly-prep-panel">
+          <div>
+            <h2>Read-only Bağlantı Hazırlığı</h2>
+            <p>
+              Bu alan ileride açılacak Vega read-only bağlantısı için gerekli hazırlıkları gösterir. Bu sürümde bağlantı
+              kurulmaz, sorgu çalıştırılmaz ve veri yazılmaz.
+            </p>
+          </div>
+          <div className="vega-readonly-prep-grid">
+            {readOnlyPreparationRows.map((row) => (
+              <div className="vega-readonly-prep-row" key={row.label}>
+                <span>{row.label}</span>
+                <strong>{row.value}</strong>
               </div>
             ))}
           </div>
