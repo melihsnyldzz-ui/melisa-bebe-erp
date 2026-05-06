@@ -22,19 +22,38 @@ export default function VegaImportPreview() {
     { label: "Çoklu barkodlu stok", value: formatNumber(vegaImportSummary.multiBarcodeStockCount), tone: "warning" },
   ];
 
+  const securityStatusCards = [
+    { label: "Canlı Vega bağlantısı", value: "Kapalı" },
+    { label: "SQL/ODBC okuma", value: "Kapalı" },
+    { label: "ERP’ye yazma", value: "Kapalı" },
+    { label: "Import işlemi", value: "Kapalı" },
+  ];
+
   return (
     <>
       <section className="page-title vega-import-title">
         <div>
           <p>Read-only Demo / Preview</p>
           <h1>Vega Import Önizleme</h1>
-          <span>Vega yedek analizine göre stok import eşleştirme ve risk kontrol ekranı.</span>
+          <span>Vega yedek analizine göre stok önizleme eşleştirme ve risk kontrol ekranı.</span>
         </div>
       </section>
 
       <section className="vega-import-warning-panel section-updated-highlight" id="vega-import-preview-panel">
         <AlertTriangle size={18} />
-        <strong>Bu ekran sadece Vega yedek analizine göre önizleme amaçlıdır. Gerçek Vega verisine bağlanmaz, ERP’ye kayıt yazmaz.</strong>
+        <div>
+          <strong>Import Kilidi Aktif</strong>
+          <p>Bu ekran yalnızca mock önizleme ve mapping kontrolü içindir. Canlı Vega bağlantısı kurmaz, ERP’ye kayıt yazmaz, import başlatmaz.</p>
+        </div>
+      </section>
+
+      <section className="vega-import-summary-grid">
+        {securityStatusCards.map((card) => (
+          <div className="vega-import-summary-card warning" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </div>
+        ))}
       </section>
 
       <section className="vega-import-summary-grid">
@@ -51,7 +70,7 @@ export default function VegaImportPreview() {
           <Database size={18} />
           <div>
             <h2>Doğrulanmış Vega Kaynak Bilgisi</h2>
-            <p>Bu bilgiler merkezi mapping dosyasından okunur; bu sürümde SQL bağlantısı kurulmaz.</p>
+            <p>Bu bilgiler merkezi mapping dosyasından okunur; bu sürümde SQL/ODBC bağlantısı, DB okuma ve canlı veri çekme işlemi yapılmaz.</p>
           </div>
         </div>
         <div className="vega-import-map-grid">
@@ -70,17 +89,17 @@ export default function VegaImportPreview() {
 
       <section className="vega-import-tabs">
         <button className="active" type="button">Stok Önizleme</button>
-        <button type="button" disabled>Müşteri Cari · Sonra</button>
-        <button type="button" disabled>Tedarikçi Cari · Sonra</button>
+        <button type="button" disabled>Müşteri Cari · Kapalı · Sonra</button>
+        <button type="button" disabled>Tedarikçi Cari · Kapalı · Sonra</button>
       </section>
 
       <section className="vega-import-table-panel">
         <div className="vega-import-table-heading">
           <div>
             <h2>Stok Önizleme</h2>
-            <p>Mock veri ile çalışan read-only import önizleme tablosu. Mimari ileride SQL’den okuyacak şekilde mapping üzerinden hazırlanmıştır.</p>
+            <p>Mock veri ile çalışan read-only önizleme tablosu. Bu sürümde SQL okuma yoktur; mapping mantığı yalnızca görsel önizleme olarak gösterilir.</p>
           </div>
-          <span><ShieldCheck size={14} /> Gerçek import yok</span>
+          <span><ShieldCheck size={14} /> Pasif önizleme · Gerçek import yok</span>
         </div>
 
         <div className="vega-import-table-wrap">
@@ -139,7 +158,7 @@ export default function VegaImportPreview() {
 
       <section className="vega-import-risk-panel">
         <h2>Risk Kuralları</h2>
-        <p>Bu kurallar import öncesi kalite kontrol içindir; bu sürümde kayıt oluşturmaz ve veri değiştirmez.</p>
+        <p>Bu kurallar pasif önizleme kalite kontrolü içindir; bu sürümde kayıt oluşturmaz, veriyi değiştirmez ve import başlatmaz.</p>
         <div className="vega-import-risk-grid">
           {vegaImportMapping.riskRules.map((rule) => (
             <span className={`vega-risk-chip ${rule.severity}`} key={rule.id}>{rule.label}</span>
