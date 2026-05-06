@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.15.5",
+    title: "Ana Panel dönem seçici hesaplama doğrulama ve görsel denge",
+    area: "Dashboard",
+    description: "Dönem seçici görünümü, KPI alt metinleri ve grafik eksenleri seçili dönemlere göre daha anlaşılır hale getirildi.",
+  },
+  {
     version: "v1.15.4",
     title: "Ana Panel filtre ve dönem seçimi hazırlığı",
     area: "Dashboard",
@@ -166,12 +172,6 @@ const versionHistoryRows = [
     title: "Sol üst sürüm rozetini kısaltma ve okunabilirlik iyileştirmesi",
     area: "Genel Layout / Ayarlar",
     description: "Sol üst sürüm rozeti daha kompakt hale getirildi ve tam sürüm açıklaması erişilebilir bilgi olarak korundu.",
-  },
-  {
-    version: "v1.14.5",
-    title: "Sol üst yönetim paneli altında güncel sürüm rozeti",
-    area: "Genel Layout / Ayarlar",
-    description: "Güncel sürüm bilgisi sol üstte Yönetim paneli yazısının altında açık mavi bilgi rozeti olarak görünür hale getirildi.",
   },
 ];
 

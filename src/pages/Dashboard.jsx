@@ -18,6 +18,7 @@ export default function Dashboard() {
   const erpData = useErpData();
   const [selectedPeriod, setSelectedPeriod] = useState("month");
   const dashboardData = useMemo(() => buildDashboardData(erpData, selectedPeriod), [erpData, selectedPeriod]);
+  const selectedPeriodLabel = dashboardPeriodOptions.find((option) => option.id === selectedPeriod)?.label || "Bu Ay";
 
   return (
     <>
@@ -48,6 +49,7 @@ export default function Dashboard() {
             {option.label}
           </button>
         ))}
+        <span>Gösterilen dönem: {selectedPeriodLabel}</span>
       </div>
 
       <section className="kpi-grid dashboard-compact-kpis" id="dashboard-daily-operation">
@@ -106,7 +108,7 @@ function buildKpi(label, currentValueRaw, monthValue, type, icon, tone) {
   return {
     icon,
     label,
-    monthValue: `Ay: ${formatInsightValue(monthTotal, type)}`,
+    monthValue: `Bu ay: ${formatInsightValue(monthTotal, type)}`,
     percent,
     tone,
     value: formatInsightValue(currentValue, type),

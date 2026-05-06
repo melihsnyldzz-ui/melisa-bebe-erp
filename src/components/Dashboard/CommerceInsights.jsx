@@ -55,7 +55,16 @@ function HorizontalBarCard({ title, icon: Icon, data, dataKey, valueLabel, empty
   );
 }
 
+function getXAxisInterval(length) {
+  if (length > 24) return 4;
+  if (length > 14) return 2;
+  if (length > 7) return 1;
+  return 0;
+}
+
 export default function CommerceInsights({ data }) {
+  const salesTrendInterval = getXAxisInterval(data.monthlySalesTrend.length);
+
   return (
     <section className="dashboard-commerce-insights" id="dashboard-commerce-insights">
       <div className="dashboard-middle-grid">
@@ -74,7 +83,7 @@ export default function CommerceInsights({ data }) {
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="4 4" vertical={false} stroke="#e5e7eb" />
-                <XAxis dataKey="day" axisLine={false} tickLine={false} />
+                <XAxis dataKey="day" axisLine={false} interval={salesTrendInterval} tickLine={false} />
                 <YAxis axisLine={false} tickLine={false} tickFormatter={(value) => `${value / 1000}K`} />
                 <Tooltip content={<ShortTooltip />} />
                 <Area type="monotone" dataKey="value" name="Satış" stroke="#d71920" strokeWidth={3} fill="url(#monthlySalesFill)" />
@@ -90,7 +99,7 @@ export default function CommerceInsights({ data }) {
           dataKey="revenue"
           valueLabel="Ciro"
           color="#1864ab"
-          emptyText="Bu ay müşteri analizi için satış verisi bekleniyor."
+          emptyText="Seçili dönem için müşteri satışı bekleniyor."
         />
       </div>
 
@@ -102,7 +111,7 @@ export default function CommerceInsights({ data }) {
           dataKey="quantity"
           valueLabel="Adet"
           color="#2d2f34"
-          emptyText="Bu ay ürün satış analizi için satış verisi bekleniyor."
+          emptyText="Seçili dönem için ürün satışı bekleniyor."
         />
 
         <div className="chart-panel dashboard-list-card">
@@ -167,7 +176,7 @@ export default function CommerceInsights({ data }) {
           </div>
         </div>
       ) : (
-        <p className="dashboard-empty-note dashboard-distribution-empty">Kategori/yaş grubu analizi için ürün eşleşmesi bekleniyor.</p>
+        <p className="dashboard-empty-note dashboard-distribution-empty">Kategori analizi için eşleşme bekleniyor.</p>
       )}
     </section>
   );

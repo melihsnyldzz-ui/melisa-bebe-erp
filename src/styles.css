@@ -334,6 +334,7 @@ button {
 }
 
 .dashboard-period-selector {
+  align-items: center;
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
@@ -356,6 +357,12 @@ button {
   border-color: rgba(24, 100, 171, 0.34);
   background: #eaf4ff;
   color: #0f4c81;
+}
+
+.dashboard-period-selector span {
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 800;
 }
 
 .page-title p {

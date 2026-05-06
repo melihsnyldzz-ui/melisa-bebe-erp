@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.15.4";
+export const currentReleaseVersion = "v1.15.5";
 
-export const currentReleaseTitle = "Ana Panel filtre ve dönem seçimi hazırlığı";
+export const currentReleaseTitle = "Ana Panel dönem seçici hesaplama doğrulama ve görsel denge";
 
 export const updatedSectionIds = ["latest-version-history", "project-maturity", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Ana Panel’e kompakt dönem seçici eklendi",
-  "Dashboard analizleri seçilen dönem mantığına hazırlandı",
-  "Grafik altı özetler daha kompakt hale getirildi",
+  "Dönem seçici görünümü daha anlaşılır hale getirildi",
+  "Grafik eksenleri seçilen döneme göre daha dengeli gösterildi",
+  "KPI alt metinleri dönem seçimiyle uyumlu hale getirildi",
 ];
 
 export const releaseJumpLinks = [
