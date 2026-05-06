@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.24.2",
+    title: "İlk read-only deneme öncesi kapanış kontrolü ve final saha notu",
+    area: "Vega / Import Önizleme",
+    description: "İlk read-only deneme öncesi hazırlık fazı için kapanış kontrolü eklendi; final saha notu ile gerçek denemenin ayrı sürümde yapılacağı tekrar vurgulandı ve gerçek bağlantı, query, DB okuma veya veri yazma eklenmeden hazırlık fazı kapatıldı.",
+  },
+  {
     version: "v1.24.1",
     title: "İlk read-only deneme öncesi saha kontrol özeti ve personel notu",
     area: "Vega / Import Önizleme",

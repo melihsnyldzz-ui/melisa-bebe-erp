@@ -326,6 +326,20 @@ export default function VegaImportPreview() {
           <span>İlk gerçek read-only deneme öncesinde son karar bu ekrandan verilmez. Gerçek deneme yalnızca ayrı sürümde, manuel yedek ve read-only kullanıcı doğrulandıktan sonra ele alınacaktır.</span>
         </div>
       </section>
+
+      <section className="vega-transition-gate-panel">
+        <h2>İlk Read-only Deneme Final Kararı</h2>
+        <p>Bu panel yalnızca karar rehberidir. İlk gerçek read-only deneme bu ekrandan başlatılmaz. Gerçek deneme ayrı sürümde, manuel yedek, read-only kullanıcı ve 20 satır sınırı doğrulandıktan sonra ele alınacaktır.</p>
+        <div className="vega-transition-gate-grid">
+          <div className="vega-transition-gate-row"><strong>Hazırlık fazı tamamlandı mı?</strong><span>Manuel değerlendirilecek</span></div>
+          <div className="vega-transition-gate-row"><strong>Manuel yedek hazır mı?</strong><span>Manuel değerlendirilecek</span></div>
+          <div className="vega-transition-gate-row"><strong>Read-only kullanıcı kesin mi?</strong><span>Manuel değerlendirilecek</span></div>
+          <div className="vega-transition-gate-row"><strong>İlk kapsam sadece stok kartı mı?</strong><span>Manuel değerlendirilecek</span></div>
+          <div className="vega-transition-gate-row"><strong>20 satır sınırı kabul edildi mi?</strong><span>Manuel değerlendirilecek</span></div>
+          <div className="vega-transition-gate-row"><strong>Son karar</strong><span>Bu ekrandan verilmeyecek</span></div>
+          <div className="vega-transition-gate-row"><strong>Gerçek deneme</strong><span>Ayrı sürümde yapılacak</span></div>
+        </div>
+      </section>
     </>
   );
 }

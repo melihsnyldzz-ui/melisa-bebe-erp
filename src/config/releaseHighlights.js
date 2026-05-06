@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.24.2";
+export const currentReleaseVersion = "v1.25.0";
 
-export const currentReleaseTitle = "İlk read-only deneme öncesi kapanış kontrolü ve final saha notu";
+export const currentReleaseTitle = "İlk gerçek read-only deneme hazırlığına geçiş öncesi final karar ekranı";
 
 export const updatedSectionIds = ["latest-version-history", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "İlk read-only deneme öncesi hazırlık fazı için kapanış kontrolü eklendi",
-  "Final saha notu ile gerçek denemenin ayrı sürümde yapılacağı tekrar vurgulandı",
-  "Gerçek bağlantı, query, DB okuma ve veri yazma eklenmeden hazırlık fazı kapatıldı",
+  "İlk read-only deneme öncesi final karar rehberi eklendi",
+  "Hazırlık, manuel yedek, read-only kullanıcı ve 20 satır sınırı son kez görünür hale getirildi",
+  "Gerçek denemenin bu ekrandan başlatılmayacağı ve ayrı sürümde yapılacağı netleştirildi",
 ];
 
 export const releaseJumpLinks = [
