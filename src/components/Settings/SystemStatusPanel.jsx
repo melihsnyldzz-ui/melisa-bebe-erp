@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.19.6",
+    title: "Vega Stok Deneme sayfa sadeleştirme ve panel gruplama",
+    area: "Vega / Read-only",
+    description: "Vega Stok Deneme ekranındaki pasif hazırlık panelleri güvenli deneme özeti, read-only bağlantı hazırlığı, Vega bilgi/sorgu hazırlığı, güvenlik checklist'i ve demo stok tablosu grupları altında daha okunur hale getirildi.",
+  },
+  {
     version: "v1.19.5",
     title: "Read-only güvenlik checklist'i",
     area: "Vega / Read-only",

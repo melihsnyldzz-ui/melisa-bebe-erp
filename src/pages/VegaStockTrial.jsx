@@ -214,62 +214,75 @@ export default function VegaStockTrial() {
 
       <section className="vega-stock-trial-panel section-updated-highlight" id="vega-stock-trial-panel">
         <span className="new-release-badge">YENİ · {currentReleaseVersion}</span>
-        <div className="vega-stock-safety-box">
-          <ShieldCheck size={18} />
-          <div>
-            <strong>Güvenli Deneme Modu</strong>
-            <span>Bu ekran yalnızca stok okuma hazırlığı içindir. Vega'ya veri yazmaz, stok değiştirmez, kayıt oluşturmaz.</span>
+        <div className="vega-panel-group">
+          <div className="vega-panel-group-header">
+            <h2>Güvenli Deneme Özeti</h2>
+            <p>Durum, veri kaynağı ve güvenli deneme sınırları tek bakışta gösterilir.</p>
           </div>
-        </div>
-        <div className="vega-stock-trial-header">
-          <div>
-            <h2>Stok Okuma Denemesi</h2>
-            <p>Gerçek bağlantı açılmadan stok okuma hazırlığı ve demo veri kontrol alanıdır.</p>
+
+          <div className="vega-stock-safety-box">
+            <ShieldCheck size={18} />
+            <div>
+              <strong>Güvenli Deneme Modu</strong>
+              <span>Bu sürümde bağlantı kurulmaz, sorgu çalıştırılmaz, veri yazılmaz.</span>
+            </div>
           </div>
-          <div className="vega-stock-status-list">
-            <span className={`vega-stock-status ${visibleStatus}`}>{statusLabels[visibleStatus] || statusLabels.error}</span>
-            {!hasVegaRows && <span className="vega-stock-status demo">Demo veri</span>}
-            <span className="vega-stock-mode-chip">
-              <ShieldCheck size={14} />
-              Read-only
+          <div className="vega-stock-trial-header">
+            <div>
+              <h2>Stok Okuma Denemesi</h2>
+              <p>Gerçek bağlantı açılmadan stok okuma hazırlığı ve demo veri kontrol alanıdır.</p>
+            </div>
+            <div className="vega-stock-status-list">
+              <span className={`vega-stock-status ${visibleStatus}`}>{statusLabels[visibleStatus] || statusLabels.error}</span>
+              {!hasVegaRows && <span className="vega-stock-status demo">Demo veri</span>}
+              <span className="vega-stock-mode-chip">
+                <ShieldCheck size={14} />
+                Read-only
+              </span>
+              <span className="vega-stock-mode-chip">
+                <Database size={14} />
+                Veri yazılmaz
+              </span>
+            </div>
+          </div>
+
+          <div className="vega-data-source-panel">
+            <div>
+              <strong>Veri Kaynağı</strong>
+              <span>{dataSourceMessage}</span>
+              <small>Vega read-only bağlantısı ileride ayrı kontrollü sürümde açılacaktır.</small>
+            </div>
+            <em>{dataSourceLabel}</em>
+          </div>
+
+          <div className="vega-stock-warning">
+            <AlertTriangle size={18} />
+            <span>
+              {stockState.message} {!hasVegaRows && "Gösterilen satırlar demo veridir; gerçek Vega stoğu değildir."}
             </span>
-            <span className="vega-stock-mode-chip">
-              <Database size={14} />
-              Veri yazılmaz
-            </span>
+          </div>
+
+          <div className="vega-readiness-panel">
+            <div>
+              <h2>Hazır Değil Kontrol Özeti</h2>
+              <p>Eksik hazırlıkları gösterir; bağlantı açmaz, veri yazmaz.</p>
+            </div>
+            <div className="vega-readiness-grid">
+              {readinessSummaryRows.map((row) => (
+                <div className="vega-readiness-row" key={row.label}>
+                  <span>{row.label}</span>
+                  <strong>{row.value}</strong>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
-        <div className="vega-data-source-panel">
-          <div>
-            <strong>Veri Kaynağı</strong>
-            <span>{dataSourceMessage}</span>
-            <small>Vega read-only bağlantısı ileride ayrı kontrollü sürümde açılacaktır.</small>
+        <div className="vega-panel-group">
+          <div className="vega-panel-group-header">
+            <h2>Read-only Bağlantı Hazırlığı</h2>
+            <p>Sürücü, parametre ve bağlantı hazırlıkları pasif olarak özetlenir.</p>
           </div>
-          <em>{dataSourceLabel}</em>
-        </div>
-
-        <div className="vega-stock-warning">
-          <AlertTriangle size={18} />
-          <span>
-            {stockState.message} {!hasVegaRows && "Gösterilen satırlar demo veridir; gerçek Vega stoğu değildir."}
-          </span>
-        </div>
-
-        <div className="vega-readiness-panel">
-          <div>
-            <h2>Hazır Değil Kontrol Özeti</h2>
-            <p>Gerçek stok okuması açılmadan önce eksik güvenli hazırlıkları gösterir; bağlantı açmaz, veri yazmaz.</p>
-          </div>
-          <div className="vega-readiness-grid">
-            {readinessSummaryRows.map((row) => (
-              <div className="vega-readiness-row" key={row.label}>
-                <span>{row.label}</span>
-                <strong>{row.value}</strong>
-              </div>
-            ))}
-          </div>
-        </div>
 
         <div className="vega-connection-panel">
           <div>
@@ -357,6 +370,13 @@ export default function VegaStockTrial() {
             ))}
           </div>
         </div>
+        </div>
+
+        <div className="vega-panel-group">
+          <div className="vega-panel-group-header">
+            <h2>Vega Bilgi / Sorgu Hazırlığı</h2>
+            <p>Stok okuma taslağı ve kolon eşleştirme planı sadece önizleme olarak gösterilir.</p>
+          </div>
 
         <div className="vega-stock-query-preview-panel">
           <div>
@@ -377,24 +397,6 @@ export default function VegaStockTrial() {
           <div className="vega-stock-query-field-list" aria-label="Taslak stok okuma alan listesi">
             {stockQueryDraftFields.map((field) => (
               <span key={field}>{field}</span>
-            ))}
-          </div>
-        </div>
-
-        <div className="vega-security-checklist-panel">
-          <div>
-            <h2>Read-only Güvenlik Checklist'i</h2>
-            <p>
-              Bu checklist, gerçek Vega read-only bağlantısı açılmadan önce kontrol edilmesi gereken güvenlik şartlarını
-              gösterir. Bu sürümde bağlantı kurulmaz, sorgu çalıştırılmaz ve herhangi bir onay kaydedilmez.
-            </p>
-          </div>
-          <div className="vega-security-checklist-grid" aria-label="Read-only güvenlik checklist'i">
-            {readOnlySecurityChecklist.map((item) => (
-              <div className="vega-security-checklist-item" key={item}>
-                <span aria-hidden="true">•</span>
-                <strong>{item}</strong>
-              </div>
             ))}
           </div>
         </div>
@@ -423,15 +425,43 @@ export default function VegaStockTrial() {
           <div>
             <strong>Hazırlık Kapanış Notu</strong>
             <span>
-              Bu hazırlık ekranı, gerçek Vega bağlantısı açılmadan önce demo veri, veri kaynağı, bağlantı güvenliği ve
-              kolon eşleştirme kontrollerini tamamlamak için hazırlanmıştır. Gerçek Vega read-only bağlantısı ayrı ve
-              kontrollü bir sürümde açılacaktır.
+              Demo veri, veri kaynağı, bağlantı güvenliği ve kolon eşleştirme kontrolleri gerçek bağlantı açılmadan
+              hazırlanır. Gerçek Vega read-only bağlantısı ayrı ve kontrollü bir sürümde açılacaktır.
             </span>
           </div>
           <p>
             Sonraki Faz: <strong>v1.19.x · Vega read-only bağlantı hazırlığı</strong>
           </p>
         </div>
+        </div>
+
+        <div className="vega-panel-group">
+          <div className="vega-panel-group-header">
+            <h2>Güvenlik Checklist'i</h2>
+            <p>Gerçek bağlantı öncesi şartlar pasif liste olarak korunur; onay kaydı yapılmaz.</p>
+          </div>
+
+          <div className="vega-security-checklist-panel">
+            <div>
+              <h2>Read-only Güvenlik Checklist'i</h2>
+              <p>Bu sürümde bağlantı kurulmaz, sorgu çalıştırılmaz ve herhangi bir onay kaydedilmez.</p>
+            </div>
+            <div className="vega-security-checklist-grid" aria-label="Read-only güvenlik checklist'i">
+              {readOnlySecurityChecklist.map((item) => (
+                <div className="vega-security-checklist-item" key={item}>
+                  <span aria-hidden="true">•</span>
+                  <strong>{item}</strong>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="vega-panel-group">
+          <div className="vega-panel-group-header">
+            <h2>Demo Stok Tablosu</h2>
+            <p>Gerçek Vega stoğu okunmadığında demo satırlar açık etiketle gösterilir.</p>
+          </div>
 
         <label className="vega-stock-search">
           <Search size={18} />
@@ -483,6 +513,7 @@ export default function VegaStockTrial() {
         </div>
 
         {filteredRows.length === 0 && <p className="vega-stock-empty">Arama kriterine uygun stok satırı görünmüyor.</p>}
+        </div>
       </section>
     </>
   );
