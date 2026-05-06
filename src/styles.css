@@ -1873,6 +1873,120 @@ button {
   white-space: nowrap;
 }
 
+
+.warehouse-operation-status-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.warehouse-operation-status-card,
+.warehouse-operation-summary-card,
+.warehouse-barcode-risk-card {
+  display: grid;
+  gap: 8px;
+  min-height: 92px;
+  align-content: center;
+  padding: 14px;
+  border: 1px solid #dbeafe;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f8fbff 0%, #eef6ff 100%);
+  box-shadow: 0 10px 24px rgb(15 23 42 / 5%);
+}
+
+.warehouse-operation-status-card span,
+.warehouse-operation-summary-card span,
+.warehouse-barcode-risk-card span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 850;
+  line-height: 1.45;
+}
+
+.warehouse-operation-status-card strong,
+.warehouse-operation-summary-card strong,
+.warehouse-barcode-risk-card strong {
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1.3;
+}
+
+.warehouse-operation-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.warehouse-operation-guide-card,
+.warehouse-barcode-risk-panel,
+.warehouse-operation-summary-panel,
+.handheld-barcode-status-panel {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.warehouse-operation-step-list,
+.warehouse-operation-check-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding-left: 20px;
+  color: var(--text);
+  font-weight: 750;
+  line-height: 1.5;
+}
+
+.warehouse-barcode-risk-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.warehouse-barcode-risk-card {
+  border-color: #ffe1a3;
+  background: linear-gradient(135deg, #fffaf0 0%, #fff4d6 100%);
+}
+
+.warehouse-operation-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.handheld-barcode-status-panel {
+  padding: 16px;
+  border: 1px solid #c3fae8;
+  border-radius: 14px;
+  background: #f4fcf8;
+}
+
+.handheld-barcode-status-panel h3,
+.handheld-barcode-status-panel p {
+  margin: 0;
+}
+
+.handheld-barcode-status-panel h3 {
+  color: var(--text);
+}
+
+.handheld-barcode-status-panel p {
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.handheld-barcode-safety-note {
+  width: fit-content;
+  padding: 10px 12px;
+  border: 1px solid #d0ebff;
+  border-radius: 10px;
+  color: #1864ab;
+  background: #e7f5ff;
+  font-weight: 850;
+}
+
 .warehouse-terminal-title h1 {
   font-size: clamp(1.65rem, 2vw, 2.35rem);
 }
@@ -6076,6 +6190,10 @@ tr:last-child td {
   .management-alert-grid,
   .management-quality-grid,
   .management-balance-grid,
+  .warehouse-operation-status-grid,
+  .warehouse-operation-guide-grid,
+  .warehouse-barcode-risk-grid,
+  .warehouse-operation-summary-grid,
   .warehouse-terminal-grid,
   .warehouse-terminal-metrics,
   .warehouse-terminal-detail-grid,
