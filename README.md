@@ -1,5 +1,22 @@
 # Melisa Bebe ERP
 
+![Melisa Bebe ERP Build](https://github.com/melihsnyldzz-ui/melisa-bebe-erp/actions/workflows/build.yml/badge.svg)
+
+Melisa Bebe ERP, Vega'dan kademeli gecis icin gelistirilen bagimsiz ERP sistemidir.
+
+## Mevcut durum
+
+- Guncel surum: v1.10.8
+- Asama: Build workflow durum rozeti ve kalite kontrol notu
+- El terminali: okuma, son okutulanlar, sayim sepeti, rapor/CSV/JSON onizleme hazirligi
+- Build kontrolu: GitHub Actions
+
+## Guvenli gelistirme notu
+
+- Once okuma, rapor ve onizleme modulleri gelistirilir.
+- Veri yazan stok, cari, fis, yedek, import ve migration isleri kucuk ve kontrollu surumlere bolunur.
+- Build gecmeden main branch'e push yapilmamalidir.
+
 Melisa Bebe Tekstil San. ve Tic. Ltd. Sti. icin gelistirilen Electron masaustu ERP prototipi.
 
 ## Sirket bilgisayarinda tek komutla calistirma

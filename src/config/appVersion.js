@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.10.7";
-export const APP_STAGE = "GitHub Actions build kontrolü";
+export const APP_VERSION = "v1.10.8";
+export const APP_STAGE = "Build workflow durum rozeti ve kalite kontrol notu";
