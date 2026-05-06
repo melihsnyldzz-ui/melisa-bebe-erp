@@ -28,6 +28,12 @@ const goLiveMissingItems = [
   "El terminaliyle gerçek barkod/stok sayım testi",
 ];
 
+const releaseHighlightItems = [
+  "Sayfa içi yenilik vurgusu eklendi",
+  "Güncellenen alanlara hızlı geçiş sistemi hazırlandı",
+  "Yeni veya güncellenen bölümlerde YENİ etiketi gösterilmeye başlandı",
+];
+
 const goLiveTestPlanSteps = [
   "1. Gün: Vega ürün/stok verisiyle ekran karşılaştırması",
   "2. Gün: El terminali barkod okutma ve stok sayım denemesi",
@@ -118,6 +124,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.14.1",
+    title: "Sayfa içi yenilik vurgusu, YENİ etiketi ve hızlı geçiş paneli",
+    area: "Ayarlar",
+    description: "Kullanıcının yeni eklenen alanları kolay bulması için sayfa içi yenilik paneli, YENİ etiketi ve hızlı geçiş linkleri eklendi.",
+  },
+  {
     version: "v1.14.0",
     title: "Ayarlar ekranı sadeleştirme ve canlı test merkezi düzeni",
     area: "Ayarlar",
@@ -159,12 +171,6 @@ const versionHistoryRows = [
     area: "Ayarlar",
     description: "Yedek/geri yükleme hazırlık seviyesi, canlı sistem uyarısı ve risk özeti eklendi.",
   },
-  {
-    version: "v1.13.3",
-    title: "Yedek ve geri yükleme test raporu",
-    area: "Ayarlar",
-    description: "Yedek ve geri yükleme testi için rapor şablonu eklendi.",
-  },
 ];
 
 const liveTestGuideSteps = [
@@ -192,6 +198,28 @@ export default function SystemStatusPanel() {
         Bu ekran, ERP'nin mevcut geliştirme seviyesini ve güvenli kullanım durumunu gösterir. Buradaki bilgiler sadece
         bilgilendirme amaçlıdır; herhangi bir ayar kaydetmez.
       </p>
+
+      <div className="release-highlights-panel">
+        <div>
+          <h3>Bu Sürümde Yenilenen Alanlar</h3>
+          <p>
+            Sol menüdeki mavi nokta yenilik olan sayfayı gösterir. Bu panel ise sayfa içindeki yeni veya güncellenen
+            bölümleri bulmanı kolaylaştırır.
+          </p>
+        </div>
+
+        <ul className="release-highlight-list">
+          {releaseHighlightItems.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+
+        <nav className="release-jump-links" aria-label="Bu sürümde yenilenen alanlara hızlı geçiş">
+          <a href="#latest-version-history">Son Sürüm Geçmişi'ne git</a>
+          <a href="#project-maturity">Proje Olgunluk Bilgisi'ne git</a>
+          <a href="#live-test-center">Canlı Test Merkezi'ne git</a>
+        </nav>
+      </div>
 
       <div className="system-status-focus-card">
         <span>Bu Sürümde Test Edilecek Alan</span>
@@ -221,9 +249,11 @@ export default function SystemStatusPanel() {
         </p>
       </div>
 
-      <div className="version-history-panel">
+      <div className="version-history-panel section-updated-highlight" id="latest-version-history">
         <div>
-          <h3>Son Sürüm Geçmişi</h3>
+          <h3>
+            Son Sürüm Geçmişi <span className="new-release-badge">YENİ · v1.14.1</span>
+          </h3>
           <p>
             Bu alan, son sürümlerde hangi bölümde ne değiştiğini gösterir. Sürüm numarası değiştiğinde bu liste de
             güncel tutulmalıdır.
@@ -254,8 +284,10 @@ export default function SystemStatusPanel() {
         ))}
       </div>
 
-      <div className="system-status-maturity">
-        <h3>Proje Olgunluk Bilgisi</h3>
+      <div className="system-status-maturity section-updated-highlight" id="project-maturity">
+        <h3>
+          Proje Olgunluk Bilgisi <span className="new-release-badge">YENİ · v1.14.1</span>
+        </h3>
         <div className="system-status-grid">
           {maturityRows.map((row) => (
             <div className="system-status-card" key={row.label}>
@@ -279,9 +311,11 @@ export default function SystemStatusPanel() {
         </div>
       </div>
 
-      <div className="live-test-center-panel">
+      <div className="live-test-center-panel section-updated-highlight" id="live-test-center">
         <div>
-          <h3>Canlı Test Merkezi</h3>
+          <h3>
+            Canlı Test Merkezi <span className="new-release-badge">YENİ · v1.14.1</span>
+          </h3>
           <p>Canlı test, personel denemesi ve Vega karşılaştırma adımlarını tek merkezden takip edin.</p>
         </div>
 
