@@ -3404,6 +3404,66 @@ button {
   margin-top: 1px;
 }
 
+.vega-connection-panel {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+.vega-connection-panel h2,
+.vega-connection-panel p {
+  margin: 0;
+}
+
+.vega-connection-panel h2 {
+  color: var(--anthracite);
+  font-size: 0.96rem;
+}
+
+.vega-connection-panel p {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.vega-connection-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.vega-connection-card {
+  min-width: 0;
+  padding: 8px 9px;
+  border: 1px solid #edf0f4;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.vega-connection-card span,
+.vega-connection-card strong {
+  display: block;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.vega-connection-card span {
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 900;
+}
+
+.vega-connection-card strong {
+  margin-top: 3px;
+  color: var(--anthracite);
+  font-size: 0.84rem;
+}
+
 .vega-stock-search {
   display: flex;
   align-items: center;
@@ -5141,6 +5201,10 @@ tr:last-child td {
     justify-content: flex-start;
   }
 
+  .vega-connection-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .chart-wrap {
     height: 250px;
   }
@@ -5234,6 +5298,18 @@ tr:last-child td {
 
   .vega-stock-warning {
     font-size: 0.78rem;
+  }
+
+  .vega-connection-panel {
+    padding: 10px;
+  }
+
+  .vega-connection-grid {
+    gap: 6px;
+  }
+
+  .vega-connection-card {
+    padding: 7px;
   }
 
   th,

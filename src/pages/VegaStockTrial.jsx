@@ -36,12 +36,19 @@ const statusLabels = {
   error: "Bağlantı hatası",
 };
 
+const defaultConnectionMetadata = {
+  readOnlyEnabled: false,
+  driverConfigured: false,
+  writeEnabled: false,
+};
+
 export default function VegaStockTrial() {
   const [query, setQuery] = useState("");
   const [stockState, setStockState] = useState({
     status: "not_configured",
     message: "Vega bağlantısı henüz yapılandırılmadı. Gerçek stok okunmuyor.",
     items: [],
+    metadata: defaultConnectionMetadata,
   });
 
   useEffect(() => {
@@ -63,6 +70,7 @@ export default function VegaStockTrial() {
             status: "error",
             message: error?.message || "Vega read-only denemesi sırasında hata oluştu.",
             items: [],
+            metadata: defaultConnectionMetadata,
           });
         }
       }
@@ -78,6 +86,13 @@ export default function VegaStockTrial() {
   const hasVegaRows = stockState.items?.length > 0;
   const visibleRows = hasVegaRows ? stockState.items : demoStockRows;
   const visibleStatus = stockState.status;
+  const connectionMetadata = { ...defaultConnectionMetadata, ...(stockState.metadata || {}) };
+  const connectionCards = [
+    { label: "Read-only mod", value: connectionMetadata.readOnlyEnabled ? "Açık" : "Kapalı" },
+    { label: "Bağlantı sürücüsü", value: connectionMetadata.driverConfigured ? "Tanımlı" : "Tanımlı değil" },
+    { label: "Veri yazma", value: connectionMetadata.writeEnabled ? "Açık" : "Kapalı" },
+    { label: "Gösterilen veri", value: hasVegaRows ? "Vega read-only" : "Demo veri" },
+  ];
   const normalizedQuery = query.trim().toLocaleLowerCase("tr-TR");
   const filteredRows = useMemo(() => {
     if (!normalizedQuery) {
@@ -136,6 +151,21 @@ export default function VegaStockTrial() {
           <span>
             {stockState.message} {!hasVegaRows && "Gösterilen satırlar demo veridir; gerçek Vega stoğu değildir."}
           </span>
+        </div>
+
+        <div className="vega-connection-panel">
+          <div>
+            <h2>Bağlantı Kontrolü</h2>
+            <p>Gerçek Vega bağlantısı henüz kapalıdır. Bu alan sadece read-only bağlantı hazırlığını gösterir.</p>
+          </div>
+          <div className="vega-connection-grid">
+            {connectionCards.map((card) => (
+              <div className="vega-connection-card" key={card.label}>
+                <span>{card.label}</span>
+                <strong>{card.value}</strong>
+              </div>
+            ))}
+          </div>
         </div>
 
         <label className="vega-stock-search">

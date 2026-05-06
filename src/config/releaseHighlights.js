@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.18.1";
+export const currentReleaseVersion = "v1.18.2";
 
-export const currentReleaseTitle = "Vega stok deneme ekranı güvenlik ve bağlantı durumu netleştirme";
+export const currentReleaseTitle = "Vega stok deneme ekranı bağlantı kontrol paneli hazırlığı";
 
 export const updatedSectionIds = ["latest-version-history", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Vega Stok Deneme ekranında güvenli deneme modu daha net gösterildi",
-  "Demo veri, bağlantı yok ve bağlantı hatası durumları ayrıştırıldı",
-  "Vega'ya veri yazılmadığı ve gerçek stok okunmadığı durumlar açıkça belirtildi",
+  "Vega Stok Deneme ekranına bağlantı kontrol paneli eklendi",
+  "Read-only mod, bağlantı sürücüsü ve veri yazma durumu görünür hale getirildi",
+  "Gösterilen verinin demo mu Vega read-only mi olduğu daha net ayrıldı",
 ];
 
 export const releaseJumpLinks = [
