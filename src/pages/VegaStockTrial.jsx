@@ -153,7 +153,7 @@ export default function VegaStockTrial() {
         <div className="vega-stock-trial-header">
           <div>
             <h2>Stok Okuma Denemesi</h2>
-            <p>Geçici test ekranıdır. Vega'dan sadece stok okunur, veri yazılmaz.</p>
+            <p>Gerçek bağlantı açılmadan stok okuma hazırlığı ve demo veri kontrol alanıdır.</p>
           </div>
           <div className="vega-stock-status-list">
             <span className={`vega-stock-status ${visibleStatus}`}>{statusLabels[visibleStatus] || statusLabels.error}</span>
@@ -169,13 +169,6 @@ export default function VegaStockTrial() {
           </div>
         </div>
 
-        <div className="vega-stock-warning">
-          <AlertTriangle size={18} />
-          <span>
-            {stockState.message} {!hasVegaRows && "Gösterilen satırlar demo veridir; gerçek Vega stoğu değildir."}
-          </span>
-        </div>
-
         <div className="vega-data-source-panel">
           <div>
             <strong>Veri Kaynağı</strong>
@@ -185,42 +178,38 @@ export default function VegaStockTrial() {
           <em>{dataSourceLabel}</em>
         </div>
 
-        <div className="vega-test-note">
-          <strong>Test Notu</strong>
+        <div className="vega-stock-warning">
+          <AlertTriangle size={18} />
           <span>
-            Bu ekranda yalnızca demo stok görünümü, bağlantı durumu ve kolon eşleştirme hazırlığı kontrol edilir. Gerçek Vega
-            bağlantısı açılmaz, veri çekilmez ve kayıt oluşturulmaz.
+            {stockState.message} {!hasVegaRows && "Gösterilen satırlar demo veridir; gerçek Vega stoğu değildir."}
           </span>
-        </div>
-
-        <div className="vega-connection-panel">
-          <div>
-            <h2>Bağlantı Kontrolü</h2>
-            <p>Gerçek Vega bağlantısı henüz kapalıdır. Bu alan sadece read-only bağlantı hazırlığını gösterir.</p>
-          </div>
-          <div className="vega-connection-grid">
-            {connectionCards.map((card) => (
-              <div className="vega-connection-card" key={card.label}>
-                <span>{card.label}</span>
-                <strong>{card.value}</strong>
-              </div>
-            ))}
-          </div>
         </div>
 
         <div className="vega-readiness-panel">
           <div>
             <h2>Hazır Değil Kontrol Özeti</h2>
-            <p>
-              Bu özet, gerçek Vega stok okuması açılmadan önce hangi güvenli hazırlıkların eksik olduğunu gösterir. Bu
-              ekrandan bağlantı açılmaz ve veri yazılmaz.
-            </p>
+            <p>Gerçek stok okuması açılmadan önce eksik güvenli hazırlıkları gösterir; bağlantı açmaz, veri yazmaz.</p>
           </div>
           <div className="vega-readiness-grid">
             {readinessSummaryRows.map((row) => (
               <div className="vega-readiness-row" key={row.label}>
                 <span>{row.label}</span>
                 <strong>{row.value}</strong>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="vega-connection-panel">
+          <div>
+            <h2>Bağlantı Kontrolü</h2>
+            <p>Read-only hazırlık durumunu gösterir; gerçek Vega bağlantısını açmaz.</p>
+          </div>
+          <div className="vega-connection-grid">
+            {connectionCards.map((card) => (
+              <div className="vega-connection-card" key={card.label}>
+                <span>{card.label}</span>
+                <strong>{card.value}</strong>
               </div>
             ))}
           </div>
@@ -239,6 +228,11 @@ export default function VegaStockTrial() {
               </div>
             ))}
           </div>
+        </div>
+
+        <div className="vega-test-note">
+          <strong>Test Notu</strong>
+          <span>Demo stok görünümü, bağlantı durumu ve kolon eşleştirme hazırlığı kontrol edilir; veri çekilmez, veri yazılmaz, kayıt oluşturulmaz.</span>
         </div>
 
         <label className="vega-stock-search">

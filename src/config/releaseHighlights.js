@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.18.6";
+export const currentReleaseVersion = "v1.18.7";
 
-export const currentReleaseTitle = "Vega stok deneme hazır değil kontrol özeti";
+export const currentReleaseTitle = "Vega stok deneme final kalite kontrol ve ekran sadeleştirme";
 
 export const updatedSectionIds = ["latest-version-history", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Vega Stok Deneme ekranına hazır değil kontrol özeti eklendi",
-  "Gerçek stok okuması için eksik güvenli hazırlıklar daha net gösterildi",
-  "Demo veri, bağlantı sürücüsü ve veri yazma durumları tek özet alanda toplandı",
+  "Vega Stok Deneme ekranındaki panel sırası daha anlaşılır hale getirildi",
+  "Tekrar eden güvenlik açıklamaları sadeleştirildi",
+  "Gerçek bağlantı açılmadan final hazırlık görünümü güçlendirildi",
 ];
 
 export const releaseJumpLinks = [
