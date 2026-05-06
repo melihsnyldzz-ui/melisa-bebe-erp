@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.19.3",
+    title: "Vega DB yolu / sunucu bilgisi kontrol rehberi",
+    area: "Vega / Read-only",
+    description: "Vega read-only bağlantı hazırlığı kapsamında Vega veritabanı yolu veya SQL sunucu bilgisinin ileride nasıl kontrol edileceğini gösteren, dosya seçme veya bağlantı testi içermeyen pasif DB yolu / sunucu bilgisi rehberi eklendi.",
+  },
+  {
     version: "v1.19.2",
     title: "ODBC / SQL sürücü gereksinim rehberi",
     area: "Vega / Read-only",

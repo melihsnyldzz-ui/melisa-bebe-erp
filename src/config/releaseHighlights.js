@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.19.2";
+export const currentReleaseVersion = "v1.19.3";
 
-export const currentReleaseTitle = "ODBC / SQL sürücü gereksinim rehberi";
+export const currentReleaseTitle = "Vega DB yolu / sunucu bilgisi kontrol rehberi";
 
 export const updatedSectionIds = ["latest-version-history", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Vega read-only bağlantı hazırlığına ODBC / SQL sürücü gereksinim rehberi eklendi",
-  "Sadece okuma yetkisi, minimum kullanıcı yetkisi ve yazma izni kapalı kalması gerektiği netleştirildi",
-  "Gerçek bağlantı kurulmadan sürücü ve erişim hazırlıkları pasif şekilde gösterildi",
+  "Vega read-only bağlantı hazırlığına DB yolu / sunucu bilgisi kontrol rehberi eklendi",
+  "DB yolu veya SQL sunucu bilgisinin gerçek bağlantı kurulmadan kontrol edileceği netleştirildi",
+  "Dosya seçme, sunucu girme ve bağlantı testi olmadan güvenli hazırlık görünümü korundu",
 ];
 
 export const releaseJumpLinks = [

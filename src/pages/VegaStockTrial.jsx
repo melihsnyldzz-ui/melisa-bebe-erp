@@ -148,6 +148,15 @@ export default function VegaStockTrial() {
     { label: "Stok sorgusu", value: "Ayrı kontrollü sürümde hazırlanacak" },
     { label: "Güvenlik notu", value: "Gerçek Vega verisine yazma işlemi kesinlikle açılmayacak" },
   ];
+  const databaseGuideRows = [
+    { label: "Bilgi türü", value: "Vega veritabanı yolu veya SQL sunucu bilgisi" },
+    { label: "Varsayılan durum", value: "Tanımlı değil" },
+    { label: "Erişim şekli", value: "Sadece okunur bağlantı için kullanılacak" },
+    { label: "Dosya / sunucu seçimi", value: "Bu sürümde yapılmaz" },
+    { label: "Bağlantı testi", value: "Bu sürümde yapılmaz" },
+    { label: "Güvenlik notu", value: "Gerçek Vega verisine yazma yetkisi açılmayacak" },
+    { label: "Sonraki adım", value: "Stok sorgusu taslak önizleme" },
+  ];
   const normalizedQuery = query.trim().toLocaleLowerCase("tr-TR");
   const filteredRows = useMemo(() => {
     if (!normalizedQuery) {
@@ -294,6 +303,24 @@ export default function VegaStockTrial() {
           <div className="vega-driver-guide-grid">
             {driverRequirementRows.map((row) => (
               <div className="vega-driver-guide-row" key={row.label}>
+                <span>{row.label}</span>
+                <strong>{row.value}</strong>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="vega-db-guide-panel">
+          <div>
+            <h2>Vega DB Yolu / Sunucu Bilgisi Rehberi</h2>
+            <p>
+              Bu alan ileride yapılacak read-only bağlantı için Vega veritabanı yolu veya sunucu bilgisinin nasıl kontrol
+              edileceğini gösterir. Bu sürümde yol seçilmez, sunucu girilmez, bağlantı kurulmaz.
+            </p>
+          </div>
+          <div className="vega-db-guide-grid">
+            {databaseGuideRows.map((row) => (
+              <div className="vega-db-guide-row" key={row.label}>
                 <span>{row.label}</span>
                 <strong>{row.value}</strong>
               </div>
