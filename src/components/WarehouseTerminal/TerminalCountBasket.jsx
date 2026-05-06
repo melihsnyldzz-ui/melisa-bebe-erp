@@ -1,19 +1,34 @@
 import { Trash2 } from "lucide-react";
 import { useState } from "react";
 import { buildCountBasketSummary, getBasketDifferenceStatus } from "../../utils/warehouseCountBasketUtils.js";
+import { buildWarehouseCountCsvPreview } from "../../utils/warehouseCountExportUtils.js";
 import { buildWarehouseCountPreviewReport } from "../../utils/warehouseCountReportUtils.js";
 import { formatNumber } from "../../utils/formatters.js";
 
 export default function TerminalCountBasket({ basket, onClear, onRemove, onUpdateQuantity }) {
   const [previewReport, setPreviewReport] = useState(null);
+  const [exportPreviewType, setExportPreviewType] = useState("");
   const summary = buildCountBasketSummary(basket);
+  const csvPreview = previewReport ? buildWarehouseCountCsvPreview(previewReport) : "";
 
   function previewCountReport() {
     setPreviewReport(buildWarehouseCountPreviewReport(basket));
+    setExportPreviewType("json");
   }
 
   function closePreview() {
     setPreviewReport(null);
+    setExportPreviewType("");
+  }
+
+  function previewCsv() {
+    setPreviewReport((currentReport) => currentReport || buildWarehouseCountPreviewReport(basket));
+    setExportPreviewType("csv");
+  }
+
+  function previewJson() {
+    setPreviewReport((currentReport) => currentReport || buildWarehouseCountPreviewReport(basket));
+    setExportPreviewType("json");
   }
 
   return (
@@ -99,6 +114,12 @@ export default function TerminalCountBasket({ basket, onClear, onRemove, onUpdat
         <button className="primary-action" type="button" onClick={previewCountReport} disabled={basket.length === 0}>
           Raporu Önizle
         </button>
+        <button className="secondary-action" type="button" onClick={previewCsv} disabled={basket.length === 0}>
+          CSV Önizle
+        </button>
+        <button className="secondary-action" type="button" onClick={previewJson} disabled={basket.length === 0}>
+          JSON Önizle
+        </button>
         {previewReport && (
           <button className="secondary-action" type="button" onClick={closePreview}>
             Rapor Önizlemesini Kapat
@@ -111,13 +132,20 @@ export default function TerminalCountBasket({ basket, onClear, onRemove, onUpdat
           <p className="form-note warehouse-terminal-note warehouse-count-basket-warning">
             Bu rapor önizlemedir. Stokları değiştirmez ve veritabanına kaydedilmez.
           </p>
+          <p className="form-note warehouse-terminal-note warehouse-count-basket-warning">
+            Bu dışa aktarım hazırlığı stokları değiştirmez ve veritabanına kaydedilmez.
+          </p>
           <div className="stock-count-report-summary warehouse-count-report-summary">
             <SummaryCard label="Rapor tipi" value={previewReport.documentType} raw />
             <SummaryCard label="Oluşturulma zamanı" value={formatDateTime(previewReport.createdAt)} raw />
             <SummaryCard label="Sistem stok toplamı" value={previewReport.summary.totalSystemStock} />
             <SummaryCard label="Net fark" value={previewReport.summary.netDifference} />
           </div>
-          <pre className="stock-count-report-preview">{JSON.stringify(previewReport, null, 2)}</pre>
+          {exportPreviewType === "csv" ? (
+            <pre className="stock-count-report-preview warehouse-count-csv-preview">{csvPreview}</pre>
+          ) : (
+            <pre className="stock-count-report-preview">{JSON.stringify(previewReport, null, 2)}</pre>
+          )}
         </section>
       )}
     </section>

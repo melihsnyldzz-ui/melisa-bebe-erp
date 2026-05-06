@@ -1364,6 +1364,10 @@ button {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
+.warehouse-count-csv-preview {
+  white-space: pre;
+}
+
 .integrity-summary-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
