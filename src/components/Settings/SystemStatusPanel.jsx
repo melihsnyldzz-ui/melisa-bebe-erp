@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.24.1",
+    title: "İlk read-only deneme öncesi saha kontrol özeti ve personel notu",
+    area: "Vega / Import Önizleme",
+    description: "İlk read-only deneme öncesi saha kontrol özeti eklendi; personel notu şablonu statik rehber olarak hazırlandı ve gerçek bağlantı, query, DB okuma veya veri yazma eklenmeden saha hazırlık akışı netleştirildi.",
+  },
+  {
     version: "v1.24.0",
     title: "İlk gerçek read-only deneme öncesi onay matrisi ve test prosedürü",
     area: "Vega / Import Önizleme",

@@ -309,6 +309,23 @@ export default function VegaImportPreview() {
           <span>Personel: · Test ekranı: · Beklenen sonuç: · Görülen sonuç: · Vega karşılığı: · Not:</span>
         </div>
       </section>
+
+      <section className="vega-transition-gate-panel">
+        <h2>Read-only Hazırlık Kapanış Kontrolü</h2>
+        <p>Bu ekran ilk gerçek read-only deneme öncesi hazırlık fazını kapatmak için kullanılır. Bu sürümde bağlantı kurulmaz, query hazırlanmaz, sorgu çalıştırılmaz ve veri yazılmaz.</p>
+        <div className="vega-transition-gate-grid">
+          <div className="vega-transition-gate-row"><strong>Güvenlik kartları kapalı görünüyor mu?</strong><span>Manuel kontrol edilecek</span></div>
+          <div className="vega-transition-gate-row"><strong>Import Kilidi Aktif kutusu görünüyor mu?</strong><span>Manuel kontrol edilecek</span></div>
+          <div className="vega-transition-gate-row"><strong>Final Güvenlik Matrisi kontrol edildi mi?</strong><span>Manuel kontrol edilecek</span></div>
+          <div className="vega-transition-gate-row"><strong>Operatör Hazırlık Rehberi okundu mu?</strong><span>Manuel kontrol edilecek</span></div>
+          <div className="vega-transition-gate-row"><strong>Saha Kontrol Özeti personelle paylaşıldı mı?</strong><span>Manuel kontrol edilecek</span></div>
+          <div className="vega-transition-gate-row"><strong>İlk gerçek denemenin ayrı sürümde yapılacağı teyit edildi mi?</strong><span>Manuel kontrol edilecek</span></div>
+        </div>
+        <div className="vega-transition-gate-note">
+          <strong>Final Saha Notu</strong>
+          <span>İlk gerçek read-only deneme öncesinde son karar bu ekrandan verilmez. Gerçek deneme yalnızca ayrı sürümde, manuel yedek ve read-only kullanıcı doğrulandıktan sonra ele alınacaktır.</span>
+        </div>
+      </section>
     </>
   );
 }
