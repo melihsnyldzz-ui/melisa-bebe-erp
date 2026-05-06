@@ -68,6 +68,29 @@ const backupRestoreReportTemplate = [
   "Notlar:",
 ];
 
+const testReadinessLevels = [
+  {
+    title: "Hazır değil",
+    description: "Zorunlu kontroller tamamlanmadan geri yükleme denenmemeli.",
+  },
+  {
+    title: "Kısmen hazır",
+    description: "Temel kontroller yapılmış ancak sonuç notu eksik olabilir.",
+  },
+  {
+    title: "Test için hazır",
+    description: "Kontrol listesi ve rapor şablonu tamamlanmış, yalnızca kontrollü test ortamında denenebilir.",
+  },
+];
+
+const riskSummaryItems = [
+  ["Veri yazma", "Yok"],
+  ["Geri yükleme işlemi", "Yok"],
+  ["Dosya silme", "Yok"],
+  ["Canlı veri etkisi", "Yok"],
+  ["Kullanım amacı", "Test öncesi kontrol"],
+];
+
 export default function BackupSafetyChecklist() {
   return (
     <section className="table-panel settings-panel backup-safety-panel">
@@ -174,6 +197,38 @@ export default function BackupSafetyChecklist() {
         <p className="backup-restore-report-note">
           Bu alan yalnızca rapor şablonudur. Gerçek yedek oluşturmaz, geri yükleme yapmaz ve veritabanına yazmaz.
         </p>
+      </div>
+
+      <div className="backup-test-evaluation-panel">
+        <div>
+          <h3>Test Sonucu Değerlendirme</h3>
+          <p>Yedek ve geri yükleme testine başlamadan önce hazırlık seviyesini hızlıca değerlendirin.</p>
+        </div>
+
+        <div className="backup-test-level-grid">
+          {testReadinessLevels.map((level) => (
+            <article className="backup-test-level-card" key={level.title}>
+              <strong>{level.title}</strong>
+              <span>{level.description}</span>
+            </article>
+          ))}
+        </div>
+
+        <p className="backup-live-warning">
+          Bu değerlendirme canlı veritabanında işlem başlatmaz. Sadece test hazırlık seviyesini gösterir.
+        </p>
+
+        <div className="backup-risk-summary">
+          <h3>Risk Özeti</h3>
+          <dl>
+            {riskSummaryItems.map(([label, value]) => (
+              <div key={label}>
+                <dt>{label}</dt>
+                <dd>{value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
       </div>
     </section>
   );
