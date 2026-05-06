@@ -1783,6 +1783,80 @@ button {
   line-height: 1.55;
 }
 
+.go-live-checklist {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(249, 250, 251, 0.88);
+}
+
+.go-live-checklist h3,
+.go-live-checklist h4,
+.go-live-checklist p {
+  margin: 0;
+}
+
+.go-live-checklist h3 {
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.go-live-checklist p {
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.go-live-checklist-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.go-live-checklist-card {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.go-live-checklist-card.ready {
+  border-color: #c3fae8;
+  background: #e6fcf5;
+}
+
+.go-live-checklist-card.progress {
+  border-color: #ffe1a3;
+  background: #fff8e6;
+}
+
+.go-live-checklist-card.waiting {
+  border-color: #d8dee9;
+  background: #f3f6fa;
+}
+
+.go-live-checklist-card h4 {
+  color: var(--text);
+  font-size: 0.94rem;
+}
+
+.go-live-checklist-card ul {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 18px;
+  color: var(--text);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.go-live-checklist-note {
+  padding-top: 2px;
+}
+
 .settings-roles-panel {
   grid-column: 1 / -1;
 }
@@ -2916,6 +2990,10 @@ tr:last-child td {
 
   .system-status-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .go-live-checklist-grid {
+    grid-template-columns: 1fr;
   }
 
   .table-panel:last-child {

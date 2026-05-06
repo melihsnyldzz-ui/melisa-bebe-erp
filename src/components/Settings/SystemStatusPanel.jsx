@@ -12,10 +12,35 @@ const statusRows = [
 ];
 
 const maturityRows = [
-  { label: "ERP genel hazırlık", value: "%54-58" },
-  { label: "Canlı kullanım güvenliği", value: "%46-50" },
+  { label: "ERP genel hazırlık", value: "%55-59" },
+  { label: "Canlı kullanım güvenliği", value: "%47-51" },
   { label: "El terminali hazırlığı", value: "%45-50" },
-  { label: "Vega'dan geçiş hazırlığı", value: "%39-44" },
+  { label: "Vega'dan geçiş hazırlığı", value: "%40-45" },
+];
+
+const goLiveChecklistGroups = [
+  {
+    title: "Hazır",
+    tone: "ready",
+    items: [
+      "GitHub Actions build kontrolü aktif",
+      "El terminali okuma modu hazır",
+      "Son okutulanlar geçmişi hazır",
+      "Sayım sepeti önizleme hazır",
+      "Sayım raporu JSON/CSV önizleme hazır",
+      "README ve proje özeti düzenli",
+    ],
+  },
+  {
+    title: "Hazırlıkta",
+    tone: "progress",
+    items: ["Gerçek veriyle uzun test bekleniyor", "Yedekleme / geri yükleme testi bekleniyor", "Rollback senaryosu bekleniyor"],
+  },
+  {
+    title: "Bekliyor",
+    tone: "waiting",
+    items: ["Personel deneme kullanımı bekleniyor", "Vega karşılaştırmalı doğrulama bekleniyor"],
+  },
 ];
 
 export default function SystemStatusPanel() {
@@ -57,6 +82,34 @@ export default function SystemStatusPanel() {
         <p>
           Bu oranlar canlı kullanıma geçiş için yaklaşık takip değerleridir. Veri yazan işlemler devreye alınmadan önce
           yedekleme, rollback, gerçek veri testi ve personel denemesi yapılmalıdır.
+        </p>
+      </div>
+
+      <div className="go-live-checklist">
+        <div>
+          <h3>Canlıya Hazırlık Kontrol Listesi</h3>
+          <p>
+            Bu liste, canlı kullanıma geçmeden önce takip edilmesi gereken başlıkları gösterir. Her madde yalnızca
+            bilgilendirme amaçlıdır.
+          </p>
+        </div>
+
+        <div className="go-live-checklist-grid">
+          {goLiveChecklistGroups.map((group) => (
+            <div className={`go-live-checklist-card ${group.tone}`} key={group.title}>
+              <h4>{group.title}</h4>
+              <ul>
+                {group.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        <p className="go-live-checklist-note">
+          Mevcut aşamada sistem sınırlı test ve hazırlık seviyesindedir. Vega'dan tamamen çıkış için gerçek veri testi,
+          yedekleme ve personel denemesi tamamlanmalıdır.
         </p>
       </div>
     </section>
