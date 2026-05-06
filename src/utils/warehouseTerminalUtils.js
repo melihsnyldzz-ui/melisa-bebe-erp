@@ -3,6 +3,7 @@ import { normalizeLookupValue } from "./productLookup.js";
 const MAX_MOVEMENT_ROWS = 8;
 const MAX_SCAN_HISTORY = 20;
 const MAX_PARTIAL_MATCHES = 10;
+const WAREHOUSE_HISTORY_KEY = "melisa-bebe-warehouse-terminal-history";
 
 export function findWarehouseTerminalMatches(products = [], value) {
   const normalizedValue = normalizeLookupValue(value);
@@ -55,6 +56,9 @@ export function buildWarehouseProductView(product, stockMovements = []) {
     modelCode: product.modelCode || "",
     name: product.name || "",
     brand: product.brand || "",
+    season: product.season || "",
+    ageGroup: product.ageGroup || "",
+    gender: product.gender || "",
     category: product.category || "",
     size: product.size || "",
     color: product.color || "",
@@ -85,7 +89,55 @@ export function appendWarehouseScanHistory(currentHistory, productView, rawValue
     scannedAt: new Date().toISOString(),
   };
 
-  return [scanRecord, ...(Array.isArray(currentHistory) ? currentHistory : [])].slice(0, MAX_SCAN_HISTORY);
+  const nextHistory = [scanRecord, ...(Array.isArray(currentHistory) ? currentHistory : [])].slice(0, MAX_SCAN_HISTORY);
+  writeWarehouseScanHistory(nextHistory);
+
+  return nextHistory;
+}
+
+export function readWarehouseScanHistory() {
+  if (typeof localStorage === "undefined") return [];
+
+  try {
+    const parsedHistory = JSON.parse(localStorage.getItem(WAREHOUSE_HISTORY_KEY) || "[]");
+    return Array.isArray(parsedHistory) ? parsedHistory.map(normalizeHistoryRecord).filter(Boolean).slice(0, MAX_SCAN_HISTORY) : [];
+  } catch (error) {
+    console.error("Depo terminali geçmişi okunamadı:", error);
+    return [];
+  }
+}
+
+export function clearWarehouseScanHistory() {
+  if (typeof localStorage !== "undefined") {
+    localStorage.removeItem(WAREHOUSE_HISTORY_KEY);
+  }
+
+  return [];
+}
+
+function writeWarehouseScanHistory(history) {
+  if (typeof localStorage === "undefined") return;
+
+  try {
+    localStorage.setItem(WAREHOUSE_HISTORY_KEY, JSON.stringify(history));
+  } catch (error) {
+    console.error("Depo terminali geçmişi kaydedilemedi:", error);
+  }
+}
+
+function normalizeHistoryRecord(record = {}) {
+  if (!record || typeof record !== "object") return null;
+
+  return {
+    id: record.id || `${record.scannedAt || Date.now()}-${record.barcode || record.productCode || record.scannedValue || "scan"}`,
+    scannedValue: record.scannedValue || "",
+    productCode: record.productCode || "",
+    barcode: record.barcode || "",
+    productName: record.productName || "",
+    stockQuantity: toNumber(record.stockQuantity),
+    status: record.status || "-",
+    scannedAt: record.scannedAt || "",
+  };
 }
 
 function resolveWarehouseStockStatus(stockQuantity, criticalStockLevel, isActive) {
@@ -93,7 +145,7 @@ function resolveWarehouseStockStatus(stockQuantity, criticalStockLevel, isActive
   if (stockQuantity < 0) return "Negatif stok";
   if (stockQuantity === 0) return "Stok yok";
   if (stockQuantity <= criticalStockLevel) return "Kritik stok";
-  return "Satışa hazır";
+  return "Sağlıklı";
 }
 
 function toNumber(value) {

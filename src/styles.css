@@ -1305,6 +1305,15 @@ button {
   font-weight: 750;
 }
 
+.warehouse-terminal-history-row small {
+  color: var(--text);
+}
+
+.warehouse-terminal-card .section-heading .secondary-action {
+  min-height: 34px;
+  padding: 7px 10px;
+}
+
 .integrity-summary-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
