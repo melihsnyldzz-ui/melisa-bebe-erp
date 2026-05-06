@@ -3754,6 +3754,66 @@ button {
   font-weight: 900;
 }
 
+.vega-technical-prep-panel {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid rgba(30, 64, 175, 0.14);
+  border-radius: 8px;
+  background: #eff6ff;
+}
+
+.vega-technical-prep-panel h2,
+.vega-technical-prep-panel p {
+  margin: 0;
+}
+
+.vega-technical-prep-panel h2 {
+  color: #1e3a8a;
+  font-size: 0.96rem;
+}
+
+.vega-technical-prep-panel p {
+  margin-top: 3px;
+  color: #1e40af;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.vega-technical-prep-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.vega-technical-prep-row {
+  min-width: 0;
+  padding: 7px 8px;
+  border: 1px solid rgba(30, 64, 175, 0.12);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.vega-technical-prep-row span,
+.vega-technical-prep-row strong {
+  display: block;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.vega-technical-prep-row span {
+  color: #1d4ed8;
+  font-size: 0.68rem;
+  font-weight: 900;
+}
+
+.vega-technical-prep-row strong {
+  margin-top: 3px;
+  color: var(--anthracite);
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
 .vega-connection-preview-panel {
   display: grid;
   gap: 8px;
@@ -6110,6 +6170,19 @@ tr:last-child td {
   }
 
   .vega-readonly-prep-row {
+    padding: 7px;
+  }
+
+  .vega-technical-prep-panel {
+    padding: 10px;
+  }
+
+  .vega-technical-prep-grid {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .vega-technical-prep-row {
     padding: 7px;
   }
 

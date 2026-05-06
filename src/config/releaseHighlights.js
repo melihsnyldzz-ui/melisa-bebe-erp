@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.19.9";
+export const currentReleaseVersion = "v1.20.0";
 
-export const currentReleaseTitle = "Vega read-only teknik hazırlık kilidi ve son geçiş özeti";
+export const currentReleaseTitle = "Vega read-only teknik hazırlık başlangıcı";
 
 export const updatedSectionIds = ["latest-version-history", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Vega Stok Deneme ekranına pasif Teknik Hazırlık Kilidi eklendi",
-  "v1.19.x hazırlık fazının demo veri, bağlantı, sorgu ve güvenlik özeti görünür hale getirildi",
-  "Gerçek bağlantı, SQL/ODBC, query ve onay kaydı olmadan son geçiş özeti hazırlandı",
+  "Vega read-only teknik hazırlık fazı pasif metadata ile başlatıldı",
+  "Bağlantı kilidi, SQL/ODBC, DB okuma ve manuel onay durumları güvenli şekilde görünür hale getirildi",
+  "Gerçek bağlantı, sorgu çalıştırma ve Vega verisi okuma olmadan v1.20 hazırlık paneli eklendi",
 ];
 
 export const releaseJumpLinks = [

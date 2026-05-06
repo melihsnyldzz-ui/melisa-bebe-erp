@@ -7,6 +7,13 @@ function listVegaStockReadOnly() {
     databaseConfigured: false,
     stockQueryPrepared: false,
     writeEnabled: false,
+    technicalPhase: "v1.20-read-only-prep",
+    connectionLocked: true,
+    sqlExecutionEnabled: false,
+    odbcEnabled: false,
+    databaseReadEnabled: false,
+    maxRowsLimitPrepared: false,
+    approvalRequired: true,
   };
 
   if (!isEnabled) {

@@ -43,6 +43,13 @@ const defaultConnectionMetadata = {
   databaseConfigured: false,
   stockQueryPrepared: false,
   writeEnabled: false,
+  technicalPhase: "v1.20-read-only-prep",
+  connectionLocked: true,
+  sqlExecutionEnabled: false,
+  odbcEnabled: false,
+  databaseReadEnabled: false,
+  maxRowsLimitPrepared: false,
+  approvalRequired: true,
 };
 
 const columnMappings = [
@@ -206,6 +213,15 @@ export default function VegaStockTrial() {
     { label: "Onay kaydı", value: "Yok" },
     { label: "Sonraki faz", value: "v1.20.0 read-only teknik hazırlık" },
   ];
+  const technicalPreparationRows = [
+    { label: "Teknik faz", value: connectionMetadata.technicalPhase === "v1.20-read-only-prep" ? "v1.20 read-only prep" : "Tanımlı değil" },
+    { label: "Bağlantı kilidi", value: connectionMetadata.connectionLocked ? "Açık" : "Kapalı" },
+    { label: "SQL çalıştırma", value: connectionMetadata.sqlExecutionEnabled ? "Açık" : "Kapalı" },
+    { label: "ODBC", value: connectionMetadata.odbcEnabled ? "Açık" : "Kapalı" },
+    { label: "DB okuma", value: connectionMetadata.databaseReadEnabled ? "Açık" : "Kapalı" },
+    { label: "Satır limiti hazırlığı", value: connectionMetadata.maxRowsLimitPrepared ? "Hazır" : "Bekliyor" },
+    { label: "Manuel onay", value: connectionMetadata.approvalRequired ? "Gerekli" : "Gerekli değil" },
+  ];
   const finalTransitionSummary = [
     "Demo veri ayrımı yapıldı.",
     "Bağlantı hazırlığı pasif gösterildi.",
@@ -336,6 +352,21 @@ export default function VegaStockTrial() {
           <div className="vega-readonly-prep-grid">
             {readOnlyPreparationRows.map((row) => (
               <div className="vega-readonly-prep-row" key={row.label}>
+                <span>{row.label}</span>
+                <strong>{row.value}</strong>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="vega-technical-prep-panel">
+          <div>
+            <h2>v1.20 Teknik Hazırlık Durumu</h2>
+            <p>v1.20.0 sadece teknik hazırlık başlangıcıdır; bağlantı açmaz, sorgu çalıştırmaz, Vega verisi okumaz.</p>
+          </div>
+          <div className="vega-technical-prep-grid" aria-label="v1.20 teknik hazırlık durumu">
+            {technicalPreparationRows.map((row) => (
+              <div className="vega-technical-prep-row" key={row.label}>
                 <span>{row.label}</span>
                 <strong>{row.value}</strong>
               </div>
