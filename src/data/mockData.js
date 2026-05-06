@@ -37,7 +37,7 @@ export const menuItems = [
   { id: "settings", label: "Ayarlar", icon: Settings },
 ];
 
-export const updatedMenuItemIds = ["settings"];
+export const updatedMenuItemIds = ["dashboard"];
 
 export const kpis = [
   { label: "Bugünkü Satış", value: "125.000 TL", icon: ShoppingBag, tone: "red" },

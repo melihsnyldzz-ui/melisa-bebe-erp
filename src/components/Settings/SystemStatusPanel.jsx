@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.15.0",
+    title: "ERP hızlandırma paketi: ana sayfa canlı hazırlık özeti ve hızlı test kısayolları",
+    area: "Dashboard / Ayarlar",
+    description: "Ana sayfaya canlıya hazırlık özeti, hızlı test kısayolları ve bugün test edilecek öncelikler eklendi.",
+  },
+  {
     version: "v1.14.7",
     title: "Sidebar menü sıkışıklığı ve Ayarlar görünürlüğü düzeltmesi",
     area: "Genel Layout / Sidebar",
@@ -166,12 +172,6 @@ const versionHistoryRows = [
     title: "Sayfa içi yenilik vurgusu, YENİ etiketi ve hızlı geçiş paneli",
     area: "Ayarlar",
     description: "Kullanıcının yeni eklenen alanları kolay bulması için sayfa içi yenilik paneli, YENİ etiketi ve hızlı geçiş linkleri eklendi.",
-  },
-  {
-    version: "v1.14.0",
-    title: "Ayarlar ekranı sadeleştirme ve canlı test merkezi düzeni",
-    area: "Ayarlar",
-    description: "Canlı test, Vega karşılaştırma ve personel deneme alanları Canlı Test Merkezi altında daha düzenli hale getirildi.",
   },
 ];
 

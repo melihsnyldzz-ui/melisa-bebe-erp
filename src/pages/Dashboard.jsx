@@ -12,16 +12,43 @@ import {
   WalletCards,
 } from "lucide-react";
 import { useMemo } from "react";
+import ReleaseHighlightsPanel from "../components/Common/ReleaseHighlightsPanel.jsx";
 import DataTable from "../components/Dashboard/DataTable.jsx";
 import KpiCard from "../components/Dashboard/KpiCard.jsx";
 import SalesChart from "../components/Dashboard/SalesChart.jsx";
 import SystemHealthCard from "../components/Dashboard/SystemHealthCard.jsx";
 import TopProductsChart from "../components/Dashboard/TopProductsChart.jsx";
 import { APP_STAGE, APP_VERSION } from "../config/appVersion.js";
+import { currentReleaseVersion, releaseHighlightsByPage } from "../config/releaseHighlights.js";
 import { useErpData } from "../context/ErpDataContext.jsx";
 import { formatDateTR, getTodayISO } from "../utils/dateUtils.js";
 import { buildDataIntegrityReport } from "../utils/dataIntegrity.js";
 import { formatCurrency, formatNumber } from "../utils/formatters.js";
+
+const dashboardReleaseHighlights = releaseHighlightsByPage.dashboard;
+
+const liveReadinessRows = [
+  { label: "ERP hazırlık", value: "%76-81" },
+  { label: "Canlı kullanım güvenliği", value: "%70-75" },
+  { label: "El terminali hazırlığı", value: "%62-67" },
+  { label: "Vega geçiş hazırlığı", value: "%63-68" },
+];
+
+const quickTestShortcuts = [
+  { title: "Ayarlar kontrolüne git", path: "Sol menü > Ayarlar" },
+  { title: "Depo Terminali testine git", path: "Sol menü > Depo Terminali" },
+  { title: "Stok Sayım ekranına git", path: "Sol menü > Barkodlu Sayım" },
+  { title: "Raporları kontrol et", path: "Sol menü > Raporlar" },
+  { title: "Veri içe aktarma hazırlığına git", path: "Sol menü > Excel Aktarım" },
+];
+
+const todayTestPriorities = [
+  "Sol menüde mavi nokta olan sayfayı kontrol et",
+  "Ayarlar > Bu Sürümde Yenilenen Alanlar panelini kontrol et",
+  "Depo Terminali'nde örnek barkod okutma testi yap",
+  "Rapor ekranlarının açıldığını kontrol et",
+  "Hata varsa ekran adı ve işlem notunu kaydet",
+];
 
 export default function Dashboard() {
   const erpData = useErpData();
@@ -42,6 +69,68 @@ export default function Dashboard() {
           <ClipboardList size={18} />
           Gün Sonu Raporu
         </button>
+      </section>
+
+      <ReleaseHighlightsPanel
+        releaseHighlightItems={dashboardReleaseHighlights.releaseHighlightItems}
+        releaseJumpLinks={dashboardReleaseHighlights.releaseJumpLinks}
+      />
+
+      <section className="dashboard-live-summary-panel table-panel" id="dashboard-live-summary">
+        <div className="dashboard-panel-heading">
+          <div>
+            <h2>
+              Canlıya Hazırlık Özeti <span className="new-release-badge">YENİ · {currentReleaseVersion}</span>
+            </h2>
+            <p>
+              Sistem henüz tam canlı kullanım için açılmadı. Gerçek veri, Vega karşılaştırması, yedek/geri yükleme ve
+              personel denemesi tamamlanmadan veri yazan işlemler kontrollü tutulmalıdır.
+            </p>
+          </div>
+        </div>
+
+        <div className="dashboard-live-summary-grid">
+          {liveReadinessRows.map((row) => (
+            <article className="dashboard-live-summary-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="dashboard-test-panel table-panel" id="dashboard-test-shortcuts">
+        <div className="dashboard-panel-heading">
+          <div>
+            <h2>
+              Hızlı Test Kısayolları <span className="new-release-badge">YENİ · {currentReleaseVersion}</span>
+            </h2>
+            <p>Bu kartlar güvenli test yönlendirmesidir; sayfa değiştirme veya veri yazma işlemi yapmaz.</p>
+          </div>
+        </div>
+
+        <div className="dashboard-shortcut-grid">
+          {quickTestShortcuts.map((shortcut) => (
+            <article className="dashboard-shortcut-card" key={shortcut.title}>
+              <strong>{shortcut.title}</strong>
+              <span>{shortcut.path}</span>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="dashboard-priority-panel table-panel">
+        <div className="dashboard-panel-heading">
+          <div>
+            <h2>Bugün Test Edilecek Öncelikler</h2>
+            <p>Canlı hazırlık testinde önce bakılacak başlıklar.</p>
+          </div>
+        </div>
+        <ul>
+          {todayTestPriorities.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
       </section>
 
       <section className="kpi-grid">
