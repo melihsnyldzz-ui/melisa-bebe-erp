@@ -2624,6 +2624,55 @@ button {
   font-size: 0.88rem;
 }
 
+.live-test-center-panel {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(249, 250, 251, 0.9);
+}
+
+.live-test-center-panel h3,
+.live-test-center-panel p {
+  margin: 0;
+}
+
+.live-test-center-panel > div:first-child h3 {
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.live-test-center-panel > div:first-child p {
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.live-test-center-warning {
+  padding: 10px 11px;
+  border: 1px solid #ffe1a3;
+  border-radius: 8px;
+  color: #8a5800;
+  background: #fff8e6;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.live-test-center-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.live-test-center-grid > * {
+  min-width: 0;
+}
+
+.live-test-center-grid .go-live-test-plan-panel,
+.live-test-center-grid .vega-result-template-panel {
+  margin-top: 0;
+}
+
 .live-test-guide-panel {
   display: grid;
   gap: 12px;
@@ -3980,6 +4029,10 @@ tr:last-child td {
   }
 
   .go-live-checklist-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .live-test-center-grid {
     grid-template-columns: 1fr;
   }
 

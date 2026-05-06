@@ -118,6 +118,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.14.0",
+    title: "Ayarlar ekranı sadeleştirme ve canlı test merkezi düzeni",
+    area: "Ayarlar",
+    description: "Canlı test, Vega karşılaştırma ve personel deneme alanları Canlı Test Merkezi altında daha düzenli hale getirildi.",
+  },
+  {
     version: "v1.13.9",
     title: "Canlı test checklist sayfası ve personel deneme notları",
     area: "Ayarlar",
@@ -158,12 +164,6 @@ const versionHistoryRows = [
     title: "Yedek ve geri yükleme test raporu",
     area: "Ayarlar",
     description: "Yedek ve geri yükleme testi için rapor şablonu eklendi.",
-  },
-  {
-    version: "v1.13.2",
-    title: "Yedek alma uyarıları ve son yedek görünürlüğü",
-    area: "Ayarlar",
-    description: "Son yedek görünürlüğü, yedek alınması gereken durumlar ve güvenlik uyarıları eklendi.",
   },
 ];
 
@@ -245,59 +245,6 @@ export default function SystemStatusPanel() {
         </div>
       </div>
 
-      <div className="live-test-guide-panel">
-        <div>
-          <h3>Canlı Test Rehberi</h3>
-          <p>Canlı test sırasında nereden başlayacağınızı ve hangi sırayla kontrol yapacağınızı gösterir.</p>
-        </div>
-
-        <ol>
-          {liveTestGuideSteps.map((step) => (
-            <li key={step}>{step}</li>
-          ))}
-        </ol>
-
-        <p className="live-test-guide-note">
-          Bu rehber test sırasında nereden başlayacağınızı göstermek için hazırlanmıştır. Gerçek veriyle işlem yapmadan
-          önce yedekleme ve geri dönüş senaryosu ayrıca test edilmelidir.
-        </p>
-
-        <div className="live-test-checklist-panel">
-          <h3>Canlı Test Checklist</h3>
-          <ul>
-            {liveTestChecklistItems.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-
-          <div className="staff-trial-notes-panel">
-            <h3>Personel Deneme Notları</h3>
-            <pre>{staffTrialNotesTemplate.join("\n")}</pre>
-          </div>
-
-          <p>
-            Bu alan yalnızca manuel test rehberidir. Personel notlarını kaydetmez, dosya oluşturmaz ve veritabanına
-            yazmaz.
-          </p>
-        </div>
-      </div>
-
-      <div className="test-feedback-panel">
-        <div>
-          <h3>Testte Hata Görürsen</h3>
-          <p>
-            Test sırasında hata görürseniz, hatayı tekrar üretebilmek için ekran adını, yaptığınız işlemi ve görünen hata
-            mesajını not alın.
-          </p>
-        </div>
-
-        <pre>{testFeedbackTemplate.join("\n")}</pre>
-
-        <p className="test-feedback-note">
-          Bu bilgileri ChatGPT'ye gönderirseniz, sorun için daha net Codex promptu hazırlanabilir.
-        </p>
-      </div>
-
       <div className="system-status-grid">
         {statusRows.map((row) => (
           <div className="system-status-card" key={row.label}>
@@ -330,18 +277,74 @@ export default function SystemStatusPanel() {
             değişikliği yapmaz.
           </p>
         </div>
+      </div>
 
-        <div className="go-live-test-plan-panel">
-          <div>
-            <h3>Canlıya Geçiş Test Planı</h3>
-            <p>Canlı kullanım öncesinde manuel kontrol sırasını 5 günlük sade bir plan olarak takip edin.</p>
+      <div className="live-test-center-panel">
+        <div>
+          <h3>Canlı Test Merkezi</h3>
+          <p>Canlı test, personel denemesi ve Vega karşılaştırma adımlarını tek merkezden takip edin.</p>
+        </div>
+
+        <p className="live-test-center-warning">
+          Bu merkez yalnızca manuel test rehberidir. Vega'ya bağlanmaz, veri çekmez, veri yazmaz ve test notlarını
+          kaydetmez.
+        </p>
+
+        <div className="live-test-center-grid">
+          <div className="live-test-guide-panel">
+            <div>
+              <h3>Canlı Test Rehberi</h3>
+              <p>Canlı test sırasında nereden başlayacağınızı ve hangi sırayla kontrol yapacağınızı gösterir.</p>
+            </div>
+
+            <ol>
+              {liveTestGuideSteps.map((step) => (
+                <li key={step}>{step}</li>
+              ))}
+            </ol>
+
+            <p className="live-test-guide-note">
+              Bu rehber test sırasında nereden başlayacağınızı göstermek için hazırlanmıştır. Gerçek veriyle işlem
+              yapmadan önce yedekleme ve geri dönüş senaryosu ayrıca test edilmelidir.
+            </p>
           </div>
 
-          <ol>
-            {goLiveTestPlanSteps.map((step) => (
-              <li key={step}>{step}</li>
-            ))}
-          </ol>
+          <div className="live-test-checklist-panel">
+            <h3>Canlı Test Checklist</h3>
+            <ul>
+              {liveTestChecklistItems.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+
+            <p>
+              Bu alan yalnızca manuel test rehberidir. Personel notlarını kaydetmez, dosya oluşturmaz ve veritabanına
+              yazmaz.
+            </p>
+          </div>
+
+          <div className="staff-trial-notes-panel">
+            <h3>Personel Deneme Notları</h3>
+            <pre>{staffTrialNotesTemplate.join("\n")}</pre>
+          </div>
+
+          <div className="go-live-test-plan-panel">
+            <div>
+              <h3>Canlıya Geçiş Test Planı</h3>
+              <p>Canlı kullanım öncesinde manuel kontrol sırasını 5 günlük sade bir plan olarak takip edin.</p>
+            </div>
+
+            <ol>
+              {goLiveTestPlanSteps.map((step) => (
+                <li key={step}>{step}</li>
+              ))}
+            </ol>
+
+            <p className="go-live-test-plan-note">
+              Bu test planı yalnızca manuel kontrol rehberidir. Vega'ya bağlanmaz, veri çekmez, veri yazmaz ve
+              karşılaştırmayı otomatik yapmaz.
+            </p>
+          </div>
 
           <div className="vega-comparison-panel">
             <h3>Vega Karşılaştırma Kontrol Listesi</h3>
@@ -352,30 +355,41 @@ export default function SystemStatusPanel() {
             </ul>
           </div>
 
-          <p className="go-live-test-plan-note">
-            Bu test planı yalnızca manuel kontrol rehberidir. Vega'ya bağlanmaz, veri çekmez, veri yazmaz ve
-            karşılaştırmayı otomatik yapmaz.
-          </p>
-        </div>
+          <div className="vega-result-template-panel">
+            <div>
+              <h3>Vega Karşılaştırma Test Sonuç Şablonu</h3>
+              <p>Vega ve ERP ekranlarını karşılaştırırken sonucu aynı formatta not almak için kullanılabilir.</p>
+            </div>
 
-        <div className="vega-result-template-panel">
-          <div>
-            <h3>Vega Karşılaştırma Test Sonuç Şablonu</h3>
-            <p>Vega ve ERP ekranlarını karşılaştırırken sonucu aynı formatta not almak için kullanılabilir.</p>
+            <pre>{vegaComparisonResultTemplate.join("\n")}</pre>
           </div>
-
-          <pre>{vegaComparisonResultTemplate.join("\n")}</pre>
 
           <div className="vega-issue-format-panel">
             <h3>Hata Kayıt Formatı</h3>
             <pre>{vegaComparisonIssueTemplate.join("\n")}</pre>
           </div>
 
-          <p className="vega-template-note">
-            Bu şablon yalnızca manuel not alma rehberidir. Gerçek log kaydı, dosya kaydı, API işlemi veya veritabanı
-            yazma işlemi yapmaz.
-          </p>
+          <div className="test-feedback-panel">
+            <div>
+              <h3>Testte Hata Görürsen</h3>
+              <p>
+                Test sırasında hata görürseniz, hatayı tekrar üretebilmek için ekran adını, yaptığınız işlemi ve görünen
+                hata mesajını not alın.
+              </p>
+            </div>
+
+            <pre>{testFeedbackTemplate.join("\n")}</pre>
+
+            <p className="test-feedback-note">
+              Bu bilgileri ChatGPT'ye gönderirseniz, sorun için daha net Codex promptu hazırlanabilir.
+            </p>
+          </div>
         </div>
+
+        <p className="vega-template-note">
+          Bu merkezdeki şablonlar yalnızca manuel not alma rehberidir. Gerçek log kaydı, dosya kaydı, API işlemi veya
+          veritabanı yazma işlemi yapmaz.
+        </p>
       </div>
 
       <div className="system-status-guide">
