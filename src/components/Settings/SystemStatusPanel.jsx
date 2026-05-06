@@ -46,6 +46,29 @@ const vegaComparisonChecklist = [
   "Hatalı veya eksik kayıtlar not alındı mı?",
 ];
 
+const vegaComparisonResultTemplate = [
+  "Test tarihi:",
+  "Testi yapan kişi:",
+  "Vega ekranı / raporu:",
+  "ERP ekranı / raporu:",
+  "Karşılaştırılan kayıt türü:",
+  "Vega'daki değer:",
+  "ERP'deki değer:",
+  "Sonuç: Uyumlu / Fark var / Kontrol edilecek",
+  "Not:",
+];
+
+const vegaComparisonIssueTemplate = [
+  "Ekran adı:",
+  "İşlem:",
+  "Beklenen sonuç:",
+  "Görülen sonuç:",
+  "Vega'daki karşılığı:",
+  "Tekrar ediyor mu:",
+  "Önem seviyesi: Düşük / Orta / Yüksek",
+  "Not / ekran görüntüsü:",
+];
+
 const goLiveChecklistGroups = [
   {
     title: "Hazır",
@@ -72,6 +95,12 @@ const goLiveChecklistGroups = [
 ];
 
 const versionHistoryRows = [
+  {
+    version: "v1.13.8",
+    title: "Vega karşılaştırma test sonuç şablonu ve hata kayıt formatı",
+    area: "Ayarlar",
+    description: "Vega karşılaştırma testleri için sonuç şablonu ve hata kayıt formatı eklendi.",
+  },
   {
     version: "v1.13.7",
     title: "Canlıya geçiş test planı ve Vega karşılaştırma kontrol listesi",
@@ -113,12 +142,6 @@ const versionHistoryRows = [
     title: "Geri yükleme simülasyonu ve doğrulama listesi",
     area: "Ayarlar",
     description: "Test ortamında geri yükleme senaryosu ve canlıdan önce doğrulanacak maddeler eklendi.",
-  },
-  {
-    version: "v1.13.0",
-    title: "Yedekleme güvenlik kontrolü",
-    area: "Ayarlar",
-    description: "Canlı kullanıma geçmeden önce yedekleme güvenlik kontrol listesi eklendi.",
   },
 ];
 
@@ -291,6 +314,25 @@ export default function SystemStatusPanel() {
           <p className="go-live-test-plan-note">
             Bu test planı yalnızca manuel kontrol rehberidir. Vega'ya bağlanmaz, veri çekmez, veri yazmaz ve
             karşılaştırmayı otomatik yapmaz.
+          </p>
+        </div>
+
+        <div className="vega-result-template-panel">
+          <div>
+            <h3>Vega Karşılaştırma Test Sonuç Şablonu</h3>
+            <p>Vega ve ERP ekranlarını karşılaştırırken sonucu aynı formatta not almak için kullanılabilir.</p>
+          </div>
+
+          <pre>{vegaComparisonResultTemplate.join("\n")}</pre>
+
+          <div className="vega-issue-format-panel">
+            <h3>Hata Kayıt Formatı</h3>
+            <pre>{vegaComparisonIssueTemplate.join("\n")}</pre>
+          </div>
+
+          <p className="vega-template-note">
+            Bu şablon yalnızca manuel not alma rehberidir. Gerçek log kaydı, dosya kaydı, API işlemi veya veritabanı
+            yazma işlemi yapmaz.
           </p>
         </div>
       </div>

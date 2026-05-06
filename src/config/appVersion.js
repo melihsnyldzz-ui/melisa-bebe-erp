@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.13.7";
-export const APP_STAGE = "Canlıya geçiş test planı ve Vega karşılaştırma kontrol listesi";
+export const APP_VERSION = "v1.13.8";
+export const APP_STAGE = "Vega karşılaştırma test sonuç şablonu ve hata kayıt formatı";

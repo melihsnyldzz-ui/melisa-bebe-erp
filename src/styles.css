@@ -2395,6 +2395,62 @@ button {
   font-weight: 800;
 }
 
+.vega-result-template-panel {
+  display: grid;
+  gap: 12px;
+  margin-top: 12px;
+  padding: 13px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+.vega-result-template-panel h3,
+.vega-result-template-panel p {
+  margin: 0;
+}
+
+.vega-result-template-panel h3 {
+  color: var(--text);
+  font-size: 0.98rem;
+}
+
+.vega-result-template-panel p {
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.vega-result-template-panel pre,
+.vega-issue-format-panel pre {
+  margin: 0;
+  padding: 12px;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--text);
+  background: #fff;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  line-height: 1.55;
+}
+
+.vega-issue-format-panel {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid #d0ebff;
+  border-radius: 8px;
+  background: #f0f8ff;
+}
+
+.vega-template-note {
+  padding: 10px 11px;
+  border: 1px solid #ffe1a3;
+  border-radius: 8px;
+  color: #8a5800 !important;
+  background: #fff8e6;
+  font-weight: 800;
+}
+
 .system-status-guide {
   display: grid;
   gap: 7px;
