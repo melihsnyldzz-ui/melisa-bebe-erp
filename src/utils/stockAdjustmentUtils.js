@@ -1,19 +1,7 @@
 import { getTodayISO } from "./dateUtils.js";
 
 export function getAdjustableStockCountItems(items = []) {
-  return items
-    .filter((item) => Number(item.difference) !== 0)
-    .map((item) => ({
-      productId: item.productId,
-      productCode: item.productCode || "",
-      barcode: item.barcode || "",
-      productName: item.productName || "",
-      size: item.size || "",
-      color: item.color || "",
-      currentStock: Number(item.currentStock) || 0,
-      countedQuantity: Math.max(0, Number(item.countedQuantity) || 0),
-      difference: Number(item.difference) || 0,
-    }));
+  return items.filter((item) => toNumber(item.difference) !== 0).map(normalizeAdjustmentItem);
 }
 
 export function buildStockAdjustmentSummary(items = []) {
@@ -42,4 +30,54 @@ export function buildStockAdjustmentPayload(items = []) {
     description: "Barkodlu stok sayım düzeltmesi",
     items: getAdjustableStockCountItems(items),
   };
+}
+
+export function validateStockAdjustmentPayload(payload) {
+  if (!payload?.date) return "Sayım tarihi bulunamadı.";
+  if (!Array.isArray(payload.items) || payload.items.length === 0) return "Düzeltilecek ürün bulunamadı.";
+
+  const productIds = new Set();
+  for (const item of payload.items) {
+    if (!item.productId) return "Düzeltilecek ürün bulunamadı.";
+    if (productIds.has(Number(item.productId))) return "Aynı ürün birden fazla satırda görünüyor. Lütfen listeyi kontrol edin.";
+    productIds.add(Number(item.productId));
+
+    if (!isSafeNumber(item.countedQuantity) || Number(item.countedQuantity) < 0) return "Sayım miktarı geçersiz.";
+    if (!isSafeNumber(item.currentStock) || !isSafeNumber(item.difference)) return "Sayım miktarı geçersiz.";
+  }
+
+  return "";
+}
+
+export function buildStockCountReference(value = new Date().toISOString()) {
+  const digits = value.replace(/\D/g, "");
+  const datePart = digits.slice(0, 8);
+  const timePart = digits.slice(8, 14);
+  return `SAYIM-${datePart}-${timePart}`;
+}
+
+function normalizeAdjustmentItem(item) {
+  const currentStock = Number(item.currentStock);
+  const countedQuantity = Number(item.countedQuantity);
+
+  return {
+    productId: item.productId,
+    productCode: item.productCode || "",
+    barcode: item.barcode || "",
+    productName: item.productName || "",
+    size: item.size || "",
+    color: item.color || "",
+    currentStock,
+    countedQuantity,
+    difference: countedQuantity - currentStock,
+  };
+}
+
+function isSafeNumber(value) {
+  return Number.isFinite(Number(value));
+}
+
+function toNumber(value) {
+  const numberValue = Number(value);
+  return Number.isFinite(numberValue) ? numberValue : 0;
 }

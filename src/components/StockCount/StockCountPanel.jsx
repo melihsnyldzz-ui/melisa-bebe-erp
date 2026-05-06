@@ -5,6 +5,7 @@ import {
   buildStockAdjustmentPayload,
   buildStockAdjustmentSummary,
   getAdjustableStockCountItems,
+  validateStockAdjustmentPayload,
 } from "../../utils/stockAdjustmentUtils.js";
 import {
   buildStockCountReport,
@@ -18,16 +19,18 @@ import StockCountSummary from "./StockCountSummary.jsx";
 
 const BOUNCE_GUARD_MS = 450;
 
-export default function StockCountPanel({ onApplyStockCountAdjustment, products }) {
+export default function StockCountPanel({ appSettings, onApplyStockCountAdjustment, products }) {
   const [barcodeValue, setBarcodeValue] = useState("");
   const [filter, setFilter] = useState("all");
   const [message, setMessage] = useState(null);
   const [report, setReport] = useState(null);
   const [search, setSearch] = useState("");
   const [items, setItems] = useState([]);
+  const [adjustmentError, setAdjustmentError] = useState("");
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [isAdjusting, setIsAdjusting] = useState(false);
   const inputRef = useRef(null);
+  const adjustmentInFlightRef = useRef(false);
   const lastAcceptedScanRef = useRef({ normalizedValue: "", time: 0 });
 
   useEffect(() => {
@@ -92,6 +95,12 @@ export default function StockCountPanel({ onApplyStockCountAdjustment, products 
   }
 
   function updateQuantity(productId, value) {
+    const numericValue = Number(value);
+    if (value !== "" && (!Number.isFinite(numericValue) || numericValue < 0)) {
+      setMessage({ type: "error", text: "Sayım miktarı geçersiz." });
+      return;
+    }
+
     setItems((currentItems) =>
       currentItems.map((item) =>
         item.productId === productId
@@ -116,6 +125,7 @@ export default function StockCountPanel({ onApplyStockCountAdjustment, products 
     setReport(null);
     setSearch("");
     lastAcceptedScanRef.current = { normalizedValue: "", time: 0 };
+    setAdjustmentError("");
     setIsConfirmOpen(false);
     focusInput();
   }
@@ -127,26 +137,49 @@ export default function StockCountPanel({ onApplyStockCountAdjustment, products 
   }
 
   function openAdjustmentConfirm() {
+    const payload = buildStockAdjustmentPayload(items);
+    const validationError = validateStockAdjustmentPayload(payload);
+    if (validationError) {
+      setMessage({ type: "error", text: validationError });
+      focusInput();
+      return;
+    }
+
+    setAdjustmentError("");
     if (!canApplyAdjustment) return;
     setIsConfirmOpen(true);
   }
 
   async function applyAdjustment() {
-    if (!onApplyStockCountAdjustment || !canApplyAdjustment) return;
+    if (!onApplyStockCountAdjustment || !canApplyAdjustment || adjustmentInFlightRef.current) return;
 
+    adjustmentInFlightRef.current = true;
     setIsAdjusting(true);
     const payload = buildStockAdjustmentPayload(items);
+    const validationError = validateStockAdjustmentPayload(payload);
+    if (validationError) {
+      setMessage({ type: "error", text: validationError });
+      setAdjustmentError(validationError);
+      setIsAdjusting(false);
+      adjustmentInFlightRef.current = false;
+      return;
+    }
+
     const result = await onApplyStockCountAdjustment(payload);
     setIsAdjusting(false);
+    adjustmentInFlightRef.current = false;
 
     if (!result?.ok) {
-      setMessage({ type: "error", text: result?.error || "Stok düzeltme işlemi tamamlanamadı." });
-      setIsConfirmOpen(false);
+      const errorText = result?.error || "Stok düzeltme işlemi tamamlanamadı.";
+      setMessage({ type: "error", text: errorText });
+      setAdjustmentError(errorText);
       focusInput();
       return;
     }
 
-    setMessage({ type: "success", text: "Stoklar sayım sonucuna göre düzeltildi." });
+    const referenceNo = result.record?.referenceNo || result.data?.referenceNo || result.referenceNo || "-";
+    setMessage({ type: "success", text: `Stoklar sayım sonucuna göre düzeltildi. Referans: ${referenceNo}` });
+    setAdjustmentError("");
     setItems([]);
     setReport(null);
     setIsConfirmOpen(false);
@@ -255,7 +288,12 @@ export default function StockCountPanel({ onApplyStockCountAdjustment, products 
         open={isConfirmOpen}
         summary={adjustmentSummary}
         isSaving={isAdjusting}
-        onCancel={() => setIsConfirmOpen(false)}
+        errorMessage={adjustmentError}
+        lastBackupAt={appSettings?.lastBackupAt}
+        onCancel={() => {
+          setAdjustmentError("");
+          setIsConfirmOpen(false);
+        }}
         onConfirm={applyAdjustment}
       />
     </>

@@ -2,7 +2,7 @@ import StockCountPanel from "../components/StockCount/StockCountPanel.jsx";
 import { useErpData } from "../context/ErpDataContext.jsx";
 
 export default function StockCount() {
-  const { applyStockCountAdjustment, products } = useErpData();
+  const { appSettings, applyStockCountAdjustment, products } = useErpData();
 
   return (
     <>
@@ -18,7 +18,7 @@ export default function StockCount() {
         Not: Sayım farkları raporlanır; stok düzeltme yalnızca açık onaydan sonra stok hareketi oluşturularak uygulanır.
       </p>
 
-      <StockCountPanel products={products} onApplyStockCountAdjustment={applyStockCountAdjustment} />
+      <StockCountPanel appSettings={appSettings} products={products} onApplyStockCountAdjustment={applyStockCountAdjustment} />
     </>
   );
 }

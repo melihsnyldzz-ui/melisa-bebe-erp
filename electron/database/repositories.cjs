@@ -464,7 +464,7 @@ function applyStockCountAdjustmentTx(db, payload) {
     const product = getProduct.get(item.productId);
     if (!product) throw new Error(`${item.productName || "Ürün"} bulunamadı.`);
 
-    const countedQuantity = Math.max(0, Number(item.countedQuantity) || 0);
+    const countedQuantity = Number(item.countedQuantity);
     const currentDbStock = Number(product.stockQuantity) || 0;
     const actualDifference = countedQuantity - currentDbStock;
     if (actualDifference === 0) return;
@@ -488,6 +488,8 @@ function applyStockCountAdjustmentTx(db, payload) {
     });
     adjustedCount += 1;
   });
+
+  if (adjustedCount === 0) throw new Error("Düzeltilecek ürün bulunamadı.");
 
   return { referenceNo, adjustedCount };
 }
@@ -734,17 +736,26 @@ function formatDocumentNo(prefix, year, sequence) {
 
 function validateStockAdjustmentPayload(payload) {
   if (!payload?.date) return "Sayım tarihi bulunamadı.";
-  if (!Array.isArray(payload.items) || payload.items.length === 0) return "Düzeltilecek sayım farkı bulunamadı.";
+  if (!Array.isArray(payload.items) || payload.items.length === 0) return "Düzeltilecek ürün bulunamadı.";
 
-  const invalidItem = payload.items.find((item) => !item.productId || Number(item.countedQuantity) < 0);
-  if (invalidItem) return "Sayım satırlarında geçersiz ürün veya negatif miktar var.";
+  const productIds = new Set();
+  for (const item of payload.items) {
+    if (!item.productId) return "Düzeltilecek ürün bulunamadı.";
+    if (productIds.has(Number(item.productId))) return "Aynı ürün birden fazla satırda görünüyor. Lütfen listeyi kontrol edin.";
+    productIds.add(Number(item.productId));
+
+    if (!Number.isFinite(Number(item.countedQuantity)) || Number(item.countedQuantity) < 0) return "Sayım miktarı geçersiz.";
+    if (!Number.isFinite(Number(item.currentStock)) || !Number.isFinite(Number(item.difference))) return "Sayım miktarı geçersiz.";
+  }
 
   return "";
 }
 
 function buildStockCountReference(value = new Date().toISOString()) {
-  const normalized = value.replace(/\D/g, "").slice(0, 14);
-  return `STOCK-COUNT-${normalized}`;
+  const digits = value.replace(/\D/g, "");
+  const datePart = digits.slice(0, 8);
+  const timePart = digits.slice(8, 14);
+  return `SAYIM-${datePart}-${timePart}`;
 }
 
 function parseItemsJson(value) {

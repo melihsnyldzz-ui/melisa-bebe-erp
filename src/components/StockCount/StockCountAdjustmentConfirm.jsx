@@ -1,7 +1,8 @@
 import { AlertTriangle, CheckCircle2 } from "lucide-react";
 import { formatNumber } from "../../utils/formatters.js";
+import { formatDateTR } from "../../utils/dateUtils.js";
 
-export default function StockCountAdjustmentConfirm({ open, summary, onCancel, onConfirm, isSaving = false }) {
+export default function StockCountAdjustmentConfirm({ open, summary, errorMessage = "", lastBackupAt, onCancel, onConfirm, isSaving = false }) {
   if (!open) return null;
 
   return (
@@ -35,10 +36,13 @@ export default function StockCountAdjustmentConfirm({ open, summary, onCancel, o
         </div>
 
         <p className="form-note stock-adjustment-warning">
-          Bu işlem ürün kartlarındaki stok miktarlarını sayılan miktarlara göre günceller ve stok hareketi oluşturur. İşlem geri
-          alınamaz; gerekirse yeni bir sayım/düzeltme yapılmalıdır.
+          Bu işlem stok miktarlarını değiştirir. Ürün kartlarındaki stok miktarlarını sayılan miktarlara göre günceller ve stok
+          hareketi oluşturur. İşlem geri alınamaz; gerekirse yeni bir sayım/düzeltme yapılmalıdır.
         </p>
-        <p className="form-note stock-adjustment-backup-note">Öneri: Stok düzeltmeden önce veritabanı yedeği alın.</p>
+        <p className="form-note stock-adjustment-backup-note">
+          İşlem öncesinde veritabanı yedeği almanız önerilir. {lastBackupAt ? `Son yedek: ${formatDateTR(lastBackupAt)}` : "Son yedek bilgisi bulunamadı."}
+        </p>
+        {errorMessage && <p className="barcode-message barcode-message-error stock-adjustment-error">{errorMessage}</p>}
 
         <div className="modal-actions">
           <button className="secondary-action" type="button" onClick={onCancel} disabled={isSaving}>

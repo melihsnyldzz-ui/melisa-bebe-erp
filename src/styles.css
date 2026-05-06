@@ -823,7 +823,8 @@ button {
 }
 
 .stock-adjustment-warning,
-.stock-adjustment-backup-note {
+.stock-adjustment-backup-note,
+.stock-adjustment-error {
   margin: 14px 20px 0;
 }
 
