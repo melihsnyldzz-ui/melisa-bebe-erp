@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.20.1";
+export const currentReleaseVersion = "v1.20.2";
 
-export const currentReleaseTitle = "Vega read-only satır limiti ve hata güvenliği hazırlığı";
+export const currentReleaseTitle = "Vega read-only timeout ve bağlantı denemesi kapalı hazırlığı";
 
 export const updatedSectionIds = ["latest-version-history", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "İlk Vega read-only denemesi için pasif satır limiti metadata’sı eklendi",
-  "Retry kapalı, fail-closed açık ve hata baskısı koruması görünür hale getirildi",
-  "Gerçek bağlantı, sorgu çalıştırma ve Vega verisi okuma olmadan hata güvenliği paneli eklendi",
+  "Vega read-only hazırlığına bağlantı denemesi kapalı metadata’sı eklendi",
+  "Timeout politikası, güvenli hata mesajı ve ham hata gizleme durumları görünür hale getirildi",
+  "Gerçek bağlantı, sorgu çalıştırma ve Vega verisi okuma olmadan timeout güvenliği paneli eklendi",
 ];
 
 export const releaseJumpLinks = [

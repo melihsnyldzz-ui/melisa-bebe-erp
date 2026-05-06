@@ -56,6 +56,12 @@ const defaultConnectionMetadata = {
   failClosedEnabled: true,
   errorPressureProtection: true,
   stockReadScope: "stock-cards-only",
+  connectionAttemptEnabled: false,
+  timeoutMs: 3000,
+  timeoutPolicyPrepared: true,
+  safeErrorMessageEnabled: true,
+  rawErrorExposeEnabled: false,
+  lastConnectionAttempt: null,
 };
 
 const columnMappings = [
@@ -239,6 +245,14 @@ export default function VegaStockTrial() {
       value: connectionMetadata.stockReadScope === "stock-cards-only" ? "Sadece stok kartları" : "Tanımlı değil",
     },
   ];
+  const timeoutConnectionSafetyRows = [
+    { label: "Bağlantı denemesi", value: connectionMetadata.connectionAttemptEnabled ? "Açık" : "Kapalı" },
+    { label: "Timeout süresi", value: `${connectionMetadata.timeoutMs || 3000} ms` },
+    { label: "Timeout politikası", value: connectionMetadata.timeoutPolicyPrepared ? "Hazır" : "Bekliyor" },
+    { label: "Güvenli hata mesajı", value: connectionMetadata.safeErrorMessageEnabled ? "Açık" : "Kapalı" },
+    { label: "Ham hata gösterimi", value: connectionMetadata.rawErrorExposeEnabled ? "Açık" : "Kapalı" },
+    { label: "Son bağlantı denemesi", value: connectionMetadata.lastConnectionAttempt || "Yok" },
+  ];
   const finalTransitionSummary = [
     "Demo veri ayrımı yapıldı.",
     "Bağlantı hazırlığı pasif gösterildi.",
@@ -399,6 +413,21 @@ export default function VegaStockTrial() {
           <div className="vega-row-limit-safety-grid" aria-label="Satır limiti ve hata güvenliği">
             {rowLimitSafetyRows.map((row) => (
               <div className="vega-row-limit-safety-row" key={row.label}>
+                <span>{row.label}</span>
+                <strong>{row.value}</strong>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="vega-timeout-safety-panel">
+          <div>
+            <h2>Timeout ve Bağlantı Denemesi Güvenliği</h2>
+            <p>Bu panel sadece bağlantı denemesi açılmadan önceki timeout ve hata mesajı güvenliğini gösterir; bağlantı açmaz, sorgu çalıştırmaz, veri okumaz.</p>
+          </div>
+          <div className="vega-timeout-safety-grid" aria-label="Timeout ve bağlantı denemesi güvenliği">
+            {timeoutConnectionSafetyRows.map((row) => (
+              <div className="vega-timeout-safety-row" key={row.label}>
                 <span>{row.label}</span>
                 <strong>{row.value}</strong>
               </div>

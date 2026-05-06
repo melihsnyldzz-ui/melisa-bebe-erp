@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.20.2",
+    title: "Vega read-only timeout ve bağlantı denemesi kapalı hazırlığı",
+    area: "Vega / Read-only",
+    description: "Vega read-only teknik hazırlığı kapsamında gerçek bağlantı açılmadan bağlantı denemesinin kapalı olduğu, 3000 ms timeout politikası, güvenli hata mesajı, ham hata gizleme ve son bağlantı denemesi yok durumu pasif metadata ve UI düzeyinde görünür hale getirildi.",
+  },
+  {
     version: "v1.20.1",
     title: "Vega read-only satır limiti ve hata güvenliği hazırlığı",
     area: "Vega / Read-only",

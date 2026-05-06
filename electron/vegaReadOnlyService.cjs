@@ -20,6 +20,12 @@ function listVegaStockReadOnly() {
     failClosedEnabled: true,
     errorPressureProtection: true,
     stockReadScope: "stock-cards-only",
+    connectionAttemptEnabled: false,
+    timeoutMs: 3000,
+    timeoutPolicyPrepared: true,
+    safeErrorMessageEnabled: true,
+    rawErrorExposeEnabled: false,
+    lastConnectionAttempt: null,
   };
 
   if (!isEnabled) {
