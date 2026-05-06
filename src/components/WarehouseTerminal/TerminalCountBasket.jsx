@@ -1,9 +1,20 @@
 import { Trash2 } from "lucide-react";
+import { useState } from "react";
 import { buildCountBasketSummary, getBasketDifferenceStatus } from "../../utils/warehouseCountBasketUtils.js";
+import { buildWarehouseCountPreviewReport } from "../../utils/warehouseCountReportUtils.js";
 import { formatNumber } from "../../utils/formatters.js";
 
 export default function TerminalCountBasket({ basket, onClear, onRemove, onUpdateQuantity }) {
+  const [previewReport, setPreviewReport] = useState(null);
   const summary = buildCountBasketSummary(basket);
+
+  function previewCountReport() {
+    setPreviewReport(buildWarehouseCountPreviewReport(basket));
+  }
+
+  function closePreview() {
+    setPreviewReport(null);
+  }
 
   return (
     <section className="table-panel warehouse-terminal-card warehouse-count-basket-panel">
@@ -83,15 +94,47 @@ export default function TerminalCountBasket({ basket, onClear, onRemove, onUpdat
           </table>
         </div>
       )}
+
+      <div className="modal-actions stock-count-actions warehouse-count-report-actions">
+        <button className="primary-action" type="button" onClick={previewCountReport} disabled={basket.length === 0}>
+          Raporu Önizle
+        </button>
+        {previewReport && (
+          <button className="secondary-action" type="button" onClick={closePreview}>
+            Rapor Önizlemesini Kapat
+          </button>
+        )}
+      </div>
+
+      {previewReport && (
+        <section className="warehouse-count-report-preview-panel">
+          <p className="form-note warehouse-terminal-note warehouse-count-basket-warning">
+            Bu rapor önizlemedir. Stokları değiştirmez ve veritabanına kaydedilmez.
+          </p>
+          <div className="stock-count-report-summary warehouse-count-report-summary">
+            <SummaryCard label="Rapor tipi" value={previewReport.documentType} raw />
+            <SummaryCard label="Oluşturulma zamanı" value={formatDateTime(previewReport.createdAt)} raw />
+            <SummaryCard label="Sistem stok toplamı" value={previewReport.summary.totalSystemStock} />
+            <SummaryCard label="Net fark" value={previewReport.summary.netDifference} />
+          </div>
+          <pre className="stock-count-report-preview">{JSON.stringify(previewReport, null, 2)}</pre>
+        </section>
+      )}
     </section>
   );
 }
 
-function SummaryCard({ label, value }) {
+function SummaryCard({ label, raw = false, value }) {
   return (
     <div className="integrity-summary-card">
       <span>{label}</span>
-      <strong>{formatNumber(value)}</strong>
+      <strong>{raw ? value || "-" : formatNumber(value)}</strong>
     </div>
   );
+}
+
+function formatDateTime(value) {
+  if (!value) return "-";
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? "-" : date.toLocaleString("tr-TR");
 }

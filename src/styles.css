@@ -1351,6 +1351,19 @@ button {
   font-weight: 850;
 }
 
+.warehouse-count-report-actions {
+  justify-content: flex-start;
+}
+
+.warehouse-count-report-preview-panel {
+  display: grid;
+  gap: 12px;
+}
+
+.warehouse-count-report-summary {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
 .integrity-summary-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -2812,6 +2825,7 @@ tr:last-child td {
   .warehouse-terminal-detail-grid,
   .warehouse-terminal-scan-form,
   .warehouse-count-summary-grid,
+  .warehouse-count-report-summary,
   .reports-grid,
   .stock-count-history-filters,
   .stock-count-report-summary,
