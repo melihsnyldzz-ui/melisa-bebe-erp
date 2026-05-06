@@ -85,6 +85,8 @@ export default function SystemStatusPanel() {
         </p>
       </div>
 
+      <p className="system-status-test-note">Sol menüdeki mavi nokta, son sürümde yenilik yapılan sayfayı gösterir.</p>
+
       <div className="go-live-checklist">
         <div>
           <h3>Canlıya Hazırlık Kontrol Listesi</h3>

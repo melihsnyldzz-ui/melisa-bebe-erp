@@ -1794,6 +1794,17 @@ button {
   line-height: 1.55;
 }
 
+.system-status-test-note {
+  margin: -2px 0 0;
+  padding: 10px 12px;
+  border: 1px solid #d0ebff;
+  border-radius: 8px;
+  color: #1864ab;
+  background: #e7f5ff;
+  font-size: 0.88rem;
+  font-weight: 750;
+}
+
 .go-live-checklist {
   display: grid;
   gap: 12px;

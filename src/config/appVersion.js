@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.11.3";
-export const APP_STAGE = "Menü yenilik noktası ve test yönlendirmesi";
+export const APP_VERSION = "v1.11.4";
+export const APP_STAGE = "Yenilik noktası açıklama balonu ve test notu";
