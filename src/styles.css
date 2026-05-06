@@ -1917,6 +1917,34 @@ button {
   line-height: 1.55;
 }
 
+.last-backup-visibility-panel {
+  display: grid;
+  gap: 12px;
+  padding: 13px;
+  border: 1px solid #c3fae8;
+  border-radius: 8px;
+  background: #f4fcf8;
+}
+
+.last-backup-visibility-panel h3,
+.last-backup-visibility-panel p {
+  margin: 0;
+}
+
+.last-backup-visibility-panel h3 {
+  color: var(--text);
+  font-size: 0.98rem;
+}
+
+.last-backup-visibility-panel p {
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.last-backup-visibility-note {
+  padding-top: 2px;
+}
+
 .live-mode-summary {
   display: grid;
   gap: 10px;

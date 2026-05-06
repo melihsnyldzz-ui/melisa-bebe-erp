@@ -35,6 +35,23 @@ const restoreValidationItems = [
   "Eski veriye dönüş prosedürü yazılı mı?",
 ];
 
+const backupRequiredCases = [
+  "Gerçek stok işlemi öncesi",
+  "Toplu import öncesi",
+  "Cari bakiye işlemleri öncesi",
+  "Fiş iptal/düzeltme öncesi",
+  "Migration veya veri aktarımı öncesi",
+  "Yeni canlı sürüm öncesi",
+];
+
+const lastBackupCheckNotes = [
+  "Son yedek tarihi biliniyor mu?",
+  "Yedek dosyasının nerede olduğu biliniyor mu?",
+  "Yedek test ortamında açılabiliyor mu?",
+  "Yedek canlı veriyle karıştırılmayacak şekilde adlandırılmış mı?",
+  "Geri dönüş prosedürü hazır mı?",
+];
+
 export default function BackupSafetyChecklist() {
   return (
     <section className="table-panel settings-panel backup-safety-panel">
@@ -71,6 +88,37 @@ export default function BackupSafetyChecklist() {
         Bu panel yalnızca bilgilendirme amaçlıdır. Gerçek yedek alma, geri yükleme, dosya silme veya migration işlemi
         yapmaz.
       </p>
+
+      <div className="last-backup-visibility-panel">
+        <div>
+          <h3>Son Yedek Görünürlüğü</h3>
+          <p>Canlı stok, cari veya fiş işlemlerinden önce son yedeğin tarihi ve güvenilirliği kontrol edilmelidir.</p>
+        </div>
+
+        <div className="backup-safety-grid">
+          <div className="backup-safety-card">
+            <h3>Yedek alınması gereken durumlar</h3>
+            <ul>
+              {backupRequiredCases.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="backup-safety-card">
+            <h3>Son yedek kontrol notları</h3>
+            <ul>
+              {lastBackupCheckNotes.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <p className="last-backup-visibility-note">
+          Bu alan yalnızca bilgilendirme amaçlıdır. Gerçek yedek oluşturmaz veya geri yükleme yapmaz.
+        </p>
+      </div>
 
       <div className="restore-simulation-panel">
         <div>
