@@ -418,6 +418,22 @@ export default function VegaImportPreview() {
       </section>
 
       <section className="vega-transition-gate-panel">
+        <h2>Saha Doğrulama Özeti</h2>
+        <div className="vega-transition-gate-grid">
+          <div className="vega-transition-gate-row"><strong>Yedek alındı mı?</strong><span>Manuel kontrol</span></div>
+          <div className="vega-transition-gate-row"><strong>Read-only kullanıcı hazır mı?</strong><span>Manuel kontrol</span></div>
+          <div className="vega-transition-gate-row"><strong>İlk test sadece stok kartı mı?</strong><span>Manuel kontrol</span></div>
+          <div className="vega-transition-gate-row"><strong>İlk sınır 20 satır mı?</strong><span>Manuel kontrol</span></div>
+          <div className="vega-transition-gate-row"><strong>Yazma/import kapalı mı?</strong><span>Manuel kontrol</span></div>
+          <div className="vega-transition-gate-row"><strong>Sonuç Vega ekranıyla manuel karşılaştırılacak mı?</strong><span>Manuel kontrol</span></div>
+        </div>
+        <div className="vega-transition-gate-note">
+          <strong>Saha doğrulama notu</strong>
+          <span>Bu alan yalnızca saha kontrol rehberidir. Bağlantı kurmaz, test başlatmaz, veri okumaz ve kayıt yazmaz.</span>
+        </div>
+      </section>
+
+      <section className="vega-transition-gate-panel">
         <h2>Read-only Manuel Kontrollü Test Kapısı</h2>
         <p>Bu kapı yalnızca ilk gerçek read-only denemeye geçmeden önce manuel şartların gözden geçirilmesi için hazırlanmıştır. Bu ekrandan bağlantı kurulmaz, SQL/ODBC açılmaz, DB okunmaz, query hazırlanmaz, sorgu çalıştırılmaz ve veri yazılmaz.</p>
         <div className="vega-transition-gate-grid">

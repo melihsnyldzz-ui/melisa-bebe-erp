@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.27.2";
-export const APP_STAGE = "Manuel read-only test kapısı kapanış kontrolü";
+export const APP_VERSION = "v1.27.3";
+export const APP_STAGE = "Read-only öncesi saha doğrulama özeti sadeleştirme";
