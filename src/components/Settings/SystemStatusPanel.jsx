@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.15.4",
+    title: "Ana Panel filtre ve dönem seçimi hazırlığı",
+    area: "Dashboard",
+    description: "Ana Panel’e kompakt dönem seçici eklendi ve ticari analizler seçilen dönem mantığına hazır hale getirildi.",
+  },
+  {
     version: "v1.15.3",
     title: "Ana Panel ticari grafiklerde adet/ciro ayrımı ve boşluk azaltma",
     area: "Dashboard",
@@ -166,12 +172,6 @@ const versionHistoryRows = [
     title: "Sol üst yönetim paneli altında güncel sürüm rozeti",
     area: "Genel Layout / Ayarlar",
     description: "Güncel sürüm bilgisi sol üstte Yönetim paneli yazısının altında açık mavi bilgi rozeti olarak görünür hale getirildi.",
-  },
-  {
-    version: "v1.14.4",
-    title: "Yenilik sistemi için sayfa bazlı test ve görünürlük kontrolü",
-    area: "Ayarlar / Ortak Bileşen",
-    description: "Yenilik paneline görünürlük kontrol listesi eklendi ve Ayarlar sayfası releaseHighlightsByPage settings yapısından beslenecek hale getirildi.",
   },
 ];
 

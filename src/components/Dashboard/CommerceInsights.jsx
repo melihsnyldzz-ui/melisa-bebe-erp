@@ -44,7 +44,7 @@ function HorizontalBarCard({ title, icon: Icon, data, dataKey, valueLabel, empty
       )}
       {data.length > 0 && (
         <div className="dashboard-chart-summary">
-          {data.slice(0, 3).map((item) => (
+          {data.slice(0, 2).map((item) => (
             <span key={`${item.name}-${item.quantity}-${item.revenue}`}>
               {item.name}: {formatNumber(item.quantity)} adet{item.revenue !== undefined ? ` · ${formatCurrency(item.revenue)}` : ""}
             </span>
@@ -62,7 +62,7 @@ export default function CommerceInsights({ data }) {
         <div className="chart-panel dashboard-chart-card">
           <div className="section-heading">
             <BarChart3 size={18} />
-            <h2>Bu Ay Satış Trendi</h2>
+            <h2>Satış Trendi</h2>
           </div>
           <div className="dashboard-chart-wrap">
             <ResponsiveContainer width="100%" height="100%">

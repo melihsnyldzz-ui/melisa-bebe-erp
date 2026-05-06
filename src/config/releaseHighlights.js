@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.15.3";
+export const currentReleaseVersion = "v1.15.4";
 
-export const currentReleaseTitle = "Ana Panel ticari grafiklerde adet/ciro ayrımı ve boşluk azaltma";
+export const currentReleaseTitle = "Ana Panel filtre ve dönem seçimi hazırlığı";
 
 export const updatedSectionIds = ["latest-version-history", "project-maturity", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Müşteri ve ürün grafiklerinde adet/ciro bilgisi daha anlaşılır hale getirildi",
-  "Dashboard grafik ve kart boşlukları azaltıldı",
-  "Ana Panel tek ekrana daha yakın kompakt görünüme getirildi",
+  "Ana Panel’e kompakt dönem seçici eklendi",
+  "Dashboard analizleri seçilen dönem mantığına hazırlandı",
+  "Grafik altı özetler daha kompakt hale getirildi",
 ];
 
 export const releaseJumpLinks = [

@@ -1,5 +1,5 @@
 import { AlertTriangle, Banknote, Boxes, ClipboardList, ReceiptText, ShoppingBag } from "lucide-react";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import CommerceInsights from "../components/Dashboard/CommerceInsights.jsx";
 import KpiCard from "../components/Dashboard/KpiCard.jsx";
 import { APP_STAGE, APP_VERSION } from "../config/appVersion.js";
@@ -7,9 +7,17 @@ import { useErpData } from "../context/ErpDataContext.jsx";
 import { getTodayISO } from "../utils/dateUtils.js";
 import { formatCurrency, formatNumber } from "../utils/formatters.js";
 
+const dashboardPeriodOptions = [
+  { id: "today", label: "Bugün" },
+  { id: "month", label: "Bu Ay" },
+  { id: "last7", label: "Son 7 Gün" },
+  { id: "last30", label: "Son 30 Gün" },
+];
+
 export default function Dashboard() {
   const erpData = useErpData();
-  const dashboardData = useMemo(() => buildDashboardData(erpData), [erpData]);
+  const [selectedPeriod, setSelectedPeriod] = useState("month");
+  const dashboardData = useMemo(() => buildDashboardData(erpData, selectedPeriod), [erpData, selectedPeriod]);
 
   return (
     <>
@@ -28,6 +36,20 @@ export default function Dashboard() {
         </button>
       </section>
 
+      <div className="dashboard-period-selector" aria-label="Ana Panel dönem seçimi">
+        {dashboardPeriodOptions.map((option) => (
+          <button
+            aria-pressed={selectedPeriod === option.id}
+            className={selectedPeriod === option.id ? "active" : ""}
+            key={option.id}
+            onClick={() => setSelectedPeriod(option.id)}
+            type="button"
+          >
+            {option.label}
+          </button>
+        ))}
+      </div>
+
       <section className="kpi-grid dashboard-compact-kpis" id="dashboard-daily-operation">
         {dashboardData.kpis.map((item, index) => (
           <KpiCard item={item} index={index} key={item.label} />
@@ -39,44 +61,46 @@ export default function Dashboard() {
   );
 }
 
-function buildDashboardData({ collections, customers, products, purchaseSlips, salesSlips }) {
+function buildDashboardData({ collections, customers, products, purchaseSlips, salesSlips }, selectedPeriod) {
   const today = getTodayISO();
+  const periodRange = getPeriodRange(selectedPeriod, today);
   const activeSalesSlips = salesSlips.filter(isActiveRecord);
   const activePurchaseSlips = purchaseSlips.filter(isActiveRecord);
   const activeCollections = collections.filter(isActiveRecord);
   const criticalProducts = products.filter((product) => toNumber(product.stockQuantity) <= toNumber(product.criticalStockLevel));
   const monthKey = today.slice(0, 7);
-  const todaySalesSlips = activeSalesSlips.filter((slip) => getRecordDate(slip) === today);
   const monthlySalesSlips = activeSalesSlips.filter((slip) => getRecordDate(slip).startsWith(monthKey));
   const monthlyCollections = activeCollections.filter((collection) => getRecordDate(collection).startsWith(monthKey));
-  const todaySales = sumByDate(activeSalesSlips, today, "grandTotal");
-  const todayCollections = sumByDate(activeCollections, today, "amount");
+  const periodSalesSlips = activeSalesSlips.filter((slip) => isDateInRange(getRecordDate(slip), periodRange));
+  const periodCollections = activeCollections.filter((collection) => isDateInRange(getRecordDate(collection), periodRange));
+  const periodSales = sumBy(periodSalesSlips, "grandTotal");
+  const periodCollectionsTotal = sumBy(periodCollections, "amount");
   const monthlySalesTotal = sumBy(monthlySalesSlips, "grandTotal");
   const monthlyCollectionsTotal = sumBy(monthlyCollections, "amount");
-  const todaySoldQuantity = sumSlipQuantity(todaySalesSlips);
+  const periodSoldQuantity = sumSlipQuantity(periodSalesSlips);
   const monthlySoldQuantity = sumSlipQuantity(monthlySalesSlips);
 
   return {
     kpis: [
-      buildKpi("Bugünkü fiş", todaySalesSlips.length, monthlySalesSlips.length, "count", ReceiptText, "dark"),
-      buildKpi("Çıkan adet", todaySoldQuantity, monthlySoldQuantity, "quantity", Boxes, "green"),
-      buildKpi("Satış", todaySales, monthlySalesTotal, "currency", ShoppingBag, "red"),
-      buildKpi("Tahsilat", todayCollections, monthlyCollectionsTotal, "currency", Banknote, "amber"),
+      buildKpi("Fiş", periodSalesSlips.length, monthlySalesSlips.length, "count", ReceiptText, "dark"),
+      buildKpi("Çıkan adet", periodSoldQuantity, monthlySoldQuantity, "quantity", Boxes, "green"),
+      buildKpi("Satış", periodSales, monthlySalesTotal, "currency", ShoppingBag, "red"),
+      buildKpi("Tahsilat", periodCollectionsTotal, monthlyCollectionsTotal, "currency", Banknote, "amber"),
     ],
     commerceInsights: {
-      monthlySalesTrend: buildCurrentMonthSalesTrend(monthlySalesSlips, today),
-      monthlyTopProducts: buildMonthlyTopProducts(monthlySalesSlips),
-      topCustomersByRevenue: buildTopCustomers(monthlySalesSlips),
-      categoryAgeDistribution: buildCategoryAgeDistribution(monthlySalesSlips, products),
+      monthlySalesTrend: buildSalesTrend(periodSalesSlips, periodRange),
+      monthlyTopProducts: buildMonthlyTopProducts(periodSalesSlips),
+      topCustomersByRevenue: buildTopCustomers(periodSalesSlips),
+      categoryAgeDistribution: buildCategoryAgeDistribution(periodSalesSlips, products),
       riskRows: buildRiskRows({ criticalProducts, customers }),
       latestSlips: buildLatestSlipRows({ activePurchaseSlips, activeSalesSlips }),
     },
   };
 }
 
-function buildKpi(label, todayValue, monthValue, type, icon, tone) {
+function buildKpi(label, currentValueRaw, monthValue, type, icon, tone) {
   const monthTotal = Math.max(toNumber(monthValue), 0);
-  const currentValue = Math.max(toNumber(todayValue), 0);
+  const currentValue = Math.max(toNumber(currentValueRaw), 0);
   const percent = monthTotal > 0 ? Math.min((currentValue / monthTotal) * 100, 100) : 0;
 
   return {
@@ -95,19 +119,13 @@ function formatInsightValue(value, type) {
   return formatNumber(value);
 }
 
-function buildCurrentMonthSalesTrend(salesSlips, today) {
-  const dayCount = Number(today.slice(8, 10));
-  const monthKey = today.slice(0, 7);
+function buildSalesTrend(salesSlips, range) {
+  const dates = getDateKeysInRange(range);
 
-  return Array.from({ length: dayCount }, (_, index) => {
-    const dayNumber = index + 1;
-    const date = `${monthKey}-${String(dayNumber).padStart(2, "0")}`;
-
-    return {
-      day: String(dayNumber),
-      value: sumByDate(salesSlips, date, "grandTotal"),
-    };
-  });
+  return dates.map((date) => ({
+    day: formatTrendLabel(date),
+    value: sumByDate(salesSlips, date, "grandTotal"),
+  }));
 }
 
 function buildMonthlyTopProducts(salesSlips) {
@@ -260,6 +278,55 @@ function shortenLabel(value, maxLength = 24) {
 
 function sumByDate(items, date, key) {
   return items.filter((item) => getRecordDate(item) === date).reduce((total, item) => total + toNumber(item[key]), 0);
+}
+
+function getPeriodRange(periodId, todayISO) {
+  const today = parseISODate(todayISO);
+  const end = todayISO;
+
+  if (periodId === "today") return { end, start: todayISO };
+  if (periodId === "last7") return { end, start: toISODate(addDays(today, -6)) };
+  if (periodId === "last30") return { end, start: toISODate(addDays(today, -29)) };
+
+  return { end, start: `${todayISO.slice(0, 7)}-01` };
+}
+
+function getDateKeysInRange({ start, end }) {
+  const startDate = parseISODate(start);
+  const endDate = parseISODate(end);
+  const dates = [];
+
+  for (let cursor = startDate; cursor <= endDate; cursor = addDays(cursor, 1)) {
+    dates.push(toISODate(cursor));
+  }
+
+  return dates;
+}
+
+function isDateInRange(date, { start, end }) {
+  return Boolean(date) && date >= start && date <= end;
+}
+
+function formatTrendLabel(date) {
+  return String(Number(date.slice(8, 10)));
+}
+
+function parseISODate(date) {
+  const [year, month, day] = date.split("-").map(Number);
+  return new Date(year, month - 1, day);
+}
+
+function addDays(date, days) {
+  const nextDate = new Date(date);
+  nextDate.setDate(nextDate.getDate() + days);
+  return nextDate;
+}
+
+function toISODate(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
 }
 
 function isActiveRecord(record) {

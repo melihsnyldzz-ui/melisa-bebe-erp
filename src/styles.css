@@ -333,6 +333,31 @@ button {
   font-size: 0.88rem;
 }
 
+.dashboard-period-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: -2px 0 7px;
+}
+
+.dashboard-period-selector button {
+  min-height: 30px;
+  padding: 0 11px;
+  border: 1px solid rgba(24, 100, 171, 0.16);
+  border-radius: 999px;
+  background: #f7fbff;
+  color: #1864ab;
+  font-size: 0.78rem;
+  font-weight: 850;
+}
+
+.dashboard-period-selector button:hover,
+.dashboard-period-selector button.active {
+  border-color: rgba(24, 100, 171, 0.34);
+  background: #eaf4ff;
+  color: #0f4c81;
+}
+
 .page-title p {
   margin: 0 0 8px;
   color: var(--red);
@@ -423,8 +448,8 @@ button {
 
 .dashboard-commerce-insights {
   display: grid;
-  gap: 7px;
-  margin-top: 7px;
+  gap: 6px;
+  margin-top: 6px;
 }
 
 .dashboard-mini-bar {
@@ -446,23 +471,23 @@ button {
 .dashboard-middle-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.9fr);
-  gap: 8px;
+  gap: 7px;
 }
 
 .dashboard-bottom-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
+  gap: 7px;
 }
 
 .dashboard-chart-card,
 .dashboard-list-card {
-  min-height: 214px;
+  min-height: 204px;
 }
 
 .dashboard-chart-wrap {
-  height: 196px;
-  margin-top: 7px;
+  height: 186px;
+  margin-top: 6px;
 }
 
 .dashboard-empty-note {
@@ -478,8 +503,8 @@ button {
 .dashboard-chart-summary {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px 8px;
-  margin-top: 7px;
+  gap: 4px 7px;
+  margin-top: 5px;
 }
 
 .dashboard-chart-summary span {
