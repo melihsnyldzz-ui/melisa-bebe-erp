@@ -1,5 +1,11 @@
 import { ShieldCheck } from "lucide-react";
 import { APP_STAGE, APP_VERSION } from "../../config/appVersion.js";
+import {
+  currentReleaseVersion,
+  releaseHighlightItems,
+  releaseJumpLinks,
+  updatedSectionIds,
+} from "../../config/releaseHighlights.js";
 
 const statusRows = [
   { label: "Uygulama sürümü", value: APP_VERSION },
@@ -26,12 +32,6 @@ const goLiveMissingItems = [
   "Vega'dan bağımsız rapor doğrulama",
   "Yetki ve kullanıcı rol testleri",
   "El terminaliyle gerçek barkod/stok sayım testi",
-];
-
-const releaseHighlightItems = [
-  "Sayfa içi yenilik vurgusu eklendi",
-  "Güncellenen alanlara hızlı geçiş sistemi hazırlandı",
-  "Yeni veya güncellenen bölümlerde YENİ etiketi gösterilmeye başlandı",
 ];
 
 const goLiveTestPlanSteps = [
@@ -124,6 +124,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.14.2",
+    title: "Yenilik etiketlerini sayfa bazlı merkezi yönetme sistemi",
+    area: "Ayarlar",
+    description: "Sayfa içi yenilik paneli, YENİ etiketleri ve hızlı geçiş bilgileri merkezi konfigürasyonla yönetilebilir hale getirildi.",
+  },
+  {
     version: "v1.14.1",
     title: "Sayfa içi yenilik vurgusu, YENİ etiketi ve hızlı geçiş paneli",
     area: "Ayarlar",
@@ -165,12 +171,6 @@ const versionHistoryRows = [
     area: "Ayarlar",
     description: "Son Sürüm Geçmişi v1.13.x kayıtlarıyla güncellendi ve yedek test kontrol geçmişi görünür hale getirildi.",
   },
-  {
-    version: "v1.13.4",
-    title: "Yedek test sonucu değerlendirme ve risk özeti",
-    area: "Ayarlar",
-    description: "Yedek/geri yükleme hazırlık seviyesi, canlı sistem uyarısı ve risk özeti eklendi.",
-  },
 ];
 
 const liveTestGuideSteps = [
@@ -185,6 +185,23 @@ const liveTestGuideSteps = [
 ];
 
 const testFeedbackTemplate = ["Ekran:", "Yaptığım işlem:", "Beklenen sonuç:", "Gördüğüm hata:", "Tekrar oluyor mu:", "Not / ekran görüntüsü:"];
+
+function sectionHighlightProps(sectionId) {
+  const isUpdated = updatedSectionIds.includes(sectionId);
+
+  return {
+    className: isUpdated ? "section-updated-highlight" : undefined,
+    id: sectionId,
+  };
+}
+
+function NewReleaseBadge({ sectionId }) {
+  if (!updatedSectionIds.includes(sectionId)) {
+    return null;
+  }
+
+  return <span className="new-release-badge">YENİ · {currentReleaseVersion}</span>;
+}
 
 export default function SystemStatusPanel() {
   return (
@@ -215,9 +232,11 @@ export default function SystemStatusPanel() {
         </ul>
 
         <nav className="release-jump-links" aria-label="Bu sürümde yenilenen alanlara hızlı geçiş">
-          <a href="#latest-version-history">Son Sürüm Geçmişi'ne git</a>
-          <a href="#project-maturity">Proje Olgunluk Bilgisi'ne git</a>
-          <a href="#live-test-center">Canlı Test Merkezi'ne git</a>
+          {releaseJumpLinks.map((link) => (
+            <a href={`#${link.id}`} key={link.id}>
+              {link.label}
+            </a>
+          ))}
         </nav>
       </div>
 
@@ -249,10 +268,10 @@ export default function SystemStatusPanel() {
         </p>
       </div>
 
-      <div className="version-history-panel section-updated-highlight" id="latest-version-history">
+      <div className="version-history-panel" {...sectionHighlightProps("latest-version-history")}>
         <div>
           <h3>
-            Son Sürüm Geçmişi <span className="new-release-badge">YENİ · v1.14.1</span>
+            Son Sürüm Geçmişi <NewReleaseBadge sectionId="latest-version-history" />
           </h3>
           <p>
             Bu alan, son sürümlerde hangi bölümde ne değiştiğini gösterir. Sürüm numarası değiştiğinde bu liste de
@@ -284,9 +303,9 @@ export default function SystemStatusPanel() {
         ))}
       </div>
 
-      <div className="system-status-maturity section-updated-highlight" id="project-maturity">
+      <div className="system-status-maturity" {...sectionHighlightProps("project-maturity")}>
         <h3>
-          Proje Olgunluk Bilgisi <span className="new-release-badge">YENİ · v1.14.1</span>
+          Proje Olgunluk Bilgisi <NewReleaseBadge sectionId="project-maturity" />
         </h3>
         <div className="system-status-grid">
           {maturityRows.map((row) => (
@@ -311,10 +330,10 @@ export default function SystemStatusPanel() {
         </div>
       </div>
 
-      <div className="live-test-center-panel section-updated-highlight" id="live-test-center">
+      <div className="live-test-center-panel" {...sectionHighlightProps("live-test-center")}>
         <div>
           <h3>
-            Canlı Test Merkezi <span className="new-release-badge">YENİ · v1.14.1</span>
+            Canlı Test Merkezi <NewReleaseBadge sectionId="live-test-center" />
           </h3>
           <p>Canlı test, personel denemesi ve Vega karşılaştırma adımlarını tek merkezden takip edin.</p>
         </div>
