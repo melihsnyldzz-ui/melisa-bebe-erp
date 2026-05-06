@@ -1390,6 +1390,68 @@ button {
   line-height: 1.35;
 }
 
+.warehouse-staff-trial-panel {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.warehouse-staff-trial-description,
+.warehouse-staff-trial-note {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.warehouse-staff-trial-note {
+  width: fit-content;
+  padding: 9px 11px;
+  border: 1px solid #d0ebff;
+  border-radius: 8px;
+  color: #1864ab;
+  background: #e7f5ff;
+  font-weight: 850;
+}
+
+.warehouse-staff-trial-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.warehouse-staff-trial-card {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.warehouse-staff-trial-card.allowed {
+  border-color: #c3fae8;
+  background: #e8f7f1;
+}
+
+.warehouse-staff-trial-card.restricted {
+  border-color: #ffe1a3;
+  background: #fff8e6;
+}
+
+.warehouse-staff-trial-card h3 {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.98rem;
+}
+
+.warehouse-staff-trial-card ul {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 19px;
+  color: var(--text);
+  line-height: 1.45;
+}
+
 .warehouse-terminal-fast-scan-panel {
   display: grid;
   gap: 14px;
@@ -3370,6 +3432,7 @@ tr:last-child td {
   .warehouse-terminal-detail-grid,
   .warehouse-terminal-scan-form,
   .warehouse-last-scan-content,
+  .warehouse-staff-trial-grid,
   .warehouse-terminal-fast-scan-list,
   .warehouse-terminal-test-grid,
   .warehouse-count-summary-grid,

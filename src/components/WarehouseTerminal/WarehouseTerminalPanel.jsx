@@ -21,6 +21,7 @@ import TerminalFastScanNotes from "./TerminalFastScanNotes.jsx";
 import TerminalLastScanSummary from "./TerminalLastScanSummary.jsx";
 import TerminalProductCard from "./TerminalProductCard.jsx";
 import TerminalScanHistory from "./TerminalScanHistory.jsx";
+import TerminalStaffTrialMode from "./TerminalStaffTrialMode.jsx";
 import TerminalTestScenarios from "./TerminalTestScenarios.jsx";
 
 export default function WarehouseTerminalPanel({ products = [], stockMovements = [] }) {
@@ -177,6 +178,7 @@ export default function WarehouseTerminalPanel({ products = [], stockMovements =
       </section>
 
       <TerminalLastScanSummary summary={lastScanSummary} />
+      <TerminalStaffTrialMode />
       <TerminalFastScanNotes />
       <TerminalTestScenarios />
 
