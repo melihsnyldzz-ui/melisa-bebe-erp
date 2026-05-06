@@ -363,6 +363,47 @@ export default function VegaImportPreview() {
           <span>Bu panel bilgi toplamaz. Bağlantı testi ve ilk okuma ayrı sürümde ele alınacaktır.</span>
         </div>
       </section>
+
+      <section className="vega-transition-gate-panel">
+        <h2>Read-only Kullanıcı Yetki Rehberi</h2>
+        <p>İlk gerçek denemede kullanılacak kullanıcı minimum yetkili ve sadece okuma amaçlı olmalıdır. Yazma, silme, güncelleme veya import yetkisi olmamalıdır.</p>
+        <div className="vega-transition-gate-grid">
+          <div className="vega-transition-gate-row"><strong>SELECT dışı yetki</strong><span>Verilmemeli</span></div>
+          <div className="vega-transition-gate-row"><strong>INSERT / UPDATE / DELETE</strong><span>Olmamalı</span></div>
+          <div className="vega-transition-gate-row"><strong>DROP / ALTER</strong><span>Olmamalı</span></div>
+          <div className="vega-transition-gate-row"><strong>Import yetkisi</strong><span>Olmamalı</span></div>
+          <div className="vega-transition-gate-row"><strong>ERP’ye yazma yetkisi</strong><span>Olmamalı</span></div>
+          <div className="vega-transition-gate-row"><strong>Yetki kontrolü</strong><span>Manuel yapılmalı</span></div>
+        </div>
+      </section>
+
+      <section className="vega-transition-gate-panel">
+        <h2>İlk Sorgu Kapsamı ve Sınırları</h2>
+        <p>İlk gerçek read-only deneme yalnızca sınırlı stok kartı okuma amacıyla planlanmalıdır. Cari, fiş, hareket, ödeme, tahsilat, stok mutasyonu ve import kapsam dışıdır.</p>
+        <div className="vega-transition-gate-grid">
+          <div className="vega-transition-gate-row"><strong>Kapsam</strong><span>Sadece stok kartları</span></div>
+          <div className="vega-transition-gate-row"><strong>Satır sınırı</strong><span>20</span></div>
+          <div className="vega-transition-gate-row"><strong>Zaman aşımı</strong><span>3000 ms hedef</span></div>
+          <div className="vega-transition-gate-row"><strong>Retry</strong><span>Kapalı</span></div>
+          <div className="vega-transition-gate-row"><strong>Ham hata</strong><span>Kullanıcıya gösterilmeyecek</span></div>
+          <div className="vega-transition-gate-row"><strong>Sonuç</strong><span>Vega ekranıyla manuel karşılaştırılacak</span></div>
+          <div className="vega-transition-gate-row"><strong>ERP’ye kayıt</strong><span>Yok</span></div>
+          <div className="vega-transition-gate-row"><strong>Import</strong><span>Yok</span></div>
+        </div>
+      </section>
+
+      <section className="vega-transition-gate-panel">
+        <h2>Operatör/Saha Hazırlık Özeti</h2>
+        <p>İlk denemeden önce operatör ve saha tarafında manuel hazırlık yapılmalıdır. Bu panel veri almaz, onay toplamaz ve işlem başlatmaz.</p>
+        <div className="vega-transition-gate-grid">
+          <div className="vega-transition-gate-row"><strong>Manuel yedek alındı mı?</strong><span>Manuel doğrulanacak</span></div>
+          <div className="vega-transition-gate-row"><strong>Testi yapacak kişi belli mi?</strong><span>Manuel doğrulanacak</span></div>
+          <div className="vega-transition-gate-row"><strong>Vega ekranında karşılaştırılacak stok listesi hazır mı?</strong><span>Manuel hazırlanacak</span></div>
+          <div className="vega-transition-gate-row"><strong>Read-only kullanıcı yetkisi doğrulandı mı?</strong><span>Manuel doğrulanacak</span></div>
+          <div className="vega-transition-gate-row"><strong>İlk testin sadece 20 stok kartı olduğu personele söylendi mi?</strong><span>Manuel aktarılacak</span></div>
+          <div className="vega-transition-gate-row"><strong>Hata görülürse ekran görüntüsü ve not alınacağı bildirildi mi?</strong><span>Manuel aktarılacak</span></div>
+        </div>
+      </section>
     </>
   );
 }

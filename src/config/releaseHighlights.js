@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.26.0";
+export const currentReleaseVersion = "v1.26.1";
 
-export const currentReleaseTitle = "Vega read-only bağlantı bilgisi manuel hazırlık ekranı";
+export const currentReleaseTitle = "Read-only kullanıcı yetki rehberi ve ilk sorgu kapsam sınırı genişletme";
 
 export const updatedSectionIds = ["latest-version-history", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Read-only deneme için bağlantı bilgisi manuel hazırlık paneli eklendi",
-  "SQL sunucu, veritabanı adı, kullanıcı tipi ve ilk kapsam bilgileri statik rehber olarak listelendi",
-  "Bağlantı testi ve ilk okumanın ayrı sürümde ele alınacağı netleştirildi",
+  "Read-only kullanıcı yetki rehberi eklendi",
+  "İlk sorgu kapsamı ve 20 satır sınırı ayrı panelde netleştirildi",
+  "Operatör/saha hazırlık özeti gerçek bağlantı eklenmeden tamamlandı",
 ];
 
 export const releaseJumpLinks = [

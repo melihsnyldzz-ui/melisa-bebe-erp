@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.26.0",
+    title: "Vega read-only bağlantı bilgisi manuel hazırlık ekranı",
+    area: "Vega / Import Önizleme",
+    description: "Read-only deneme için bağlantı bilgisi manuel hazırlık paneli eklendi; SQL sunucu, veritabanı adı, kullanıcı tipi ve ilk kapsam bilgileri statik rehber olarak listelendi; bağlantı testi ve ilk okumanın ayrı sürümde ele alınacağı netleştirildi.",
+  },
+  {
     version: "v1.25.1",
     title: "Vega read-only final karar ekranı kapanış özeti ve sadeleştirme",
     area: "Vega / Import Önizleme",
