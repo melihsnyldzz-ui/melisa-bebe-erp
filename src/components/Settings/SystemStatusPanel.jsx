@@ -28,6 +28,24 @@ const goLiveMissingItems = [
   "El terminaliyle gerçek barkod/stok sayım testi",
 ];
 
+const goLiveTestPlanSteps = [
+  "1. Gün: Vega ürün/stok verisiyle ekran karşılaştırması",
+  "2. Gün: El terminali barkod okutma ve stok sayım denemesi",
+  "3. Gün: Satış/alış fişi ekranlarının sadece görüntüleme testi",
+  "4. Gün: Rapor ekranlarının Vega çıktılarıyla karşılaştırılması",
+  "5. Gün: Personel deneme kullanımı ve hata notlarının toplanması",
+];
+
+const vegaComparisonChecklist = [
+  "Ürün sayısı Vega ile aynı mı?",
+  "Barkodlar doğru eşleşiyor mu?",
+  "Stok toplamları Vega ile tutarlı mı?",
+  "Cari kart sayısı doğru mu?",
+  "Alış/satış fişleri görüntülenebiliyor mu?",
+  "Rapor toplamları Vega ile karşılaştırıldı mı?",
+  "Hatalı veya eksik kayıtlar not alındı mı?",
+];
+
 const goLiveChecklistGroups = [
   {
     title: "Hazır",
@@ -54,6 +72,12 @@ const goLiveChecklistGroups = [
 ];
 
 const versionHistoryRows = [
+  {
+    version: "v1.13.7",
+    title: "Canlıya geçiş test planı ve Vega karşılaştırma kontrol listesi",
+    area: "Ayarlar",
+    description: "Canlıya geçiş öncesi 5 günlük test planı ve Vega karşılaştırma kontrol listesi eklendi.",
+  },
   {
     version: "v1.13.6",
     title: "Proje olgunluk oranlarını güncelleme ve canlıya geçiş eksik listesi",
@@ -95,12 +119,6 @@ const versionHistoryRows = [
     title: "Yedekleme güvenlik kontrolü",
     area: "Ayarlar",
     description: "Canlı kullanıma geçmeden önce yedekleme güvenlik kontrol listesi eklendi.",
-  },
-  {
-    version: "v1.11.9",
-    title: "Canlı test hata notu ve geri bildirim alanı",
-    area: "Ayarlar",
-    description: "Canlı testte hata görülürse not alınacak bilgiler için sade bir şablon eklendi.",
   },
 ];
 
@@ -246,6 +264,33 @@ export default function SystemStatusPanel() {
           <p>
             Bu liste yalnızca canlıya geçiş hazırlığını takip etmek için hazırlanmıştır. Gerçek veri işlemi veya sistem
             değişikliği yapmaz.
+          </p>
+        </div>
+
+        <div className="go-live-test-plan-panel">
+          <div>
+            <h3>Canlıya Geçiş Test Planı</h3>
+            <p>Canlı kullanım öncesinde manuel kontrol sırasını 5 günlük sade bir plan olarak takip edin.</p>
+          </div>
+
+          <ol>
+            {goLiveTestPlanSteps.map((step) => (
+              <li key={step}>{step}</li>
+            ))}
+          </ol>
+
+          <div className="vega-comparison-panel">
+            <h3>Vega Karşılaştırma Kontrol Listesi</h3>
+            <ul>
+              {vegaComparisonChecklist.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+
+          <p className="go-live-test-plan-note">
+            Bu test planı yalnızca manuel kontrol rehberidir. Vega'ya bağlanmaz, veri çekmez, veri yazmaz ve
+            karşılaştırmayı otomatik yapmaz.
           </p>
         </div>
       </div>
