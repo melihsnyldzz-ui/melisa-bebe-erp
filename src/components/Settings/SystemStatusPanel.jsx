@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.17.4",
+    title: "Dashboard mobil ve kompakt görünüm son dengeleme",
+    area: "Dashboard",
+    description: "Dashboard rapor önizlemesi, risk satırları, döviz ve cari detay alanları küçük ekranda taşmadan okunacak şekilde kompakt görünümde dengelendi.",
+  },
+  {
     version: "v1.17.3",
     title: "Gün sonu raporu önizlemesini patron diline çekme",
     area: "Dashboard",

@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.17.3";
+export const currentReleaseVersion = "v1.17.4";
 
-export const currentReleaseTitle = "Gün sonu raporu önizlemesini patron diline çekme";
+export const currentReleaseTitle = "Dashboard mobil ve kompakt görünüm son dengeleme";
 
 export const updatedSectionIds = ["latest-version-history", "project-maturity", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Gün Sonu Raporu Önizleme satırları patron diline çekildi",
-  "Satış, tahsilat, müşteri ve ürün alanları daha karar odaklı adlandırıldı",
-  "Risk notu ve Patron Notu rapor içinde daha okunur hale getirildi",
+  "Dashboard rapor önizlemesi mobilde iki kolona dengelendi",
+  "Risk ve karar notu metinlerinin küçük ekranda taşmadan okunması güçlendirildi",
+  "Döviz, cari detay ve ticari özet kartlarının kompakt görünümü korundu",
 ];
 
 export const releaseJumpLinks = [

@@ -4746,6 +4746,10 @@ tr:last-child td {
   .dashboard-currency-detail-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+
+  .dashboard-report-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 820px) {
@@ -4881,6 +4885,12 @@ tr:last-child td {
     grid-template-columns: 1fr;
   }
 
+  .dashboard-report-preview.chart-panel,
+  .dashboard-list-card.chart-panel,
+  .dashboard-chart-card.chart-panel {
+    overflow-x: visible;
+  }
+
   .system-status-grid {
     grid-template-columns: 1fr;
   }
@@ -4899,6 +4909,19 @@ tr:last-child td {
   .dashboard-decision-note span,
   .dashboard-currency-note,
   .dashboard-card-comment {
+    white-space: normal;
+  }
+
+  .dashboard-report-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dashboard-report-grid div {
+    padding: 6px;
+  }
+
+  .dashboard-report-grid strong,
+  .dashboard-compact-row em {
     white-space: normal;
   }
 
