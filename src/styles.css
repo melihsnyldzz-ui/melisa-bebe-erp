@@ -3754,7 +3754,8 @@ button {
   font-weight: 900;
 }
 
-.vega-technical-prep-panel {
+.vega-technical-prep-panel,
+.vega-row-limit-safety-panel {
   display: grid;
   gap: 8px;
   padding: 10px;
@@ -3764,29 +3765,35 @@ button {
 }
 
 .vega-technical-prep-panel h2,
-.vega-technical-prep-panel p {
+.vega-technical-prep-panel p,
+.vega-row-limit-safety-panel h2,
+.vega-row-limit-safety-panel p {
   margin: 0;
 }
 
-.vega-technical-prep-panel h2 {
+.vega-technical-prep-panel h2,
+.vega-row-limit-safety-panel h2 {
   color: #1e3a8a;
   font-size: 0.96rem;
 }
 
-.vega-technical-prep-panel p {
+.vega-technical-prep-panel p,
+.vega-row-limit-safety-panel p {
   margin-top: 3px;
   color: #1e40af;
   font-size: 0.78rem;
   font-weight: 800;
 }
 
-.vega-technical-prep-grid {
+.vega-technical-prep-grid,
+.vega-row-limit-safety-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 6px;
 }
 
-.vega-technical-prep-row {
+.vega-technical-prep-row,
+.vega-row-limit-safety-row {
   min-width: 0;
   padding: 7px 8px;
   border: 1px solid rgba(30, 64, 175, 0.12);
@@ -3795,19 +3802,23 @@ button {
 }
 
 .vega-technical-prep-row span,
-.vega-technical-prep-row strong {
+.vega-technical-prep-row strong,
+.vega-row-limit-safety-row span,
+.vega-row-limit-safety-row strong {
   display: block;
   min-width: 0;
   overflow-wrap: anywhere;
 }
 
-.vega-technical-prep-row span {
+.vega-technical-prep-row span,
+.vega-row-limit-safety-row span {
   color: #1d4ed8;
   font-size: 0.68rem;
   font-weight: 900;
 }
 
-.vega-technical-prep-row strong {
+.vega-technical-prep-row strong,
+.vega-row-limit-safety-row strong {
   margin-top: 3px;
   color: var(--anthracite);
   font-size: 0.78rem;
@@ -6173,16 +6184,19 @@ tr:last-child td {
     padding: 7px;
   }
 
-  .vega-technical-prep-panel {
+  .vega-technical-prep-panel,
+  .vega-row-limit-safety-panel {
     padding: 10px;
   }
 
-  .vega-technical-prep-grid {
+  .vega-technical-prep-grid,
+  .vega-row-limit-safety-grid {
     grid-template-columns: 1fr;
     gap: 6px;
   }
 
-  .vega-technical-prep-row {
+  .vega-technical-prep-row,
+  .vega-row-limit-safety-row {
     padding: 7px;
   }
 

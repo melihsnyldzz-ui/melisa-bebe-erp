@@ -126,6 +126,12 @@ const goLiveChecklistGroups = [
 
 const versionHistoryRows = [
   {
+    version: "v1.20.1",
+    title: "Vega read-only satır limiti ve hata güvenliği hazırlığı",
+    area: "Vega / Read-only",
+    description: "İlk Vega read-only denemesi için gerçek bağlantı açılmadan 20 satır limiti, timeout hazırlığı, retry kapalı, fail-closed açık, hata baskısı koruması ve sadece stok kartları okuma kapsamı pasif metadata ve UI düzeyinde görünür hale getirildi.",
+  },
+  {
     version: "v1.20.0",
     title: "Vega read-only teknik hazırlık başlangıcı",
     area: "Vega / Read-only",

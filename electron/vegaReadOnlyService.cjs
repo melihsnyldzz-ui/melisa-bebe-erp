@@ -14,6 +14,12 @@ function listVegaStockReadOnly() {
     databaseReadEnabled: false,
     maxRowsLimitPrepared: false,
     approvalRequired: true,
+    maxRowsLimit: 20,
+    timeoutMsPrepared: false,
+    retryEnabled: false,
+    failClosedEnabled: true,
+    errorPressureProtection: true,
+    stockReadScope: "stock-cards-only",
   };
 
   if (!isEnabled) {

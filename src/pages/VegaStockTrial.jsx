@@ -50,6 +50,12 @@ const defaultConnectionMetadata = {
   databaseReadEnabled: false,
   maxRowsLimitPrepared: false,
   approvalRequired: true,
+  maxRowsLimit: 20,
+  timeoutMsPrepared: false,
+  retryEnabled: false,
+  failClosedEnabled: true,
+  errorPressureProtection: true,
+  stockReadScope: "stock-cards-only",
 };
 
 const columnMappings = [
@@ -222,6 +228,17 @@ export default function VegaStockTrial() {
     { label: "Satır limiti hazırlığı", value: connectionMetadata.maxRowsLimitPrepared ? "Hazır" : "Bekliyor" },
     { label: "Manuel onay", value: connectionMetadata.approvalRequired ? "Gerekli" : "Gerekli değil" },
   ];
+  const rowLimitSafetyRows = [
+    { label: "İlk satır limiti", value: connectionMetadata.maxRowsLimit || 20 },
+    { label: "Timeout hazırlığı", value: connectionMetadata.timeoutMsPrepared ? "Hazır" : "Bekliyor" },
+    { label: "Retry", value: connectionMetadata.retryEnabled ? "Açık" : "Kapalı" },
+    { label: "Fail-closed", value: connectionMetadata.failClosedEnabled ? "Açık" : "Kapalı" },
+    { label: "Hata baskısı koruması", value: connectionMetadata.errorPressureProtection ? "Açık" : "Kapalı" },
+    {
+      label: "Okuma kapsamı",
+      value: connectionMetadata.stockReadScope === "stock-cards-only" ? "Sadece stok kartları" : "Tanımlı değil",
+    },
+  ];
   const finalTransitionSummary = [
     "Demo veri ayrımı yapıldı.",
     "Bağlantı hazırlığı pasif gösterildi.",
@@ -367,6 +384,21 @@ export default function VegaStockTrial() {
           <div className="vega-technical-prep-grid" aria-label="v1.20 teknik hazırlık durumu">
             {technicalPreparationRows.map((row) => (
               <div className="vega-technical-prep-row" key={row.label}>
+                <span>{row.label}</span>
+                <strong>{row.value}</strong>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="vega-row-limit-safety-panel">
+          <div>
+            <h2>Satır Limiti ve Hata Güvenliği</h2>
+            <p>Bu panel sadece ilk read-only deneme güvenlik sınırlarını gösterir; bağlantı açmaz, sorgu çalıştırmaz, veri okumaz.</p>
+          </div>
+          <div className="vega-row-limit-safety-grid" aria-label="Satır limiti ve hata güvenliği">
+            {rowLimitSafetyRows.map((row) => (
+              <div className="vega-row-limit-safety-row" key={row.label}>
                 <span>{row.label}</span>
                 <strong>{row.value}</strong>
               </div>

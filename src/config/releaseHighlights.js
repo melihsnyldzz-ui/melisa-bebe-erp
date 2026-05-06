@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.20.0";
+export const currentReleaseVersion = "v1.20.1";
 
-export const currentReleaseTitle = "Vega read-only teknik hazırlık başlangıcı";
+export const currentReleaseTitle = "Vega read-only satır limiti ve hata güvenliği hazırlığı";
 
 export const updatedSectionIds = ["latest-version-history", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Vega read-only teknik hazırlık fazı pasif metadata ile başlatıldı",
-  "Bağlantı kilidi, SQL/ODBC, DB okuma ve manuel onay durumları güvenli şekilde görünür hale getirildi",
-  "Gerçek bağlantı, sorgu çalıştırma ve Vega verisi okuma olmadan v1.20 hazırlık paneli eklendi",
+  "İlk Vega read-only denemesi için pasif satır limiti metadata’sı eklendi",
+  "Retry kapalı, fail-closed açık ve hata baskısı koruması görünür hale getirildi",
+  "Gerçek bağlantı, sorgu çalıştırma ve Vega verisi okuma olmadan hata güvenliği paneli eklendi",
 ];
 
 export const releaseJumpLinks = [
