@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.27.0";
+export const currentReleaseVersion = "v1.27.1";
 
-export const currentReleaseTitle = "Vega read-only manuel kontrollü test kapısı";
+export const currentReleaseTitle = "Manuel çalışma modeli ve loop kalıntılarını temizleme";
 
 export const updatedSectionIds = ["latest-version-history", "live-test-center"];
 
 export const releaseHighlightItems = [
-  "Vega read-only manuel kontrollü test kapısı eklendi",
-  "Manuel yedek, read-only kullanıcı ve 20 satır sınırı son kez görünür hale getirildi",
-  "Gerçek bağlantı, query, DB okuma ve veri yazma eklenmeden test kapısı pasif rehber olarak hazırlandı",
+  "Harici araç ve tekrarlı işlem akışı ifadeleri projeden temizlendi",
+  "Çalışma modeli manuel Codex prompt akışına göre netleştirildi",
+  "Gerçek bağlantı, query, DB okuma ve veri yazma eklenmeden güvenli manuel süreç korundu",
 ];
 
 export const releaseJumpLinks = [

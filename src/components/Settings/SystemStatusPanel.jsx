@@ -14,6 +14,7 @@ const statusRows = [
   { label: "Geliştirme aşaması", value: APP_STAGE },
   { label: "Build kontrolü", value: "GitHub Actions" },
   { label: "Çalışma modu", value: "Güvenli geliştirme modu" },
+  { label: "Manuel çalışma modeli", value: "ChatGPT GitHub main'i kontrol eder, kullanıcı Codex promptunu manuel verir, Codex manuel uygulanır ve kullanıcı onayıyla ilerler." },
   { label: "Kritik işlem politikası", value: "Stok, cari, fiş, yedekleme, import ve migration işlemleri ayrı kontrollü sürümlerle açılır." },
   { label: "El terminali hazırlığı", value: "Okuma, son okutulanlar, sayım sepeti ve rapor/CSV/JSON önizleme hazır." },
   { label: "Vega geçiş hazırlığı", value: "Kademeli geçiş hazırlığı devam ediyor." },
@@ -125,6 +126,12 @@ const goLiveChecklistGroups = [
 ];
 
 const versionHistoryRows = [
+  {
+    version: "v1.27.0",
+    title: "Vega read-only manuel kontrollü test kapısı",
+    area: "Vega / Import Önizleme",
+    description: "Vega read-only manuel kontrollü test kapısı eklendi; manuel yedek, read-only kullanıcı ve 20 satır sınırı görünür hale getirildi; gerçek bağlantı, query, DB okuma veya veri yazma eklenmeden test kapısı pasif rehber olarak hazırlandı.",
+  },
   {
     version: "v1.26.1",
     title: "Read-only kullanıcı yetki rehberi ve ilk sorgu kapsam sınırı genişletme",

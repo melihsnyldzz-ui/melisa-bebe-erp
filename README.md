@@ -6,8 +6,8 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 
 ## Mevcut Durum
 
-- Güncel sürüm: v1.10.9
-- Aşama: README Türkçe kalite düzeltmesi ve proje özeti
+- Güncel sürüm: v1.27.1
+- Aşama: Manuel çalışma modeli ve loop kalıntılarını temizleme
 - Build kontrolü: GitHub Actions
 - El terminali: okuma, son okutulanlar, sayım sepeti, rapor/CSV/JSON önizleme hazırlığı
 
@@ -16,6 +16,10 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 - Önce okuma, rapor ve önizleme modülleri geliştirilir.
 - Veri yazan stok, cari, fiş, yedek, import ve migration işleri küçük ve kontrollü sürümlere bölünür.
 - Build geçmeden main branch’e push yapılmamalıdır.
+
+## Manuel Çalışma Modeli
+
+Bu proje manuel kontrollü geliştirme modeliyle ilerler. ChatGPT GitHub main’i kontrol eder ve sonraki Codex promptunu hazırlar. Kullanıcı promptu Codex’e manuel verir. Codex uygulama, build ve commit/push işlemini yapar. Harici mesajlaşma aracı veya tekrarlı işlem akışı kullanılmaz.
 
 ## Modül Durumu
 
