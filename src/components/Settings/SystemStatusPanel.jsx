@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.68.1",
+    title: "Patron Onay Paketi Netleştirme",
+    area: "Dashboard / Sistem Durumu",
+    description: "Patron Onay Paketi Hazırlık Paneli, patrona sunulmadan önce kontrol edilecekler ve panelin yapmadığı işlemler ayrı pasif listelerle daha anlaşılır hale getirildi.",
+  },
+  {
     version: "v1.68.0",
     title: "Patron Onay Paketi Hazırlık Paneli",
     area: "Dashboard / Sistem Durumu",

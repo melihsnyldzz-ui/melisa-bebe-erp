@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.68.0";
+export const currentReleaseVersion = "v1.68.1";
 
-export const currentReleaseTitle = "Patron Onay Paketi Hazırlık Paneli";
+export const currentReleaseTitle = "Patron Onay Paketi Netleştirme";
 
 export const updatedSectionIds = ["latest-version-history", "system-workflow-model"];
 
 export const releaseHighlightItems = [
-  "Dashboard'a read-only test raporu paneli yakınında pasif Patron Onay Paketi Hazırlık Paneli eklendi.",
-  "Patrona sunulacak onay paketi başlıkları durum etiketleriyle görünür hale getirildi.",
-  "Onay kaydı, dosya oluşturma, veri okuma/yazma, SQL/Vega işlemi veya import/senkron/export başlatmadan güvenli hazırlık sınırı korundu.",
+  "Patron Onay Paketi Hazırlık Paneli patrona sunum öncesi kontrol listesiyle genişletildi.",
+  "Onay paketinin ne yapmadığı ayrı güvenlik kutusuyla daha açık hale getirildi.",
+  "Onay kaydı, imza alma, dosya oluşturma, veri okuma/yazma, SQL/Vega işlemi veya import/senkron/export başlatmadan pasif güvenlik sınırı korundu.",
 ];
 
 export const releaseJumpLinks = [

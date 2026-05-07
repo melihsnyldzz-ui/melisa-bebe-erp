@@ -146,6 +146,22 @@ const ownerApprovalPackageSafetyNotes = [
   "Veri okumaz/yazmaz.",
   "SQL/Vega işlemi başlatmaz.",
 ];
+const ownerApprovalPackagePrecheckItems = [
+  "Tüm modüllerin durum matrisi güncel mi?",
+  "Read-only test raporu manuel hazır mı?",
+  "Canlıya geçiş eksik listesi kapandı mı?",
+  "Finans/kasa güvenlik notu okundu mu?",
+  "Cari/sipariş maskeleme notu hazır mı?",
+  "Manuel yedek prosedürü hazır mı?",
+  "Son karar toplantısı planlandı mı?",
+];
+const ownerApprovalPackageNoActionItems = [
+  "Onay kaydetmez.",
+  "İmza almaz.",
+  "Dosya oluşturmaz.",
+  "Veri okumaz/yazmaz.",
+  "SQL/Vega işlemi başlatmaz.",
+];
 const financePreviewPrepGateCards = [
   { label: "Finans kapsam", value: "Planlandı" },
   { label: "Bağlantı", value: "Yok" },
@@ -1198,6 +1214,26 @@ function OwnerApprovalPackagePrepPanel() {
           </article>
         ))}
       </div>
+
+      <CommercePanel title="Patrona Sunulmadan Önce Kontrol Edilecekler" note="Bu liste yalnızca manuel sunum öncesi kontrol içindir; kayıt veya onay oluşturmaz.">
+        <div className="commerce-performance-grid">
+          {ownerApprovalPackagePrecheckItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Bu Panel Ne Yapmaz?" note="Bu güvenlik kutusu pasif sınırı netleştirir; işlem başlatmaz.">
+        <div className="commerce-performance-grid">
+          {ownerApprovalPackageNoActionItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
 
       <p className="commerce-profitability-safety-note">{ownerApprovalPackageSafetyNotes.join(" · ")}</p>
     </section>
