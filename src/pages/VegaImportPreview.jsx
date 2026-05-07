@@ -5,6 +5,7 @@ import {
   readOnlyFirstScopeRules,
   readOnlyNextPhaseBoundaries,
   readOnlyOperatorChecklist,
+  readOnlyPreConnectionCleanupNotes,
 } from "../config/readOnlyConnectionPlan.js";
 import {
   vegaImportMapping,
@@ -97,6 +98,29 @@ const operatorChecklistStatusCards = [
   { label: "Teknik kontrol", value: "Manuel" },
   { label: "Patron kararı", value: "Ayrı küçük faz" },
   { label: "Veri yazma/import", value: "Kapalı" },
+];
+
+const finalSecurityScanStatusCards = [
+  { label: "Sürüm uyumu", value: "Kontrol edilecek" },
+  { label: "Mavi nokta", value: "Release yapısıyla uyumlu" },
+  { label: "Pasif teknik iskelet", value: "Kapalı" },
+  { label: "Gerçek bağlantı", value: "Kapalı" },
+  { label: "Query / DB okuma", value: "Yok" },
+  { label: "Veri yazma/import", value: "Kapalı" },
+];
+
+const finalSecurityCleanupItems = [
+  "appVersion ve releaseHighlights uyumlu olmalı",
+  "Sidebar mavi nokta sistemi releaseHighlightsByPage ile uyumlu kalmalı",
+  "readOnlyConnectionPlan sadece statik metadata içermeli",
+  "Connection string, server adı, database adı, username veya password olmamalı",
+  "SQL/ODBC, DB okuma, query veya connection test logic olmamalı",
+  "API/backend endpoint eklenmemeli",
+  "LocalStorage veya form state eklenmemeli",
+  "Veri yazma, import, export veya gerçek işlem butonu olmamalı",
+  "Eski otomasyon kalıntıları geri gelmemeli",
+  "Bir sonraki faz küçük ve sadece read-only bağlantı denemesi olmalı",
+  ...readOnlyPreConnectionCleanupNotes,
 ];
 
 const operatorFinalChecklistItems = [
@@ -547,6 +571,37 @@ export default function VegaImportPreview() {
           <h1>Vega Read-only Operasyon Merkezi</h1>
           <span>Bu ekran gerçek Vega bağlantısı kurmadan, ilk read-only deneme öncesi güvenlik, saha ve kapsam kontrollerini tek yerde toplar.</span>
         </div>
+      </section>
+
+      <section className="vega-technical-gate-center section-updated-highlight" id="vega-readonly-final-security-scan">
+        <div className="vega-technical-gate-hero">
+          <p>Pasif son tarama</p>
+          <h2>Read-only Öncesi Son Güvenlik Tarama ve Temizlik</h2>
+          <span>
+            İlk gerçek read-only bağlantı fazına geçmeden önce sürüm, mavi nokta, kapalı kilitler, pasif teknik iskelet ve eski otomasyon kalıntılarını kontrol eden son pasif güvenlik ekranı.
+          </span>
+        </div>
+
+        <div className="vega-technical-gate-status-grid">
+          {finalSecurityScanStatusCards.map((card) => (
+            <article className="vega-import-summary-card" key={card.label}>
+              <span>{card.label}</span>
+              <strong>{card.value}</strong>
+            </article>
+          ))}
+        </div>
+
+        <section className="vega-technical-gate-panel" id="vega-final-security-cleanup-list">
+          <h3>Son Güvenlik Kontrol Listesi</h3>
+          <div className="vega-technical-gate-card-grid">
+            {finalSecurityCleanupItems.map((item) => (
+              <article className="vega-owner-summary-row" key={item}>
+                <ShieldCheck size={14} />
+                <span>{item}</span>
+              </article>
+            ))}
+          </div>
+        </section>
       </section>
 
       <section className="vega-technical-gate-center section-updated-highlight" id="vega-readonly-operator-checklist-center">

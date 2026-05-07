@@ -64,6 +64,10 @@ const ownerViewCards = [
   { label: "Teknik kontrol", value: "Manuel" },
   { label: "Patron kararı", value: "Sonraki küçük faz" },
   { label: "Checklist veri yazma/import", value: "Kapalı" },
+  { label: "Son güvenlik taraması", value: "Kontrol edildi" },
+  { label: "Credential / query", value: "Yok" },
+  { label: "Son tarama gerçek bağlantı", value: "Kapalı" },
+  { label: "Sonraki faz", value: "Küçük read-only deneme" },
   { label: "Barkod operasyonu", value: "Hazırlıkta" },
   { label: "Barkod kalite kontrolü", value: "Öncelikli" },
   { label: "Riskli barkodlar", value: "İzlenecek" },
@@ -125,6 +129,10 @@ const ownerTodayItems = [
   "Teknik sorumlu read-only kullanıcıyı doğrulayacak",
   "İlk 20 stok kartı sınırı tekrar teyit edilecek",
   "Başarısızlıkta tekrar deneme yapılmayacağı netleştirilecek",
+  "Son güvenlik tarama paneli kontrol edilecek",
+  "readOnlyConnectionPlan dosyasının pasif kaldığı doğrulanacak",
+  "Credential ve query bulunmadığı kontrol edilecek",
+  "Sonraki küçük read-only deneme fazı sınırları okunacak",
   "Personel kullanım notları toplanacak",
   "Gerçek veri bağlantısı için yedek ve yetki kontrolü hazırlanacak",
 ];
@@ -184,6 +192,15 @@ const readonlyOperatorChecklistSummaryCards = [
   { label: "Kontrol maddesi", value: `${readOnlyOperatorChecklist.length} statik madde` },
   { label: "Connection test", value: "Kapalı" },
   { label: "Veri yazma/import", value: "Kapalı" },
+];
+
+const readonlyFinalSecurityScanSummaryCards = [
+  { label: "Son güvenlik taraması", value: "Kontrol edildi" },
+  { label: "Mavi nokta", value: "Release yapısıyla uyumlu" },
+  { label: "Pasif teknik iskelet", value: "Kapalı metadata" },
+  { label: "Credential / query", value: "Yok" },
+  { label: "Gerçek bağlantı", value: "Kapalı" },
+  { label: "Sonraki faz", value: "Küçük read-only deneme" },
 ];
 
 const readonlyFinalDecisionSummaryCards = [
@@ -364,6 +381,8 @@ export default function Dashboard() {
 
       <OwnerView />
 
+      <ReadonlyFinalSecurityScanSummary />
+
       <ReadonlyOperatorChecklistSummary />
 
       <ReadonlyConnectionSkeletonSummary />
@@ -399,6 +418,30 @@ export default function Dashboard() {
         <DashboardNewReleaseBadge sectionId="dashboard-commerce-insights" />
       </CommerceInsights>
     </>
+  );
+}
+
+function ReadonlyFinalSecurityScanSummary() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-readonly-final-security-scan-summary")}`} id="dashboard-readonly-final-security-scan-summary">
+      <DashboardNewReleaseBadge sectionId="dashboard-readonly-final-security-scan-summary" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Pasif son güvenlik taraması</p>
+          <h2>Read-only Öncesi Son Güvenlik Özeti</h2>
+          <span>Sürüm uyumu, mavi nokta görünürlüğü, pasif metadata ve kapalı bağlantı kilitleri ilk bağlantıdan önce son kez görünür.</span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {readonlyFinalSecurityScanSummaryCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+    </section>
   );
 }
 

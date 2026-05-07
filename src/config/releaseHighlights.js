@@ -1,18 +1,18 @@
-export const currentReleaseVersion = "v1.42.0";
+export const currentReleaseVersion = "v1.42.1";
 
-export const currentReleaseTitle = "Read-only İlk Bağlantı Operatör Checklist Merkezi";
+export const currentReleaseTitle = "Read-only Öncesi Son Güvenlik Tarama ve Temizlik";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "readonly-operator-checklist-status"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "readonly-final-security-scan-status"];
 
 export const releaseHighlightItems = [
-  "İlk gerçek read-only bağlantıdan önce operatör, teknik sorumlu ve patron kontrol checklist’i tek merkezde toplandı.",
-  "Manuel yedek, read-only kullanıcı, 20 satır sınırı, timeout, ham hata gizleme ve rollback sorumlusu görünür hale getirildi.",
-  "Gerçek Vega bağlantısı, SQL/ODBC, DB okuma, query, connection test, API veya veri yazma eklenmeden güvenli hazırlık korundu.",
+  "İlk gerçek read-only bağlantı öncesi sürüm, mavi nokta, güvenlik metni ve pasif teknik iskelet son kez kontrol edildi.",
+  "Eski otomasyon kalıntısı, gerçek bağlantı davranışı, credential, query ve veri yazma riski için görünür güvenlik taraması eklendi.",
+  "Gerçek Vega bağlantısı, SQL/ODBC, DB okuma, query, connection test, API veya veri yazma eklenmeden son temizlik yapıldı.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
-  { id: "readonly-operator-checklist-status", label: "Read-only Operatör Checklist Durumu'na git" },
+  { id: "readonly-final-security-scan-status", label: "Read-only Son Güvenlik Tarama Durumu'na git" },
   { id: "system-workflow-model", label: "Çalışma Modeli'ne git" },
 ];
 
@@ -28,6 +28,7 @@ export const releaseHighlightsByPage = {
     releaseHighlightItems,
     releaseJumpLinks: [
       { id: "dashboard-owner-view", label: "Patron Bakışı'na git" },
+      { id: "dashboard-readonly-final-security-scan-summary", label: "Read-only Son Güvenlik Taraması'na git" },
       { id: "dashboard-readonly-operator-checklist-summary", label: "Read-only Operatör Checklist Özeti'ne git" },
       { id: "dashboard-readonly-connection-skeleton-summary", label: "Read-only Altyapı Özeti'ne git" },
       { id: "dashboard-readonly-final-security-summary", label: "Read-only Final Güvenlik Özeti'ne git" },
@@ -42,7 +43,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-owner-view", "dashboard-readonly-operator-checklist-summary", "dashboard-daily-operation"],
+    updatedSectionIds: ["dashboard-owner-view", "dashboard-readonly-final-security-scan-summary", "dashboard-daily-operation"],
   },
   reports: {
     releaseHighlightItems,
@@ -73,6 +74,8 @@ export const releaseHighlightsByPage = {
   vegaImportPreview: {
     releaseHighlightItems,
     releaseJumpLinks: [
+      { id: "vega-readonly-final-security-scan", label: "Son Güvenlik Taraması'na git" },
+      { id: "vega-final-security-cleanup-list", label: "Son Güvenlik Kontrol Listesi'ne git" },
       { id: "vega-readonly-operator-checklist-center", label: "Operatör Checklist Merkezi'ne git" },
       { id: "vega-operator-final-checklist", label: "Operatör Son Kontrol Listesi'ne git" },
       { id: "vega-role-based-control-panel", label: "Rol Bazlı Kontrol Paneli'ne git" },
@@ -100,7 +103,7 @@ export const releaseHighlightsByPage = {
       { id: "vega-import-quality-note", label: "Kalite Kontrol Notu'na git" },
       { id: "vega-readonly-roadmap", label: "Read-only Yol Haritası'na git" },
     ],
-    updatedSectionIds: ["vega-readonly-operator-checklist-center", "vega-operator-final-checklist", "vega-role-based-control-panel", "vega-next-small-phase-prep"],
+    updatedSectionIds: ["vega-readonly-final-security-scan", "vega-final-security-cleanup-list"],
   },
 
   warehouseTerminal: {

@@ -279,7 +279,22 @@ const readonlyOperatorChecklistStatusRows = [
   { label: "ERP’ye yazma/import", value: "Kapalı" },
 ];
 
+const readonlyFinalSecurityScanStatusRows = [
+  { label: "Sürüm uyumu", value: "Kontrol edildi" },
+  { label: "Mavi nokta sistemi", value: "Release yapısıyla uyumlu" },
+  { label: "Pasif teknik iskelet", value: "Kapalı metadata" },
+  { label: "Gerçek bağlantı", value: "Kapalı" },
+  { label: "Credential / query", value: "Yok" },
+  { label: "ERP’ye yazma/import", value: "Kapalı" },
+];
+
 const versionHistoryRows = [
+  {
+    version: "v1.42.1",
+    title: "Read-only Öncesi Son Güvenlik Tarama ve Temizlik",
+    area: "Vega Import Önizleme / Dashboard / Sistem Durumu / README",
+    description: "İlk gerçek read-only bağlantı öncesi sürüm uyumu, mavi nokta görünürlüğü, pasif teknik iskelet ve güvenlik metinleri son kez pasif olarak kontrol edildi; gerçek bağlantı, DB okuma, query, API, credential, connection test veya veri yazma eklenmedi.",
+  },
   {
     version: "v1.42.0",
     title: "Read-only İlk Bağlantı Operatör Checklist Merkezi",
@@ -795,8 +810,8 @@ export default function SystemStatusPanel() {
 
       <div className="system-status-focus-card">
         <span>Bu Sürümde Test Edilecek Alan</span>
-        <strong>Vega Import Önizleme / Read-only Operatör Checklist</strong>
-        <p>Bu sürümde operatör son kontrol listesi, teknik sorumlu doğrulaması, patron kararı ve 20 stok kartı sınırı özellikle kontrol edilmelidir.</p>
+        <strong>Vega Import Önizleme / Read-only Son Güvenlik Taraması</strong>
+        <p>Bu sürümde sürüm uyumu, mavi nokta görünürlüğü, pasif metadata ve credential/query yokluğu özellikle kontrol edilmelidir.</p>
       </div>
 
       <div className="system-workflow-panel" {...sectionHighlightProps("system-workflow-model")}>
@@ -814,6 +829,24 @@ export default function SystemStatusPanel() {
         </div>
         <p className="system-workflow-safety-note">
           Gerçek veri bağlantısı, DB okuma, query, import ve veri yazma işlemleri yalnızca ayrı küçük ve açık onaylı sürümlerde ele alınır.
+        </p>
+      </div>
+
+      <div className="handheld-barcode-status-panel readonly-final-security-scan-status-panel" {...sectionHighlightProps("readonly-final-security-scan-status")}>
+        <div>
+          <h3>Read-only Öncesi Son Güvenlik Tarama Durumu <NewReleaseBadge sectionId="readonly-final-security-scan-status" /></h3>
+          <p>İlk gerçek bağlantı öncesi sürüm, görünürlük, pasif iskelet ve kapalı güvenlik kilitleri son kez pasif sistem özeti olarak takip edilir.</p>
+        </div>
+        <div className="system-status-grid">
+          {readonlyFinalSecurityScanStatusRows.map((row) => (
+            <div className="system-status-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </div>
+          ))}
+        </div>
+        <p className="handheld-barcode-safety-note readonly-final-security-scan-safety-note">
+          Bu sürüm yalnızca son güvenlik tarama ve temizlik görünürlüğü sağlar; bağlantı, DB okuma, query, API, credential, connection test veya veri yazma işlemi yapmaz.
         </p>
       </div>
 

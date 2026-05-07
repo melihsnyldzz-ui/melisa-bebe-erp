@@ -49,3 +49,9 @@ export const readOnlyNextPhaseBoundaries = [
   "Cari, fiş, hareket, tahsilat, ödeme ve import kapsam dışı kalacaktır.",
   "Veri yazma ve import kapalı kalacaktır.",
 ];
+
+export const readOnlyPreConnectionCleanupNotes = [
+  "Bu dosya yalnızca pasif metadata içerir.",
+  "Gerçek bağlantı bilgisi, credential veya query içermez.",
+  "İlk gerçek bağlantı ayrı küçük onaylı fazda ele alınacaktır.",
+];
