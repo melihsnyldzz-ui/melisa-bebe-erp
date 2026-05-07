@@ -21,7 +21,10 @@ const ownerViewCards = [
   { label: "Günlük operasyon durumu", value: "Takipte" },
   { label: "Stok görünürlüğü", value: "Hazırlıkta" },
   { label: "Stok kalite kontrolü", value: "Hazırlıkta" },
-  { label: "Cari kontrol", value: "Planlandı" },
+  { label: "Cari risk takibi", value: "Hazırlıkta" },
+  { label: "Alacak önceliği", value: "Yönetici kontrolünde" },
+  { label: "Gecikmiş tahsilatlar", value: "İzlenecek" },
+  { label: "Gerçek tahsilat kaydı", value: "Kapalı" },
   { label: "Alış / satış özeti", value: "Geliştiriliyor" },
   { label: "Barkod operasyonu", value: "Hazırlıkta" },
   { label: "Barkod kalite kontrolü", value: "Öncelikli" },
@@ -42,6 +45,10 @@ const ownerTodayItems = [
   "Barkodsuz ve duplicate barkod riskleri kontrol edilecek",
   "Personelin okutma sonrası kontrol adımları netleştirilecek",
   "Read-only geçiş güvenlik şartları gözden geçirilecek",
+  "Gecikmiş alacak riskleri gözden geçirilecek",
+  "Yakın vade müşterileri manuel takip listesine alınacak",
+  "Kritik cari riskler yöneticiye bildirilecek",
+  "Tahsilat kaydı yapılmadan önce bakiye doğrulama kuralı netleştirilecek",
   "Personel kullanım notları toplanacak",
   "Gerçek veri bağlantısı için yedek ve yetki kontrolü hazırlanacak",
 ];
@@ -51,6 +58,9 @@ const ownerDecisionItems = [
   "İlk gerçek deneme sadece read-only olacak",
   "İlk kapsam sadece stok kartı olacak",
   "Veri yazma ve import ayrı fazda değerlendirilecek",
+  "Kritik riskli müşterilerde yeni satış kararı yöneticiye bağlıdır",
+  "Gerçek tahsilat/ödeme kaydı bu fazın konusu değildir",
+  "Cari risk görünürlüğü gerçek veri bağlantısından önce pasif olarak olgunlaştırılır",
   "Ana hedef: güvenli geçiş, hızlı kontrol, hatasız stok görünürlüğü",
 ];
 

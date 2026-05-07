@@ -1,19 +1,18 @@
-export const currentReleaseVersion = "v1.31.0";
+export const currentReleaseVersion = "v1.32.0";
 
-export const currentReleaseTitle = "Stok Riskleri ve Barkod Kalite Kontrol Merkezi";
+export const currentReleaseTitle = "Cari ve Alacak Riskleri Yönetici Merkezi";
 
-export const updatedSectionIds = ["latest-version-history", "live-test-center", "system-workflow-model", "handheld-barcode-status", "stock-barcode-quality-status"];
+export const updatedSectionIds = ["latest-version-history", "live-test-center", "system-workflow-model", "current-account-risk-status"];
 
 export const releaseHighlightItems = [
-  "Stok ve barkod kalite kontrol süreci personel ve yönetici için daha görünür hale getirildi.",
-  "Barkodsuz ürün, duplicate barkod, eksik stok kodu ve sayım farkı riskleri pasif/mock modda toparlandı.",
-  "Gerçek cihaz bağlantısı, Vega bağlantısı, DB okuma, query, veri yazma veya import eklenmeden güvenli hazırlık korundu.",
+  "Cari, alacak ve tahsilat riskleri yönetici takibi için daha görünür hale getirildi.",
+  "Vade, gecikme, alacak önceliği ve müşteri risk sınıfları pasif/mock modda toparlandı.",
+  "Gerçek Vega bağlantısı, DB okuma, query, tahsilat kaydı, ödeme kaydı veya veri yazma eklenmeden güvenli hazırlık korundu.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
-  { id: "handheld-barcode-status", label: "El Terminali Durumu'na git" },
-  { id: "stock-barcode-quality-status", label: "Kalite Kontrol Durumu'na git" },
+  { id: "current-account-risk-status", label: "Cari ve Alacak Durumu'na git" },
   { id: "live-test-center", label: "Canlı Test Merkezi'ne git" },
 ];
 
@@ -34,6 +33,16 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
     updatedSectionIds: ["dashboard-owner-view", "dashboard-daily-operation"],
+  },
+  customers: {
+    releaseHighlightItems,
+    releaseJumpLinks: [
+      { id: "current-account-risk-center", label: "Cari Risk Merkezi'ne git" },
+      { id: "current-account-risk-classes", label: "Risk Sınıfları'na git" },
+      { id: "receivable-priority-matrix", label: "Alacak Öncelik Matrisi'ne git" },
+      { id: "collection-preparation-guide", label: "Tahsilat Hazırlık Rehberi'ne git" },
+    ],
+    updatedSectionIds: ["current-account-risk-center", "current-account-risk-classes", "receivable-priority-matrix", "collection-preparation-guide"],
   },
   vegaStockTrial: {
     releaseHighlightItems,

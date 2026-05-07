@@ -6,8 +6,8 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 
 ## Mevcut Durum
 
-- Güncel sürüm: v1.31.0
-- Aşama: Stok Riskleri ve Barkod Kalite Kontrol Merkezi
+- Güncel sürüm: v1.32.0
+- Aşama: Cari ve Alacak Riskleri Yönetici Merkezi
 - Build kontrolü: GitHub Actions
 - El terminali: okuma, son okutulanlar, sayım sepeti, rapor/CSV/JSON önizleme hazırlığı
 - Stok ve barkod kalite kontrolü: pasif/mock risk görünürlüğü
@@ -52,6 +52,13 @@ Bu proje manuel kontrollü geliştirme modeliyle ilerler. ChatGPT GitHub main’
 - Duplicate barkod, barkodsuz ürün, eksik stok kodu ve sayım farkı gibi riskler pasif olarak takip edilir.
 - Gerçek düzeltme, import veya veri yazma yapılmaz.
 - Gerçek düzeltme akışı ileride ayrı küçük onaylı fazda ele alınır.
+
+## Cari ve Alacak Riskleri Fazı
+
+- Bu faz cari, alacak, vade ve tahsilat risklerini patron/yönetici için görünür hale getirir.
+- Gecikmiş alacak, yakın vade, kritik risk ve düzenli müşteri ayrımı pasif olarak gösterilir.
+- Gerçek tahsilat, ödeme, cari kart güncelleme veya veri yazma yapılmaz.
+- Gerçek finansal işlem akışı ileride ayrı küçük onaylı fazda ele alınır.
 
 ## Build Kontrolü
 
