@@ -264,6 +264,19 @@ export default function VegaImportPreview() {
         </div>
       </section>
 
+      <section className="vega-import-quality-note section-updated-highlight" id="vega-import-quality-note">
+        <ShieldCheck size={18} />
+        <div>
+          <h2>Vega Import Kalite Kontrol Notu</h2>
+          <ul>
+            <li>Bu ekrandaki riskler gerçek import başlatmaz.</li>
+            <li>Barkod ve stok riskleri önce pasif olarak gözlemlenir.</li>
+            <li>Duplicate barkod, eksik stok kodu ve barkodsuz ürünler ilk saha kontrol listesine alınır.</li>
+            <li>Gerçek import/veri yazma ayrı ve onaylı fazda değerlendirilir.</li>
+          </ul>
+        </div>
+      </section>
+
       <section className="vega-import-risk-panel">
         <h2>Risk Kuralları</h2>
         <p>Bu kurallar yalnızca ön kontrol içindir; kayıt oluşturmaz, veriyi değiştirmez ve import başlatmaz.</p>
