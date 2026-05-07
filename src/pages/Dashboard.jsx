@@ -50,6 +50,39 @@ const vegaReadonlyModuleMatrixSafetyNotes = [
   "Gerçek tablo/sorgu içermez.",
   "Veri yazma/import/senkron/export yoktur.",
 ];
+const liveDecisionStatusCards = [
+  { label: "Genel durum", value: "Hazırlık / Canlı değil" },
+  { label: "Veri yazma", value: "Kapalı" },
+  { label: "Otomatik bağlantı", value: "Kapalı" },
+  { label: "Read-only kapsam", value: "Sınırlı" },
+  { label: "Patron onayı", value: "Bekliyor" },
+  { label: "Canlı geçiş kararı", value: "Henüz verilmedi" },
+];
+const liveDecisionRequiredItems = [
+  "Read-only kullanıcı yetkisi doğrulandı.",
+  "Stok önizleme kullanıcı doğrulaması tamamlandı.",
+  "Cari kapsam ve maskeleme kuralı netleşti.",
+  "Sipariş kapsam ve maskeleme kuralı netleşti.",
+  "Manuel yedek prosedürü yazıldı.",
+  "Test sonucunda hata/uyarı raporu hazırlandı.",
+  "Patron onayı alındı.",
+];
+const liveDecisionBlockerItems = [
+  "Veri yazma kapalı değilse.",
+  "Otomatik bağlantı kontrolsüz çalışıyorsa.",
+  "Read-only kullanıcı doğrulanmadıysa.",
+  "Yedek prosedürü yoksa.",
+  "Cari/sipariş maskeleme kuralları yoksa.",
+  "Test sonucu raporlanmadıysa.",
+  "Patron onayı yoksa.",
+];
+const liveDecisionSafetyNotes = [
+  "Bu panel karar rehberidir.",
+  "Canlı bağlantı açmaz.",
+  "Veri yazmaz.",
+  "Onay kaydetmez.",
+  "SQL/Vega işlemi başlatmaz.",
+];
 
 const currentPreviewPrepGateCards = [
   { label: "Cari kapsam", value: "Planlandı" },
@@ -742,6 +775,8 @@ export default function Dashboard() {
 
       <VegaReadonlyModuleMatrix />
 
+      <LiveDecisionPanel />
+
       <CurrentPreviewPrepGate />
 
       <OrderPreviewPrepGate />
@@ -902,6 +937,52 @@ function VegaReadonlyModuleMatrix() {
       </div>
 
       <p className="commerce-profitability-safety-note">{vegaReadonlyModuleMatrixSafetyNotes.join(" · ")}</p>
+    </section>
+  );
+}
+
+function LiveDecisionPanel() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-live-decision-panel")}`} id="dashboard-live-decision-panel">
+      <DashboardNewReleaseBadge sectionId="dashboard-live-decision-panel" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Pasif karar rehberi</p>
+          <h2>Canlıya Geçiş Karar Paneli</h2>
+          <span>ERP'nin canlıya ne kadar hazır olduğunu patron seviyesinde özetler; veri okumaz, bağlantı açmaz ve onay kaydetmez.</span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {liveDecisionStatusCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+
+      <CommercePanel title="Canlıya Yaklaşmak İçin Gereken Şartlar" note="Bu maddeler bu ekranda onaylanmaz; sadece karar öncesi görünür kılınır.">
+        <div className="commerce-performance-grid">
+          {liveDecisionRequiredItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Kesin Canlıya Geçiş Engelleri" note="Bu engellerden biri varsa canlıya geçiş kararı ayrı kontrollü faza bırakılır.">
+        <div className="commerce-performance-grid">
+          {liveDecisionBlockerItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <p className="commerce-profitability-safety-note">{liveDecisionSafetyNotes.join(" · ")}</p>
     </section>
   );
 }

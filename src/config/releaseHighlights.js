@@ -1,12 +1,12 @@
-export const currentReleaseVersion = "v1.65.1";
+export const currentReleaseVersion = "v1.65.2";
 
-export const currentReleaseTitle = "Vega Read-only Modül Durum Matrisi";
+export const currentReleaseTitle = "Canlıya Geçiş Karar Paneli";
 
 export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "stock-preview-beta-package-status"];
 
 export const releaseHighlightItems = [
-  "Vega read-only modülleri için pasif durum matrisi eklendi.",
-  "Stok, cari, sipariş, kasa/finans ve export modüllerinin veri okuma, veri yazma, risk ve sonraki adım bilgileri tek panelde toplandı.",
+  "Dashboard'a pasif Canlıya Geçiş Karar Paneli eklendi.",
+  "Canlıya yaklaşmak için gereken şartlar, geçiş engelleri ve karar güvenlik notları patron görünümünde netleştirildi.",
   "Gerçek tablo adı, SQL sorgusu, müşteri/stok/sipariş/kasa verisi, import, senkron, export veya SQL/Vega otomatik bağlantısı eklenmeden read-only güvenlik modeli korundu.",
 ];
 
@@ -30,6 +30,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-owner-view", label: "Patron Bakışı'na git" },
       { id: "dashboard-vega-readonly-operation-center", label: "Vega Read-only Operasyon Merkezi'ne git" },
       { id: "dashboard-vega-readonly-module-matrix", label: "Vega Read-only Modül Durum Matrisi'ne git" },
+      { id: "dashboard-live-decision-panel", label: "Canlıya Geçiş Karar Paneli'ne git" },
       { id: "dashboard-current-preview-prep-gate", label: "Cari Önizleme Hazırlık Kapısı'na git" },
       { id: "dashboard-order-preview-prep-gate", label: "Sipariş Önizleme Hazırlık Kapısı'na git" },
       { id: "dashboard-stock-preview-beta-package", label: "Stok Önizleme Beta Hazırlığı'na git" },
@@ -66,7 +67,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-vega-readonly-module-matrix", "dashboard-order-preview-prep-gate", "dashboard-current-preview-prep-gate"],
+    updatedSectionIds: ["dashboard-live-decision-panel", "dashboard-vega-readonly-module-matrix", "dashboard-order-preview-prep-gate"],
   },
   reports: {
     releaseHighlightItems,
