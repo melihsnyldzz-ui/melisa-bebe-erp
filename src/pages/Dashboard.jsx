@@ -185,6 +185,21 @@ const managementPresentationNextDecisionItems = [
   "Manuel yedek prosedürü netleşecek.",
   "Patron onayı alınmadan canlıya geçilmeyecek.",
 ];
+const managementPresentationOneSentenceSummary =
+  "Sistem şu anda canlı değil; güvenli read-only hazırlık, test ve onay aşamasındadır.";
+const managementPresentationPurposeItems = [
+  "ERP'nin mevcut hazırlık seviyesini göstermek.",
+  "Hangi modüllerin kapalı olduğunu göstermek.",
+  "Canlıya geçiş için kalan kararları netleştirmek.",
+  "Riskli finans/cari/sipariş alanlarının neden kapalı olduğunu anlatmak.",
+];
+const managementPresentationNoActionItems = [
+  "Veri okumaz.",
+  "Veri yazmaz.",
+  "SQL/Vega işlemi başlatmaz.",
+  "Dosya/rapor üretmez.",
+  "Onay kaydetmez.",
+];
 const financePreviewPrepGateCards = [
   { label: "Finans kapsam", value: "Planlandı" },
   { label: "Bağlantı", value: "Yok" },
@@ -1286,9 +1301,37 @@ function ManagementPresentationSummaryPanel() {
         ))}
       </div>
 
+      <CommercePanel title="Yöneticiye Tek Cümlelik Özet" note="Bu alan yalnızca sunum metnidir; veri okumaz veya kayıt oluşturmaz.">
+        <div className="commerce-performance-grid">
+          <article className="commerce-performance-card">
+            <strong>{managementPresentationOneSentenceSummary}</strong>
+          </article>
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Bu Sunumun Amacı" note="Bu liste ERP durumunu anlatmak içindir; işlem başlatmaz.">
+        <div className="commerce-performance-grid">
+          {managementPresentationPurposeItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
       <CommercePanel title="Şu An Yapılmayanlar" note="Bu liste güvenli sınırları görünür kılar; işlem veya kayıt başlatmaz.">
         <div className="commerce-performance-grid">
           {managementPresentationNotDoingItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Bu Panel Ne Yapmaz?" note="Bu güvenlik kutusu pasif sınırı netleştirir.">
+        <div className="commerce-performance-grid">
+          {managementPresentationNoActionItems.map((item) => (
             <article className="commerce-performance-card" key={item}>
               <strong>{item}</strong>
             </article>

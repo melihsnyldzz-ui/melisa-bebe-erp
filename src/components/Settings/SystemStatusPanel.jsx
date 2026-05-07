@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.69.1",
+    title: "Yönetici Sunum Özeti Netleştirme",
+    area: "Dashboard / Sistem Durumu",
+    description: "Yönetici Sunum Özeti Paneli, tek cümlelik özet, sunum amacı ve panelin yapmadığı işlemlerle veri okuma/yazma, dosya/rapor üretimi veya onay kaydı eklemeden pasif olarak netleştirildi.",
+  },
+  {
     version: "v1.69.0",
     title: "Yönetici Sunum Özeti Paneli",
     area: "Dashboard / Sistem Durumu",

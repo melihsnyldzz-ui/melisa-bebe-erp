@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.69.0";
+export const currentReleaseVersion = "v1.69.1";
 
-export const currentReleaseTitle = "Yönetici Sunum Özeti Paneli";
+export const currentReleaseTitle = "Yönetici Sunum Özeti Netleştirme";
 
 export const updatedSectionIds = ["latest-version-history", "system-workflow-model"];
 
 export const releaseHighlightItems = [
-  "Dashboard'a patron onay paketi paneli yakınında pasif Yönetici Sunum Özeti Paneli eklendi.",
-  "ERP'nin read-only hazırlık durumu, yapılmayan işlemler ve sıradaki yönetici kararları tek sayfalık sunum özeti gibi görünür hale getirildi.",
-  "Veri okuma/yazma, dosya/rapor üretimi, onay kaydı, SQL/Vega işlemi veya export/import/senkron başlatmadan pasif güvenlik sınırı korundu.",
+  "Yönetici Sunum Özeti Paneli tek cümlelik yönetici özetiyle daha anlaşılır hale getirildi.",
+  "Sunumun amacı ve panelin yapmadığı işlemler ayrı pasif listelerle netleştirildi.",
+  "Veri okuma/yazma, SQL/Vega işlemi, dosya/rapor üretimi, onay kaydı veya export/import/senkron başlatmadan pasif güvenlik sınırı korundu.",
 ];
 
 export const releaseJumpLinks = [
