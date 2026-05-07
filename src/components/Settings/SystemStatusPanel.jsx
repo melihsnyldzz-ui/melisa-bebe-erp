@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.74.0",
+    title: "Risk ve Uyarı Merkezi",
+    area: "Dashboard / Sistem Durumu",
+    description: "ERP'nin eksik ana katmanlarından risk ve uyarı merkezi, kritik stok, barkodsuz ürün, duplicate barkod, riskli cari, geciken tahsilat, düşük marj, hatalı fiyat, finansal risk ve entegrasyon riski için seviye, veri modu, sorumlu rol ve sonraki adımı gösteren pasif merkezle görünür hale getirildi; gerçek alarm, bildirim, görev kaydı, veri okuma/yazma, SQL/Vega işlemi, dosya/export veya onay kaydı eklenmedi.",
+  },
+  {
     version: "v1.73.0",
     title: "Günlük Operasyon İş Akışı Merkezi",
     area: "Dashboard / Sistem Durumu",
