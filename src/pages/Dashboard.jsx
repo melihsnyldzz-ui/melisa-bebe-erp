@@ -99,6 +99,23 @@ const liveMissingListSafetyNotes = [
   "SQL/Vega işlemi başlatmaz.",
   "Veri yazmaz.",
 ];
+const readonlyTestReportPrepItems = [
+  { title: "Test tarihi", status: "Manuel doldurulacak" },
+  { title: "Testi yapan kişi", status: "Manuel doldurulacak" },
+  { title: "Test edilen modül", status: "Manuel doldurulacak" },
+  { title: "Veri kaynağı", status: "Bekliyor" },
+  { title: "Satır/özet limiti", status: "Bekliyor" },
+  { title: "Beklenen sonuç", status: "Manuel doldurulacak" },
+  { title: "Görülen sonuç", status: "Sonraki faz" },
+  { title: "Hata/uyarı var mı", status: "Sonraki faz" },
+  { title: "Patron kararı", status: "Sonraki faz" },
+];
+const readonlyTestReportPrepSafetyNotes = [
+  "Bu panel rapor dosyası oluşturmaz.",
+  "Test sonucu kaydetmez.",
+  "SQL/Vega işlemi başlatmaz.",
+  "Veri yazmaz.",
+];
 const financePreviewPrepGateCards = [
   { label: "Finans kapsam", value: "Planlandı" },
   { label: "Bağlantı", value: "Yok" },
@@ -840,6 +857,8 @@ export default function Dashboard() {
 
       <LiveMissingListPanel />
 
+      <ReadonlyTestReportPrepPanel />
+
       <FinancePreviewPrepGate />
 
       <CurrentPreviewPrepGate />
@@ -1075,6 +1094,33 @@ function LiveMissingListPanel() {
       </div>
 
       <p className="commerce-profitability-safety-note">{liveMissingListSafetyNotes.join(" · ")}</p>
+    </section>
+  );
+}
+
+function ReadonlyTestReportPrepPanel() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-readonly-test-report-prep")}`} id="dashboard-readonly-test-report-prep">
+      <DashboardNewReleaseBadge sectionId="dashboard-readonly-test-report-prep" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Pasif test raporu hazırlığı</p>
+          <h2>Read-only Test Raporu Hazırlık Paneli</h2>
+          <span>Read-only test raporu için manuel hazırlanacak başlıkları gösterir; rapor üretmez, dosya oluşturmaz, veri okumaz ve veri yazmaz.</span>
+        </div>
+      </div>
+
+      <div className="profitability-priority-grid">
+        {readonlyTestReportPrepItems.map((item) => (
+          <article className="profitability-priority-card" key={item.title}>
+            <span>{item.status}</span>
+            <strong>{item.title}</strong>
+            <small>Rapor başlığı hazırlığı</small>
+          </article>
+        ))}
+      </div>
+
+      <p className="commerce-profitability-safety-note">{readonlyTestReportPrepSafetyNotes.join(" · ")}</p>
     </section>
   );
 }

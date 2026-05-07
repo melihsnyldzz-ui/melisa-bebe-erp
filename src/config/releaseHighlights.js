@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.66.2";
+export const currentReleaseVersion = "v1.67.0";
 
-export const currentReleaseTitle = "Canlıya Geçiş Eksik Listesi";
+export const currentReleaseTitle = "Read-only Test Raporu Hazırlık Paneli";
 
 export const updatedSectionIds = ["latest-version-history", "system-workflow-model"];
 
 export const releaseHighlightItems = [
-  "Dashboard'a Canlıya Geçiş Karar Paneli yakınında pasif Canlıya Geçiş Eksik Listesi eklendi.",
-  "Read-only kullanıcı, stok doğrulama, maskeleme kuralları, yedek prosedürü, test raporu ve patron onayı eksikleri durum etiketleriyle görünür hale getirildi.",
-  "Panel görev kaydı, onay kaydı, SQL/Vega işlemi, veri yazma, import, senkron veya export başlatmadan yalnızca patrona kalan işleri gösterir.",
+  "Dashboard'a canlıya geçiş eksik listesi yakınında pasif Read-only Test Raporu Hazırlık Paneli eklendi.",
+  "Test raporu için manuel hazırlanacak başlıklar durum etiketleriyle patron seviyesinde görünür hale getirildi.",
+  "Panel rapor dosyası oluşturmadan, test sonucu kaydetmeden, SQL/Vega işlemi veya veri yazma/import/senkron/export başlatmadan pasif kalır.",
 ];
 
 export const releaseJumpLinks = [
@@ -32,6 +32,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-vega-readonly-module-matrix", label: "Vega Read-only Modül Durum Matrisi'ne git" },
       { id: "dashboard-live-decision-panel", label: "Canlıya Geçiş Karar Paneli'ne git" },
       { id: "dashboard-live-missing-list", label: "Canlıya Geçiş Eksik Listesi'ne git" },
+      { id: "dashboard-readonly-test-report-prep", label: "Read-only Test Raporu Hazırlığı'na git" },
       { id: "dashboard-finance-preview-prep-gate", label: "Kasa/Finans Özeti Hazırlık Kapısı'na git" },
       { id: "dashboard-current-preview-prep-gate", label: "Cari Önizleme Hazırlık Kapısı'na git" },
       { id: "dashboard-order-preview-prep-gate", label: "Sipariş Önizleme Hazırlık Kapısı'na git" },
@@ -69,7 +70,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-live-missing-list", "dashboard-live-decision-panel"],
+    updatedSectionIds: ["dashboard-readonly-test-report-prep", "dashboard-live-missing-list"],
   },
   reports: {
     releaseHighlightItems,

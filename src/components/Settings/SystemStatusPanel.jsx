@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.67.0",
+    title: "Read-only Test Raporu Hazırlık Paneli",
+    area: "Dashboard / Sistem Durumu",
+    description: "Canlıya geçiş eksik listesi yakınına rapor dosyası oluşturmadan, test sonucu kaydetmeden, SQL/Vega işlemi veya veri yazma başlatmadan manuel test raporu başlıklarını gösteren pasif hazırlık paneli eklendi.",
+  },
+  {
     version: "v1.66.2",
     title: "Canlıya Geçiş Eksik Listesi",
     area: "Dashboard / Sistem Durumu",

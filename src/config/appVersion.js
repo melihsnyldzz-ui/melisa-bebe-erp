@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.66.2";
-export const APP_STAGE = "Canlıya Geçiş Eksik Listesi";
+export const APP_VERSION = "v1.67.0";
+export const APP_STAGE = "Read-only Test Raporu Hazırlık Paneli";
