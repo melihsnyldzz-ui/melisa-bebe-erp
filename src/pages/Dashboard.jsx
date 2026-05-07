@@ -6,6 +6,7 @@ import { APP_STAGE, APP_VERSION } from "../config/appVersion.js";
 import { readOnlyConnectionPlan, readOnlyEnvironmentPreparationItems, readOnlyOperatorChecklist } from "../config/readOnlyConnectionPlan.js";
 import { readOnlyFailClosedPolicy } from "../config/readOnlyFailClosedPolicy.js";
 import { currentReleaseVersion, releaseHighlightsByPage } from "../config/releaseHighlights.js";
+import { vegaStockFieldMap, vegaStockFieldMapWarning } from "../config/vegaStockFieldMap.js";
 import { useErpData } from "../context/ErpDataContext.jsx";
 import { getTodayISO } from "../utils/dateUtils.js";
 import { formatCurrency, formatNumber } from "../utils/formatters.js";
@@ -81,6 +82,8 @@ const ownerViewCards = [
   { label: "Smoke test kapsamı", value: "20 stok kartı" },
   { label: "Smoke test ERP’ye yazma", value: "Kapalı" },
   { label: "Smoke test import", value: "Kapalı" },
+  { label: "Stok alan haritası", value: "Pasif dokümantasyon" },
+  { label: "Alan eşleştirme kararı", value: "Kesin değil" },
   { label: "Desktop uygulama modu", value: "Local Desktop" },
   { label: "Desktop Vega bağlantısı", value: "Kapalı / terminal smoke test" },
   { label: "Desktop veri yazma", value: "Kapalı" },
@@ -253,6 +256,15 @@ const readonlyStockSmokeSummaryCards = [
   { label: "ERP’ye yazma", value: "Kapalı" },
   { label: "Import", value: "Kapalı" },
   { label: "Sonuç", value: "Terminal önizleme" },
+];
+
+const vegaStockFieldMapSummaryCards = [
+  { label: "Harita modu", value: "Pasif dokümantasyon" },
+  { label: "Kolon sayısı", value: `${vegaStockFieldMap.length} alan` },
+  { label: "Yüksek güven", value: "IND, STOKKODU, MALINCINSI" },
+  { label: "Orta güven", value: "Fiyat/KDV adayları" },
+  { label: "Düşük güven", value: "KOD sınıflandırmaları" },
+  { label: "Kesin karar", value: "Örnek satır sonrası" },
 ];
 
 const desktopPreparationCards = [
@@ -446,6 +458,8 @@ export default function Dashboard() {
 
       <ReadonlyStockSmokeSummary />
 
+      <VegaStockFieldMapSummary />
+
       <ReadonlyEnvironmentPrepSummary />
 
       <ReadonlyFailClosedSummary />
@@ -534,6 +548,43 @@ function ReadonlyStockSmokeSummary() {
           </article>
         ))}
       </div>
+    </section>
+  );
+}
+
+function VegaStockFieldMapSummary() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-vega-stock-field-map")}`} id="dashboard-vega-stock-field-map">
+      <DashboardNewReleaseBadge sectionId="dashboard-vega-stock-field-map" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Read-only stok kartı dokümantasyonu</p>
+          <h2>Vega Stok Kartı Alan Haritası</h2>
+          <span>Smoke test kolonlarının muhtemel ERP karşılıklarını güven seviyesiyle gösteren pasif görünürlük alanı; canlı bağlantı veya veri çekme başlatmaz.</span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {vegaStockFieldMapSummaryCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+
+      <div className="commerce-profitability-class-grid">
+        {vegaStockFieldMap.map((field) => (
+          <article className="commerce-profitability-class-card" key={field.column}>
+            <span>{field.column}</span>
+            <strong>{field.erpMeaning}</strong>
+            <p>Güven: {field.confidence}</p>
+            <p>{field.note}</p>
+          </article>
+        ))}
+      </div>
+
+      <p className="commerce-profitability-safety-note">{vegaStockFieldMapWarning}</p>
     </section>
   );
 }

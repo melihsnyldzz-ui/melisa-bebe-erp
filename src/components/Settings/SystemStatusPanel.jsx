@@ -3,6 +3,7 @@ import ReleaseHighlightsPanel from "../Common/ReleaseHighlightsPanel.jsx";
 import { APP_STAGE, APP_VERSION } from "../../config/appVersion.js";
 import { readOnlyConnectionPlan } from "../../config/readOnlyConnectionPlan.js";
 import { readOnlyFailClosedPolicy } from "../../config/readOnlyFailClosedPolicy.js";
+import { vegaStockFieldMap, vegaStockFieldMapWarning } from "../../config/vegaStockFieldMap.js";
 import {
   currentReleaseVersion,
   releaseHighlightsByPage,
@@ -317,6 +318,15 @@ const readonlyStockSmokeStatusRows = [
   { label: "Sonuç yazma", value: "Yok" },
 ];
 
+const vegaStockFieldMapStatusRows = [
+  { label: "Alan haritası", value: "Pasif dokümantasyon" },
+  { label: "Kolon sayısı", value: `${vegaStockFieldMap.length} alan` },
+  { label: "Yüksek güven", value: "IND / STOKKODU / MALINCINSI" },
+  { label: "Orta güven", value: "Fiyat ve KDV adayları" },
+  { label: "Düşük güven", value: "KOD sınıflandırmaları" },
+  { label: "Kesinleştirme", value: "Örnek satır incelemesi sonrası" },
+];
+
 const desktopPreparationStatusRows = [
   { label: "Uygulama modu", value: "Local Desktop" },
   { label: "Vega bağlantısı", value: "Kapalı / sadece terminal smoke test" },
@@ -327,6 +337,12 @@ const desktopPreparationStatusRows = [
 ];
 
 const versionHistoryRows = [
+  {
+    version: "v1.48.0",
+    title: "Vega Stok Kartı Alan Haritası",
+    area: "Dashboard / Sistem Durumu / README",
+    description: "Read-only stok smoke test kolonları için pasif alan haritası eklendi; IND, STOKKODU, MALINCINSI, KOD alanları, fiyat adayları ve KDVGRUBU muhtemel ERP karşılıklarıyla ve güven seviyesiyle gösterildi; yeni SQL, canlı bağlantı, veri yazma veya import eklenmedi.",
+  },
   {
     version: "v1.47.0",
     title: "Read-only SQL/Vega Hata Sınıflandırma Güçlendirmesi",
@@ -878,8 +894,8 @@ export default function SystemStatusPanel() {
 
       <div className="system-status-focus-card">
         <span>Bu Sürümde Test Edilecek Alan</span>
-        <strong>Read-only Smoke Test / Hata Sınıflandırması</strong>
-        <p>Bu sürümde local terminal smoke test başarısız olduğunda ham SQL hatası basılmadan güvenli hata sınıfı ve Türkçe açıklama gösterilmesi özellikle kontrol edilmelidir.</p>
+        <strong>Vega Stok Kartı Alan Haritası</strong>
+        <p>Bu sürümde smoke test kolonlarının muhtemel ERP karşılıkları pasif dokümantasyon olarak kontrol edilmelidir; eşleştirmeler kesin operasyon kararı değildir.</p>
       </div>
 
       <div className="system-workflow-panel" {...sectionHighlightProps("system-workflow-model")}>
@@ -897,6 +913,24 @@ export default function SystemStatusPanel() {
         </div>
         <p className="system-workflow-safety-note">
           Gerçek veri bağlantısı, DB okuma, query, import ve veri yazma işlemleri yalnızca ayrı küçük ve açık onaylı sürümlerde ele alınır.
+        </p>
+      </div>
+
+      <div className="handheld-barcode-status-panel vega-stock-field-map-status-panel" {...sectionHighlightProps("vega-stock-field-map-status")}>
+        <div>
+          <h3>Vega Stok Kartı Alan Haritası Durumu <NewReleaseBadge sectionId="vega-stock-field-map-status" /></h3>
+          <p>Read-only stok smoke test kolonları ERP tarafında yalnızca pasif dokümantasyon ve güven seviyesiyle anlamlandırılır.</p>
+        </div>
+        <div className="system-status-grid">
+          {vegaStockFieldMapStatusRows.map((row) => (
+            <div className="system-status-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </div>
+          ))}
+        </div>
+        <p className="handheld-barcode-safety-note vega-stock-field-map-safety-note">
+          {vegaStockFieldMapWarning}
         </p>
       </div>
 

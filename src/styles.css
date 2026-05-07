@@ -7750,6 +7750,17 @@ tr:last-child td {
   background: #f0f9ff;
 }
 
+.vega-stock-field-map-status-panel {
+  border-color: #ddd6fe;
+  background: linear-gradient(135deg, #f5f3ff, #ffffff);
+}
+
+.vega-stock-field-map-safety-note {
+  border-color: #ddd6fe;
+  color: #5b21b6;
+  background: #f5f3ff;
+}
+
 @media (max-width: 1180px) {
   .current-account-status-grid,
   .current-account-risk-class-grid,

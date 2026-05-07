@@ -6,8 +6,8 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 
 ## Mevcut Durum
 
-- Güncel sürüm: v1.47.0
-- Aşama: Read-only SQL/Vega Hata Sınıflandırma Güçlendirmesi
+- Güncel sürüm: v1.48.0
+- Aşama: Vega Stok Kartı Alan Haritası
 - Build kontrolü: GitHub Actions
 - El terminali: okuma, son okutulanlar, sayım sepeti, rapor/CSV/JSON önizleme hazırlığı
 - Stok ve barkod kalite kontrolü: pasif/mock risk görünürlüğü
@@ -175,6 +175,15 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 - `SQL_TABLE_OR_COLUMN_MISMATCH`: `F0102TBLSTOKLAR` tablosu veya beklenen stok kolonları ortamla uyumsuz olabilir.
 - `SQL_TIMEOUT`: Bağlantı veya sorgu kısa timeout hedefini aşmıştır.
 - `SQL_UNKNOWN_SAFE`: Hata güvenli şekilde sınıflandırılamamıştır; ham hata ve credential bilgisi gösterilmez.
+
+## Vega Stok Kartı Alan Haritası
+
+- Bu faz read-only smoke test kolonlarını ERP tarafında pasif dokümantasyon olarak anlamlandırır.
+- `IND`, `STOKKODU` ve `MALINCINSI` yüksek güvenli teknik/stok/ürün adı adaylarıdır.
+- `KOD1`, `KOD2`, `KOD4` ve `KOD6` düşük güvenli sınıflandırma alanlarıdır; gerçek örnek satırlarla doğrulanmalıdır.
+- `ALISFIYATI`, `ISKSATISFIYATI2`, `ISKSATISFIYATI3` ve `KDVGRUBU` orta güvenli fiyat/KDV adaylarıdır.
+- Bu alan haritası kesin muhasebe/operasyon kararı değildir. Gerçek Vega verisiyle örnek satırlar incelendikten sonra kesinleştirilecektir.
+- Bu faz yeni SQL sorgusu, ERP arayüzünden bağlantı, canlı veri çekme, veri yazma, import veya dosyaya çıktı eklemez.
 
 ## Build Kontrolü
 
