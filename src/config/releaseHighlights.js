@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.65.2";
+export const currentReleaseVersion = "v1.66.0";
 
-export const currentReleaseTitle = "Canlıya Geçiş Karar Paneli";
+export const currentReleaseTitle = "Kasa Finans Özeti Hazırlık Kapısı";
 
 export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "stock-preview-beta-package-status"];
 
 export const releaseHighlightItems = [
-  "Dashboard'a pasif Canlıya Geçiş Karar Paneli eklendi.",
-  "Canlıya yaklaşmak için gereken şartlar, geçiş engelleri ve karar güvenlik notları patron görünümünde netleştirildi.",
-  "Gerçek tablo adı, SQL sorgusu, müşteri/stok/sipariş/kasa verisi, import, senkron, export veya SQL/Vega otomatik bağlantısı eklenmeden read-only güvenlik modeli korundu.",
+  "Kasa/Finans Özeti için pasif hazırlık kapısı eklendi.",
+  "Finans kapsamı, aday alanlar, güvenlik notları ve kesin yasaklar bağlantı açmadan görünür hale getirildi.",
+  "Gerçek kasa, banka, tahsilat, ödeme, bakiye veya hareket verisi; tablo adı, SQL sorgusu, import, senkron, export ya da SQL/Vega otomatik bağlantısı eklenmeden read-only güvenlik modeli korundu.",
 ];
 
 export const releaseJumpLinks = [
@@ -31,6 +31,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-vega-readonly-operation-center", label: "Vega Read-only Operasyon Merkezi'ne git" },
       { id: "dashboard-vega-readonly-module-matrix", label: "Vega Read-only Modül Durum Matrisi'ne git" },
       { id: "dashboard-live-decision-panel", label: "Canlıya Geçiş Karar Paneli'ne git" },
+      { id: "dashboard-finance-preview-prep-gate", label: "Kasa/Finans Özeti Hazırlık Kapısı'na git" },
       { id: "dashboard-current-preview-prep-gate", label: "Cari Önizleme Hazırlık Kapısı'na git" },
       { id: "dashboard-order-preview-prep-gate", label: "Sipariş Önizleme Hazırlık Kapısı'na git" },
       { id: "dashboard-stock-preview-beta-package", label: "Stok Önizleme Beta Hazırlığı'na git" },
@@ -67,7 +68,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-live-decision-panel", "dashboard-vega-readonly-module-matrix", "dashboard-order-preview-prep-gate"],
+    updatedSectionIds: ["dashboard-finance-preview-prep-gate", "dashboard-live-decision-panel", "dashboard-vega-readonly-module-matrix"],
   },
   reports: {
     releaseHighlightItems,

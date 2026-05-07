@@ -83,6 +83,47 @@ const liveDecisionSafetyNotes = [
   "Onay kaydetmez.",
   "SQL/Vega işlemi başlatmaz.",
 ];
+const financePreviewPrepGateCards = [
+  { label: "Finans kapsam", value: "Planlandı" },
+  { label: "Bağlantı", value: "Yok" },
+  { label: "Veri okuma", value: "Yok" },
+  { label: "Veri yazma", value: "Yok" },
+  { label: "Tablo/sorgu", value: "Eklenmedi" },
+  { label: "Sonraki adım", value: "Finans raporlama sınırı analizi" },
+];
+const financePreviewPrepChecklist = [
+  "Kasa/banka/tahsilat kapsamı netleştirilecek.",
+  "Read-only kullanıcı yetkisi doğrulanacak.",
+  "İlk satır/özet limiti belirlenecek.",
+  "Finansal veri maskeleme kuralı belirlenecek.",
+  "Bakiye ve hareket alanları ayrıca doğrulanacak.",
+  "Patron onayı olmadan finans görünümü açılmayacak.",
+];
+const financePreviewCandidateLabels = [
+  "Günlük kasa özeti",
+  "Tahsilat durumu",
+  "Ödeme durumu",
+  "Bakiye yönü",
+  "Riskli hareket etiketi",
+  "Son işlem tarihi",
+];
+const financePreviewPrepSafetyNotes = [
+  "Bu sürümde finans verisi okunmaz.",
+  "SQL sorgusu yoktur.",
+  "Tablo adı yoktur.",
+  "Kasa/banka/tahsilat/ödeme/bakiye verisi repoya yazılmaz.",
+  "Veri yazma/import/senkron/export yoktur.",
+];
+const financePreviewForbiddenItems = [
+  "Finans verisi okuma yok.",
+  "SQL sorgusu yok.",
+  "Tablo adı yok.",
+  "Kasa/banka hareketi yok.",
+  "Tahsilat/ödeme verisi yok.",
+  "Bakiye verisi yok.",
+  "Export/import/senkron yok.",
+  "Vega'ya veri yazma yok.",
+];
 
 const currentPreviewPrepGateCards = [
   { label: "Cari kapsam", value: "Planlandı" },
@@ -777,6 +818,8 @@ export default function Dashboard() {
 
       <LiveDecisionPanel />
 
+      <FinancePreviewPrepGate />
+
       <CurrentPreviewPrepGate />
 
       <OrderPreviewPrepGate />
@@ -983,6 +1026,62 @@ function LiveDecisionPanel() {
       </CommercePanel>
 
       <p className="commerce-profitability-safety-note">{liveDecisionSafetyNotes.join(" · ")}</p>
+    </section>
+  );
+}
+
+function FinancePreviewPrepGate() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-finance-preview-prep-gate")}`} id="dashboard-finance-preview-prep-gate">
+      <DashboardNewReleaseBadge sectionId="dashboard-finance-preview-prep-gate" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Pasif kasa/finans hazırlık kapısı</p>
+          <h2>Kasa/Finans Özeti Hazırlık Kapısı</h2>
+          <span>Finans özeti için yalnızca güvenli raporlama kapsamı hazırlanır; bağlantı açılmaz, tablo adı veya sorgu eklenmez, finans verisi okunmaz.</span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {financePreviewPrepGateCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+
+      <CommercePanel title="Finans Açılmadan Önce Gereken Şartlar" note="Bu liste sadece manuel kapsam hazırlığı içindir; onay veya kayıt tutmaz.">
+        <div className="commerce-performance-grid">
+          {financePreviewPrepChecklist.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="İlk Read-only Finans Önizlemede Gösterilebilecek Aday Alanlar" note="Bu liste gerçek tablo alanı değildir; yalnızca iş seviyesi aday etiketleri gösterir.">
+        <div className="commerce-performance-grid">
+          {financePreviewCandidateLabels.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Kesin Yasaklar" note="Bu panel pasif kalır; bağlantı, sorgu, finans verisi okuma veya kayıt işlemi başlatmaz.">
+        <div className="commerce-performance-grid">
+          {financePreviewForbiddenItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <p className="commerce-profitability-safety-note">{financePreviewPrepSafetyNotes.join(" · ")}</p>
     </section>
   );
 }
