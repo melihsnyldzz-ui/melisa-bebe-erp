@@ -1,17 +1,18 @@
-export const currentReleaseVersion = "v1.78.0";
+export const currentReleaseVersion = "v1.79.0";
 
-export const currentReleaseTitle = "Stok Yönetimi Geliştirme Yol Haritası";
+export const currentReleaseTitle = "Barkod El Terminali Geliştirme Yol Haritası";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "dashboard-stock-management-roadmap"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "dashboard-barcode-handheld-roadmap"];
 
 export const releaseHighlightItems = [
-  "Dashboard'a Stok Yönetimi Geliştirme Yol Haritası paneli eklenerek öncelik sıralamasındaki ilk modülün hangi fazlarla tamamlanacağı pasif olarak görünür hale getirildi.",
-  "Stok read-only doğrulama, 20 satır kullanıcı doğrulaması, arama/filtre, barkod/duplicate hazırlığı, detay görünümü, risk etiketleri ve depo/personel ekranı fazları durum, veri modu, risk ve sonraki adımla listelendi.",
-  "Bu sürüm yeni stok verisi okuma, SQL sorgusu, veri yazma, import/senkron/export, dosya üretimi veya stok dışı kapsam başlatmadan yalnızca stok geliştirme rehberi sağlar.",
+  "Dashboard'a Barkod / El Terminali Geliştirme Yol Haritası paneli eklenerek öncelik sıralamasındaki ikinci modülün hangi fazlarla tamamlanacağı pasif olarak görünür hale getirildi.",
+  "Barkod senaryosu, barkodsuz ürün listesi, duplicate kontrol, Honeywell okutma akışı, sayım farkı, depo personel ekranı ve Vega'ya yazmadan read-only karşılaştırma fazları durum, veri modu, risk ve sonraki adımla listelendi.",
+  "Bu sürüm gerçek barkod okutma, cihaz bağlantısı, Honeywell bağlantısı, veri okuma/yazma, SQL/Vega işlemi, import/senkron/export, dosya üretimi veya görev/onay kaydı başlatmadan yalnızca pasif barkod yol haritası sağlar.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
+  { id: "dashboard-barcode-handheld-roadmap", label: "Barkod / El Terminali Geliştirme Yol Haritası'na git" },
   { id: "dashboard-stock-management-roadmap", label: "Stok Yönetimi Geliştirme Yol Haritası'na git" },
   { id: "dashboard-erp-module-priority-order", label: "ERP Modül Öncelik Sıralaması'na git" },
   { id: "dashboard-staff-usage-screen-map", label: "Personel Kullanım Ekranları Haritası'na git" },
@@ -41,6 +42,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-staff-usage-screen-map", label: "Personel Kullanım Ekranları Haritası'na git" },
       { id: "dashboard-erp-module-priority-order", label: "ERP Modül Öncelik Sıralaması'na git" },
       { id: "dashboard-stock-management-roadmap", label: "Stok Yönetimi Geliştirme Yol Haritası'na git" },
+      { id: "dashboard-barcode-handheld-roadmap", label: "Barkod / El Terminali Geliştirme Yol Haritası'na git" },
       { id: "dashboard-risk-warning-center", label: "Risk ve Uyarı Merkezi'ne git" },
       { id: "dashboard-data-field-dictionary", label: "Veri Alan Sözlüğü'ne git" },
       { id: "dashboard-owner-view", label: "Patron Bakışı'na git" },
@@ -91,7 +93,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-stock-management-roadmap", "dashboard-erp-module-priority-order"],
+    updatedSectionIds: ["dashboard-barcode-handheld-roadmap", "dashboard-stock-management-roadmap"],
   },
   reports: {
     releaseHighlightItems,

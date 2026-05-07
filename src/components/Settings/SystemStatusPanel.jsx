@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.79.0",
+    title: "Barkod El Terminali Geliştirme Yol Haritası",
+    area: "Dashboard / Sistem Durumu",
+    description: "ERP öncelik sıralamasında ikinci sıradaki Barkod / El Terminali modülü için barkod senaryosu tanımı, barkodsuz ürün listesi hazırlığı, duplicate barkod kontrol mantığı, Honeywell okutma akışı taslağı, sayım farkı kontrol akışı, depo personel kullanım ekranı ve Vega'ya yazmadan read-only karşılaştırma fazları pasif yol haritası olarak eklendi; gerçek barkod okutma, cihaz bağlantısı, veri okuma/yazma, SQL/Vega işlemi, import/senkron/export, dosya/export veya görev/onay kaydı eklenmedi.",
+  },
+  {
     version: "v1.78.0",
     title: "Stok Yönetimi Geliştirme Yol Haritası",
     area: "Dashboard / Sistem Durumu",

@@ -181,6 +181,23 @@ const stockManagementRoadmapNoActionItems = [
   "Dosya/export yok.",
   "Stok dışı kapsam yok.",
 ];
+const barcodeHandheldRoadmapPhases = [
+  { phase: "Faz 1: Barkod senaryosu tanımı", status: "Hazırlıkta", dataMode: "Pasif iş akışı", risk: "Orta", nextStep: "Depo senaryosu netleşecek" },
+  { phase: "Faz 2: Barkodsuz ürün listesi hazırlığı", status: "Planlandı", dataMode: "Pasif liste taslağı", risk: "Orta", nextStep: "Barkodsuz ürün etiketi tanımı" },
+  { phase: "Faz 3: Duplicate barkod kontrol mantığı", status: "Planlandı", dataMode: "İş seviyesi kontrol", risk: "Yüksek", nextStep: "Duplicate kalite kuralı" },
+  { phase: "Faz 4: Honeywell okutma akışı taslağı", status: "Pasif taslak", dataMode: "Cihaz bağlantısı yok", risk: "Yüksek", nextStep: "Okutma ekran akışı çizilecek" },
+  { phase: "Faz 5: Sayım farkı kontrol akışı", status: "Sonraki faz", dataMode: "Pasif karşılaştırma", risk: "Yüksek", nextStep: "Sayım farkı karar kuralı" },
+  { phase: "Faz 6: Depo personel kullanım ekranı", status: "Hazırlıkta", dataMode: "Pasif ekran haritası", risk: "Orta", nextStep: "Depo rol ekranı doğrulanacak" },
+  { phase: "Faz 7: Vega'ya yazmadan read-only karşılaştırma", status: "Güvenlik kapısı", dataMode: "Read-only karşılaştırma adayı", risk: "Çok yüksek", nextStep: "Yazmasız kontrol sınırı" },
+];
+const barcodeHandheldRoadmapNoActionItems = [
+  "Gerçek barkod okutma yok.",
+  "Cihaz bağlantısı yok.",
+  "Vega'ya yazma yok.",
+  "Stok güncelleme yok.",
+  "Dosya/export yok.",
+  "SQL/Vega işlemi yok.",
+];
 const vegaReadonlyModuleMatrixRows = [
   { module: "Stok", status: "Hazır", read: "Manuel read-only", write: "Yok", risk: "Orta", nextStep: "Kullanıcı doğrulaması" },
   { module: "Cari", status: "Hazırlık", read: "Yok", write: "Yok", risk: "Yüksek", nextStep: "Kapsam analizi" },
@@ -1175,6 +1192,8 @@ export default function Dashboard() {
 
       <StockManagementRoadmapPanel />
 
+      <BarcodeHandheldRoadmapPanel />
+
       <RiskWarningCenter />
 
       <DataFieldDictionaryPanel />
@@ -1557,6 +1576,43 @@ function StockManagementRoadmapPanel() {
       <CommercePanel title="Bu Sürümde Olmayanlar" note="Bu kutu stok yol haritasının pasif sınırını gösterir; sorgu, veri, import, senkron veya export işlemi başlatmaz.">
         <div className="commerce-performance-grid">
           {stockManagementRoadmapNoActionItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+    </section>
+  );
+}
+
+function BarcodeHandheldRoadmapPanel() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-barcode-handheld-roadmap")}`} id="dashboard-barcode-handheld-roadmap">
+      <DashboardNewReleaseBadge sectionId="dashboard-barcode-handheld-roadmap" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Pasif barkod ve el terminali yol haritası</p>
+          <h2>Barkod / El Terminali Geliştirme Yol Haritası</h2>
+          <span>ERP öncelik sıralamasında ikinci sıradaki barkod modülünün hangi fazlarla tamamlanacağını gösterir; cihaz bağlantısı kurmaz, barkod okutmaz ve Vega işlemi başlatmaz.</span>
+        </div>
+      </div>
+
+      <div className="profitability-priority-grid">
+        {barcodeHandheldRoadmapPhases.map((phase) => (
+          <article className="profitability-priority-card" key={phase.phase}>
+            <span>{phase.phase}</span>
+            <strong>{phase.status}</strong>
+            <p>Veri modu: {phase.dataMode}</p>
+            <p>Risk seviyesi: {phase.risk}</p>
+            <small>Sonraki adım: {phase.nextStep}</small>
+          </article>
+        ))}
+      </div>
+
+      <CommercePanel title="Bu Sürümde Olmayanlar" note="Bu kutu barkod/el terminali yol haritasının pasif sınırını gösterir; cihaz, okutma, yazma veya export işlemi başlatmaz.">
+        <div className="commerce-performance-grid">
+          {barcodeHandheldRoadmapNoActionItems.map((item) => (
             <article className="commerce-performance-card" key={item}>
               <strong>{item}</strong>
             </article>
