@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.63.1";
+export const currentReleaseVersion = "v1.63.2";
 
-export const currentReleaseTitle = "Vega Read-only Operasyon Merkezi Durum Netleştirme";
+export const currentReleaseTitle = "Stok Önizleme Kullanıcı Doğrulama Paneli";
 
 export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "stock-preview-beta-package-status"];
 
 export const releaseHighlightItems = [
-  "Vega read-only operasyon merkezi kartlarında durum, bağlantı, veri yazma ve sonraki güvenli adım bilgileri netleştirildi.",
-  "Stok, cari, sipariş, kasa/finans ve export hazırlıklarının pasif ilerleme seviyesi patrona daha okunur hale getirildi.",
-  "Gerçek veri yazma, import, senkron, export, SQL/Vega otomatik bağlantısı veya hassas bilgi eklenmeden read-only güvenlik modeli korundu.",
+  "Stok önizleme ekranına kullanıcı doğrulama paneli eklendi.",
+  "20 satırlık read-only stok önizlemesinde stok kodu, ürün adı, fiyat, KDV ve şüpheli alan kontrolleri daha görünür hale getirildi.",
+  "Kontrol sonucu kaydı, veri yazma, import, senkron, export veya SQL/Vega otomatik bağlantısı eklenmeden read-only güvenlik modeli korundu.",
 ];
 
 export const releaseJumpLinks = [
@@ -88,8 +88,11 @@ export const releaseHighlightsByPage = {
   },
   vegaStockTrial: {
     releaseHighlightItems,
-    releaseJumpLinks: [{ id: "vega-stock-trial-panel", label: "Vega Stok Deneme alanına git" }],
-    updatedSectionIds: ["vega-stock-trial-panel"],
+    releaseJumpLinks: [
+      { id: "vega-stock-trial-panel", label: "Vega Stok Deneme alanına git" },
+      { id: "vega-stock-user-validation-panel", label: "Kullanıcı Doğrulama Paneli'ne git" },
+    ],
+    updatedSectionIds: ["vega-stock-trial-panel", "vega-stock-user-validation-panel"],
   },
   vegaImportPreview: {
     releaseHighlightItems,

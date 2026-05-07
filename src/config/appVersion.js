@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.63.1";
-export const APP_STAGE = "Vega Read-only Operasyon Merkezi Durum Netleştirme";
+export const APP_VERSION = "v1.63.2";
+export const APP_STAGE = "Stok Önizleme Kullanıcı Doğrulama Paneli";

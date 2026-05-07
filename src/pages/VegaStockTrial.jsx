@@ -212,6 +212,23 @@ export default function VegaStockTrial() {
     "Hata durumunda Vega'ya tekrar deneme baskısı yapılmayacak",
     "Gerçek okuma öncesi manuel yedek kontrolü yapılacak",
   ];
+  const stockUserValidationChecklist = [
+    "20 satır gerçekten Vega'dan mı geldi?",
+    "Stok kodu ürünle uyumlu mu?",
+    "Ürün adı okunabilir mi?",
+    "Kategori/marka alanı tahmin edilebilir mi?",
+    "Alış fiyatı mantıklı mı?",
+    "Satış fiyatı mantıklı mı?",
+    "KDV alanı kontrol edildi mi?",
+    "Boş veya şüpheli alan var mı?",
+  ];
+  const stockUserValidationSafetyNotes = [
+    "Bu panel sadece manuel kontrol rehberidir.",
+    "Kontrol sonucu kaydedilmez.",
+    "Vega'ya veri yazılmaz.",
+    "Yeni bağlantı başlatılmaz.",
+    "Önizleme verisi geçici frontend state içinde kalır.",
+  ];
   const readOnlyTransitionGateRows = [
     { requirement: "Manuel Vega yedeği kontrol edildi mi?", status: "Manuel kontrol gerekli" },
     { requirement: "Read-only kullanıcı yetkisi hazır mı?", status: "Bekliyor" },
@@ -710,6 +727,29 @@ export default function VegaStockTrial() {
             placeholder="Stok kodu, barkod veya ürün adı ara"
           />
         </label>
+
+        <div className="vega-security-checklist-panel section-updated-highlight" id="vega-stock-user-validation-panel">
+          <span className="new-release-badge">YENİ · {currentReleaseVersion}</span>
+          <div>
+            <h2>Kullanıcı Doğrulama Paneli</h2>
+            <p>20 satırlık stok önizlemesini Vega ekranıyla manuel karşılaştırmak için pasif kontrol rehberidir.</p>
+          </div>
+          <div className="vega-security-checklist-grid" aria-label="Stok önizleme kullanıcı doğrulama kontrol maddeleri">
+            {stockUserValidationChecklist.map((item) => (
+              <div className="vega-security-checklist-item" key={item}>
+                <span aria-hidden="true">•</span>
+                <strong>{item}</strong>
+              </div>
+            ))}
+          </div>
+          <div className="vega-stock-safety-box">
+            <ShieldCheck size={18} />
+            <div>
+              <strong>Güvenlik Notu</strong>
+              <span>{stockUserValidationSafetyNotes.join(" ")}</span>
+            </div>
+          </div>
+        </div>
 
         <div className="vega-stock-table-wrap">
           <table className="vega-stock-table">
