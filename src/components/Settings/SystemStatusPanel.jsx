@@ -298,7 +298,22 @@ const readonlyFailClosedStatusRows = [
   { label: "ERP’ye yazma/import", value: "Kapalı" },
 ];
 
+const readonlyEnvironmentPrepStatusRows = [
+  { label: "Ortam bilgisi", value: "Manuel hazırlanacak" },
+  { label: "Sunucu/DB bilgisi", value: "Bu ekranda tutulmaz" },
+  { label: "Read-only kullanıcı", value: "Manuel hazırlanacak" },
+  { label: "Test ortamı", value: "Karar bekliyor" },
+  { label: "Gerçek bağlantı", value: "Kapalı" },
+  { label: "Credential / veri yazma", value: "Yok" },
+];
+
 const versionHistoryRows = [
+  {
+    version: "v1.44.0",
+    title: "Read-only Bağlantı Ortam Bilgisi Manuel Hazırlık Merkezi",
+    area: "Vega Import Önizleme / Dashboard / Sistem Durumu / README",
+    description: "İlk read-only bağlantı öncesi SQL Server, DB adı, read-only kullanıcı, manuel yedek, test bilgisayarı ve test ortamı kararları pasif rehber olarak görünür hale getirildi; gerçek bağlantı, credential, query veya veri yazma eklenmedi.",
+  },
   {
     version: "v1.43.0",
     title: "İlk Read-only Bağlantı Denemesi Fail-closed Hazırlık Kabuğu",
@@ -826,8 +841,8 @@ export default function SystemStatusPanel() {
 
       <div className="system-status-focus-card">
         <span>Bu Sürümde Test Edilecek Alan</span>
-        <strong>Vega Import Önizleme / Read-only Fail-closed Kabuğu</strong>
-        <p>Bu sürümde fail-closed varsayılan kapalı politika, bloke edilen davranışlar ve ilk bağlantı öncesi teknik sınırlar özellikle kontrol edilmelidir.</p>
+        <strong>Vega Import Önizleme / Read-only Ortam Bilgisi Hazırlığı</strong>
+        <p>Bu sürümde ortam bilgisi hazırlığı, read-only kullanıcı, test bilgisayarı ve canlı/kopya ortam kararı özellikle kontrol edilmelidir.</p>
       </div>
 
       <div className="system-workflow-panel" {...sectionHighlightProps("system-workflow-model")}>
@@ -845,6 +860,24 @@ export default function SystemStatusPanel() {
         </div>
         <p className="system-workflow-safety-note">
           Gerçek veri bağlantısı, DB okuma, query, import ve veri yazma işlemleri yalnızca ayrı küçük ve açık onaylı sürümlerde ele alınır.
+        </p>
+      </div>
+
+      <div className="handheld-barcode-status-panel readonly-environment-prep-status-panel" {...sectionHighlightProps("readonly-environment-prep-status")}>
+        <div>
+          <h3>Read-only Ortam Bilgisi Hazırlık Durumu <NewReleaseBadge sectionId="readonly-environment-prep-status" /></h3>
+          <p>İlk bağlantı öncesi ortam başlıklarının kim tarafından manuel hazırlanacağı pasif sistem özeti olarak takip edilir.</p>
+        </div>
+        <div className="system-status-grid">
+          {readonlyEnvironmentPrepStatusRows.map((row) => (
+            <div className="system-status-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </div>
+          ))}
+        </div>
+        <p className="handheld-barcode-safety-note readonly-environment-prep-safety-note">
+          Bu sürüm yalnızca ortam bilgisi hazırlık rehberi sağlar; bağlantı, DB okuma, query, API, credential, connection test veya veri yazma işlemi yapmaz.
         </p>
       </div>
 

@@ -6,8 +6,8 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 
 ## Mevcut Durum
 
-- Güncel sürüm: v1.43.0
-- Aşama: İlk Read-only Bağlantı Denemesi Fail-closed Hazırlık Kabuğu
+- Güncel sürüm: v1.44.0
+- Aşama: Read-only Bağlantı Ortam Bilgisi Manuel Hazırlık Merkezi
 - Build kontrolü: GitHub Actions
 - El terminali: okuma, son okutulanlar, sayım sepeti, rapor/CSV/JSON önizleme hazırlığı
 - Stok ve barkod kalite kontrolü: pasif/mock risk görünürlüğü
@@ -142,6 +142,13 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 - Bu faz ilk gerçek read-only bağlantıdan önce fail-closed güvenlik prensibini görünür hale getirir.
 - Eksik yedek, doğrulanmamış read-only kullanıcı, kapsam aşımı, ham hata riski veya yazma yetkisi şüphesinde bağlantı denenmez.
 - Bu sürüm gerçek bağlantı, DB okuma, query, connection test, API, credential veya veri yazma yapmaz.
+- İlk gerçek bağlantı ileride ayrı küçük onaylı fazda ele alınır.
+
+## Read-only Bağlantı Ortam Bilgisi Manuel Hazırlık Fazı
+
+- Bu faz ilk gerçek read-only bağlantıdan önce SQL Server, DB adı, read-only kullanıcı, manuel yedek, test bilgisayarı ve test ortamı kararlarını görünür hale getirir.
+- Bu bilgiler bu projede tutulmaz; yalnızca manuel hazırlık rehberi gösterilir.
+- Gerçek bağlantı, DB okuma, query, connection test, API, credential veya veri yazma yapılmaz.
 - İlk gerçek bağlantı ileride ayrı küçük onaylı fazda ele alınır.
 
 ## Build Kontrolü

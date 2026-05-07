@@ -2,6 +2,8 @@ import { AlertTriangle, Database, ShieldCheck } from "lucide-react";
 import {
   readOnlyConnectionLocks,
   readOnlyConnectionPlan,
+  readOnlyEnvironmentDecisionNotes,
+  readOnlyEnvironmentPreparationItems,
   readOnlyFirstScopeRules,
   readOnlyNextPhaseBoundaries,
   readOnlyOperatorChecklist,
@@ -122,6 +124,67 @@ const failClosedStatusCards = [
   { label: "Query", value: readOnlyFailClosedPolicy.defaultQueryState },
   { label: "Connection test", value: "Kapalı" },
   { label: "Veri yazma/import", value: "Kapalı" },
+];
+
+const environmentPrepStatusCards = [
+  { label: "Ortam hazırlığı", value: "Manuel" },
+  { label: "Gerçek bağlantı", value: "Kapalı" },
+  { label: "Sunucu/DB bilgisi", value: "Bu ekranda girilmez" },
+  { label: "Read-only kullanıcı", value: "Manuel hazırlanacak" },
+  { label: "Test ortamı", value: "Tercihen kopya ortam" },
+  { label: "Veri yazma/import", value: "Kapalı" },
+];
+
+const roleEnvironmentPrepCards = [
+  {
+    title: "Teknik Sorumlu",
+    items: [
+      "SQL Server / DB bilgisini manuel tespit eder",
+      "Read-only kullanıcıyı hazırlar veya yetkisini doğrular",
+      "Yazma yetkisi olmadığını manuel kontrol eder",
+      "Test bilgisayarını belirler",
+    ],
+  },
+  {
+    title: "Operatör",
+    items: [
+      "Manuel yedek alındığını teyit eder",
+      "Test sırasında hata ve ekran notu tutar",
+      "Başarısızlıkta tekrar deneme yapmaz",
+      "Sonucu yöneticiye bildirir",
+    ],
+  },
+  {
+    title: "Patron / Yönetici",
+    items: [
+      "Testin canlı mı kopya ortamda mı yapılacağına karar verir",
+      "İlk kapsamın sadece 20 stok kartı olduğunu onaylar",
+      "Test saatini ve sorumluları belirler",
+      "Başarı/başarısızlık sonrası ikinci faz kararını verir",
+    ],
+  },
+];
+
+const testEnvironmentDecisionGroups = [
+  {
+    title: "Canlı dışı / kopya ortam tercih edilir çünkü",
+    items: [
+      "Risk daha düşüktür",
+      "Hata durumunda iş akışı etkilenmez",
+      "Bağlantı ve yetki testleri daha güvenli yapılır",
+      "Sonuçlar manuel karşılaştırma için izole olur",
+    ],
+  },
+  {
+    title: "Canlı ortam ancak şu şartlarla düşünülür",
+    items: [
+      "Manuel yedek kesin doğrulanmışsa",
+      "Read-only kullanıcı kesin doğrulanmışsa",
+      "İlk kapsam 20 stok kartı ile sınırlıysa",
+      "Yazma yetkisi kesinlikle kapalıysa",
+      "Test düşük riskli saatte yapılacaksa",
+    ],
+  },
 ];
 
 const failClosedRuleItems = [
@@ -614,6 +677,79 @@ export default function VegaImportPreview() {
           <h1>Vega Read-only Operasyon Merkezi</h1>
           <span>Bu ekran gerçek Vega bağlantısı kurmadan, ilk read-only deneme öncesi güvenlik, saha ve kapsam kontrollerini tek yerde toplar.</span>
         </div>
+      </section>
+
+      <section className="vega-technical-gate-center section-updated-highlight" id="vega-readonly-environment-prep-center">
+        <div className="vega-technical-gate-hero">
+          <p>Pasif ortam hazırlığı</p>
+          <h2>Read-only Bağlantı Ortam Bilgisi Manuel Hazırlık Merkezi</h2>
+          <span>
+            İlk gerçek read-only bağlantıdan önce gerekli SQL Server, veritabanı, read-only kullanıcı, yedek, test bilgisayarı ve test ortamı bilgilerinin gerçek veri girişi yapılmadan manuel olarak kim tarafından hazırlanacağını gösteren pasif rehber ekranı.
+          </span>
+        </div>
+
+        <div className="vega-technical-gate-status-grid">
+          {environmentPrepStatusCards.map((card) => (
+            <article className="vega-import-summary-card" key={card.label}>
+              <span>{card.label}</span>
+              <strong>{card.value}</strong>
+            </article>
+          ))}
+        </div>
+
+        <section className="vega-technical-gate-panel" id="vega-environment-prep-table">
+          <h3>Ortam Bilgisi Hazırlık Tablosu</h3>
+          <div className="vega-technical-gate-lock-grid">
+            {readOnlyEnvironmentPreparationItems.map((row) => (
+              <article className="vega-technical-lock-row" key={row.label}>
+                <span>{row.label}</span>
+                <strong>{row.owner}</strong>
+                <small>{row.status}</small>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="vega-technical-gate-panel" id="vega-role-environment-prep">
+          <h3>Rol Bazlı Ortam Hazırlığı</h3>
+          <div className="vega-technical-gate-card-grid">
+            {roleEnvironmentPrepCards.map((card) => (
+              <article className="vega-operation-group-card" key={card.title}>
+                <h3>{card.title}</h3>
+                <ul>
+                  {card.items.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="vega-technical-gate-panel" id="vega-test-environment-decision-guide">
+          <h3>Test Ortamı Karar Rehberi</h3>
+          <div className="vega-technical-gate-card-grid">
+            {testEnvironmentDecisionGroups.map((group) => (
+              <article className="vega-operation-group-card" key={group.title}>
+                <h3>{group.title}</h3>
+                <ul>
+                  {group.items.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+          <div className="vega-technical-gate-card-grid">
+            {readOnlyEnvironmentDecisionNotes.map((note) => (
+              <article className="vega-owner-summary-row" key={note}>
+                <ShieldCheck size={14} />
+                <span>{note}</span>
+              </article>
+            ))}
+          </div>
+          <p>Bu sürümde canlı veya kopya ortama bağlantı açılmaz. Sadece karar rehberi sunulur.</p>
+        </section>
       </section>
 
       <section className="vega-technical-gate-center section-updated-highlight" id="vega-readonly-fail-closed-shell">

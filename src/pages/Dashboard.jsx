@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import CommerceInsights from "../components/Dashboard/CommerceInsights.jsx";
 import KpiCard from "../components/Dashboard/KpiCard.jsx";
 import { APP_STAGE, APP_VERSION } from "../config/appVersion.js";
-import { readOnlyConnectionPlan, readOnlyOperatorChecklist } from "../config/readOnlyConnectionPlan.js";
+import { readOnlyConnectionPlan, readOnlyEnvironmentPreparationItems, readOnlyOperatorChecklist } from "../config/readOnlyConnectionPlan.js";
 import { readOnlyFailClosedPolicy } from "../config/readOnlyFailClosedPolicy.js";
 import { currentReleaseVersion, releaseHighlightsByPage } from "../config/releaseHighlights.js";
 import { useErpData } from "../context/ErpDataContext.jsx";
@@ -73,6 +73,10 @@ const ownerViewCards = [
   { label: "Varsayılan bağlantı", value: "Kapalı" },
   { label: "Fail-closed credential / query", value: "Yok" },
   { label: "Fail-closed sonraki faz", value: "Küçük read-only deneme" },
+  { label: "Ortam hazırlığı", value: "Manuel" },
+  { label: "Ortam read-only kullanıcı", value: "Hazırlanacak" },
+  { label: "Test ortamı kararı", value: "Bekliyor" },
+  { label: "Ortam gerçek bağlantı", value: "Kapalı" },
   { label: "Barkod operasyonu", value: "Hazırlıkta" },
   { label: "Barkod kalite kontrolü", value: "Öncelikli" },
   { label: "Riskli barkodlar", value: "İzlenecek" },
@@ -142,6 +146,10 @@ const ownerTodayItems = [
   "Bloke edilen davranışlar kontrol edilecek",
   "Read-only kullanıcı ve manuel yedek olmadan bağlantı denenmeyeceği teyit edilecek",
   "Sonraki küçük bağlantı fazı sınırları okunacak",
+  "SQL Server / DB bilgisi teknik sorumlu tarafından manuel tespit edilecek",
+  "Read-only kullanıcı yetkisi hazırlanacak veya doğrulanacak",
+  "Test ortamı canlı mı kopya mı olacak kararı verilecek",
+  "Test bilgisayarı ve test saati belirlenecek",
   "Personel kullanım notları toplanacak",
   "Gerçek veri bağlantısı için yedek ve yetki kontrolü hazırlanacak",
 ];
@@ -219,6 +227,15 @@ const readonlyFailClosedSummaryCards = [
   { label: "Connection test", value: "Kapalı" },
   { label: "Credential", value: "Yok" },
   { label: "Veri yazma/import", value: "Kapalı" },
+];
+
+const readonlyEnvironmentPrepSummaryCards = [
+  { label: "Ortam hazırlığı", value: "Manuel" },
+  { label: "Hazırlık başlığı", value: `${readOnlyEnvironmentPreparationItems.length} statik madde` },
+  { label: "Read-only kullanıcı", value: "Hazırlanacak" },
+  { label: "Test ortamı kararı", value: "Bekliyor" },
+  { label: "Gerçek bağlantı", value: "Kapalı" },
+  { label: "Credential / veri yazma", value: "Yok" },
 ];
 
 const readonlyFinalDecisionSummaryCards = [
@@ -399,6 +416,8 @@ export default function Dashboard() {
 
       <OwnerView />
 
+      <ReadonlyEnvironmentPrepSummary />
+
       <ReadonlyFailClosedSummary />
 
       <ReadonlyFinalSecurityScanSummary />
@@ -438,6 +457,30 @@ export default function Dashboard() {
         <DashboardNewReleaseBadge sectionId="dashboard-commerce-insights" />
       </CommerceInsights>
     </>
+  );
+}
+
+function ReadonlyEnvironmentPrepSummary() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-readonly-environment-prep-summary")}`} id="dashboard-readonly-environment-prep-summary">
+      <DashboardNewReleaseBadge sectionId="dashboard-readonly-environment-prep-summary" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Pasif ortam hazırlığı</p>
+          <h2>Read-only Ortam Bilgisi Hazırlık Özeti</h2>
+          <span>Teknik sorumlu, operatör ve patronun bağlantı öncesi manuel hazırlayacağı ortam bilgileri gerçek veri girişi olmadan görünür.</span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {readonlyEnvironmentPrepSummaryCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+    </section>
   );
 }
 

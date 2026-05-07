@@ -1,18 +1,18 @@
-export const currentReleaseVersion = "v1.43.0";
+export const currentReleaseVersion = "v1.44.0";
 
-export const currentReleaseTitle = "İlk Read-only Bağlantı Denemesi Fail-closed Hazırlık Kabuğu";
+export const currentReleaseTitle = "Read-only Bağlantı Ortam Bilgisi Manuel Hazırlık Merkezi";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "readonly-fail-closed-status"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "readonly-environment-prep-status"];
 
 export const releaseHighlightItems = [
-  "İlk read-only bağlantı denemesi öncesi fail-closed güvenlik kabuğu pasif olarak hazırlandı.",
-  "Bağlantı kapalıyken uygulanacak DB okuma, query, connection test, credential ve veri yazma kilitleri görünür hale getirildi.",
-  "Gerçek Vega bağlantısı, SQL/ODBC, DB okuma, query, connection test, API veya veri yazma eklenmeden güvenli teknik hazırlık korundu.",
+  "İlk read-only bağlantı öncesi SQL Server, DB adı, read-only kullanıcı, yedek ve test bilgisayarı gibi ortam bilgileri manuel hazırlık rehberiyle görünür hale getirildi.",
+  "Teknik sorumlu, operatör ve patronun bağlantı öncesi hazırlayacağı bilgiler rol bazlı olarak netleştirildi.",
+  "Gerçek Vega bağlantısı, SQL/ODBC, DB okuma, query, connection test, API, credential veya veri yazma eklenmeden güvenli hazırlık korundu.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
-  { id: "readonly-fail-closed-status", label: "Read-only Fail-closed Durumu'na git" },
+  { id: "readonly-environment-prep-status", label: "Read-only Ortam Hazırlık Durumu'na git" },
   { id: "system-workflow-model", label: "Çalışma Modeli'ne git" },
 ];
 
@@ -28,6 +28,7 @@ export const releaseHighlightsByPage = {
     releaseHighlightItems,
     releaseJumpLinks: [
       { id: "dashboard-owner-view", label: "Patron Bakışı'na git" },
+      { id: "dashboard-readonly-environment-prep-summary", label: "Read-only Ortam Hazırlığı'na git" },
       { id: "dashboard-readonly-fail-closed-summary", label: "Read-only Fail-closed Özeti'ne git" },
       { id: "dashboard-readonly-final-security-scan-summary", label: "Read-only Son Güvenlik Taraması'na git" },
       { id: "dashboard-readonly-operator-checklist-summary", label: "Read-only Operatör Checklist Özeti'ne git" },
@@ -44,7 +45,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-owner-view", "dashboard-readonly-fail-closed-summary", "dashboard-daily-operation"],
+    updatedSectionIds: ["dashboard-owner-view", "dashboard-readonly-environment-prep-summary", "dashboard-daily-operation"],
   },
   reports: {
     releaseHighlightItems,
@@ -75,6 +76,10 @@ export const releaseHighlightsByPage = {
   vegaImportPreview: {
     releaseHighlightItems,
     releaseJumpLinks: [
+      { id: "vega-readonly-environment-prep-center", label: "Ortam Bilgisi Hazırlığı'na git" },
+      { id: "vega-environment-prep-table", label: "Ortam Bilgisi Tablosu'na git" },
+      { id: "vega-role-environment-prep", label: "Rol Bazlı Ortam Hazırlığı'na git" },
+      { id: "vega-test-environment-decision-guide", label: "Test Ortamı Karar Rehberi'ne git" },
       { id: "vega-readonly-fail-closed-shell", label: "Fail-closed Hazırlık Kabuğu'na git" },
       { id: "vega-fail-closed-rules", label: "Fail-closed Kuralları'na git" },
       { id: "vega-blocked-behaviors", label: "Bloke Edilen Davranışlar'a git" },
@@ -108,7 +113,7 @@ export const releaseHighlightsByPage = {
       { id: "vega-import-quality-note", label: "Kalite Kontrol Notu'na git" },
       { id: "vega-readonly-roadmap", label: "Read-only Yol Haritası'na git" },
     ],
-    updatedSectionIds: ["vega-readonly-fail-closed-shell", "vega-fail-closed-rules", "vega-blocked-behaviors", "vega-first-real-connection-boundary"],
+    updatedSectionIds: ["vega-readonly-environment-prep-center", "vega-environment-prep-table", "vega-role-environment-prep", "vega-test-environment-decision-guide"],
   },
 
   warehouseTerminal: {

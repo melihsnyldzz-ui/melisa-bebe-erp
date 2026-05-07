@@ -61,3 +61,22 @@ export const readOnlyFailClosedPreparationNotes = [
   "Fail-closed prensibi gereği eksik şart varsa bağlantı denenmez.",
   "Bu hazırlık dosyaları gerçek bağlantı davranışı içermez.",
 ];
+
+export const readOnlyEnvironmentPreparationItems = [
+  { label: "SQL Server / sunucu bilgisi", owner: "Teknik sorumlu", status: "Manuel tespit edilecek" },
+  { label: "Veritabanı adı", owner: "Teknik sorumlu", status: "Manuel tespit edilecek" },
+  { label: "Read-only kullanıcı", owner: "Teknik sorumlu", status: "Sadece okuma yetkisiyle hazırlanacak" },
+  { label: "Manuel yedek", owner: "Operatör / teknik sorumlu", status: "Testten önce doğrulanacak" },
+  { label: "Test bilgisayarı", owner: "Teknik sorumlu", status: "Manuel belirlenecek" },
+  { label: "Test ortamı", owner: "Patron / yönetici", status: "Canlı dışı/kopya ortam tercih edilecek" },
+  { label: "Test zamanı", owner: "Patron / yönetici", status: "Riskin düşük olduğu saat seçilecek" },
+  { label: "Hata notu sorumlusu", owner: "Operatör", status: "Test sırasında not alacak" },
+];
+
+export const readOnlyEnvironmentDecisionNotes = [
+  "Bu ekranda gerçek bağlantı bilgisi girilmez.",
+  "Sunucu, DB adı, kullanıcı adı veya şifre bu dosyada tutulmaz.",
+  "Read-only kullanıcı yetkisi manuel olarak doğrulanacaktır.",
+  "İlk deneme mümkünse canlı dışı/kopya ortamda yapılmalıdır.",
+  "Gerçek bağlantı ayrı küçük ve onaylı fazda ele alınacaktır.",
+];
