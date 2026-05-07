@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.68.0",
+    title: "Patron Onay Paketi Hazırlık Paneli",
+    area: "Dashboard / Sistem Durumu",
+    description: "Read-only test raporu paneli yakınına onay kaydı, dosya oluşturma, veri okuma/yazma veya SQL/Vega işlemi başlatmadan patrona sunulacak onay paketi başlıklarını gösteren pasif hazırlık paneli eklendi.",
+  },
+  {
     version: "v1.67.1",
     title: "Read-only Test Raporu Kontrol Netleştirme",
     area: "Dashboard / Sistem Durumu",

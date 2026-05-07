@@ -131,6 +131,21 @@ const readonlyTestReportDecisionSummaryItems = [
   "Canlıya geçişe engel var mı?",
   "Patron kararı nedir?",
 ];
+const ownerApprovalPackageItems = [
+  { title: "Read-only test raporu", status: "Hazırlanacak" },
+  { title: "Canlıya geçiş eksik listesi", status: "Manuel kontrol" },
+  { title: "Modül durum matrisi", status: "Manuel kontrol" },
+  { title: "Finans/kasa güvenlik notu", status: "Bekliyor" },
+  { title: "Cari/sipariş maskeleme notu", status: "Bekliyor" },
+  { title: "Manuel yedek prosedürü", status: "Hazırlanacak" },
+  { title: "Son karar: Bekliyor", status: "Bekliyor" },
+];
+const ownerApprovalPackageSafetyNotes = [
+  "Bu panel onay kaydetmez.",
+  "Dosya oluşturmaz.",
+  "Veri okumaz/yazmaz.",
+  "SQL/Vega işlemi başlatmaz.",
+];
 const financePreviewPrepGateCards = [
   { label: "Finans kapsam", value: "Planlandı" },
   { label: "Bağlantı", value: "Yok" },
@@ -874,6 +889,8 @@ export default function Dashboard() {
 
       <ReadonlyTestReportPrepPanel />
 
+      <OwnerApprovalPackagePrepPanel />
+
       <FinancePreviewPrepGate />
 
       <CurrentPreviewPrepGate />
@@ -1156,6 +1173,33 @@ function ReadonlyTestReportPrepPanel() {
       </CommercePanel>
 
       <p className="commerce-profitability-safety-note">{readonlyTestReportPrepSafetyNotes.join(" · ")}</p>
+    </section>
+  );
+}
+
+function OwnerApprovalPackagePrepPanel() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-owner-approval-package-prep")}`} id="dashboard-owner-approval-package-prep">
+      <DashboardNewReleaseBadge sectionId="dashboard-owner-approval-package-prep" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Pasif patron onay paketi hazırlığı</p>
+          <h2>Patron Onay Paketi Hazırlık Paneli</h2>
+          <span>Patrona sunulacak onay paketi başlıklarını gösterir; onay almaz, kayıt tutmaz, dosya oluşturmaz ve veri işlemi başlatmaz.</span>
+        </div>
+      </div>
+
+      <div className="profitability-priority-grid">
+        {ownerApprovalPackageItems.map((item) => (
+          <article className="profitability-priority-card" key={item.title}>
+            <span>{item.status}</span>
+            <strong>{item.title}</strong>
+            <small>Onay paketi hazırlık başlığı</small>
+          </article>
+        ))}
+      </div>
+
+      <p className="commerce-profitability-safety-note">{ownerApprovalPackageSafetyNotes.join(" · ")}</p>
     </section>
   );
 }
