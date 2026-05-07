@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.35.0";
+export const currentReleaseVersion = "v1.35.1";
 
-export const currentReleaseTitle = "Canlı Kullanım Öncesi Operasyon Test Merkezi";
+export const currentReleaseTitle = "Mavi Nokta ve Yeni Sürüm Görünürlüğü Düzeltmesi";
 
 export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "prelive-operation-test-status"];
 
 export const releaseHighlightItems = [
-  "Canlı kullanım öncesi personel, patron, saha ve güvenlik testleri tek merkezde toparlandı.",
-  "Dashboard, raporlama, el terminali, cari, stok ve Vega hazırlık modülleri için pasif test senaryoları görünür hale getirildi.",
-  "Gerçek Vega bağlantısı, DB okuma, query, kayıt oluşturma, cihaz bağlantısı veya veri yazma eklenmeden güvenli hazırlık korundu.",
+  "Sol menüdeki mavi nokta sistemi güncel sürümde yenilenen sayfaları doğru gösterecek şekilde düzeltildi.",
+  "Dashboard, Raporlar ve Ayarlar sayfaları v1.35.x yenilikleriyle uyumlu hale getirildi.",
+  "Gerçek bağlantı, DB okuma, query, API, veri yazma veya import eklenmeden görünürlük düzeltmesi yapıldı.",
 ];
 
 export const releaseJumpLinks = [

@@ -6,8 +6,8 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 
 ## Mevcut Durum
 
-- Güncel sürüm: v1.35.0
-- Aşama: Canlı Kullanım Öncesi Operasyon Test Merkezi
+- Güncel sürüm: v1.35.1
+- Aşama: Mavi Nokta ve Yeni Sürüm Görünürlüğü Düzeltmesi
 - Build kontrolü: GitHub Actions
 - El terminali: okuma, son okutulanlar, sayım sepeti, rapor/CSV/JSON önizleme hazırlığı
 - Stok ve barkod kalite kontrolü: pasif/mock risk görünürlüğü
@@ -76,6 +76,12 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 - Testler pasif/mock görünürlük sağlar.
 - Gerçek bağlantı, cihaz entegrasyonu, rapor export, kayıt oluşturma veya veri yazma yapılmaz.
 - Gerçek read-only bağlantı ve canlı kullanım denemesi ileride ayrı küçük onaylı fazlarda ele alınır.
+
+## Mavi Nokta ve Yeni Sürüm Görünürlüğü
+
+- Sol menüdeki mavi nokta güncel release highlight yapısına göre çalışır.
+- Güncel sürümde değişen sayfalar sol menüde işaretlenir.
+- Dashboard, Raporlar ve Ayarlar sayfaları v1.35.x görünürlüğüyle uyumlu tutulur.
 
 ## Build Kontrolü
 

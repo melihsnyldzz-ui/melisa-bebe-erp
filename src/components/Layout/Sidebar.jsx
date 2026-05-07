@@ -1,6 +1,7 @@
 import { PackageCheck } from "lucide-react";
 import melisaBabyLogo from "../../assets/melisa-baby-logo.jpg";
 import { APP_STAGE, APP_VERSION } from "../../config/appVersion.js";
+import { releaseHighlightsByPage } from "../../config/releaseHighlights.js";
 import { useAuth } from "../../context/AuthContext.jsx";
 import { menuItems, updatedMenuItemIds } from "../../data/mockData.js";
 
@@ -22,6 +23,16 @@ const menuPermissions = {
   "data-export": "reports.view",
   reports: "reports.view",
   settings: "settings.view",
+};
+
+const releasePageByMenuId = {
+  customers: "customers",
+  dashboard: "dashboard",
+  reports: "reports",
+  settings: "settings",
+  "vega-import-preview": "vegaImportPreview",
+  "vega-stock-trial": "vegaStockTrial",
+  "warehouse-terminal": "warehouseTerminal",
 };
 
 export default function Sidebar({ activeModule, onModuleChange }) {
@@ -47,7 +58,9 @@ export default function Sidebar({ activeModule, onModuleChange }) {
         {visibleMenuItems.map((item) => {
           const Icon = item.icon;
           const isActive = activeModule === item.id;
-          const hasUpdate = updatedMenuItemIds.includes(item.id);
+          const releasePageKey = releasePageByMenuId[item.id];
+          const hasReleaseUpdate = (releaseHighlightsByPage[releasePageKey]?.updatedSectionIds || []).length > 0;
+          const hasUpdate = hasReleaseUpdate || updatedMenuItemIds.includes(item.id);
 
           return (
             <button className={`nav-item ${isActive ? "active" : ""}`} key={item.id} onClick={() => onModuleChange(item.id)}>

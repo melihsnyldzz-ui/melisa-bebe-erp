@@ -40,7 +40,7 @@ export const menuItems = [
   { id: "settings", label: "Ayarlar", icon: Settings },
 ];
 
-export const updatedMenuItemIds = ["vega-stock-trial", "vega-import-preview", "settings"];
+export const updatedMenuItemIds = ["dashboard", "reports", "settings"];
 
 export const kpis = [
   { label: "Bugünkü Satış", value: "125.000 TL", icon: ShoppingBag, tone: "red" },
