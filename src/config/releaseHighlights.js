@@ -1,18 +1,18 @@
-export const currentReleaseVersion = "v1.38.0";
+export const currentReleaseVersion = "v1.39.0";
 
-export const currentReleaseTitle = "Read-only İlk Deneme Planı ve Geri Dönüş Prosedürü";
+export const currentReleaseTitle = "Read-only İlk Deneme Son Karar Merkezi";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "readonly-first-trial-plan-status"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "readonly-final-decision-status"];
 
 export const releaseHighlightItems = [
-  "İlk gerçek read-only deneme öncesi manuel yedek, geri dönüş ve başarısızlık senaryoları tek plan altında toplandı.",
-  "Test sonrası karşılaştırma, hata notu ve yönetici değerlendirme şablonları pasif olarak görünür hale getirildi.",
+  "İlk gerçek read-only deneme öncesi son karar kriterleri ve başla/başlama mantığı tek merkezde toplandı.",
+  "Manuel yedek, read-only kullanıcı, 20 satır sınırı, rollback ve hata yönetimi şartları son kontrol ekranında görünür hale getirildi.",
   "Gerçek Vega bağlantısı, SQL/ODBC, DB okuma, query, API, connection test veya veri yazma eklenmeden güvenli hazırlık korundu.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
-  { id: "readonly-first-trial-plan-status", label: "Read-only İlk Deneme Planı Durumu'na git" },
+  { id: "readonly-final-decision-status", label: "Read-only Son Karar Durumu'na git" },
   { id: "system-workflow-model", label: "Çalışma Modeli'ne git" },
 ];
 
@@ -28,6 +28,7 @@ export const releaseHighlightsByPage = {
     releaseHighlightItems,
     releaseJumpLinks: [
       { id: "dashboard-owner-view", label: "Patron Bakışı'na git" },
+      { id: "dashboard-readonly-final-decision-summary", label: "Read-only Son Karar Özeti'ne git" },
       { id: "dashboard-readonly-first-trial-summary", label: "İlk Deneme Planı Özeti'ne git" },
       { id: "dashboard-vega-technical-gate-summary", label: "Vega Teknik Ön Kapı Özeti'ne git" },
       { id: "dashboard-module-maturity-score-center", label: "Modül Olgunluk Skor Merkezi'ne git" },
@@ -38,7 +39,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-owner-view", "dashboard-readonly-first-trial-summary", "dashboard-daily-operation"],
+    updatedSectionIds: ["dashboard-owner-view", "dashboard-readonly-final-decision-summary", "dashboard-daily-operation"],
   },
   reports: {
     releaseHighlightItems,
@@ -69,6 +70,10 @@ export const releaseHighlightsByPage = {
   vegaImportPreview: {
     releaseHighlightItems,
     releaseJumpLinks: [
+      { id: "vega-readonly-final-decision-center", label: "Son Karar Merkezi'ne git" },
+      { id: "vega-start-stop-decision-logic", label: "Başla / Başlama Mantığı'na git" },
+      { id: "vega-final-decision-matrix", label: "Son Karar Matrisi'ne git" },
+      { id: "vega-final-security-lock", label: "Son Güvenlik Kilidi'ne git" },
       { id: "vega-readonly-first-trial-plan", label: "İlk Deneme Planı'na git" },
       { id: "vega-first-trial-timeline", label: "Zaman Çizelgesi'ne git" },
       { id: "vega-rollback-procedure", label: "Rollback Prosedürü'ne git" },
@@ -81,7 +86,7 @@ export const releaseHighlightsByPage = {
       { id: "vega-import-quality-note", label: "Kalite Kontrol Notu'na git" },
       { id: "vega-readonly-roadmap", label: "Read-only Yol Haritası'na git" },
     ],
-    updatedSectionIds: ["vega-readonly-first-trial-plan", "vega-first-trial-timeline", "vega-rollback-procedure", "vega-post-test-template"],
+    updatedSectionIds: ["vega-readonly-final-decision-center", "vega-start-stop-decision-logic", "vega-final-decision-matrix", "vega-final-security-lock"],
   },
 
   warehouseTerminal: {

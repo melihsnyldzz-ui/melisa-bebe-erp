@@ -643,3 +643,12 @@
   font-weight: 800;
   line-height: 1.45;
 }
+
+.vega-technical-lock-row small {
+  display: block;
+  margin-top: 4px;
+  color: #1d4ed8;
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1.35;
+}

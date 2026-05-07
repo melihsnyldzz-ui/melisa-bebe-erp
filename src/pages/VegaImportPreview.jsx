@@ -65,6 +65,103 @@ const firstTrialPlanStatusCards = [
   { label: "Veri yazma/import", value: "Kapalı" },
 ];
 
+const finalDecisionStatusCards = [
+  { label: "Son karar durumu", value: "Hazırlık ekranı" },
+  { label: "Gerçek bağlantı", value: "Kapalı" },
+  { label: "Başlama kararı", value: "Bu ekrandan verilmez" },
+  { label: "İlk kapsam", value: "Sadece stok kartı" },
+  { label: "İlk sınır", value: "20 satır" },
+  { label: "Veri yazma/import", value: "Kapalı" },
+];
+
+const startStopDecisionGroups = [
+  {
+    title: "Başlamaya Yakın Görünen Şartlar",
+    items: [
+      "Main branch güncel ve build başarılı",
+      "Manuel yedek prosedürü hazır",
+      "Read-only kullanıcı manuel doğrulanacak",
+      "İlk kapsam sadece stok kartı",
+      "20 satır sınırı net",
+      "Ham hata gizleme politikası hazır",
+      "Veri yazma/import kapalı",
+    ],
+  },
+  {
+    title: "Başlamayı Engelleyen Durumlar",
+    items: [
+      "Yedek alınmadıysa",
+      "Read-only kullanıcı kesin değilse",
+      "Yazma yetkisi şüphesi varsa",
+      "Test kapsamı 20 satırı aşacaksa",
+      "Ham hata gizleme net değilse",
+      "Rollback sorumlusu belli değilse",
+      "Canlıda riskli saat/dönem ise",
+    ],
+  },
+];
+
+const finalDecisionMatrixRows = [
+  { control: "Manuel yedek hazır mı?", expected: "Hazır olmalı", decision: "Hazır değilse başlama" },
+  { control: "Read-only kullanıcı doğrulandı mı?", expected: "Doğrulanmalı", decision: "Doğrulanmadıysa başlama" },
+  { control: "İlk kapsam sadece stok kartı mı?", expected: "Sadece stok kartı", decision: "Değilse başlama" },
+  { control: "20 satır sınırı korunuyor mu?", expected: "En fazla 20 satır", decision: "Korunmuyorsa başlama" },
+  { control: "Timeout/ham hata politikası hazır mı?", expected: "Hazır olmalı", decision: "Hazır değilse başlama" },
+  { control: "Rollback sorumlusu belli mi?", expected: "Sorumlu belli olmalı", decision: "Belli değilse başlama" },
+  { control: "Veri yazma/import kapalı mı?", expected: "Kapalı kalmalı", decision: "Kapalı değilse başlama" },
+  { control: "Test sonucu kim değerlendirecek?", expected: "Değerlendiren kişi belli olmalı", decision: "Belirsizse başlama" },
+];
+
+const scopeBoundaryGroups = [
+  {
+    title: "Kapsam içinde",
+    items: [
+      "Sadece stok kartı okuma",
+      "En fazla 20 satır",
+      "Sadece read-only kullanıcı",
+      "Sadece manuel karşılaştırma",
+      "Sadece gözlem/hata notu",
+    ],
+  },
+  {
+    title: "Kapsam dışında",
+    items: [
+      "Cari okuma",
+      "Fiş okuma",
+      "Hareket okuma",
+      "Tahsilat/ödeme okuma",
+      "Import",
+      "Veri yazma",
+      "Fiyat/stok/cari güncelleme",
+      "Rapor export",
+      "Otomatik aktarım",
+    ],
+  },
+];
+
+const finalSecurityLockRows = [
+  { label: "Canlı Vega bağlantısı", value: "Bu sürümde kapalı" },
+  { label: "SQL/ODBC", value: "Bu sürümde kapalı" },
+  { label: "DB okuma", value: "Bu sürümde kapalı" },
+  { label: "Query", value: "Bu sürümde yok" },
+  { label: "API/backend", value: "Yok" },
+  { label: "Connection test", value: "Yok" },
+  { label: "ERP’ye yazma", value: "Kapalı" },
+  { label: "Import", value: "Kapalı" },
+  { label: "LocalStorage", value: "Yok" },
+  { label: "Gerçek işlem butonu", value: "Yok" },
+];
+
+const afterFinalDecisionSteps = [
+  "Bu ekran yalnızca son karar rehberidir.",
+  "Gerçek ilk deneme ayrı küçük sürümde yapılır.",
+  "O küçük sürümde sadece read-only bağlantı açılır.",
+  "İlk test sadece 20 stok kartı ile sınırlandırılır.",
+  "Başarısızlıkta tekrar denenmez, rapor hazırlanır.",
+  "Başarı sonrası ikinci kapsam yine ayrı küçük sürümde planlanır.",
+  "Veri yazma ve import uzun süre kapalı kalır.",
+];
+
 const firstTrialTimelineStages = [
   {
     title: "Aşama 1: Test Öncesi",
@@ -302,6 +399,92 @@ export default function VegaImportPreview() {
           <h1>Vega Read-only Operasyon Merkezi</h1>
           <span>Bu ekran gerçek Vega bağlantısı kurmadan, ilk read-only deneme öncesi güvenlik, saha ve kapsam kontrollerini tek yerde toplar.</span>
         </div>
+      </section>
+
+      <section className="vega-technical-gate-center section-updated-highlight" id="vega-readonly-final-decision-center">
+        <div className="vega-technical-gate-hero">
+          <p>Pasif son karar ekranı</p>
+          <h2>Read-only İlk Deneme Son Karar Merkezi</h2>
+          <span>
+            İlk gerçek Vega read-only bağlantı açılmadan önce başla/başlama kararının hangi şartlarla verileceğini, kapsam sınırlarını ve güvenlik kilitlerini pasif olarak gösteren son hazırlık ekranı.
+          </span>
+        </div>
+
+        <div className="vega-technical-gate-status-grid">
+          {finalDecisionStatusCards.map((card) => (
+            <article className="vega-import-summary-card" key={card.label}>
+              <span>{card.label}</span>
+              <strong>{card.value}</strong>
+            </article>
+          ))}
+        </div>
+
+        <section className="vega-technical-gate-panel" id="vega-start-stop-decision-logic">
+          <h3>Başla / Başlama Karar Mantığı</h3>
+          <div className="vega-technical-gate-card-grid">
+            {startStopDecisionGroups.map((group) => (
+              <article className="vega-operation-group-card" key={group.title}>
+                <h3>{group.title}</h3>
+                <ul>
+                  {group.items.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="vega-technical-gate-panel" id="vega-final-decision-matrix">
+          <h3>Son Karar Kontrol Matrisi</h3>
+          <div className="vega-technical-gate-lock-grid">
+            {finalDecisionMatrixRows.map((row) => (
+              <article className="vega-technical-lock-row" key={row.control}>
+                <span>{row.control}</span>
+                <strong>{row.expected}</strong>
+                <small>{row.decision}</small>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="vega-technical-gate-panel">
+          <h3>İlk Deneme Kapsam Sınırı</h3>
+          <div className="vega-technical-gate-card-grid">
+            {scopeBoundaryGroups.map((group) => (
+              <article className="vega-operation-group-card" key={group.title}>
+                <h3>{group.title}</h3>
+                <ul>
+                  {group.items.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="vega-technical-gate-panel" id="vega-final-security-lock">
+          <h3>Son Güvenlik Kilidi</h3>
+          <div className="vega-technical-gate-lock-grid">
+            {finalSecurityLockRows.map((row) => (
+              <article className="vega-technical-lock-row" key={row.label}>
+                <span>{row.label}</span>
+                <strong>{row.value}</strong>
+              </article>
+            ))}
+          </div>
+          <p>Bu panel son karar görünürlüğü sağlar. Gerçek bağlantı, test başlatma, kayıt oluşturma veya veri yazma işlemi yapmaz.</p>
+        </section>
+
+        <section className="vega-technical-gate-panel">
+          <h3>Son Karar Sonrası Yol</h3>
+          <ol className="vega-technical-gate-step-list">
+            {afterFinalDecisionSteps.map((step) => (
+              <li key={step}>{step}</li>
+            ))}
+          </ol>
+        </section>
       </section>
 
       <section className="vega-technical-gate-center section-updated-highlight" id="vega-readonly-first-trial-plan">

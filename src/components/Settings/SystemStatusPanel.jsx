@@ -242,7 +242,22 @@ const readonlyFirstTrialPlanStatusRows = [
   { label: "ERP’ye yazma/import", value: "Kapalı" },
 ];
 
+const readonlyFinalDecisionStatusRows = [
+  { label: "Son karar ekranı", value: "Pasif hazırlık" },
+  { label: "Gerçek bağlantı", value: "Kapalı" },
+  { label: "Başlama kararı", value: "Bu ekrandan verilmez" },
+  { label: "İlk kapsam", value: "Sadece stok kartı" },
+  { label: "İlk sınır", value: "20 satır" },
+  { label: "ERP’ye yazma/import", value: "Kapalı" },
+];
+
 const versionHistoryRows = [
+  {
+    version: "v1.39.0",
+    title: "Read-only İlk Deneme Son Karar Merkezi",
+    area: "Vega Import Önizleme / Dashboard / Sistem Durumu / README",
+    description: "İlk gerçek read-only deneme öncesi son karar kriterleri, başla/başlama mantığı, kapsam sınırı ve güvenlik kilitleri pasif olarak görünür hale getirildi; gerçek bağlantı, DB okuma, query, API, connection test veya veri yazma eklenmedi.",
+  },
   {
     version: "v1.38.0",
     title: "Read-only İlk Deneme Planı ve Geri Dönüş Prosedürü",
@@ -734,8 +749,8 @@ export default function SystemStatusPanel() {
 
       <div className="system-status-focus-card">
         <span>Bu Sürümde Test Edilecek Alan</span>
-        <strong>Vega Import Önizleme / Read-only İlk Deneme Planı</strong>
-        <p>Bu sürümde ilk deneme zaman çizelgesi, manuel yedek, rollback prosedürü, başarısızlık senaryoları ve değerlendirme şablonu özellikle kontrol edilmelidir.</p>
+        <strong>Vega Import Önizleme / Read-only Son Karar Merkezi</strong>
+        <p>Bu sürümde başla/başlama mantığı, son karar matrisi, kapsam sınırı ve güvenlik kilitleri özellikle kontrol edilmelidir.</p>
       </div>
 
       <div className="system-workflow-panel" {...sectionHighlightProps("system-workflow-model")}>
@@ -753,6 +768,24 @@ export default function SystemStatusPanel() {
         </div>
         <p className="system-workflow-safety-note">
           Gerçek veri bağlantısı, DB okuma, query, import ve veri yazma işlemleri yalnızca ayrı küçük ve açık onaylı sürümlerde ele alınır.
+        </p>
+      </div>
+
+      <div className="handheld-barcode-status-panel readonly-final-decision-status-panel" {...sectionHighlightProps("readonly-final-decision-status")}>
+        <div>
+          <h3>Read-only İlk Deneme Son Karar Durumu <NewReleaseBadge sectionId="readonly-final-decision-status" /></h3>
+          <p>İlk gerçek read-only deneme öncesi başlama kararı, kapsam sınırı ve son güvenlik kilitleri pasif sistem özeti olarak takip edilir.</p>
+        </div>
+        <div className="system-status-grid">
+          {readonlyFinalDecisionStatusRows.map((row) => (
+            <div className="system-status-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </div>
+          ))}
+        </div>
+        <p className="handheld-barcode-safety-note readonly-final-decision-safety-note">
+          Bu sürüm ilk read-only deneme son karar görünürlüğü sağlar; bağlantı, DB okuma, query, API, connection test veya veri yazma işlemi yapmaz.
         </p>
       </div>
 

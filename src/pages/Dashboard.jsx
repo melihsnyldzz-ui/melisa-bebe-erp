@@ -47,6 +47,10 @@ const ownerViewCards = [
   { label: "İlk read-only deneme", value: "Plan aşamasında" },
   { label: "Rollback prosedürü", value: "Hazırlıkta" },
   { label: "Manuel yedek", value: "Zorunlu" },
+  { label: "İlk read-only son karar", value: "Hazırlıkta" },
+  { label: "Başlama şartları", value: "Kontrol edilecek" },
+  { label: "Başlamayı engelleyenler", value: "Görünür" },
+  { label: "Son karar veri yazma/import", value: "Kapalı" },
   { label: "Barkod operasyonu", value: "Hazırlıkta" },
   { label: "Barkod kalite kontrolü", value: "Öncelikli" },
   { label: "Riskli barkodlar", value: "İzlenecek" },
@@ -93,6 +97,10 @@ const ownerTodayItems = [
   "Manuel yedek sorumlusu netleştirilecek",
   "Rollback prosedürü kontrol edilecek",
   "Test sonrası değerlendirme şablonu okunacak",
+  "Son karar kontrol matrisi gözden geçirilecek",
+  "Başlamayı engelleyen durumlar kontrol edilecek",
+  "İlk deneme kapsam sınırı tekrar doğrulanacak",
+  "Veri yazma/import kilidi kapalı kalacak",
   "Personel kullanım notları toplanacak",
   "Gerçek veri bağlantısı için yedek ve yetki kontrolü hazırlanacak",
 ];
@@ -118,7 +126,19 @@ const ownerDecisionItems = [
   "Veri yazma ve import hâlâ kapalı kalmalıdır.",
   "İlk gerçek bağlantı ayrı küçük onaylı sürümde açılmalıdır.",
   "Başarısızlıkta tekrar deneme yapılmadan önce rapor hazırlanmalıdır.",
+  "Bu ekrandan gerçek bağlantı başlatılmaz.",
+  "İlk gerçek bağlantı ayrı küçük sürümde açılmalıdır.",
+  "Başlama kararı yedek, read-only kullanıcı ve 20 satır sınırı doğrulandıktan sonra verilmelidir.",
   "Ana hedef: güvenli geçiş, hızlı kontrol, hatasız stok görünürlüğü",
+];
+
+const readonlyFinalDecisionSummaryCards = [
+  { label: "Son karar durumu", value: "Hazırlık ekranı" },
+  { label: "Gerçek bağlantı", value: "Kapalı" },
+  { label: "Başlama kararı", value: "Bu ekrandan verilmez" },
+  { label: "İlk kapsam", value: "Sadece stok kartı" },
+  { label: "İlk sınır", value: "20 satır" },
+  { label: "Veri yazma/import", value: "Kapalı" },
 ];
 
 const readonlyFirstTrialSummaryCards = [
@@ -290,6 +310,8 @@ export default function Dashboard() {
 
       <OwnerView />
 
+      <ReadonlyFinalDecisionSummary />
+
       <ReadonlyFirstTrialSummary />
 
       <VegaTechnicalGateSummary />
@@ -317,6 +339,30 @@ export default function Dashboard() {
         <DashboardNewReleaseBadge sectionId="dashboard-commerce-insights" />
       </CommerceInsights>
     </>
+  );
+}
+
+function ReadonlyFinalDecisionSummary() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-readonly-final-decision-summary")}`} id="dashboard-readonly-final-decision-summary">
+      <DashboardNewReleaseBadge sectionId="dashboard-readonly-final-decision-summary" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Pasif son karar görünürlüğü</p>
+          <h2>Read-only İlk Deneme Son Karar Özeti</h2>
+          <span>Başlama şartları, kapsam sınırı ve güvenlik kilitleri gerçek bağlantı açılmadan patron kararına hazır görünür.</span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {readonlyFinalDecisionSummaryCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+    </section>
   );
 }
 
