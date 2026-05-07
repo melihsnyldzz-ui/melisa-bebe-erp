@@ -24,11 +24,11 @@ const dashboardReleaseHighlights = releaseHighlightsByPage.dashboard;
 const dashboardUpdatedSectionIds = dashboardReleaseHighlights.updatedSectionIds;
 
 const vegaReadonlyOperationCards = [
-  { label: "Stok Önizleme", value: "Hazır / Manuel read-only", note: "Mevcut stok önizleme ekranı korunur." },
-  { label: "Cari Önizleme", value: "Planlandı", note: "Pasif hazırlık; bu sürümde bağlantı yok." },
-  { label: "Sipariş Önizleme", value: "Planlandı", note: "Pasif hazırlık; kapsam sonraki fazda netleşir." },
-  { label: "Kasa/Finans Özeti", value: "Planlandı", note: "Pasif hazırlık; veri okuma başlatmaz." },
-  { label: "Export Hazırlığı", value: "Planlandı / Pasif", note: "Dosya çıktısı ve dışa aktarım yok." },
+  { label: "Stok Önizleme", status: "Hazır", connection: "Manuel read-only", write: "Yok", nextStep: "Kullanıcı doğrulaması" },
+  { label: "Cari Önizleme", status: "Planlandı", connection: "Yok", write: "Yok", nextStep: "Tablo/kapsam analizi" },
+  { label: "Sipariş Önizleme", status: "Planlandı", connection: "Yok", write: "Yok", nextStep: "Read-only kapsam taslağı" },
+  { label: "Kasa/Finans Özeti", status: "Planlandı", connection: "Yok", write: "Yok", nextStep: "Sadece raporlama kapsamı" },
+  { label: "Export Hazırlığı", status: "Pasif/Kilitli", connection: "Yok", write: "Yok", nextStep: "Önce mock export tasarımı" },
 ];
 
 const vegaReadonlySafetyNotes = [
@@ -742,8 +742,10 @@ function VegaReadonlyOperationCenter() {
         {vegaReadonlyOperationCards.map((card) => (
           <article className="commerce-profitability-status-card" key={card.label}>
             <span>{card.label}</span>
-            <strong>{card.value}</strong>
-            <span>{card.note}</span>
+            <strong>{card.status}</strong>
+            <span>Bağlantı: {card.connection}</span>
+            <span>Veri yazma: {card.write}</span>
+            <span>Sonraki adım: {card.nextStep}</span>
           </article>
         ))}
       </div>

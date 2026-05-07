@@ -1,12 +1,12 @@
-export const currentReleaseVersion = "v1.63.0";
+export const currentReleaseVersion = "v1.63.1";
 
-export const currentReleaseTitle = "Vega Read-only Operasyon Merkezi Hazırlığı";
+export const currentReleaseTitle = "Vega Read-only Operasyon Merkezi Durum Netleştirme";
 
 export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "stock-preview-beta-package-status"];
 
 export const releaseHighlightItems = [
-  "Dashboard içinde Vega read-only operasyon merkezi hazırlık paneli eklendi.",
-  "Stok, cari, sipariş, kasa/finans ve export hazırlığı tek merkezden pasif durum kartlarıyla görünür hale getirildi.",
+  "Vega read-only operasyon merkezi kartlarında durum, bağlantı, veri yazma ve sonraki güvenli adım bilgileri netleştirildi.",
+  "Stok, cari, sipariş, kasa/finans ve export hazırlıklarının pasif ilerleme seviyesi patrona daha okunur hale getirildi.",
   "Gerçek veri yazma, import, senkron, export, SQL/Vega otomatik bağlantısı veya hassas bilgi eklenmeden read-only güvenlik modeli korundu.",
 ];
 
