@@ -37,6 +37,19 @@ const vegaReadonlySafetyNotes = [
   "Okunan veri frontend state içinde geçicidir.",
   ".env.local Git dışında kalır.",
 ];
+const vegaReadonlyModuleMatrixRows = [
+  { module: "Stok", status: "Hazır", read: "Manuel read-only", write: "Yok", risk: "Orta", nextStep: "Kullanıcı doğrulaması" },
+  { module: "Cari", status: "Hazırlık", read: "Yok", write: "Yok", risk: "Yüksek", nextStep: "Kapsam analizi" },
+  { module: "Sipariş", status: "Hazırlık", read: "Yok", write: "Yok", risk: "Yüksek", nextStep: "Kapsam analizi" },
+  { module: "Kasa/Finans", status: "Planlandı", read: "Yok", write: "Yok", risk: "Çok yüksek", nextStep: "Raporlama sınırı" },
+  { module: "Export", status: "Kilitli", read: "Yok", write: "Yok", risk: "Yüksek", nextStep: "Mock tasarım" },
+];
+const vegaReadonlyModuleMatrixSafetyNotes = [
+  "Bu matris veri okumaz.",
+  "SQL/Vega bağlantısı başlatmaz.",
+  "Gerçek tablo/sorgu içermez.",
+  "Veri yazma/import/senkron/export yoktur.",
+];
 
 const currentPreviewPrepGateCards = [
   { label: "Cari kapsam", value: "Planlandı" },
@@ -727,6 +740,8 @@ export default function Dashboard() {
 
       <VegaReadonlyOperationCenter />
 
+      <VegaReadonlyModuleMatrix />
+
       <CurrentPreviewPrepGate />
 
       <OrderPreviewPrepGate />
@@ -858,6 +873,35 @@ function VegaReadonlyOperationCenter() {
       </div>
 
       <p className="commerce-profitability-safety-note">{vegaReadonlySafetyNotes.join(" · ")}</p>
+    </section>
+  );
+}
+
+function VegaReadonlyModuleMatrix() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-vega-readonly-module-matrix")}`} id="dashboard-vega-readonly-module-matrix">
+      <DashboardNewReleaseBadge sectionId="dashboard-vega-readonly-module-matrix" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Pasif modül matrisi</p>
+          <h2>Vega Read-only Modül Durum Matrisi</h2>
+          <span>Read-only hazırlık modüllerinin durum, veri okuma, veri yazma, risk ve sonraki adım bilgileri tek bakışta gösterilir.</span>
+        </div>
+      </div>
+
+      <div className="profitability-priority-grid">
+        {vegaReadonlyModuleMatrixRows.map((row) => (
+          <article className="profitability-priority-card" key={row.module}>
+            <span>{row.module}</span>
+            <strong>{row.status}</strong>
+            <p>Veri okuma: {row.read}</p>
+            <p>Veri yazma: {row.write}</p>
+            <small>Risk: {row.risk} · Sonraki adım: {row.nextStep}</small>
+          </article>
+        ))}
+      </div>
+
+      <p className="commerce-profitability-safety-note">{vegaReadonlyModuleMatrixSafetyNotes.join(" · ")}</p>
     </section>
   );
 }
