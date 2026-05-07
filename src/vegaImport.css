@@ -389,6 +389,61 @@
   color: #be123c;
 }
 
+.vega-readonly-preview-filter {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.vega-readonly-preview-filter label {
+  color: var(--anthracite);
+  font-size: 0.78rem;
+  font-weight: 850;
+}
+
+.vega-readonly-preview-filter input {
+  width: min(420px, 100%);
+  min-height: 38px;
+  padding: 0 12px;
+  border: 1px solid #dbeafe;
+  border-radius: 8px;
+  background: #fff;
+  color: var(--anthracite);
+  font-weight: 780;
+}
+
+.vega-readonly-preview-filter p {
+  margin: 0;
+  color: #1d4ed8;
+  font-size: 0.76rem;
+}
+
+.vega-readonly-preview-result-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.vega-import-table th small {
+  display: block;
+  margin-top: 3px;
+  color: #64748b;
+  font-size: 0.68rem;
+  font-weight: 760;
+}
+
+.vega-readonly-preview-security-box {
+  margin: 10px 0 0;
+  padding: 10px 12px;
+  border: 1px solid #bbf7d0;
+  border-radius: 8px;
+  background: #f0fdf4;
+  color: #166534;
+  font-size: 0.78rem;
+  font-weight: 820;
+}
+
 .vega-import-table-wrap {
   overflow-x: auto;
   border: 1px solid #edf0f4;
@@ -553,6 +608,7 @@
   .vega-technical-gate-lock-grid,
   .vega-post-test-template-grid,
   .vega-operation-status-grid,
+  .vega-readonly-preview-result-grid,
   .vega-operation-group-grid,
   .vega-owner-summary-list {
     grid-template-columns: 1fr;

@@ -354,6 +354,17 @@ const readonlyStockPreviewSecurityStatusRows = [
   { label: "Sonraki hedef", value: "Stok önizleme kullanım iyileştirme" },
 ];
 
+const readonlyStockPreviewUsabilityStatusRows = [
+  { label: "Arama kutusu", value: "Eklendi" },
+  { label: "Arama kapsamı", value: "Geçici 20 satır" },
+  { label: "Arama alanları", value: "Stok Kodu / Ürün Adı" },
+  { label: "Yeni bağlantı", value: "Başlatmaz" },
+  { label: "Kolon açıklamaları", value: "Netleştirildi" },
+  { label: "Fiyat gösterimi", value: "Aday format" },
+  { label: "Boş değerler", value: "—" },
+  { label: "Dosyaya çıktı/import", value: "Yok" },
+];
+
 const vegaStockFieldMapStatusRows = [
   { label: "Alan haritası", value: "Pasif dokümantasyon" },
   { label: "Kolon sayısı", value: `${vegaStockFieldMap.length} alan` },
@@ -377,6 +388,12 @@ const desktopPreparationStatusRows = [
 ];
 
 const versionHistoryRows = [
+  {
+    version: "v1.54.0",
+    title: "Stok Önizleme Kullanım İyileştirme",
+    area: "Vega Import Önizleme / Dashboard / Sistem Durumu / README",
+    description: "Read-only stok önizleme ekranında arama kutusu, kolon açıklamaları, aday fiyat formatı, boş değer gösterimi ve önizleme sonrası özet iyileştirildi; arama yalnızca ekranda gelen geçici 20 satır üzerinde çalışır ve yeni SQL/bağlantı başlatmaz.",
+  },
   {
     version: "v1.53.0",
     title: "Read-only Stok Önizleme Güvenlik Teyidi",
@@ -1127,6 +1144,24 @@ export default function SystemStatusPanel() {
         </div>
         <p className="handheld-barcode-safety-note readonly-stock-preview-safety-note">
           Bu teyit gerçek stok değerlerini, .env.local içeriğini, SQL kullanıcı bilgisini veya bağlantı bilgisini göstermez; yeni sorgu, otomatik bağlantı, veri yazma veya import/senkron eklemez.
+        </p>
+      </div>
+
+      <div className="handheld-barcode-status-panel readonly-stock-preview-usability-status-panel" {...sectionHighlightProps("readonly-stock-preview-usability-status")}>
+        <div>
+          <h3>Stok Önizleme Kullanım İyileştirme <NewReleaseBadge sectionId="readonly-stock-preview-usability-status" /></h3>
+          <p>Arama, kolon açıklaması, aday fiyat formatı ve boş değer görünümü yalnızca ekranda gelen geçici read-only veri üzerinde iyileştirildi.</p>
+        </div>
+        <div className="system-status-grid">
+          {readonlyStockPreviewUsabilityStatusRows.map((row) => (
+            <div className="system-status-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </div>
+          ))}
+        </div>
+        <p className="handheld-barcode-safety-note readonly-stock-preview-safety-note">
+          Bu kullanım iyileştirmesi veri kapsamını büyütmez; yeni SQL, otomatik bağlantı, veri yazma, import/senkron veya canlı veri dosyası oluşturmaz.
         </p>
       </div>
 

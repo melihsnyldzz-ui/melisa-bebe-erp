@@ -96,6 +96,8 @@ const ownerViewCards = [
   { label: "Önizleme limiti", value: "20 stok kartı" },
   { label: "Stok önizleme teyidi", value: "Başarılı" },
   { label: "Log / dosya sızıntısı", value: "Yok" },
+  { label: "Önizleme araması", value: "Geçici 20 satır" },
+  { label: "Fiyat gösterimi", value: "Aday format" },
   { label: "Desktop uygulama modu", value: "Local Desktop" },
   { label: "Desktop Vega bağlantısı", value: "Kapalı / terminal smoke test" },
   { label: "Desktop veri yazma", value: "Kapalı" },
@@ -318,6 +320,15 @@ const stockPreviewSecurityConfirmationCards = [
   { label: "Sonraki hedef", value: "Stok önizleme kullanım iyileştirme" },
 ];
 
+const stockPreviewUsabilityCards = [
+  { label: "Arama kapsamı", value: "Gelen 20 satır" },
+  { label: "Arama alanları", value: "Stok Kodu / Ürün Adı" },
+  { label: "Yeni bağlantı", value: "Başlatmaz" },
+  { label: "Fiyat alanları", value: "Aday format" },
+  { label: "Boş değerler", value: "—" },
+  { label: "Veri yazma/import", value: "Yok" },
+];
+
 const passiveVegaConnectionSummaryCards = passiveVegaConnectionStatusRows.slice(0, 10);
 
 const closedBetaPreparationCards = closedBetaPreparationRows;
@@ -528,6 +539,8 @@ export default function Dashboard() {
 
       <StockPreviewSecurityConfirmation />
 
+      <StockPreviewUsabilitySummary />
+
       <SuccessfulStockReadProof />
 
       <PassiveVegaConnectionStatus />
@@ -694,6 +707,32 @@ function StockPreviewSecurityConfirmation() {
 
       <div className="reporting-decision-status-grid">
         {stockPreviewSecurityConfirmationCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function StockPreviewUsabilitySummary() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-stock-preview-usability")}`} id="dashboard-stock-preview-usability">
+      <DashboardNewReleaseBadge sectionId="dashboard-stock-preview-usability" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Kullanım iyileştirme</p>
+          <h2>Stok Önizleme Kullanım İyileştirme</h2>
+          <span>
+            Read-only stok önizleme ekranında arama, kolon açıklamaları, aday fiyat formatı ve boş değer gösterimi yalnızca ekranda gelen geçici 20 satır üzerinde iyileştirildi.
+          </span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {stockPreviewUsabilityCards.map((card) => (
           <article className="commerce-profitability-status-card" key={card.label}>
             <span>{card.label}</span>
             <strong>{card.value}</strong>

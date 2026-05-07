@@ -155,17 +155,17 @@ const readOnlyStockPreviewStatusCards = [
 ];
 
 const readOnlyStockPreviewColumns = [
-  { key: "IND", label: "Teknik ID" },
-  { key: "STOKKODU", label: "Stok kodu" },
-  { key: "MALINCINSI", label: "Ürün adı" },
-  { key: "KOD1", label: "KOD1" },
-  { key: "KOD2", label: "KOD2" },
-  { key: "KOD4", label: "KOD4" },
-  { key: "KOD6", label: "KOD6" },
-  { key: "ALISFIYATI", label: "Alış fiyatı" },
-  { key: "ISKSATISFIYATI2", label: "Satış fiyatı 2" },
-  { key: "ISKSATISFIYATI3", label: "Satış fiyatı 3" },
-  { key: "KDVGRUBU", label: "KDV grubu" },
+  { key: "IND", label: "Teknik ID", note: "Karar alanı değildir" },
+  { key: "STOKKODU", label: "Stok Kodu" },
+  { key: "MALINCINSI", label: "Ürün Adı" },
+  { key: "KOD1", label: "KOD1", note: "Vega Kod Alanı" },
+  { key: "KOD2", label: "KOD2", note: "Vega Kod Alanı" },
+  { key: "KOD4", label: "KOD4", note: "Vega Kod Alanı" },
+  { key: "KOD6", label: "KOD6", note: "Vega Kod Alanı" },
+  { key: "ALISFIYATI", label: "Alış Fiyatı Adayı", type: "currencyCandidate" },
+  { key: "ISKSATISFIYATI2", label: "Satış Fiyatı Adayı 2", type: "currencyCandidate" },
+  { key: "ISKSATISFIYATI3", label: "Satış Fiyatı Adayı 3", type: "currencyCandidate" },
+  { key: "KDVGRUBU", label: "KDV Grubu Adayı" },
 ];
 
 const roleEnvironmentPrepCards = [
@@ -625,6 +625,23 @@ function formatNumber(value) {
   return new Intl.NumberFormat("tr-TR").format(value);
 }
 
+function formatPreviewCellValue(value, column) {
+  if (value === null || value === undefined || value === "") return "—";
+
+  if (column.type === "currencyCandidate") {
+    const numericValue = Number(value);
+    if (!Number.isFinite(numericValue)) return "—";
+    return new Intl.NumberFormat("tr-TR", {
+      maximumFractionDigits: 2,
+      minimumFractionDigits: 2,
+      style: "currency",
+      currency: "TRY",
+    }).format(numericValue);
+  }
+
+  return String(value);
+}
+
 export default function VegaImportPreview() {
   const [readonlyPreviewState, setReadonlyPreviewState] = useState({
     errorClass: "",
@@ -632,6 +649,7 @@ export default function VegaImportPreview() {
     message: "Henüz önizleme çalıştırılmadı.",
     status: "idle",
   });
+  const [readonlyPreviewSearch, setReadonlyPreviewSearch] = useState("");
 
   const summaryCards = [
     { label: "Firma", value: vegaImportSummary.company },
@@ -709,6 +727,15 @@ export default function VegaImportPreview() {
     "Veri yazma ve import bu fazın konusu değildir.",
   ];
 
+  const normalizedPreviewSearch = readonlyPreviewSearch.trim().toLocaleLowerCase("tr-TR");
+  const filteredReadonlyPreviewItems = normalizedPreviewSearch
+    ? readonlyPreviewState.items.filter((row) =>
+        [row.STOKKODU, row.MALINCINSI]
+          .filter((value) => value !== null && value !== undefined)
+          .some((value) => String(value).toLocaleLowerCase("tr-TR").includes(normalizedPreviewSearch))
+      )
+    : readonlyPreviewState.items;
+
   const handleReadOnlyStockPreview = async () => {
     const listStock = window.electronAPI?.vegaReadOnly?.listStock;
     if (!listStock) {
@@ -727,6 +754,7 @@ export default function VegaImportPreview() {
       message: "Read-only stok önizleme çalışıyor...",
       status: "loading",
     });
+    setReadonlyPreviewSearch("");
 
     try {
       const result = await listStock();
@@ -824,26 +852,73 @@ export default function VegaImportPreview() {
               <span><ShieldCheck size={14} /> {readonlyPreviewState.items.length} satır · read-only</span>
             </div>
 
+            <div className="vega-readonly-preview-filter">
+              <label htmlFor="vega-readonly-stock-search">Stok kodu veya ürün adı ara</label>
+              <input
+                id="vega-readonly-stock-search"
+                type="search"
+                value={readonlyPreviewSearch}
+                onChange={(event) => setReadonlyPreviewSearch(event.target.value)}
+                placeholder="Gelen 20 satır içinde ara"
+              />
+              <p>Arama yalnızca ekranda görünen geçici 20 satır üzerinde çalışır; yeni bağlantı veya SQL sorgusu başlatmaz.</p>
+            </div>
+
+            <div className="vega-readonly-preview-result-grid">
+              <article className="vega-import-summary-card">
+                <span>Gelen satır</span>
+                <strong>{readonlyPreviewState.items.length}</strong>
+              </article>
+              <article className="vega-import-summary-card">
+                <span>Görünen / filtrelenen satır</span>
+                <strong>{filteredReadonlyPreviewItems.length}</strong>
+              </article>
+              <article className="vega-import-summary-card">
+                <span>Veri yazma</span>
+                <strong>Yok</strong>
+              </article>
+              <article className="vega-import-summary-card">
+                <span>Import/senkron</span>
+                <strong>Yok</strong>
+              </article>
+              <article className="vega-import-summary-card">
+                <span>Dosyaya çıktı</span>
+                <strong>Yok</strong>
+              </article>
+            </div>
+
             <div className="vega-import-table-wrap">
               <table className="vega-import-table">
                 <thead>
                   <tr>
                     {readOnlyStockPreviewColumns.map((column) => (
-                      <th key={column.key}>{column.label}</th>
+                      <th key={column.key}>
+                        <span>{column.label}</span>
+                        {column.note && <small>{column.note}</small>}
+                      </th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
-                  {readonlyPreviewState.items.map((row, rowIndex) => (
+                  {filteredReadonlyPreviewItems.map((row, rowIndex) => (
                     <tr key={`${row.IND ?? "row"}-${rowIndex}`}>
                       {readOnlyStockPreviewColumns.map((column) => (
-                        <td key={column.key}>{row[column.key] ?? "-"}</td>
+                        <td key={column.key}>{formatPreviewCellValue(row[column.key], column)}</td>
                       ))}
                     </tr>
                   ))}
+                  {filteredReadonlyPreviewItems.length === 0 && (
+                    <tr>
+                      <td colSpan={readOnlyStockPreviewColumns.length}>Arama sonucunda eşleşen geçici satır bulunamadı.</td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>
+
+            <p className="vega-readonly-preview-security-box">
+              Bu önizleme yalnızca geçici 20 satırlık read-only gösterimdir. Veri yazmaz, import yapmaz, dosyaya kaydetmez.
+            </p>
           </section>
         )}
 

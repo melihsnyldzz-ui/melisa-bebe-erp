@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.53.0";
-export const APP_STAGE = "Read-only Stok Önizleme Güvenlik Teyidi";
+export const APP_VERSION = "v1.54.0";
+export const APP_STAGE = "Stok Önizleme Kullanım İyileştirme";
