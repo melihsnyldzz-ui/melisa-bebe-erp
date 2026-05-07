@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import CommerceInsights from "../components/Dashboard/CommerceInsights.jsx";
 import KpiCard from "../components/Dashboard/KpiCard.jsx";
 import { APP_STAGE, APP_VERSION } from "../config/appVersion.js";
+import { readOnlyConnectionPlan } from "../config/readOnlyConnectionPlan.js";
 import { currentReleaseVersion, releaseHighlightsByPage } from "../config/releaseHighlights.js";
 import { useErpData } from "../context/ErpDataContext.jsx";
 import { getTodayISO } from "../utils/dateUtils.js";
@@ -55,6 +56,10 @@ const ownerViewCards = [
   { label: "İlk bağlantı fazı", value: "Sonraki küçük sürüm" },
   { label: "Final ilk kapsam", value: "20 stok kartı" },
   { label: "Final veri yazma/import", value: "Kapalı" },
+  { label: "Read-only altyapı iskeleti", value: "Pasif hazırlık" },
+  { label: "Altyapı bağlantı modu", value: "Kapalı" },
+  { label: "Altyapı ilk kapsam", value: "20 stok kartı" },
+  { label: "Altyapı connection test", value: "Kapalı" },
   { label: "Barkod operasyonu", value: "Hazırlıkta" },
   { label: "Barkod kalite kontrolü", value: "Öncelikli" },
   { label: "Riskli barkodlar", value: "İzlenecek" },
@@ -109,6 +114,9 @@ const ownerTodayItems = [
   "Yapılmayacak işlemler listesi kontrol edilecek",
   "Sonraki küçük read-only bağlantı fazı sınırları okunacak",
   "Final veri yazma/import kilidi kapalı kalacak",
+  "Read-only pasif altyapı iskeleti gözden geçirilecek",
+  "İlk kapsamın sadece stok kartı olduğu doğrulanacak",
+  "Connection test ve DB okuma kilitlerinin kapalı kaldığı kontrol edilecek",
   "Personel kullanım notları toplanacak",
   "Gerçek veri bağlantısı için yedek ve yetki kontrolü hazırlanacak",
 ];
@@ -150,6 +158,15 @@ const readonlyFinalSecuritySummaryCards = [
   { label: "İlk kapsam", value: "20 stok kartı" },
   { label: "Veri yazma/import", value: "Kapalı" },
   { label: "Karar", value: "Ayrı bağlantı fazına hazırlık" },
+];
+
+const readonlyConnectionSkeletonSummaryCards = [
+  { label: "Bağlantı altyapısı", value: "Pasif iskelet" },
+  { label: "Bağlantı modu", value: readOnlyConnectionPlan.connectionStatus },
+  { label: "İlk kapsam", value: readOnlyConnectionPlan.firstLimit },
+  { label: "SQL/ODBC", value: readOnlyConnectionPlan.sqlOdbcStatus },
+  { label: "DB okuma", value: readOnlyConnectionPlan.dbReadStatus },
+  { label: "Connection test", value: "Kapalı" },
 ];
 
 const readonlyFinalDecisionSummaryCards = [
@@ -330,6 +347,8 @@ export default function Dashboard() {
 
       <OwnerView />
 
+      <ReadonlyConnectionSkeletonSummary />
+
       <ReadonlyFinalSecuritySummary />
 
       <ReadonlyFinalDecisionSummary />
@@ -361,6 +380,30 @@ export default function Dashboard() {
         <DashboardNewReleaseBadge sectionId="dashboard-commerce-insights" />
       </CommerceInsights>
     </>
+  );
+}
+
+function ReadonlyConnectionSkeletonSummary() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-readonly-connection-skeleton-summary")}`} id="dashboard-readonly-connection-skeleton-summary">
+      <DashboardNewReleaseBadge sectionId="dashboard-readonly-connection-skeleton-summary" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Pasif teknik iskelet</p>
+          <h2>Read-only Bağlantı Altyapısı Özeti</h2>
+          <span>Bağlantı modu, DB okuma kilidi ve ilk 20 stok kartı sınırı gerçek bağlantı açılmadan görünür.</span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {readonlyConnectionSkeletonSummaryCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+    </section>
   );
 }
 

@@ -1,6 +1,7 @@
 import { ShieldCheck } from "lucide-react";
 import ReleaseHighlightsPanel from "../Common/ReleaseHighlightsPanel.jsx";
 import { APP_STAGE, APP_VERSION } from "../../config/appVersion.js";
+import { readOnlyConnectionPlan } from "../../config/readOnlyConnectionPlan.js";
 import {
   currentReleaseVersion,
   releaseHighlightsByPage,
@@ -260,7 +261,22 @@ const readonlyFinalSecurityStatusRows = [
   { label: "ERP’ye yazma/import", value: "Kapalı" },
 ];
 
+const readonlyConnectionSkeletonStatusRows = [
+  { label: "Bağlantı altyapısı", value: "Pasif iskelet" },
+  { label: "Canlı Vega bağlantısı", value: readOnlyConnectionPlan.connectionStatus },
+  { label: "SQL/ODBC", value: readOnlyConnectionPlan.sqlOdbcStatus },
+  { label: "DB okuma", value: readOnlyConnectionPlan.dbReadStatus },
+  { label: "Connection test", value: "Kapalı" },
+  { label: "ERP’ye yazma/import", value: "Kapalı" },
+];
+
 const versionHistoryRows = [
+  {
+    version: "v1.41.0",
+    title: "Read-only Bağlantı Altyapısı Pasif Teknik İskeleti",
+    area: "Vega Import Önizleme / Dashboard / Sistem Durumu / README",
+    description: "İlk gerçek read-only bağlantı öncesi kapalı pasif teknik iskelet hazırlandı; bağlantı modu, güvenlik kilitleri, ilk kapsam, timeout ve hata politikası görünür hale getirildi; gerçek bağlantı, DB okuma, query, API, connection test veya veri yazma eklenmedi.",
+  },
   {
     version: "v1.40.0",
     title: "Read-only Bağlantı Öncesi Final Güvenlik Kapanışı",
@@ -764,8 +780,8 @@ export default function SystemStatusPanel() {
 
       <div className="system-status-focus-card">
         <span>Bu Sürümde Test Edilecek Alan</span>
-        <strong>Vega Import Önizleme / Read-only Final Güvenlik Kapanışı</strong>
-        <p>Bu sürümde kapalı kilitler, yapılmayacak işlemler, tamamlanan hazırlık alanları ve sonraki küçük bağlantı fazı sınırları özellikle kontrol edilmelidir.</p>
+        <strong>Vega Import Önizleme / Read-only Pasif Altyapı İskeleti</strong>
+        <p>Bu sürümde bağlantı modunun kapalı kaldığı, DB okuma ve connection test kilitlerinin açılmadığı, ilk kapsamın 20 stok kartıyla sınırlı olduğu kontrol edilmelidir.</p>
       </div>
 
       <div className="system-workflow-panel" {...sectionHighlightProps("system-workflow-model")}>
@@ -783,6 +799,24 @@ export default function SystemStatusPanel() {
         </div>
         <p className="system-workflow-safety-note">
           Gerçek veri bağlantısı, DB okuma, query, import ve veri yazma işlemleri yalnızca ayrı küçük ve açık onaylı sürümlerde ele alınır.
+        </p>
+      </div>
+
+      <div className="handheld-barcode-status-panel readonly-connection-skeleton-status-panel" {...sectionHighlightProps("readonly-connection-skeleton-status")}>
+        <div>
+          <h3>Read-only Bağlantı Altyapısı Durumu <NewReleaseBadge sectionId="readonly-connection-skeleton-status" /></h3>
+          <p>İlk gerçek bağlantı öncesi pasif teknik iskelet, bağlantı modu ve kapalı altyapı kilitleri sistem özeti olarak takip edilir.</p>
+        </div>
+        <div className="system-status-grid">
+          {readonlyConnectionSkeletonStatusRows.map((row) => (
+            <div className="system-status-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </div>
+          ))}
+        </div>
+        <p className="handheld-barcode-safety-note readonly-connection-skeleton-safety-note">
+          Bu sürüm yalnızca pasif teknik iskelet sağlar; bağlantı, DB okuma, query, API, connection test veya veri yazma işlemi yapmaz.
         </p>
       </div>
 

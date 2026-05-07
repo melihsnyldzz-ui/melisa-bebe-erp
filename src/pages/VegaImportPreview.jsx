@@ -1,5 +1,10 @@
 import { AlertTriangle, Database, ShieldCheck } from "lucide-react";
 import {
+  readOnlyConnectionLocks,
+  readOnlyConnectionPlan,
+  readOnlyFirstScopeRules,
+} from "../config/readOnlyConnectionPlan.js";
+import {
   vegaImportMapping,
   vegaImportSummary,
   vegaStockImportPreviewRows,
@@ -72,6 +77,36 @@ const finalDecisionStatusCards = [
   { label: "İlk kapsam", value: "Sadece stok kartı" },
   { label: "İlk sınır", value: "20 satır" },
   { label: "Veri yazma/import", value: "Kapalı" },
+];
+
+const passiveConnectionSkeletonStatusCards = [
+  { label: "Bağlantı modu", value: `${readOnlyConnectionPlan.connectionStatus} / Pasif plan` },
+  { label: "SQL/ODBC", value: readOnlyConnectionPlan.sqlOdbcStatus },
+  { label: "DB okuma", value: readOnlyConnectionPlan.dbReadStatus },
+  { label: "Query", value: readOnlyConnectionPlan.queryStatus },
+  { label: "Connection test", value: readOnlyConnectionPlan.connectionStatus },
+  { label: "İlk kapsam", value: readOnlyConnectionPlan.firstLimit },
+];
+
+const technicalInfrastructureLocks = [
+  { label: "Canlı bağlantı kilidi", value: readOnlyConnectionLocks[0].value },
+  { label: "ODBC/SQL kilidi", value: readOnlyConnectionLocks[1].value },
+  { label: "DB okuma kilidi", value: readOnlyConnectionLocks[2].value },
+  { label: "Query kilidi", value: "Kapalı" },
+  { label: "API/backend kilidi", value: readOnlyConnectionPlan.apiStatus },
+  { label: "Connection test kilidi", value: readOnlyConnectionLocks[4].value },
+  { label: "Veri yazma kilidi", value: readOnlyConnectionPlan.writePolicy },
+  { label: "Import kilidi", value: readOnlyConnectionPlan.importPolicy },
+];
+
+const firstConnectionScopeLimitItems = [
+  "Sadece read-only bağlantı hedeflenir.",
+  readOnlyFirstScopeRules[0],
+  readOnlyFirstScopeRules[1],
+  "Cari, fiş, hareket, tahsilat, ödeme ve import kapsam dışıdır.",
+  "Veri yazma ve güncelleme yapılmayacaktır.",
+  readOnlyFirstScopeRules[3],
+  readOnlyFirstScopeRules[4],
 ];
 
 const finalSecurityClosureStatusCards = [
@@ -462,6 +497,50 @@ export default function VegaImportPreview() {
           <h1>Vega Read-only Operasyon Merkezi</h1>
           <span>Bu ekran gerçek Vega bağlantısı kurmadan, ilk read-only deneme öncesi güvenlik, saha ve kapsam kontrollerini tek yerde toplar.</span>
         </div>
+      </section>
+
+      <section className="vega-technical-gate-center section-updated-highlight" id="vega-readonly-connection-skeleton">
+        <div className="vega-technical-gate-hero">
+          <p>Kapalı teknik iskelet</p>
+          <h2>Read-only Bağlantı Altyapısı Pasif Teknik İskeleti</h2>
+          <span>
+            İlk gerçek bağlantıdan önce bağlantı modunun kapalı olduğunu, SQL/ODBC ve DB okumanın başlamadığını, ilk kapsamın sadece 20 stok kartı ile sınırlı olacağını gösteren pasif teknik hazırlık alanı.
+          </span>
+        </div>
+
+        <div className="vega-technical-gate-status-grid">
+          {passiveConnectionSkeletonStatusCards.map((card) => (
+            <article className="vega-import-summary-card" key={card.label}>
+              <span>{card.label}</span>
+              <strong>{card.value}</strong>
+            </article>
+          ))}
+        </div>
+
+        <section className="vega-technical-gate-panel" id="vega-technical-infrastructure-locks">
+          <h3>Teknik Altyapı Kilitleri</h3>
+          <div className="vega-technical-gate-lock-grid">
+            {technicalInfrastructureLocks.map((row) => (
+              <article className="vega-technical-lock-row" key={row.label}>
+                <span>{row.label}</span>
+                <strong>{row.value}</strong>
+              </article>
+            ))}
+          </div>
+          <p>Bu kilitler bu sürümde açılmaz. Bu bölüm yalnızca ileride açılacak küçük bağlantı fazı öncesi görünürlük sağlar.</p>
+        </section>
+
+        <section className="vega-technical-gate-panel" id="vega-first-connection-scope-limit">
+          <h3>İlk Bağlantı Kapsam Sınırı</h3>
+          <div className="vega-technical-gate-card-grid">
+            {firstConnectionScopeLimitItems.map((item) => (
+              <article className="vega-owner-summary-row" key={item}>
+                <ShieldCheck size={14} />
+                <span>{item}</span>
+              </article>
+            ))}
+          </div>
+        </section>
       </section>
 
       <section className="vega-technical-gate-center section-updated-highlight" id="vega-readonly-final-security-closure">
