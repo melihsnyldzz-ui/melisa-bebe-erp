@@ -6,8 +6,8 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 
 ## Mevcut Durum
 
-- Güncel sürüm: v1.55.0
-- Aşama: Stok Alan Anlamlandırma ve Doğrulama Hazırlığı
+- Güncel sürüm: v1.56.0
+- Aşama: Stok Alan Manuel Doğrulama Checklist’i
 - Build kontrolü: GitHub Actions
 - El terminali: okuma, son okutulanlar, sayım sepeti, rapor/CSV/JSON önizleme hazırlığı
 - Stok ve barkod kalite kontrolü: pasif/mock risk görünürlüğü
@@ -258,6 +258,15 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 - `KDVGRUBU` KDV grubu adayıdır ve muhasebe kontrolü gerektirir.
 - Alan yorumları kesin operasyon/muhasebe kararı değildir; Vega ekranı ve örnek satırlarla doğrulandıktan sonra kesinleştirilecektir.
 - Canlı stok değerleri repoya yazılmaz; yeni SQL, veri yazma, import/senkron veya kapsam büyütme eklenmez.
+
+## Stok Alan Manuel Doğrulama Checklist’i
+
+- Bu faz Vega ekranı ile uygulamadaki read-only stok önizleme alanlarını manuel karşılaştırmak için geçici checklist ekler.
+- Checklist yalnızca manuel rehberdir; gerçek stok değerlerini repoya yazmaz.
+- Durum seçenekleri `Bekliyor`, `Uyumlu`, `Fark var` ve `Emin değilim` olarak ekranda değiştirilebilir.
+- Seçimler yalnızca frontend state içinde kalır; local DB’ye, dosyaya veya Vega’ya yazılmaz.
+- Uygulama kapatıldığında veya sayfa yenilendiğinde kalıcı doğrulama sonucu oluşmaz.
+- Veri kapsamı 20 satır read-only önizleme olarak kalır; yeni SQL, import/senkron, veri yazma veya cari/fiş/hareket okuma eklenmez.
 
 ## Build Kontrolü
 

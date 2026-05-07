@@ -182,6 +182,23 @@ const stockFieldValidationNotes = [
   { field: "KDVGRUBU", meaning: "KDV grubu adayı, muhasebe kontrolü gerekir", status: "Muhasebe kontrolü" },
 ];
 
+const manualValidationStatuses = ["Bekliyor", "Uyumlu", "Fark var", "Emin değilim"];
+
+const stockManualValidationChecklist = [
+  "STOKKODU Vega stok kartı ekranındaki stok kodu ile aynı mı?",
+  "MALINCINSI Vega’daki ürün adı / malın cinsi ile aynı mı?",
+  "IND sadece teknik ID olarak mı kalıyor?",
+  "KOD1 hangi Vega alanına karşılık geliyor olabilir?",
+  "KOD2 hangi Vega alanına karşılık geliyor olabilir?",
+  "KOD4 hangi Vega alanına karşılık geliyor olabilir?",
+  "KOD6 hangi Vega alanına karşılık geliyor olabilir?",
+  "ALISFIYATI Vega’daki alış fiyatı/maliyet alanıyla uyumlu mu?",
+  "ISKSATISFIYATI2 hangi satış fiyatı seviyesine denk geliyor?",
+  "ISKSATISFIYATI3 hangi satış fiyatı seviyesine denk geliyor?",
+  "KDVGRUBU Vega’daki KDV grubu ile uyumlu mu?",
+  "Boş gelen kod/fiyat alanları gerçekten Vega’da da boş mu?",
+];
+
 const roleEnvironmentPrepCards = [
   {
     title: "Teknik Sorumlu",
@@ -664,6 +681,9 @@ export default function VegaImportPreview() {
     status: "idle",
   });
   const [readonlyPreviewSearch, setReadonlyPreviewSearch] = useState("");
+  const [manualValidationState, setManualValidationState] = useState(() =>
+    Object.fromEntries(stockManualValidationChecklist.map((item) => [item, "Bekliyor"]))
+  );
 
   const summaryCards = [
     { label: "Firma", value: vegaImportSummary.company },
@@ -749,6 +769,13 @@ export default function VegaImportPreview() {
           .some((value) => String(value).toLocaleLowerCase("tr-TR").includes(normalizedPreviewSearch))
       )
     : readonlyPreviewState.items;
+
+  const setManualValidationStatus = (item, status) => {
+    setManualValidationState((current) => ({
+      ...current,
+      [item]: status,
+    }));
+  };
 
   const handleReadOnlyStockPreview = async () => {
     const listStock = window.electronAPI?.vegaReadOnly?.listStock;
@@ -949,6 +976,30 @@ export default function VegaImportPreview() {
                 <span>{note.field}</span>
                 <strong>{note.meaning}</strong>
                 <small>{note.status}</small>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="vega-technical-gate-panel" id="vega-stock-manual-validation-checklist">
+          <h3>Manuel Doğrulama Checklist’i</h3>
+          <p>Bu checklist yalnızca manuel karşılaştırma rehberidir. Seçimler kaydedilmez, Vega’ya yazılmaz ve uygulama kapatıldığında kalıcı sonuç oluşturmaz.</p>
+          <div className="vega-stock-manual-checklist">
+            {stockManualValidationChecklist.map((item) => (
+              <article className="vega-stock-manual-checklist-row" key={item}>
+                <strong>{item}</strong>
+                <div className="vega-stock-manual-status-list">
+                  {manualValidationStatuses.map((status) => (
+                    <button
+                      className={manualValidationState[item] === status ? "active" : ""}
+                      key={status}
+                      type="button"
+                      onClick={() => setManualValidationStatus(item, status)}
+                    >
+                      {status}
+                    </button>
+                  ))}
+                </div>
               </article>
             ))}
           </div>

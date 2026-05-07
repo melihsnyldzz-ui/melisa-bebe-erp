@@ -1,18 +1,18 @@
-export const currentReleaseVersion = "v1.55.0";
+export const currentReleaseVersion = "v1.56.0";
 
-export const currentReleaseTitle = "Stok Alan Anlamlandırma ve Doğrulama Hazırlığı";
+export const currentReleaseTitle = "Stok Alan Manuel Doğrulama Checklist’i";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "stock-field-validation-status"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "stock-manual-validation-status"];
 
 export const releaseHighlightItems = [
-  "Stok önizleme kolonları için pasif alan anlamlandırma ve doğrulama hazırlığı görünür hale getirildi.",
-  "STOKKODU, MALINCINSI, IND, KOD alanları, aday fiyatlar ve KDVGRUBU için güven seviyesi ve doğrulama notları eklendi.",
-  "Yeni SQL, kapsam büyütme, otomatik bağlantı, canlı değer kaydı, veri yazma, import/senkron veya alan yorumlarını kesin karar gibi gösterme eklenmeden güvenli hazırlık korundu.",
+  "Stok alanlarını Vega ekranı ile manuel karşılaştırmak için kalıcı kayıt oluşturmayan checklist eklendi.",
+  "Her kontrol maddesi Bekliyor, Uyumlu, Fark var ve Emin değilim durumlarıyla yalnızca frontend state içinde işaretlenebilir hale getirildi.",
+  "Yeni SQL, kapsam büyütme, otomatik bağlantı, gerçek değer kaydı, dosyaya çıktı, veri yazma veya import/senkron eklenmeden manuel doğrulama rehberi korundu.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
-  { id: "stock-field-validation-status", label: "Stok Alan Doğrulama'ya git" },
+  { id: "stock-manual-validation-status", label: "Manuel Doğrulama Checklist’ine git" },
   { id: "system-workflow-model", label: "Çalışma Modeli'ne git" },
 ];
 
@@ -28,6 +28,7 @@ export const releaseHighlightsByPage = {
     releaseHighlightItems,
     releaseJumpLinks: [
       { id: "dashboard-owner-view", label: "Patron Bakışı'na git" },
+      { id: "dashboard-stock-manual-validation-checklist", label: "Manuel Doğrulama Checklist’ine git" },
       { id: "dashboard-stock-field-validation-prep", label: "Stok Alan Doğrulama'ya git" },
       { id: "dashboard-stock-preview-usability", label: "Stok Önizleme Kullanım İyileştirme'ye git" },
       { id: "dashboard-stock-preview-security-confirmation", label: "Stok Önizleme Güvenlik Teyidi'ne git" },
@@ -55,7 +56,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-owner-view", "dashboard-stock-field-validation-prep", "dashboard-readonly-stock-preview"],
+    updatedSectionIds: ["dashboard-owner-view", "dashboard-stock-manual-validation-checklist", "dashboard-stock-field-validation-prep"],
   },
   reports: {
     releaseHighlightItems,
@@ -89,6 +90,7 @@ export const releaseHighlightsByPage = {
       { id: "vega-readonly-stock-smoke-test", label: "İlk Stok Okuma Denemesi'ne git" },
       { id: "vega-readonly-stock-preview", label: "Read-only Stok Önizleme'ye git" },
       { id: "vega-stock-field-validation-notes", label: "Alan Doğrulama Notları'na git" },
+      { id: "vega-stock-manual-validation-checklist", label: "Manuel Doğrulama Checklist’ine git" },
       { id: "vega-readonly-environment-prep-center", label: "Ortam Bilgisi Hazırlığı'na git" },
       { id: "vega-environment-prep-table", label: "Ortam Bilgisi Tablosu'na git" },
       { id: "vega-role-environment-prep", label: "Rol Bazlı Ortam Hazırlığı'na git" },
@@ -126,7 +128,7 @@ export const releaseHighlightsByPage = {
       { id: "vega-import-quality-note", label: "Kalite Kontrol Notu'na git" },
       { id: "vega-readonly-roadmap", label: "Read-only Yol Haritası'na git" },
     ],
-    updatedSectionIds: ["vega-readonly-stock-preview", "vega-stock-field-validation-notes"],
+    updatedSectionIds: ["vega-stock-manual-validation-checklist", "vega-stock-field-validation-notes"],
   },
 
   warehouseTerminal: {

@@ -100,6 +100,8 @@ const ownerViewCards = [
   { label: "Fiyat gösterimi", value: "Aday format" },
   { label: "Stok alan doğrulama", value: "Hazırlıkta" },
   { label: "Kesin alan kararı", value: "Vega kontrolü sonrası" },
+  { label: "Manuel doğrulama checklist’i", value: "Hazır" },
+  { label: "Checklist kalıcı kayıt", value: "Yok" },
   { label: "Desktop uygulama modu", value: "Local Desktop" },
   { label: "Desktop Vega bağlantısı", value: "Kapalı / terminal smoke test" },
   { label: "Desktop veri yazma", value: "Kapalı" },
@@ -341,6 +343,15 @@ const stockFieldValidationPrepCards = [
   { label: "Yeni SQL", value: "Yok" },
 ];
 
+const stockManualValidationChecklistCards = [
+  { label: "Manuel doğrulama checklist’i", value: "Hazır" },
+  { label: "Kalıcı kayıt", value: "Yok" },
+  { label: "Vega’ya yazma", value: "Yok" },
+  { label: "Dosyaya çıktı", value: "Yok" },
+  { label: "Durum seçenekleri", value: "Bekliyor / Uyumlu / Fark var / Emin değilim" },
+  { label: "Sonraki hedef", value: "Doğrulanan alanlara göre kolonları netleştirme" },
+];
+
 const passiveVegaConnectionSummaryCards = passiveVegaConnectionStatusRows.slice(0, 10);
 
 const closedBetaPreparationCards = closedBetaPreparationRows;
@@ -554,6 +565,8 @@ export default function Dashboard() {
       <StockPreviewUsabilitySummary />
 
       <StockFieldValidationPrepSummary />
+
+      <StockManualValidationChecklistSummary />
 
       <SuccessfulStockReadProof />
 
@@ -773,6 +786,32 @@ function StockFieldValidationPrepSummary() {
 
       <div className="reporting-decision-status-grid">
         {stockFieldValidationPrepCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function StockManualValidationChecklistSummary() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-stock-manual-validation-checklist")}`} id="dashboard-stock-manual-validation-checklist">
+      <DashboardNewReleaseBadge sectionId="dashboard-stock-manual-validation-checklist" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Manuel karşılaştırma</p>
+          <h2>Stok Alan Manuel Doğrulama Checklist’i</h2>
+          <span>
+            Vega ekranı ile uygulamadaki 20 satırlık read-only önizleme alanlarını karşılaştırmak için geçici checklist hazırdır; seçimler kaydedilmez ve veri yazma başlatmaz.
+          </span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {stockManualValidationChecklistCards.map((card) => (
           <article className="commerce-profitability-status-card" key={card.label}>
             <span>{card.label}</span>
             <strong>{card.value}</strong>

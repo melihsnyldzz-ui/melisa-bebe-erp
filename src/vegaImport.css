@@ -431,6 +431,49 @@
   gap: 8px;
 }
 
+.vega-stock-manual-checklist {
+  display: grid;
+  gap: 8px;
+}
+
+.vega-stock-manual-checklist-row {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.vega-stock-manual-checklist-row strong {
+  color: var(--anthracite);
+  font-size: 0.82rem;
+}
+
+.vega-stock-manual-status-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.vega-stock-manual-status-list button {
+  min-height: 30px;
+  padding: 0 10px;
+  border: 1px solid #dbeafe;
+  border-radius: 999px;
+  background: #f8fafc;
+  color: #1d4ed8;
+  cursor: pointer;
+  font-size: 0.74rem;
+  font-weight: 820;
+}
+
+.vega-stock-manual-status-list button.active {
+  border-color: rgba(24, 100, 171, 0.42);
+  background: #1864ab;
+  color: #fff;
+}
+
 .vega-import-table th small {
   display: block;
   margin-top: 3px;

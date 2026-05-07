@@ -375,6 +375,15 @@ const stockFieldValidationStatusRows = [
   { label: "Yeni SQL", value: "Yok" },
 ];
 
+const stockManualValidationChecklistStatusRows = [
+  { label: "Manuel doğrulama checklist’i", value: "Hazır" },
+  { label: "Kalıcı kayıt", value: "Yok" },
+  { label: "Vega’ya yazma", value: "Yok" },
+  { label: "Dosyaya çıktı", value: "Yok" },
+  { label: "Local DB kaydı", value: "Yok" },
+  { label: "Sonraki hedef", value: "Doğrulanan alanlara göre stok önizleme kolonlarını netleştirme" },
+];
+
 const vegaStockFieldMapStatusRows = [
   { label: "Alan haritası", value: "Pasif dokümantasyon" },
   { label: "Kolon sayısı", value: `${vegaStockFieldMap.length} alan` },
@@ -398,6 +407,12 @@ const desktopPreparationStatusRows = [
 ];
 
 const versionHistoryRows = [
+  {
+    version: "v1.56.0",
+    title: "Stok Alan Manuel Doğrulama Checklist’i",
+    area: "Vega Import Önizleme / Dashboard / Sistem Durumu / README",
+    description: "Vega ekranı ile uygulamadaki read-only stok önizleme alanlarını manuel karşılaştırmak için geçici checklist eklendi; durum seçimleri yalnızca frontend state içinde kalır, local DB/dosya/Vega yazma veya kalıcı kayıt oluşturmaz.",
+  },
   {
     version: "v1.55.0",
     title: "Stok Alan Anlamlandırma ve Doğrulama Hazırlığı",
@@ -1196,6 +1211,24 @@ export default function SystemStatusPanel() {
         </div>
         <p className="handheld-barcode-safety-note stock-field-validation-safety-note">
           Bu hazırlık gerçek stok değerlerini repoya yazmaz; yeni SQL, otomatik bağlantı, veri yazma, import/senkron veya kesin muhasebe kararı üretmez.
+        </p>
+      </div>
+
+      <div className="handheld-barcode-status-panel stock-manual-validation-status-panel" {...sectionHighlightProps("stock-manual-validation-status")}>
+        <div>
+          <h3>Stok Alan Manuel Doğrulama Checklist’i <NewReleaseBadge sectionId="stock-manual-validation-status" /></h3>
+          <p>Vega ekranı ile uygulamadaki alanları karşılaştırmak için geçici checklist hazırdır; seçimler kaydedilmez ve kalıcı sonuç oluşturmaz.</p>
+        </div>
+        <div className="system-status-grid">
+          {stockManualValidationChecklistStatusRows.map((row) => (
+            <div className="system-status-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </div>
+          ))}
+        </div>
+        <p className="handheld-barcode-safety-note stock-manual-validation-safety-note">
+          Checklist yalnızca manuel rehberdir; gerçek değerleri repoya yazmaz, local DB’ye kaydetmez, Vega’ya yazmaz, import/senkron veya yeni SQL eklemez.
         </p>
       </div>
 
