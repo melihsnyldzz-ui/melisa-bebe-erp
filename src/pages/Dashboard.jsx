@@ -22,6 +22,22 @@ const dashboardPeriodOptions = [
 
 const dashboardReleaseHighlights = releaseHighlightsByPage.dashboard;
 const dashboardUpdatedSectionIds = dashboardReleaseHighlights.updatedSectionIds;
+
+const vegaReadonlyOperationCards = [
+  { label: "Stok Önizleme", value: "Hazır / Manuel read-only", note: "Mevcut stok önizleme ekranı korunur." },
+  { label: "Cari Önizleme", value: "Planlandı", note: "Pasif hazırlık; bu sürümde bağlantı yok." },
+  { label: "Sipariş Önizleme", value: "Planlandı", note: "Pasif hazırlık; kapsam sonraki fazda netleşir." },
+  { label: "Kasa/Finans Özeti", value: "Planlandı", note: "Pasif hazırlık; veri okuma başlatmaz." },
+  { label: "Export Hazırlığı", value: "Planlandı / Pasif", note: "Dosya çıktısı ve dışa aktarım yok." },
+];
+
+const vegaReadonlySafetyNotes = [
+  "Tüm Vega bağlantıları manuel tetiklenir.",
+  "Bu sürümde veri yazma/import/senkron/export yoktur.",
+  "Okunan veri frontend state içinde geçicidir.",
+  ".env.local Git dışında kalır.",
+];
+
 const ownerViewCards = [
   { label: "Günlük operasyon durumu", value: "Takipte" },
   { label: "Stok görünürlüğü", value: "Hazırlıkta" },
@@ -606,6 +622,8 @@ export default function Dashboard() {
 
       <OwnerView />
 
+      <VegaReadonlyOperationCenter />
+
       <ClosedBetaPreparationCenter />
 
       <DesktopPreparationCenter />
@@ -704,6 +722,33 @@ function DesktopPreparationCenter() {
           </article>
         ))}
       </div>
+    </section>
+  );
+}
+
+function VegaReadonlyOperationCenter() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-vega-readonly-operation-center")}`} id="dashboard-vega-readonly-operation-center">
+      <DashboardNewReleaseBadge sectionId="dashboard-vega-readonly-operation-center" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Read-only hazırlık merkezi</p>
+          <h2>Vega Read-only Operasyon Merkezi</h2>
+          <span>Stok, cari, sipariş, kasa/finans ve export hazırlığı tek merkezde pasif izlenir; bu panel bağlantı, veri okuma veya kayıt işlemi başlatmaz.</span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {vegaReadonlyOperationCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+            <span>{card.note}</span>
+          </article>
+        ))}
+      </div>
+
+      <p className="commerce-profitability-safety-note">{vegaReadonlySafetyNotes.join(" · ")}</p>
     </section>
   );
 }

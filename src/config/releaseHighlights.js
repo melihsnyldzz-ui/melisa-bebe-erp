@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.62.0";
+export const currentReleaseVersion = "v1.63.0";
 
-export const currentReleaseTitle = "Stok Önizleme Test Sonrası Temizlik ve Paket Hazırlığı";
+export const currentReleaseTitle = "Vega Read-only Operasyon Merkezi Hazırlığı";
 
 export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "stock-preview-beta-package-status"];
 
 export const releaseHighlightItems = [
-  "Read-only stok önizleme modülü kapalı beta paketi öncesi son temizlik ve hazırlık görünürlüğüne alındı.",
-  "Kapalı beta test notu, paket hazırlık durumu ve 20 satırlık read-only güvenlik sınırı uygulama içinde netleştirildi.",
-  "Yeni SQL, kapsam büyütme, otomatik bağlantı, panel/test state kaydı, dosyaya çıktı, veri yazma veya import/senkron eklenmeden paket hazırlığı korundu.",
+  "Dashboard içinde Vega read-only operasyon merkezi hazırlık paneli eklendi.",
+  "Stok, cari, sipariş, kasa/finans ve export hazırlığı tek merkezden pasif durum kartlarıyla görünür hale getirildi.",
+  "Gerçek veri yazma, import, senkron, export, SQL/Vega otomatik bağlantısı veya hassas bilgi eklenmeden read-only güvenlik modeli korundu.",
 ];
 
 export const releaseJumpLinks = [
@@ -28,6 +28,7 @@ export const releaseHighlightsByPage = {
     releaseHighlightItems,
     releaseJumpLinks: [
       { id: "dashboard-owner-view", label: "Patron Bakışı'na git" },
+      { id: "dashboard-vega-readonly-operation-center", label: "Vega Read-only Operasyon Merkezi'ne git" },
       { id: "dashboard-stock-preview-beta-package", label: "Stok Önizleme Beta Hazırlığı'na git" },
       { id: "dashboard-vega-stock-screen-simplification", label: "Vega Stok Sadeleştirme'ye git" },
       { id: "dashboard-stock-preview-user-test", label: "Stok Önizleme Kullanıcı Testi'ne git" },
@@ -62,7 +63,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-owner-view", "dashboard-stock-preview-beta-package", "dashboard-vega-stock-screen-simplification"],
+    updatedSectionIds: ["dashboard-vega-readonly-operation-center", "dashboard-owner-view", "dashboard-stock-preview-beta-package"],
   },
   reports: {
     releaseHighlightItems,
