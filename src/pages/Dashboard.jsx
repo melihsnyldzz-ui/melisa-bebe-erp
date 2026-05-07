@@ -6,6 +6,7 @@ import { APP_STAGE, APP_VERSION } from "../config/appVersion.js";
 import { readOnlyConnectionPlan, readOnlyEnvironmentPreparationItems, readOnlyOperatorChecklist } from "../config/readOnlyConnectionPlan.js";
 import { readOnlyFailClosedPolicy } from "../config/readOnlyFailClosedPolicy.js";
 import { currentReleaseVersion, releaseHighlightsByPage } from "../config/releaseHighlights.js";
+import { passiveVegaConnectionStatusMessage, passiveVegaConnectionStatusRows } from "../config/vegaConnectionStatus.js";
 import { vegaStockFieldMap, vegaStockFieldMapWarning } from "../config/vegaStockFieldMap.js";
 import { useErpData } from "../context/ErpDataContext.jsx";
 import { getTodayISO } from "../utils/dateUtils.js";
@@ -82,6 +83,8 @@ const ownerViewCards = [
   { label: "Smoke test kapsamı", value: "20 stok kartı" },
   { label: "Smoke test ERP’ye yazma", value: "Kapalı" },
   { label: "Smoke test import", value: "Kapalı" },
+  { label: "Vega bağlantı durumu", value: "Kapalı" },
+  { label: "ERP bağlantı başlatma", value: "Yok" },
   { label: "Stok alan haritası", value: "Pasif dokümantasyon" },
   { label: "Alan eşleştirme kararı", value: "Kesin değil" },
   { label: "Desktop uygulama modu", value: "Local Desktop" },
@@ -257,6 +260,8 @@ const readonlyStockSmokeSummaryCards = [
   { label: "Import", value: "Kapalı" },
   { label: "Sonuç", value: "Terminal önizleme" },
 ];
+
+const passiveVegaConnectionSummaryCards = passiveVegaConnectionStatusRows.slice(0, 10);
 
 const vegaStockFieldMapSummaryCards = [
   { label: "Harita modu", value: "Pasif dokümantasyon" },
@@ -458,6 +463,8 @@ export default function Dashboard() {
 
       <ReadonlyStockSmokeSummary />
 
+      <PassiveVegaConnectionStatus />
+
       <VegaStockFieldMapSummary />
 
       <ReadonlyEnvironmentPrepSummary />
@@ -548,6 +555,32 @@ function ReadonlyStockSmokeSummary() {
           </article>
         ))}
       </div>
+    </section>
+  );
+}
+
+function PassiveVegaConnectionStatus() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-passive-vega-connection-status")}`} id="dashboard-passive-vega-connection-status">
+      <DashboardNewReleaseBadge sectionId="dashboard-passive-vega-connection-status" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Pasif entegrasyon görünürlüğü</p>
+          <h2>Vega Bağlantı Durumu</h2>
+          <span>ERP içinde canlı bağlantı başlatmadan, SQL/Vega entegrasyonunun hangi güvenli seviyede tutulduğunu gösteren pasif durum ekranı.</span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {passiveVegaConnectionSummaryCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+
+      <p className="commerce-profitability-safety-note">{passiveVegaConnectionStatusMessage}</p>
     </section>
   );
 }

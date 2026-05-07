@@ -1,18 +1,18 @@
-export const currentReleaseVersion = "v1.48.0";
+export const currentReleaseVersion = "v1.49.0";
 
-export const currentReleaseTitle = "Vega Stok Kartı Alan Haritası";
+export const currentReleaseTitle = "Pasif Vega Bağlantı Durumu";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "vega-stock-field-map-status"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "passive-vega-connection-status"];
 
 export const releaseHighlightItems = [
-  "Read-only stok smoke test kolonları için pasif Vega Stok Kartı Alan Haritası oluşturuldu.",
-  "IND, STOKKODU, MALINCINSI, KOD alanları, fiyat adayları ve KDVGRUBU için muhtemel ERP karşılıkları güven seviyesiyle görünür hale getirildi.",
-  "Alan eşleştirmeleri kesin muhasebe/operasyon kararı olarak sunulmadan; yeni SQL, canlı bağlantı, API, veri yazma veya import eklenmeden güvenli görünürlük korundu.",
+  "ERP içinde canlı bağlantı başlatmayan pasif Vega Bağlantı Durumu görünürlüğü oluşturuldu.",
+  "Local terminal smoke test seviyesi, F0102TBLSTOKLAR kapsamı, 20 stok kartı limiti, veri yazma ve import kilitleri tek özet altında toplandı.",
+  "Yeni SQL, .env.local okuma, canlı veri çekme, ERP arayüzünden bağlantı, veri yazma veya import eklenmeden güvenli entegrasyon görünürlüğü korundu.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
-  { id: "vega-stock-field-map-status", label: "Stok Alan Haritası Durumu'na git" },
+  { id: "passive-vega-connection-status", label: "Vega Bağlantı Durumu'na git" },
   { id: "system-workflow-model", label: "Çalışma Modeli'ne git" },
 ];
 
@@ -29,6 +29,7 @@ export const releaseHighlightsByPage = {
     releaseJumpLinks: [
       { id: "dashboard-owner-view", label: "Patron Bakışı'na git" },
       { id: "dashboard-desktop-preparation-center", label: "Desktop Hazırlık Merkezi'ne git" },
+      { id: "dashboard-passive-vega-connection-status", label: "Vega Bağlantı Durumu'na git" },
       { id: "dashboard-vega-stock-field-map", label: "Stok Alan Haritası'na git" },
       { id: "dashboard-readonly-stock-smoke-summary", label: "İlk Stok Okuma Denemesi'ne git" },
       { id: "dashboard-readonly-environment-prep-summary", label: "Read-only Ortam Hazırlığı'na git" },
@@ -48,7 +49,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-owner-view", "dashboard-vega-stock-field-map", "dashboard-daily-operation"],
+    updatedSectionIds: ["dashboard-owner-view", "dashboard-passive-vega-connection-status", "dashboard-daily-operation"],
   },
   reports: {
     releaseHighlightItems,

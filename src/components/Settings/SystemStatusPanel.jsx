@@ -3,6 +3,7 @@ import ReleaseHighlightsPanel from "../Common/ReleaseHighlightsPanel.jsx";
 import { APP_STAGE, APP_VERSION } from "../../config/appVersion.js";
 import { readOnlyConnectionPlan } from "../../config/readOnlyConnectionPlan.js";
 import { readOnlyFailClosedPolicy } from "../../config/readOnlyFailClosedPolicy.js";
+import { passiveVegaConnectionStatusMessage, passiveVegaConnectionStatusRows } from "../../config/vegaConnectionStatus.js";
 import { vegaStockFieldMap, vegaStockFieldMapWarning } from "../../config/vegaStockFieldMap.js";
 import {
   currentReleaseVersion,
@@ -327,6 +328,8 @@ const vegaStockFieldMapStatusRows = [
   { label: "Kesinleştirme", value: "Örnek satır incelemesi sonrası" },
 ];
 
+const passiveVegaConnectionStatusCards = passiveVegaConnectionStatusRows;
+
 const desktopPreparationStatusRows = [
   { label: "Uygulama modu", value: "Local Desktop" },
   { label: "Vega bağlantısı", value: "Kapalı / sadece terminal smoke test" },
@@ -337,6 +340,12 @@ const desktopPreparationStatusRows = [
 ];
 
 const versionHistoryRows = [
+  {
+    version: "v1.49.0",
+    title: "Pasif Vega Bağlantı Durumu",
+    area: "Dashboard / Sistem Durumu / README",
+    description: "ERP içinde canlı bağlantı başlatmayan pasif Vega Bağlantı Durumu görünürlüğü eklendi; local terminal smoke test seviyesi, F0102TBLSTOKLAR kapsamı, 20 stok kartı limiti, veri yazma/import kilitleri ve v1.48.0 alan haritası durumu gösterildi; yeni SQL, .env.local okuma veya veri çekme eklenmedi.",
+  },
   {
     version: "v1.48.0",
     title: "Vega Stok Kartı Alan Haritası",
@@ -894,8 +903,8 @@ export default function SystemStatusPanel() {
 
       <div className="system-status-focus-card">
         <span>Bu Sürümde Test Edilecek Alan</span>
-        <strong>Vega Stok Kartı Alan Haritası</strong>
-        <p>Bu sürümde smoke test kolonlarının muhtemel ERP karşılıkları pasif dokümantasyon olarak kontrol edilmelidir; eşleştirmeler kesin operasyon kararı değildir.</p>
+        <strong>Pasif Vega Bağlantı Durumu</strong>
+        <p>Bu sürümde ERP arayüzünden canlı Vega bağlantısı başlatılmadığı, bağlantı seviyesinin yalnızca local terminal smoke test olarak gösterildiği kontrol edilmelidir.</p>
       </div>
 
       <div className="system-workflow-panel" {...sectionHighlightProps("system-workflow-model")}>
@@ -913,6 +922,24 @@ export default function SystemStatusPanel() {
         </div>
         <p className="system-workflow-safety-note">
           Gerçek veri bağlantısı, DB okuma, query, import ve veri yazma işlemleri yalnızca ayrı küçük ve açık onaylı sürümlerde ele alınır.
+        </p>
+      </div>
+
+      <div className="handheld-barcode-status-panel passive-vega-connection-status-panel" {...sectionHighlightProps("passive-vega-connection-status")}>
+        <div>
+          <h3>Vega Bağlantı Durumu <NewReleaseBadge sectionId="passive-vega-connection-status" /></h3>
+          <p>SQL/Vega entegrasyonunun mevcut güvenli seviyesi yalnızca pasif olarak gösterilir; bu panel bağlantı başlatmaz ve .env.local okumaz.</p>
+        </div>
+        <div className="system-status-grid">
+          {passiveVegaConnectionStatusCards.map((row) => (
+            <div className="system-status-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </div>
+          ))}
+        </div>
+        <p className="handheld-barcode-safety-note passive-vega-connection-safety-note">
+          {passiveVegaConnectionStatusMessage}
         </p>
       </div>
 

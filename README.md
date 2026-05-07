@@ -6,8 +6,8 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 
 ## Mevcut Durum
 
-- Güncel sürüm: v1.48.0
-- Aşama: Vega Stok Kartı Alan Haritası
+- Güncel sürüm: v1.49.0
+- Aşama: Pasif Vega Bağlantı Durumu
 - Build kontrolü: GitHub Actions
 - El terminali: okuma, son okutulanlar, sayım sepeti, rapor/CSV/JSON önizleme hazırlığı
 - Stok ve barkod kalite kontrolü: pasif/mock risk görünürlüğü
@@ -184,6 +184,15 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 - `ALISFIYATI`, `ISKSATISFIYATI2`, `ISKSATISFIYATI3` ve `KDVGRUBU` orta güvenli fiyat/KDV adaylarıdır.
 - Bu alan haritası kesin muhasebe/operasyon kararı değildir. Gerçek Vega verisiyle örnek satırlar incelendikten sonra kesinleştirilecektir.
 - Bu faz yeni SQL sorgusu, ERP arayüzünden bağlantı, canlı veri çekme, veri yazma, import veya dosyaya çıktı eklemez.
+
+## Pasif Vega Bağlantı Durumu
+
+- Bu faz ERP içinde Vega entegrasyon seviyesini yalnızca durum görünürlüğü olarak gösterir.
+- Vega bağlantı modu kapalıdır; ERP arayüzünden canlı bağlantı başlatılmaz.
+- SQL/Vega bağlantısı yalnızca local terminalde `npm run vega:readonly-stock-smoke` smoke test seviyesinde kalır.
+- Güvenli kapsam `F0102TBLSTOKLAR` ve en fazla 20 stok kartıdır.
+- Veri yazma, import/senkron, cari/fiş/hareket okuma ve canlı veri çıktısı kapalıdır.
+- Bu ekran canlı Vega bağlantısı başlatmaz. Bağlantı testleri yalnızca local terminalden ve read-only smoke test olarak yapılır.
 
 ## Build Kontrolü
 
