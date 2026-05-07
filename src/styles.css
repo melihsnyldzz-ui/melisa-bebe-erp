@@ -1922,6 +1922,8 @@ button {
 .warehouse-operation-guide-card,
 .warehouse-barcode-risk-panel,
 .warehouse-operation-summary-panel,
+.warehouse-quality-center-panel,
+.warehouse-risk-priority-panel,
 .handheld-barcode-status-panel {
   display: grid;
   gap: 14px;
@@ -1948,6 +1950,98 @@ button {
 .warehouse-barcode-risk-card {
   border-color: #ffe1a3;
   background: linear-gradient(135deg, #fffaf0 0%, #fff4d6 100%);
+}
+
+.warehouse-quality-heading {
+  align-items: flex-start;
+}
+
+.warehouse-quality-heading p {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 750;
+  line-height: 1.5;
+}
+
+.warehouse-quality-card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.warehouse-quality-card,
+.warehouse-risk-priority-card {
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid #dbeafe;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #f8fbff 0%, #ffffff 100%);
+  box-shadow: 0 10px 22px rgb(15 23 42 / 5%);
+}
+
+.warehouse-quality-card h3 {
+  margin: 0 0 10px;
+  color: #1864ab;
+  font-size: 1rem;
+}
+
+.warehouse-quality-card ul {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+  padding-left: 18px;
+  color: var(--text);
+  font-size: 0.86rem;
+  font-weight: 760;
+  line-height: 1.45;
+}
+
+.warehouse-risk-priority-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.warehouse-risk-priority-card {
+  display: grid;
+  gap: 7px;
+}
+
+.warehouse-risk-priority-card span {
+  width: fit-content;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 950;
+}
+
+.warehouse-risk-priority-card strong {
+  color: var(--text);
+  font-size: 0.98rem;
+}
+
+.warehouse-risk-priority-card p,
+.warehouse-risk-priority-card small {
+  margin: 0;
+  color: var(--muted);
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.warehouse-risk-priority-card.high span {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.warehouse-risk-priority-card.medium span {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.warehouse-risk-priority-card.low span {
+  background: #dcfce7;
+  color: #166534;
 }
 
 .warehouse-operation-summary-grid {
@@ -6194,6 +6288,8 @@ tr:last-child td {
   .warehouse-operation-guide-grid,
   .warehouse-barcode-risk-grid,
   .warehouse-operation-summary-grid,
+  .warehouse-quality-card-grid,
+  .warehouse-risk-priority-grid,
   .warehouse-terminal-grid,
   .warehouse-terminal-metrics,
   .warehouse-terminal-detail-grid,

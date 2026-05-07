@@ -19,6 +19,7 @@ const statusRows = [
   { label: "Gerçek cihaz bağlantısı", value: "Kapalı" },
   { label: "Barkod okutma entegrasyonu", value: "Gerçek cihazla bağlı değil" },
   { label: "Sayım raporu", value: "Önizleme" },
+  { label: "Stok ve barkod kalite kontrolü", value: "Pasif/mock hazırlık" },
   { label: "ERP’ye stok yazma", value: "Kapalı" },
   { label: "Vega geçiş hazırlığı", value: "Read-only yol haritası ile kademeli hazırlık sürüyor." },
 ];
@@ -140,10 +141,26 @@ const handheldBarcodeStatusRows = [
   { label: "Gerçek cihaz bağlantısı", value: "Kapalı" },
   { label: "Barkod okutma entegrasyonu", value: "Gerçek cihazla bağlı değil" },
   { label: "Sayım raporu", value: "Önizleme" },
+  { label: "Stok ve barkod kalite kontrolü", value: "Pasif/mock hazırlık" },
   { label: "ERP’ye stok yazma", value: "Kapalı" },
 ];
 
+const stockBarcodeQualityStatusRows = [
+  { label: "Barkod kalite kontrolü", value: "Pasif/mock hazırlık" },
+  { label: "Stok kartı kalite kontrolü", value: "Önizleme" },
+  { label: "Duplicate barkod kontrolü", value: "Manuel takip" },
+  { label: "Sayım farkı kontrolü", value: "Manuel takip" },
+  { label: "Gerçek veri düzeltme", value: "Kapalı" },
+  { label: "ERP’ye yazma", value: "Kapalı" },
+];
+
 const versionHistoryRows = [
+  {
+    version: "v1.31.0",
+    title: "Stok Riskleri ve Barkod Kalite Kontrol Merkezi",
+    area: "Depo Terminali / Vega Import / Dashboard / Sistem Durumu",
+    description: "Stok ve barkod kalite kontrol görünürlüğü pasif/mock modda güçlendirildi; duplicate barkod, barkodsuz ürün, eksik stok kodu ve sayım farkı riskleri gerçek cihaz bağlantısı, Vega bağlantısı veya veri yazma eklenmeden özetlendi.",
+  },
   {
     version: "v1.30.0",
     title: "El Terminali ve Barkod Operasyon Merkezi",
@@ -587,8 +604,8 @@ export default function SystemStatusPanel() {
 
       <div className="system-status-focus-card">
         <span>Bu Sürümde Test Edilecek Alan</span>
-        <strong>Depo Terminali / El Terminali ve Barkod Operasyon Merkezi</strong>
-        <p>Bu sürümde el terminali operasyon özeti, barkod riskleri, sayım akışı ve sistem durumu özellikle kontrol edilmelidir.</p>
+        <strong>Depo Terminali / Stok ve Barkod Kalite Kontrol Merkezi</strong>
+        <p>Bu sürümde stok kalite kontrolü, barkod riskleri, sayım farkları ve sistem durumu özellikle kontrol edilmelidir.</p>
       </div>
 
       <div className="system-workflow-panel" {...sectionHighlightProps("system-workflow-model")}>
@@ -609,7 +626,6 @@ export default function SystemStatusPanel() {
         </p>
       </div>
 
-
       <div className="handheld-barcode-status-panel" {...sectionHighlightProps("handheld-barcode-status")}>
         <div>
           <h3>El Terminali ve Barkod Operasyonu <NewReleaseBadge sectionId="handheld-barcode-status" /></h3>
@@ -625,6 +641,24 @@ export default function SystemStatusPanel() {
         </div>
         <p className="handheld-barcode-safety-note">
           El terminali ve barkod modülü bu sürümde gerçek stok güncellemesi, cihaz bağlantısı veya veri yazma işlemi yapmaz.
+        </p>
+      </div>
+
+      <div className="handheld-barcode-status-panel" {...sectionHighlightProps("stock-barcode-quality-status")}>
+        <div>
+          <h3>Stok ve Barkod Kalite Kontrol Durumu <NewReleaseBadge sectionId="stock-barcode-quality-status" /></h3>
+          <p>Bu sürüm kalite kontrol görünürlüğünü artırır ve sahadaki risk notlarını pasif özet olarak toplar.</p>
+        </div>
+        <div className="system-status-grid">
+          {stockBarcodeQualityStatusRows.map((row) => (
+            <div className="system-status-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </div>
+          ))}
+        </div>
+        <p className="handheld-barcode-safety-note">
+          Bu sürüm kalite kontrol görünürlüğü sağlar; gerçek stok düzeltme, barkod güncelleme, cihaz bağlantısı veya veri yazma işlemi yapmaz.
         </p>
       </div>
 

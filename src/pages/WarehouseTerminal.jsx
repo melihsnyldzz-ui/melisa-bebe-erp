@@ -35,6 +35,57 @@ const barcodeRiskCards = [
   { label: "Sayım farkı", description: "Sistem stoğu ile sayılan adet farklıysa raporda sadece önizleme yapılır." },
 ];
 
+const qualityControlGroups = [
+  {
+    title: "Barkod Kalitesi",
+    items: [
+      "Barkodsuz ürünler kontrol edilecek",
+      "Duplicate barkodlar yöneticiye bildirilecek",
+      "Yanlış ürün eşleşmeleri not alınacak",
+      "Çoklu barkodlu stoklar ayrıca kontrol edilecek",
+    ],
+  },
+  {
+    title: "Stok Kartı Kalitesi",
+    items: [
+      "Eksik stok kodu kontrol edilecek",
+      "Ürün adı boş olan kayıtlar not alınacak",
+      "Marka/kategori/beden alanları karşılaştırılacak",
+      "Aktif/pasif durumu ayrıca değerlendirilecek",
+    ],
+  },
+  {
+    title: "Sayım Kalitesi",
+    items: [
+      "Son okutulanlar listesi kontrol edilecek",
+      "Sayım sepeti manuel gözden geçirilecek",
+      "Sayım farkı varsa rapora not düşülecek",
+      "Gerçek stok güncellemesi yapılmayacak",
+    ],
+  },
+  {
+    title: "Yönetici Kontrolü",
+    items: [
+      "Riskli barkodlar listelenecek",
+      "Personel notları toplanacak",
+      "Vega ekranıyla manuel karşılaştırma yapılacak",
+      "Son karar ayrı fazda verilecek",
+    ],
+  },
+];
+
+const riskPriorityRows = [
+  { level: "Yüksek", tone: "high", risk: "Duplicate barkod", staffAction: "Ürünü ayır, not al, yöneticiyi bilgilendir", managerCheck: "Evet" },
+  { level: "Yüksek", tone: "high", risk: "Eksik stok kodu", staffAction: "Stok kartı bilgisini ayır ve ürün adıyla kontrol notu oluştur", managerCheck: "Evet" },
+  { level: "Yüksek", tone: "high", risk: "Yanlış ürün eşleşmesi", staffAction: "Okutmayı durdur, ürünü ayır ve eşleşme notu al", managerCheck: "Evet" },
+  { level: "Orta", tone: "medium", risk: "Barkodsuz ürün", staffAction: "Etiket/stok kartı kontrolü yap", managerCheck: "Evet" },
+  { level: "Orta", tone: "medium", risk: "Çoklu barkodlu stok", staffAction: "Barkodları ürünle birlikte manuel karşılaştır", managerCheck: "Evet" },
+  { level: "Orta", tone: "medium", risk: "Sayım farkı", staffAction: "Sepeti ve son okutulanları tekrar gözden geçir", managerCheck: "Evet" },
+  { level: "Düşük", tone: "low", risk: "Eksik kategori", staffAction: "Not al, sonraki düzenleme listesine ekle", managerCheck: "Hayır" },
+  { level: "Düşük", tone: "low", risk: "Eksik marka", staffAction: "Marka bilgisini not listesine ekle", managerCheck: "Hayır" },
+  { level: "Düşük", tone: "low", risk: "Aktif/pasif belirsizliği", staffAction: "Durumu not al ve sonraki kontrol listesine bırak", managerCheck: "Hayır" },
+];
+
 const operationSummaryItems = [
   { label: "Son okutulanlar", value: "Kontrol listesi" },
   { label: "Sayım sepeti", value: "Önizleme" },
@@ -101,6 +152,46 @@ export default function WarehouseTerminal() {
             <article className="warehouse-barcode-risk-card" key={risk.label}>
               <strong>{risk.label}</strong>
               <span>{risk.description}</span>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="table-panel warehouse-quality-center-panel section-updated-highlight" id="warehouse-stock-barcode-quality-center">
+        <div className="section-heading warehouse-quality-heading">
+          <div>
+            <h2>Stok ve Barkod Kalite Kontrol Merkezi</h2>
+            <p>Sayım ve barkod operasyonu öncesinde riskli stok ve barkod kayıtlarını pasif/mock düzeyde görünür hale getiren kontrol alanı.</p>
+          </div>
+        </div>
+        <div className="warehouse-quality-card-grid">
+          {qualityControlGroups.map((group) => (
+            <article className="warehouse-quality-card" key={group.title}>
+              <h3>{group.title}</h3>
+              <ul>
+                {group.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="table-panel warehouse-risk-priority-panel section-updated-highlight" id="warehouse-risk-priority-matrix">
+        <div className="section-heading warehouse-quality-heading">
+          <div>
+            <h2>Risk Öncelik Matrisi</h2>
+            <p>Personelin sahada neyi ayıracağını ve yöneticinin hangi risklerde devreye gireceğini statik olarak özetler.</p>
+          </div>
+        </div>
+        <div className="warehouse-risk-priority-grid">
+          {riskPriorityRows.map((row) => (
+            <article className={`warehouse-risk-priority-card ${row.tone}`} key={`${row.level}-${row.risk}`}>
+              <span>{row.level}</span>
+              <strong>{row.risk}</strong>
+              <p>{row.staffAction}</p>
+              <small>Yönetici kontrolü: {row.managerCheck}</small>
             </article>
           ))}
         </div>

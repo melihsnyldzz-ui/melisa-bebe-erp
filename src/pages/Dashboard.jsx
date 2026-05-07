@@ -20,10 +20,14 @@ const dashboardUpdatedSectionIds = dashboardReleaseHighlights.updatedSectionIds;
 const ownerViewCards = [
   { label: "Günlük operasyon durumu", value: "Takipte" },
   { label: "Stok görünürlüğü", value: "Hazırlıkta" },
+  { label: "Stok kalite kontrolü", value: "Hazırlıkta" },
   { label: "Cari kontrol", value: "Planlandı" },
   { label: "Alış / satış özeti", value: "Geliştiriliyor" },
   { label: "Barkod operasyonu", value: "Hazırlıkta" },
+  { label: "Barkod kalite kontrolü", value: "Öncelikli" },
+  { label: "Riskli barkodlar", value: "İzlenecek" },
   { label: "Sayım akışı", value: "Önizleme" },
+  { label: "Sayım farkları", value: "Manuel kontrol" },
   { label: "El terminali bağlantısı", value: "Kapalı" },
   { label: "Stok güncelleme", value: "Kapalı" },
   { label: "Vega read-only geçişi", value: "Hazırlık kapısında" },
@@ -31,6 +35,10 @@ const ownerViewCards = [
 
 const ownerTodayItems = [
   "El terminali sayım akışı gözden geçirilecek",
+  "Duplicate barkod riskleri gözden geçirilecek",
+  "Barkodsuz ürün listesi personelle kontrol edilecek",
+  "Sayım farkı senaryoları not alınacak",
+  "Stok kartı eksikleri kalite listesine alınacak",
   "Barkodsuz ve duplicate barkod riskleri kontrol edilecek",
   "Personelin okutma sonrası kontrol adımları netleştirilecek",
   "Read-only geçiş güvenlik şartları gözden geçirilecek",

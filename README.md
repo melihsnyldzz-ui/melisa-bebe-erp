@@ -6,10 +6,11 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 
 ## Mevcut Durum
 
-- Güncel sürüm: v1.30.0
-- Aşama: El Terminali ve Barkod Operasyon Merkezi
+- Güncel sürüm: v1.31.0
+- Aşama: Stok Riskleri ve Barkod Kalite Kontrol Merkezi
 - Build kontrolü: GitHub Actions
 - El terminali: okuma, son okutulanlar, sayım sepeti, rapor/CSV/JSON önizleme hazırlığı
+- Stok ve barkod kalite kontrolü: pasif/mock risk görünürlüğü
 
 ## Güvenli Geliştirme Notu
 
@@ -44,6 +45,13 @@ Bu proje manuel kontrollü geliştirme modeliyle ilerler. ChatGPT GitHub main’
 - Gerçek stok güncellemesi yapılmaz.
 - Sayım ve rapor alanları önizleme mantığıyla geliştirilir.
 - Gerçek entegrasyon ileride ayrı küçük onaylı fazda ele alınır.
+
+## Stok Riskleri ve Barkod Kalite Kontrol Fazı
+
+- Bu faz stok ve barkod risklerini personel/yönetici için görünür hale getirir.
+- Duplicate barkod, barkodsuz ürün, eksik stok kodu ve sayım farkı gibi riskler pasif olarak takip edilir.
+- Gerçek düzeltme, import veya veri yazma yapılmaz.
+- Gerçek düzeltme akışı ileride ayrı küçük onaylı fazda ele alınır.
 
 ## Build Kontrolü
 

@@ -501,3 +501,35 @@
     grid-template-columns: 1fr;
   }
 }
+
+.vega-import-quality-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding: 16px;
+  border: 1px solid #c3fae8;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #f4fcf8 0%, #ffffff 100%);
+  color: var(--text);
+}
+
+.vega-import-quality-note h2,
+.vega-import-quality-note ul {
+  margin: 0;
+}
+
+.vega-import-quality-note h2 {
+  font-size: 1.02rem;
+}
+
+.vega-import-quality-note ul {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+  padding-left: 18px;
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 800;
+  line-height: 1.45;
+}

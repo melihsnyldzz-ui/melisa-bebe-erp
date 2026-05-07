@@ -1,18 +1,19 @@
-export const currentReleaseVersion = "v1.30.0";
+export const currentReleaseVersion = "v1.31.0";
 
-export const currentReleaseTitle = "El Terminali ve Barkod Operasyon Merkezi";
+export const currentReleaseTitle = "Stok Riskleri ve Barkod Kalite Kontrol Merkezi";
 
-export const updatedSectionIds = ["latest-version-history", "live-test-center", "system-workflow-model", "handheld-barcode-status"];
+export const updatedSectionIds = ["latest-version-history", "live-test-center", "system-workflow-model", "handheld-barcode-status", "stock-barcode-quality-status"];
 
 export const releaseHighlightItems = [
-  "El terminali ve barkod operasyonu personel kullanımı için daha net hale getirildi.",
-  "Sayım, son okutulanlar, barkod riskleri ve saha kontrol akışı pasif/mock modda toparlandı.",
-  "Gerçek cihaz bağlantısı, veri yazma, import veya canlı Vega bağlantısı eklenmeden güvenli hazırlık korundu.",
+  "Stok ve barkod kalite kontrol süreci personel ve yönetici için daha görünür hale getirildi.",
+  "Barkodsuz ürün, duplicate barkod, eksik stok kodu ve sayım farkı riskleri pasif/mock modda toparlandı.",
+  "Gerçek cihaz bağlantısı, Vega bağlantısı, DB okuma, query, veri yazma veya import eklenmeden güvenli hazırlık korundu.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
   { id: "handheld-barcode-status", label: "El Terminali Durumu'na git" },
+  { id: "stock-barcode-quality-status", label: "Kalite Kontrol Durumu'na git" },
   { id: "live-test-center", label: "Canlı Test Merkezi'ne git" },
 ];
 
@@ -43,19 +44,21 @@ export const releaseHighlightsByPage = {
     releaseHighlightItems,
     releaseJumpLinks: [
       { id: "vega-import-preview-panel", label: "Vega Import Önizleme alanına git" },
+      { id: "vega-import-quality-note", label: "Kalite Kontrol Notu'na git" },
       { id: "vega-readonly-roadmap", label: "Read-only Yol Haritası'na git" },
     ],
-    updatedSectionIds: ["vega-import-preview-panel", "vega-readonly-roadmap"],
+    updatedSectionIds: ["vega-import-preview-panel", "vega-import-quality-note", "vega-readonly-roadmap"],
   },
 
   warehouseTerminal: {
     releaseHighlightItems,
     releaseJumpLinks: [
       { id: "warehouse-barcode-operation-center", label: "Operasyon Merkezi'ne git" },
-      { id: "warehouse-barcode-flow-summary", label: "Barkod Akış Özeti'ne git" },
+      { id: "warehouse-stock-barcode-quality-center", label: "Kalite Kontrol Merkezi'ne git" },
+      { id: "warehouse-risk-priority-matrix", label: "Risk Öncelik Matrisi'ne git" },
       { id: "warehouse-barcode-risk-panel", label: "Barkod Riskleri'ne git" },
     ],
-    updatedSectionIds: ["warehouse-barcode-operation-center", "warehouse-barcode-flow-summary", "warehouse-barcode-risk-panel"],
+    updatedSectionIds: ["warehouse-barcode-operation-center", "warehouse-stock-barcode-quality-center", "warehouse-risk-priority-matrix", "warehouse-barcode-risk-panel"],
   },
   settings: {
     releaseHighlightItems,
