@@ -158,14 +158,28 @@ const readOnlyStockPreviewColumns = [
   { key: "IND", label: "Teknik ID", note: "Karar alanı değildir" },
   { key: "STOKKODU", label: "Stok Kodu" },
   { key: "MALINCINSI", label: "Ürün Adı" },
-  { key: "KOD1", label: "KOD1", note: "Vega Kod Alanı" },
-  { key: "KOD2", label: "KOD2", note: "Vega Kod Alanı" },
-  { key: "KOD4", label: "KOD4", note: "Vega Kod Alanı" },
-  { key: "KOD6", label: "KOD6", note: "Vega Kod Alanı" },
-  { key: "ALISFIYATI", label: "Alış Fiyatı Adayı", type: "currencyCandidate" },
-  { key: "ISKSATISFIYATI2", label: "Satış Fiyatı Adayı 2", type: "currencyCandidate" },
-  { key: "ISKSATISFIYATI3", label: "Satış Fiyatı Adayı 3", type: "currencyCandidate" },
-  { key: "KDVGRUBU", label: "KDV Grubu Adayı" },
+  { key: "KOD1", label: "KOD1", note: "Anlamı doğrulanacak Vega kod alanı" },
+  { key: "KOD2", label: "KOD2", note: "Anlamı doğrulanacak Vega kod alanı" },
+  { key: "KOD4", label: "KOD4", note: "Anlamı doğrulanacak Vega kod alanı" },
+  { key: "KOD6", label: "KOD6", note: "Anlamı doğrulanacak Vega kod alanı" },
+  { key: "ALISFIYATI", label: "Alış Fiyatı Adayı", note: "Aday fiyat alanı", type: "currencyCandidate" },
+  { key: "ISKSATISFIYATI2", label: "Satış Fiyatı Adayı 2", note: "Aday fiyat alanı", type: "currencyCandidate" },
+  { key: "ISKSATISFIYATI3", label: "Satış Fiyatı Adayı 3", note: "Aday fiyat alanı", type: "currencyCandidate" },
+  { key: "KDVGRUBU", label: "KDV Grubu Adayı", note: "Muhasebe kontrolü gerekir" },
+];
+
+const stockFieldValidationNotes = [
+  { field: "STOKKODU", meaning: "Stok kodu olarak yüksek güven", status: "Yüksek güven" },
+  { field: "MALINCINSI", meaning: "Ürün adı / malın cinsi olarak yüksek güven", status: "Yüksek güven" },
+  { field: "IND", meaning: "Teknik ID, kullanıcı karar alanı değildir", status: "Teknik alan" },
+  { field: "KOD1", meaning: "Vega kod alanı, anlamı örnek satırlarla doğrulanmalı", status: "Doğrulanacak" },
+  { field: "KOD2", meaning: "Vega kod alanı, anlamı örnek satırlarla doğrulanmalı", status: "Doğrulanacak" },
+  { field: "KOD4", meaning: "Vega kod alanı, anlamı örnek satırlarla doğrulanmalı", status: "Doğrulanacak" },
+  { field: "KOD6", meaning: "Vega kod alanı, anlamı örnek satırlarla doğrulanmalı", status: "Doğrulanacak" },
+  { field: "ALISFIYATI", meaning: "Alış fiyatı adayı, kesin maliyet kararı değildir", status: "Doğrulanacak" },
+  { field: "ISKSATISFIYATI2", meaning: "Satış fiyatı adayı 2, doğrulanmalı", status: "Doğrulanacak" },
+  { field: "ISKSATISFIYATI3", meaning: "Satış fiyatı adayı 3, doğrulanmalı", status: "Doğrulanacak" },
+  { field: "KDVGRUBU", meaning: "KDV grubu adayı, muhasebe kontrolü gerekir", status: "Muhasebe kontrolü" },
 ];
 
 const roleEnvironmentPrepCards = [
@@ -925,6 +939,20 @@ export default function VegaImportPreview() {
         <p className="vega-import-warning-panel">
           Bu önizleme yüksek yetkili kullanıcıyla kalıcı kullanım için tasarlanmamıştır. Sonraki fazlardan önce yalnızca okuma yetkili ayrı SQL kullanıcısına geçilmesi önerilir.
         </p>
+
+        <section className="vega-technical-gate-panel" id="vega-stock-field-validation-notes">
+          <h3>Alan Doğrulama Notları</h3>
+          <p>Bu alan yorumları kesin operasyon/muhasebe kararı değildir. Vega ekranı ve örnek satırlarla doğrulandıktan sonra kesinleştirilecektir.</p>
+          <div className="vega-stock-field-validation-grid">
+            {stockFieldValidationNotes.map((note) => (
+              <article className="vega-technical-lock-row" key={note.field}>
+                <span>{note.field}</span>
+                <strong>{note.meaning}</strong>
+                <small>{note.status}</small>
+              </article>
+            ))}
+          </div>
+        </section>
       </section>
 
       <section className="vega-technical-gate-center section-updated-highlight" id="vega-readonly-environment-prep-center">

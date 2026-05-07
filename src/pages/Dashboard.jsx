@@ -98,6 +98,8 @@ const ownerViewCards = [
   { label: "Log / dosya sızıntısı", value: "Yok" },
   { label: "Önizleme araması", value: "Geçici 20 satır" },
   { label: "Fiyat gösterimi", value: "Aday format" },
+  { label: "Stok alan doğrulama", value: "Hazırlıkta" },
+  { label: "Kesin alan kararı", value: "Vega kontrolü sonrası" },
   { label: "Desktop uygulama modu", value: "Local Desktop" },
   { label: "Desktop Vega bağlantısı", value: "Kapalı / terminal smoke test" },
   { label: "Desktop veri yazma", value: "Kapalı" },
@@ -329,6 +331,16 @@ const stockPreviewUsabilityCards = [
   { label: "Veri yazma/import", value: "Yok" },
 ];
 
+const stockFieldValidationPrepCards = [
+  { label: "Yüksek güven", value: "STOKKODU / MALINCINSI" },
+  { label: "Teknik alan", value: "IND" },
+  { label: "Doğrulanacak kod alanları", value: "KOD1 / KOD2 / KOD4 / KOD6" },
+  { label: "Doğrulanacak fiyat alanları", value: "ALISFIYATI / ISKSATISFIYATI2 / ISKSATISFIYATI3" },
+  { label: "KDV kontrolü", value: "KDVGRUBU" },
+  { label: "Gerçek veri yazma", value: "Yok" },
+  { label: "Yeni SQL", value: "Yok" },
+];
+
 const passiveVegaConnectionSummaryCards = passiveVegaConnectionStatusRows.slice(0, 10);
 
 const closedBetaPreparationCards = closedBetaPreparationRows;
@@ -541,6 +553,8 @@ export default function Dashboard() {
 
       <StockPreviewUsabilitySummary />
 
+      <StockFieldValidationPrepSummary />
+
       <SuccessfulStockReadProof />
 
       <PassiveVegaConnectionStatus />
@@ -733,6 +747,32 @@ function StockPreviewUsabilitySummary() {
 
       <div className="reporting-decision-status-grid">
         {stockPreviewUsabilityCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function StockFieldValidationPrepSummary() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-stock-field-validation-prep")}`} id="dashboard-stock-field-validation-prep">
+      <DashboardNewReleaseBadge sectionId="dashboard-stock-field-validation-prep" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Alan doğrulama hazırlığı</p>
+          <h2>Stok Alan Doğrulama Hazırlığı</h2>
+          <span>
+            Read-only stok önizlemede gelen kolonların nasıl yorumlanacağı pasif rehber olarak gösterilir; alanlar Vega ekranı ve örnek satırlarla doğrulanmadan kesin karar sayılmaz.
+          </span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {stockFieldValidationPrepCards.map((card) => (
           <article className="commerce-profitability-status-card" key={card.label}>
             <span>{card.label}</span>
             <strong>{card.value}</strong>

@@ -6,8 +6,8 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 
 ## Mevcut Durum
 
-- Güncel sürüm: v1.54.0
-- Aşama: Stok Önizleme Kullanım İyileştirme
+- Güncel sürüm: v1.55.0
+- Aşama: Stok Alan Anlamlandırma ve Doğrulama Hazırlığı
 - Build kontrolü: GitHub Actions
 - El terminali: okuma, son okutulanlar, sayım sepeti, rapor/CSV/JSON önizleme hazırlığı
 - Stok ve barkod kalite kontrolü: pasif/mock risk görünürlüğü
@@ -247,6 +247,17 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 - Boş veya null alanlar `—` olarak gösterilir.
 - Veri kapsamı, SQL sorgusu, bağlantı davranışı ve güvenlik sınırları değişmedi.
 - Yeni SQL, otomatik bağlantı, dosyaya çıktı, veri yazma, import/senkron veya cari/fiş/hareket okuma eklenmedi.
+
+## Stok Alan Anlamlandırma ve Doğrulama Hazırlığı
+
+- Bu faz read-only stok önizlemede gelen kolonların nasıl yorumlanacağına dair pasif doğrulama rehberi ekler.
+- `STOKKODU` stok kodu, `MALINCINSI` ürün adı / malın cinsi olarak yüksek güvenli alanlardır.
+- `IND` yalnızca teknik ID olarak değerlendirilir; kullanıcı karar alanı değildir.
+- `KOD1`, `KOD2`, `KOD4` ve `KOD6` anlamı örnek satırlarla doğrulanacak Vega kod alanlarıdır.
+- `ALISFIYATI`, `ISKSATISFIYATI2` ve `ISKSATISFIYATI3` aday fiyat alanlarıdır; kesin maliyet veya satış kararı değildir.
+- `KDVGRUBU` KDV grubu adayıdır ve muhasebe kontrolü gerektirir.
+- Alan yorumları kesin operasyon/muhasebe kararı değildir; Vega ekranı ve örnek satırlarla doğrulandıktan sonra kesinleştirilecektir.
+- Canlı stok değerleri repoya yazılmaz; yeni SQL, veri yazma, import/senkron veya kapsam büyütme eklenmez.
 
 ## Build Kontrolü
 

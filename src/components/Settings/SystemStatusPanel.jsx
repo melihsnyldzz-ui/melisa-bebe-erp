@@ -365,6 +365,16 @@ const readonlyStockPreviewUsabilityStatusRows = [
   { label: "Dosyaya çıktı/import", value: "Yok" },
 ];
 
+const stockFieldValidationStatusRows = [
+  { label: "Yüksek güven", value: "STOKKODU / MALINCINSI" },
+  { label: "Teknik alan", value: "IND" },
+  { label: "Doğrulanacak kod alanları", value: "KOD1 / KOD2 / KOD4 / KOD6" },
+  { label: "Doğrulanacak fiyat alanları", value: "ALISFIYATI / ISKSATISFIYATI2 / ISKSATISFIYATI3" },
+  { label: "KDV kontrolü", value: "KDVGRUBU" },
+  { label: "Gerçek veri yazma", value: "Yok" },
+  { label: "Yeni SQL", value: "Yok" },
+];
+
 const vegaStockFieldMapStatusRows = [
   { label: "Alan haritası", value: "Pasif dokümantasyon" },
   { label: "Kolon sayısı", value: `${vegaStockFieldMap.length} alan` },
@@ -388,6 +398,12 @@ const desktopPreparationStatusRows = [
 ];
 
 const versionHistoryRows = [
+  {
+    version: "v1.55.0",
+    title: "Stok Alan Anlamlandırma ve Doğrulama Hazırlığı",
+    area: "Vega Import Önizleme / Dashboard / Sistem Durumu / README",
+    description: "Read-only stok önizlemede gelen kolonların nasıl yorumlanacağı pasif doğrulama rehberi olarak eklendi; STOKKODU ve MALINCINSI yüksek güvenli, IND teknik alan, KOD/fiyat/KDV alanları ise Vega ekranı ve örnek satırlarla doğrulanacak aday alanlar olarak gösterildi.",
+  },
   {
     version: "v1.54.0",
     title: "Stok Önizleme Kullanım İyileştirme",
@@ -1162,6 +1178,24 @@ export default function SystemStatusPanel() {
         </div>
         <p className="handheld-barcode-safety-note readonly-stock-preview-safety-note">
           Bu kullanım iyileştirmesi veri kapsamını büyütmez; yeni SQL, otomatik bağlantı, veri yazma, import/senkron veya canlı veri dosyası oluşturmaz.
+        </p>
+      </div>
+
+      <div className="handheld-barcode-status-panel stock-field-validation-status-panel" {...sectionHighlightProps("stock-field-validation-status")}>
+        <div>
+          <h3>Stok Alan Doğrulama Hazırlığı <NewReleaseBadge sectionId="stock-field-validation-status" /></h3>
+          <p>Read-only stok önizleme kolonları kesin operasyon/muhasebe kararı sayılmadan önce Vega ekranı ve örnek satırlarla doğrulanacak şekilde pasif olarak sınıflandırılır.</p>
+        </div>
+        <div className="system-status-grid">
+          {stockFieldValidationStatusRows.map((row) => (
+            <div className="system-status-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </div>
+          ))}
+        </div>
+        <p className="handheld-barcode-safety-note stock-field-validation-safety-note">
+          Bu hazırlık gerçek stok değerlerini repoya yazmaz; yeni SQL, otomatik bağlantı, veri yazma, import/senkron veya kesin muhasebe kararı üretmez.
         </p>
       </div>
 

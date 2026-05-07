@@ -425,6 +425,12 @@
   margin-bottom: 10px;
 }
 
+.vega-stock-field-validation-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
 .vega-import-table th small {
   display: block;
   margin-top: 3px;
@@ -609,6 +615,7 @@
   .vega-post-test-template-grid,
   .vega-operation-status-grid,
   .vega-readonly-preview-result-grid,
+  .vega-stock-field-validation-grid,
   .vega-operation-group-grid,
   .vega-owner-summary-list {
     grid-template-columns: 1fr;
