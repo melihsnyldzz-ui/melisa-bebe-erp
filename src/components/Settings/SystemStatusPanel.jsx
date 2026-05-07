@@ -331,6 +331,17 @@ const readonlyStockProofStatusRows = [
   { label: "ERP arayüzünden bağlantı", value: "Yok" },
 ];
 
+const readonlyStockPreviewStatusRows = [
+  { label: "Önizleme ekranı", value: "Manuel read-only" },
+  { label: "Otomatik bağlantı", value: "Yok" },
+  { label: "Tablo kapsamı", value: "F0102TBLSTOKLAR" },
+  { label: "Limit", value: "20 stok kartı" },
+  { label: "Geçici state", value: "Ekranda tutulur" },
+  { label: "Dosyaya çıktı", value: "Yok" },
+  { label: "ERP’ye yazma/import", value: "Yok" },
+  { label: "Cari/fiş/hareket", value: "Kapsam dışı" },
+];
+
 const vegaStockFieldMapStatusRows = [
   { label: "Alan haritası", value: "Pasif dokümantasyon" },
   { label: "Kolon sayısı", value: `${vegaStockFieldMap.length} alan` },
@@ -354,6 +365,12 @@ const desktopPreparationStatusRows = [
 ];
 
 const versionHistoryRows = [
+  {
+    version: "v1.52.0",
+    title: "Vega Read-only Stok Önizleme Ekranı",
+    area: "Vega Import Önizleme / Dashboard / Sistem Durumu / README",
+    description: "Uygulama içinden yalnızca manuel kullanıcı aksiyonuyla çalışan, F0102TBLSTOKLAR ve 20 stok kartı sınırındaki geçici read-only stok önizleme ekranı eklendi; otomatik bağlantı, veri yazma, import/senkron, dosyaya çıktı, cari/fiş/hareket okuma veya bağlantı bilgisi gösterimi eklenmedi.",
+  },
   {
     version: "v1.51.0",
     title: "İlk Başarılı Read-only Vega Stok Okuma Kanıtı",
@@ -1056,6 +1073,24 @@ export default function SystemStatusPanel() {
         </div>
         <p className="handheld-barcode-safety-note readonly-stock-proof-safety-note">
           Sonraki canlı bağlantı fazlarından önce yalnızca okuma yetkili ayrı SQL kullanıcısına geçilmesi önerilir. Bu kanıt canlı stok değerlerini repoya yazmaz ve ERP arayüzünden bağlantı başlatmaz.
+        </p>
+      </div>
+
+      <div className="handheld-barcode-status-panel readonly-stock-preview-status-panel" {...sectionHighlightProps("readonly-stock-preview-status")}>
+        <div>
+          <h3>Vega Read-only Stok Önizleme Durumu <NewReleaseBadge sectionId="readonly-stock-preview-status" /></h3>
+          <p>Uygulama içi önizleme yalnızca manuel kullanıcı aksiyonuyla çalışır; 20 stok kartı sınırını, geçici ekran sonucunu ve kapalı yazma/import kilitlerini gösterir.</p>
+        </div>
+        <div className="system-status-grid">
+          {readonlyStockPreviewStatusRows.map((row) => (
+            <div className="system-status-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </div>
+          ))}
+        </div>
+        <p className="handheld-barcode-safety-note readonly-stock-preview-safety-note">
+          Bu ekran Vega’dan yalnızca 20 stok kartını read-only olarak önizler. Veri yazmaz, import yapmaz, senkron başlatmaz ve bağlantı bilgilerini kullanıcıya göstermez. Sonraki fazlardan önce yalnızca okuma yetkili ayrı SQL kullanıcısı önerilir.
         </p>
       </div>
 

@@ -92,6 +92,8 @@ const ownerViewCards = [
   { label: "Alan eşleştirme kararı", value: "Kesin değil" },
   { label: "İlk stok okuma kanıtı", value: "Başarılı" },
   { label: "Kanıt kapsamı", value: "20 satır / kolon doğrulandı" },
+  { label: "Read-only stok önizleme", value: "Manuel ekran" },
+  { label: "Önizleme limiti", value: "20 stok kartı" },
   { label: "Desktop uygulama modu", value: "Local Desktop" },
   { label: "Desktop Vega bağlantısı", value: "Kapalı / terminal smoke test" },
   { label: "Desktop veri yazma", value: "Kapalı" },
@@ -291,6 +293,15 @@ const successfulStockReadProofColumns = [
   "ISKSATISFIYATI2",
   "ISKSATISFIYATI3",
   "KDVGRUBU",
+];
+
+const readOnlyStockPreviewSummaryCards = [
+  { label: "Önizleme modu", value: "Manuel read-only" },
+  { label: "Otomatik bağlantı", value: "Yok" },
+  { label: "Tablo", value: "F0102TBLSTOKLAR" },
+  { label: "Limit", value: "20 stok kartı" },
+  { label: "Sonuç saklama", value: "Geçici ekran" },
+  { label: "Veri yazma/import", value: "Yok" },
 ];
 
 const passiveVegaConnectionSummaryCards = passiveVegaConnectionStatusRows.slice(0, 10);
@@ -499,6 +510,8 @@ export default function Dashboard() {
 
       <ReadonlyStockSmokeSummary />
 
+      <ReadOnlyStockPreviewSummary />
+
       <SuccessfulStockReadProof />
 
       <PassiveVegaConnectionStatus />
@@ -613,6 +626,32 @@ function ReadonlyStockSmokeSummary() {
 
       <div className="reporting-decision-status-grid">
         {readonlyStockSmokeSummaryCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function ReadOnlyStockPreviewSummary() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-readonly-stock-preview")}`} id="dashboard-readonly-stock-preview">
+      <DashboardNewReleaseBadge sectionId="dashboard-readonly-stock-preview" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Manuel read-only ekran</p>
+          <h2>Vega Read-only Stok Önizleme</h2>
+          <span>
+            Uygulama içinden yalnızca kullanıcı isteğiyle çalışan, 20 stok kartı sınırındaki geçici read-only önizleme durumu. Otomatik bağlantı, dosyaya çıktı, import veya veri yazma içermez.
+          </span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {readOnlyStockPreviewSummaryCards.map((card) => (
           <article className="commerce-profitability-status-card" key={card.label}>
             <span>{card.label}</span>
             <strong>{card.value}</strong>

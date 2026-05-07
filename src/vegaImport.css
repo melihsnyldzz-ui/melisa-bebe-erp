@@ -339,6 +339,56 @@
   opacity: 0.58;
 }
 
+.vega-readonly-preview-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.vega-readonly-preview-action h3,
+.vega-readonly-preview-action p {
+  margin: 0;
+}
+
+.vega-readonly-preview-action button {
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid rgba(24, 100, 171, 0.28);
+  border-radius: 8px;
+  background: #1864ab;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.vega-readonly-preview-action button:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
+.vega-readonly-preview-message {
+  padding: 10px 12px;
+  border: 1px solid #dbeafe;
+  border-radius: 8px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-weight: 800;
+}
+
+.vega-readonly-preview-message.success {
+  border-color: #bbf7d0;
+  background: #f0fdf4;
+  color: #166534;
+}
+
+.vega-readonly-preview-message.error {
+  border-color: #fecdd3;
+  background: #fff1f2;
+  color: #be123c;
+}
+
 .vega-import-table-wrap {
   overflow-x: auto;
   border: 1px solid #edf0f4;
@@ -510,6 +560,7 @@
 
   .vega-import-map-header,
   .vega-import-table-heading,
+  .vega-readonly-preview-action,
   .vega-operation-center-header {
     align-items: flex-start;
     flex-direction: column;

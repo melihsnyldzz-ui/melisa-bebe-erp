@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { AlertTriangle, Database, ShieldCheck } from "lucide-react";
 import {
   readOnlyConnectionLocks,
@@ -142,6 +143,29 @@ const stockSmokeTestStatusCards = [
   { label: "Veri yazma", value: "Kapalı" },
   { label: "Import", value: "Kapalı" },
   { label: "Sonuç", value: "Terminal önizleme" },
+];
+
+const readOnlyStockPreviewStatusCards = [
+  { label: "Çalışma modu", value: "Manuel read-only" },
+  { label: "Varsayılan bağlantı", value: "Başlamaz" },
+  { label: "Tablo kapsamı", value: "F0102TBLSTOKLAR" },
+  { label: "Limit", value: "20 stok kartı" },
+  { label: "Veri yazma", value: "Yok" },
+  { label: "Import/senkron", value: "Yok" },
+];
+
+const readOnlyStockPreviewColumns = [
+  { key: "IND", label: "Teknik ID" },
+  { key: "STOKKODU", label: "Stok kodu" },
+  { key: "MALINCINSI", label: "Ürün adı" },
+  { key: "KOD1", label: "KOD1" },
+  { key: "KOD2", label: "KOD2" },
+  { key: "KOD4", label: "KOD4" },
+  { key: "KOD6", label: "KOD6" },
+  { key: "ALISFIYATI", label: "Alış fiyatı" },
+  { key: "ISKSATISFIYATI2", label: "Satış fiyatı 2" },
+  { key: "ISKSATISFIYATI3", label: "Satış fiyatı 3" },
+  { key: "KDVGRUBU", label: "KDV grubu" },
 ];
 
 const roleEnvironmentPrepCards = [
@@ -602,6 +626,13 @@ function formatNumber(value) {
 }
 
 export default function VegaImportPreview() {
+  const [readonlyPreviewState, setReadonlyPreviewState] = useState({
+    errorClass: "",
+    items: [],
+    message: "Henüz önizleme çalıştırılmadı.",
+    status: "idle",
+  });
+
   const summaryCards = [
     { label: "Firma", value: vegaImportSummary.company },
     { label: "Stok kartı", value: formatNumber(vegaImportSummary.stockCardCount) },
@@ -678,6 +709,43 @@ export default function VegaImportPreview() {
     "Veri yazma ve import bu fazın konusu değildir.",
   ];
 
+  const handleReadOnlyStockPreview = async () => {
+    const listStock = window.electronAPI?.vegaReadOnly?.listStock;
+    if (!listStock) {
+      setReadonlyPreviewState({
+        errorClass: "DESKTOP_API_UNAVAILABLE",
+        items: [],
+        message: "Electron güvenli köprüsü bulunamadı. Önizleme yalnızca desktop uygulamada çalışır.",
+        status: "error",
+      });
+      return;
+    }
+
+    setReadonlyPreviewState({
+      errorClass: "",
+      items: [],
+      message: "Read-only stok önizleme çalışıyor...",
+      status: "loading",
+    });
+
+    try {
+      const result = await listStock();
+      setReadonlyPreviewState({
+        errorClass: result?.errorClass || "",
+        items: Array.isArray(result?.items) ? result.items : [],
+        message: result?.message || "Önizleme tamamlandı.",
+        status: result?.status === "success" ? "success" : "error",
+      });
+    } catch {
+      setReadonlyPreviewState({
+        errorClass: "SQL_UNKNOWN_SAFE",
+        items: [],
+        message: "Önizleme güvenli şekilde tamamlanamadı. Ham hata gizlendi.",
+        status: "error",
+      });
+    }
+  };
+
   return (
     <>
       <section className="page-title vega-import-title">
@@ -710,6 +778,78 @@ export default function VegaImportPreview() {
           <h3>Local Terminal Deneme Notu</h3>
           <p>Bu ekranda bağlantı başlatılmaz. Deneme yalnızca local terminalde npm run vega:readonly-stock-smoke komutuyla yapılır.</p>
         </section>
+      </section>
+
+      <section className="vega-technical-gate-center section-updated-highlight" id="vega-readonly-stock-preview">
+        <div className="vega-technical-gate-hero">
+          <p>Manuel read-only önizleme</p>
+          <h2>Vega Read-only Stok Önizleme</h2>
+          <span>
+            Bu ekran Vega’dan yalnızca 20 stok kartını read-only olarak önizler. Veri yazmaz, import yapmaz, senkron başlatmaz ve sonucu dosyaya kaydetmez.
+          </span>
+        </div>
+
+        <div className="vega-technical-gate-status-grid">
+          {readOnlyStockPreviewStatusCards.map((card) => (
+            <article className="vega-import-summary-card" key={card.label}>
+              <span>{card.label}</span>
+              <strong>{card.value}</strong>
+            </article>
+          ))}
+        </div>
+
+        <section className="vega-technical-gate-panel">
+          <div className="vega-readonly-preview-action">
+            <div>
+              <h3>Geçici Stok Önizleme</h3>
+              <p>Önizleme otomatik başlamaz. Butona basılınca sadece F0102TBLSTOKLAR kapsamındaki 20 stok kartı geçici olarak ekranda gösterilir.</p>
+            </div>
+            <button type="button" onClick={handleReadOnlyStockPreview} disabled={readonlyPreviewState.status === "loading"}>
+              {readonlyPreviewState.status === "loading" ? "Önizleniyor..." : "Read-only 20 stok kartı önizle"}
+            </button>
+          </div>
+          <p className={`vega-readonly-preview-message ${readonlyPreviewState.status}`}>
+            {readonlyPreviewState.message}
+            {readonlyPreviewState.errorClass ? ` Hata sınıfı: ${readonlyPreviewState.errorClass}` : ""}
+          </p>
+        </section>
+
+        {readonlyPreviewState.items.length > 0 && (
+          <section className="vega-import-table-panel">
+            <div className="vega-import-table-heading">
+              <div>
+                <h2>Read-only Stok Önizleme Sonucu</h2>
+                <p>Bu tablo geçici ekrandır; canlı stok verileri repoya, local dosyaya veya import kaydına yazılmaz.</p>
+              </div>
+              <span><ShieldCheck size={14} /> {readonlyPreviewState.items.length} satır · read-only</span>
+            </div>
+
+            <div className="vega-import-table-wrap">
+              <table className="vega-import-table">
+                <thead>
+                  <tr>
+                    {readOnlyStockPreviewColumns.map((column) => (
+                      <th key={column.key}>{column.label}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {readonlyPreviewState.items.map((row, rowIndex) => (
+                    <tr key={`${row.IND ?? "row"}-${rowIndex}`}>
+                      {readOnlyStockPreviewColumns.map((column) => (
+                        <td key={column.key}>{row[column.key] ?? "-"}</td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        )}
+
+        <p className="vega-import-warning-panel">
+          Bu önizleme yüksek yetkili kullanıcıyla kalıcı kullanım için tasarlanmamıştır. Sonraki fazlardan önce yalnızca okuma yetkili ayrı SQL kullanıcısına geçilmesi önerilir.
+        </p>
       </section>
 
       <section className="vega-technical-gate-center section-updated-highlight" id="vega-readonly-environment-prep-center">

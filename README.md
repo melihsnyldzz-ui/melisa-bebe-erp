@@ -6,8 +6,8 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 
 ## Mevcut Durum
 
-- Güncel sürüm: v1.51.0
-- Aşama: İlk Başarılı Read-only Vega Stok Okuma Kanıtı
+- Güncel sürüm: v1.52.0
+- Aşama: Vega Read-only Stok Önizleme Ekranı
 - Build kontrolü: GitHub Actions
 - El terminali: okuma, son okutulanlar, sayım sepeti, rapor/CSV/JSON önizleme hazırlığı
 - Stok ve barkod kalite kontrolü: pasif/mock risk görünürlüğü
@@ -214,6 +214,17 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 - Gerçek stok verileri repoya eklenmedi.
 - SQL kullanıcı bilgileri ve bağlantı bilgileri repoya eklenmedi.
 - Sonraki canlı bağlantı fazlarından önce yalnızca okuma yetkili ayrı SQL kullanıcısına geçilmesi önerilir.
+
+## Read-only Stok Önizleme Ekranı
+
+- Bu faz uygulama içinde manuel çalışan Vega Read-only Stok Önizleme ekranını ekler.
+- Ekran varsayılan açılışta bağlantı başlatmaz; kullanıcı butona basmadan Vega bağlantısı denenmez.
+- Önizleme yalnızca `F0102TBLSTOKLAR` tablosundan en fazla 20 stok kartını read-only olarak gösterir.
+- Sonuç sadece geçici ekran state içinde görünür; dosyaya, repoya veya import kaydına yazılmaz.
+- Veri yazma, import/senkron, cari/fiş/hareket/tahsilat/ödeme okuma ve ERP arayüzünden veri mutasyonu yoktur.
+- `.env.local`, SQL kullanıcı bilgileri, şifre, server/database ve connection string ekranda gösterilmez ve repoya eklenmez.
+- `IND` alanı yalnızca teknik ID olarak etiketlenir; kullanıcı karar alanı gibi sunulmaz.
+- Sonraki fazlardan önce yalnızca okuma yetkili ayrı SQL kullanıcısına geçilmesi önerilir.
 
 ## Build Kontrolü
 
