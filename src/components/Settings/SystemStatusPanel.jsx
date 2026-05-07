@@ -420,6 +420,15 @@ const stockPreviewUserTestStatusRows = [
   { label: "Sonraki hedef", value: "Vega/stok ekranı genel sadeleştirme" },
 ];
 
+const vegaStockScreenSimplificationStatusRows = [
+  { label: "Vega stok ekranı sadeleştirme", value: "Hazır" },
+  { label: "Gelişmiş paneller", value: "Varsayılan kapalı" },
+  { label: "Yeni SQL", value: "Yok" },
+  { label: "Veri yazma/import", value: "Yok" },
+  { label: "Kapsam", value: "20 satır read-only" },
+  { label: "Kalıcı panel/test kaydı", value: "Yok" },
+];
+
 const vegaStockFieldMapStatusRows = [
   { label: "Alan haritası", value: "Pasif dokümantasyon" },
   { label: "Kolon sayısı", value: `${vegaStockFieldMap.length} alan` },
@@ -443,6 +452,12 @@ const desktopPreparationStatusRows = [
 ];
 
 const versionHistoryRows = [
+  {
+    version: "v1.61.0",
+    title: "Vega Stok Ekranı Genel Sadeleştirme",
+    area: "Vega Import Önizleme / Dashboard / Sistem Durumu / README",
+    description: "Vega Read-only Stok Önizleme ekranı günlük kullanım için sade ana akışa alındı; alan etiketleri, doğrulama notları, manuel checklist ve kullanıcı test notu tek kapalı Gelişmiş Alan Doğrulama paneli altında toplandı, yeni SQL veya veri yazma eklenmedi.",
+  },
   {
     version: "v1.60.0",
     title: "Stok Önizleme Kullanıcı Testi ve Son Okuma Özeti",
@@ -1361,6 +1376,24 @@ export default function SystemStatusPanel() {
         </div>
         <p className="handheld-barcode-safety-note stock-preview-user-test-safety-note">
           Kullanıcı test notları ve son okuma özeti local DB’ye/dosyaya/Vega’ya yazılmaz; yeni SQL eklemez, import/senkron başlatmaz ve 20 satırlık read-only kapsamı büyütmez.
+        </p>
+      </div>
+
+      <div className="handheld-barcode-status-panel vega-stock-screen-simplification-status-panel" {...sectionHighlightProps("vega-stock-screen-simplification-status")}>
+        <div>
+          <h3>Vega Stok Ekranı Genel Sadeleştirme <NewReleaseBadge sectionId="vega-stock-screen-simplification-status" /></h3>
+          <p>Read-only stok önizleme ana akışı sadeleştirildi; gelişmiş alan doğrulama panelleri varsayılan kapalı gelir.</p>
+        </div>
+        <div className="system-status-grid">
+          {vegaStockScreenSimplificationStatusRows.map((row) => (
+            <div className="system-status-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </div>
+          ))}
+        </div>
+        <p className="handheld-barcode-safety-note vega-stock-screen-simplification-safety-note">
+          Bu sadeleştirme yalnızca ekran yerleşimidir; panel/test state’i kalıcı kaydedilmez, yeni SQL eklemez, veri yazmaz, import/senkron başlatmaz ve 20 satır read-only kapsamı büyütmez.
         </p>
       </div>
 

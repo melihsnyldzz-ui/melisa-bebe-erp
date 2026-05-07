@@ -388,6 +388,15 @@ const stockPreviewUserTestCards = [
   { label: "Sonraki hedef", value: "Vega/stok ekranı genel sadeleştirme" },
 ];
 
+const vegaStockScreenSimplificationCards = [
+  { label: "Vega stok ekranı sadeleştirme", value: "Hazır" },
+  { label: "Gelişmiş paneller", value: "Varsayılan kapalı" },
+  { label: "Yeni SQL", value: "Yok" },
+  { label: "Veri yazma/import", value: "Yok" },
+  { label: "Kapsam", value: "20 satır read-only" },
+  { label: "Kalıcı panel/test kaydı", value: "Yok" },
+];
+
 const passiveVegaConnectionSummaryCards = passiveVegaConnectionStatusRows.slice(0, 10);
 
 const closedBetaPreparationCards = closedBetaPreparationRows;
@@ -611,6 +620,8 @@ export default function Dashboard() {
       <StockPreviewPanelSimplificationSummary />
 
       <StockPreviewUserTestSummary />
+
+      <VegaStockScreenSimplificationSummary />
 
       <SuccessfulStockReadProof />
 
@@ -960,6 +971,32 @@ function StockPreviewUserTestSummary() {
 
       <div className="reporting-decision-status-grid">
         {stockPreviewUserTestCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function VegaStockScreenSimplificationSummary() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-vega-stock-screen-simplification")}`} id="dashboard-vega-stock-screen-simplification">
+      <DashboardNewReleaseBadge sectionId="dashboard-vega-stock-screen-simplification" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Günlük kullanım düzeni</p>
+          <h2>Vega Stok Ekranı Genel Sadeleştirme</h2>
+          <span>
+            Stok önizleme ana akışı sade tutulur; gelişmiş alan doğrulama panelleri varsayılan kapalı gelir ve seçimler kalıcı kaydedilmez.
+          </span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {vegaStockScreenSimplificationCards.map((card) => (
           <article className="commerce-profitability-status-card" key={card.label}>
             <span>{card.label}</span>
             <strong>{card.value}</strong>

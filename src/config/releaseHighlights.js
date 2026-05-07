@@ -1,18 +1,18 @@
-export const currentReleaseVersion = "v1.60.0";
+export const currentReleaseVersion = "v1.61.0";
 
-export const currentReleaseTitle = "Stok Önizleme Kullanıcı Testi ve Son Okuma Özeti";
+export const currentReleaseTitle = "Vega Stok Ekranı Genel Sadeleştirme";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "stock-preview-user-test-status"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "vega-stock-screen-simplification-status"];
 
 export const releaseHighlightItems = [
-  "Read-only stok önizleme ekranına geçici son okuma özeti ve kullanıcı test notu alanı eklendi.",
-  "Son önizleme sonucu, gelen satır, filtrelenen satır, görünür kolon ve güvenlik kilitleri yalnızca ekran state’i olarak görünür hale getirildi.",
-  "Yeni SQL, kapsam büyütme, otomatik bağlantı, test notu kaydı, dosyaya çıktı, veri yazma veya import/senkron eklenmeden 20 satırlık read-only sınır korundu.",
+  "Vega Read-only Stok Önizleme ekranı günlük kullanıma daha uygun sade ana akışa toparlandı.",
+  "Alan etiketleri, doğrulama notları, manuel checklist ve kullanıcı test notu tek kapalı Gelişmiş Alan Doğrulama paneli altında toplandı.",
+  "Yeni SQL, kapsam büyütme, otomatik bağlantı, panel/test state kaydı, dosyaya çıktı, veri yazma veya import/senkron eklenmeden 20 satırlık read-only sınır korundu.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
-  { id: "stock-preview-user-test-status", label: "Kullanıcı Testi Durumu'na git" },
+  { id: "vega-stock-screen-simplification-status", label: "Vega Stok Sadeleştirme Durumu'na git" },
   { id: "system-workflow-model", label: "Çalışma Modeli'ne git" },
 ];
 
@@ -28,6 +28,7 @@ export const releaseHighlightsByPage = {
     releaseHighlightItems,
     releaseJumpLinks: [
       { id: "dashboard-owner-view", label: "Patron Bakışı'na git" },
+      { id: "dashboard-vega-stock-screen-simplification", label: "Vega Stok Sadeleştirme'ye git" },
       { id: "dashboard-stock-preview-user-test", label: "Stok Önizleme Kullanıcı Testi'ne git" },
       { id: "dashboard-stock-preview-panel-simplification", label: "Stok Önizleme Panel Sadeleştirme'ye git" },
       { id: "dashboard-stock-column-visibility", label: "Kolon Görünürlüğü Kontrolü'ne git" },
@@ -60,7 +61,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-owner-view", "dashboard-stock-preview-user-test", "dashboard-stock-preview-panel-simplification"],
+    updatedSectionIds: ["dashboard-owner-view", "dashboard-vega-stock-screen-simplification", "dashboard-stock-preview-user-test"],
   },
   reports: {
     releaseHighlightItems,
@@ -94,6 +95,7 @@ export const releaseHighlightsByPage = {
       { id: "vega-readonly-stock-smoke-test", label: "İlk Stok Okuma Denemesi'ne git" },
       { id: "vega-readonly-stock-preview", label: "Read-only Stok Önizleme'ye git" },
       { id: "vega-stock-last-read-summary", label: "Son Okuma Özeti'ne git" },
+      { id: "vega-advanced-field-validation", label: "Gelişmiş Alan Doğrulama'ya git" },
       { id: "vega-stock-user-test-notes", label: "Kullanıcı Test Notu'na git" },
       { id: "vega-stock-preview-support-panels", label: "Önizleme Destek Panelleri'ne git" },
       { id: "vega-stock-column-visibility", label: "Kolon Görünürlüğü'ne git" },
@@ -137,7 +139,7 @@ export const releaseHighlightsByPage = {
       { id: "vega-import-quality-note", label: "Kalite Kontrol Notu'na git" },
       { id: "vega-readonly-roadmap", label: "Read-only Yol Haritası'na git" },
     ],
-    updatedSectionIds: ["vega-stock-last-read-summary", "vega-stock-user-test-notes"],
+    updatedSectionIds: ["vega-readonly-stock-preview", "vega-advanced-field-validation"],
   },
 
   warehouseTerminal: {
