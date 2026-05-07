@@ -370,6 +370,15 @@ const stockColumnVisibilityCards = [
   { label: "Sonraki hedef", value: "Stok önizleme ekranını sadeleştirme" },
 ];
 
+const stockPreviewPanelSimplificationCards = [
+  { label: "Panel sadeleştirme", value: "Hazır" },
+  { label: "Açılır bölümler", value: "Alan etiketleri / doğrulama notları / checklist" },
+  { label: "Yeni SQL", value: "Yok" },
+  { label: "Veri yazma/import", value: "Yok" },
+  { label: "Kapsam", value: "20 satır" },
+  { label: "Kalıcı panel kaydı", value: "Yok" },
+];
+
 const passiveVegaConnectionSummaryCards = passiveVegaConnectionStatusRows.slice(0, 10);
 
 const closedBetaPreparationCards = closedBetaPreparationRows;
@@ -589,6 +598,8 @@ export default function Dashboard() {
       <StockFieldLabelingPrepSummary />
 
       <StockColumnVisibilitySummary />
+
+      <StockPreviewPanelSimplificationSummary />
 
       <SuccessfulStockReadProof />
 
@@ -886,6 +897,32 @@ function StockColumnVisibilitySummary() {
 
       <div className="reporting-decision-status-grid">
         {stockColumnVisibilityCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function StockPreviewPanelSimplificationSummary() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-stock-preview-panel-simplification")}`} id="dashboard-stock-preview-panel-simplification">
+      <DashboardNewReleaseBadge sectionId="dashboard-stock-preview-panel-simplification" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Sade önizleme akışı</p>
+          <h2>Stok Önizleme Panel Sadeleştirme</h2>
+          <span>
+            Read-only stok önizleme ekranı güvenlik mesajı, manuel çalıştırma, özet, arama, kolon görünürlüğü, tablo ve açılır destek panelleri sırasına toparlandı.
+          </span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {stockPreviewPanelSimplificationCards.map((card) => (
           <article className="commerce-profitability-status-card" key={card.label}>
             <span>{card.label}</span>
             <strong>{card.value}</strong>

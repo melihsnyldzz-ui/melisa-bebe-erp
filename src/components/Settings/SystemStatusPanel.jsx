@@ -402,6 +402,15 @@ const stockColumnVisibilityStatusRows = [
   { label: "Sonraki hedef", value: "Stok önizleme ekranını sadeleştirme" },
 ];
 
+const stockPreviewPanelSimplificationStatusRows = [
+  { label: "Panel sadeleştirme", value: "Hazır" },
+  { label: "Açılır bölümler", value: "Alan etiketleri / doğrulama notları / checklist" },
+  { label: "Yeni SQL", value: "Yok" },
+  { label: "Veri yazma/import", value: "Yok" },
+  { label: "Kapsam", value: "20 satır" },
+  { label: "Kalıcı panel kaydı", value: "Yok" },
+];
+
 const vegaStockFieldMapStatusRows = [
   { label: "Alan haritası", value: "Pasif dokümantasyon" },
   { label: "Kolon sayısı", value: `${vegaStockFieldMap.length} alan` },
@@ -425,6 +434,12 @@ const desktopPreparationStatusRows = [
 ];
 
 const versionHistoryRows = [
+  {
+    version: "v1.59.0",
+    title: "Stok Önizleme Panel Sadeleştirme",
+    area: "Vega Import Önizleme / Dashboard / Sistem Durumu / README",
+    description: "Read-only stok önizleme ekranı güvenlik mesajı, manuel çalıştırma, özet, arama, kolon görünürlüğü, tablo ve açılır destek panelleri sırasına toparlandı; panel state’i geçici kaldı, yeni SQL, kapsam büyütme, veri yazma veya import/senkron eklenmedi.",
+  },
   {
     version: "v1.58.0",
     title: "Stok Önizleme Kolon Görünürlüğü Kontrolü",
@@ -1295,6 +1310,24 @@ export default function SystemStatusPanel() {
         </div>
         <p className="handheld-barcode-safety-note stock-column-visibility-safety-note">
           Kolon görünürlüğü kalıcı kayıt oluşturmaz; local DB’ye/dosyaya yazmaz, Vega’ya yazmaz, yeni SQL eklemez ve 20 satırlık read-only kapsamı büyütmez.
+        </p>
+      </div>
+
+      <div className="handheld-barcode-status-panel stock-preview-panel-simplification-status-panel" {...sectionHighlightProps("stock-preview-panel-simplification-status")}>
+        <div>
+          <h3>Stok Önizleme Panel Sadeleştirme <NewReleaseBadge sectionId="stock-preview-panel-simplification-status" /></h3>
+          <p>Read-only stok önizleme akışı daha sade panel düzenine alındı; destek alanları geçici açılır/kapanır bölümler halinde tutulur.</p>
+        </div>
+        <div className="system-status-grid">
+          {stockPreviewPanelSimplificationStatusRows.map((row) => (
+            <div className="system-status-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </div>
+          ))}
+        </div>
+        <p className="handheld-barcode-safety-note stock-preview-panel-simplification-safety-note">
+          Panel sadeleştirme yalnızca frontend görünümüdür; accordion state’i kalıcı kaydedilmez, yeni SQL eklemez, veri yazmaz, import/senkron başlatmaz ve 20 satır kapsamını büyütmez.
         </p>
       </div>
 

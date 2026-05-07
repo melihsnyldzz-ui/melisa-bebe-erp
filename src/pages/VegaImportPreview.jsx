@@ -706,6 +706,11 @@ export default function VegaImportPreview() {
   });
   const [readonlyPreviewSearch, setReadonlyPreviewSearch] = useState("");
   const [visibleReadonlyStockColumns, setVisibleReadonlyStockColumns] = useState(defaultVisibleReadonlyStockColumns);
+  const [openReadonlySupportPanels, setOpenReadonlySupportPanels] = useState({
+    fieldLabels: true,
+    validationNotes: false,
+    manualChecklist: false,
+  });
   const [manualValidationState, setManualValidationState] = useState(() =>
     Object.fromEntries(stockManualValidationChecklist.map((item) => [item, "Bekliyor"]))
   );
@@ -806,6 +811,13 @@ export default function VegaImportPreview() {
     );
   };
 
+  const toggleReadonlySupportPanel = (panelKey) => {
+    setOpenReadonlySupportPanels((current) => ({
+      ...current,
+      [panelKey]: !current[panelKey],
+    }));
+  };
+
   const setManualValidationStatus = (item, status) => {
     setManualValidationState((current) => ({
       ...current,
@@ -902,6 +914,10 @@ export default function VegaImportPreview() {
             </article>
           ))}
         </div>
+
+        <p className="vega-readonly-preview-security-box">
+          Read-only · 20 satır · Yazma yok · Import yok · Dosyaya çıktı yok. Önizleme otomatik başlamaz; sadece butonla çalışır.
+        </p>
 
         <section className="vega-technical-gate-panel">
           <div className="vega-readonly-preview-action">
@@ -1032,56 +1048,79 @@ export default function VegaImportPreview() {
           Bu önizleme yüksek yetkili kullanıcıyla kalıcı kullanım için tasarlanmamıştır. Sonraki fazlardan önce yalnızca okuma yetkili ayrı SQL kullanıcısına geçilmesi önerilir.
         </p>
 
-        <section className="vega-technical-gate-panel" id="vega-stock-field-validation-notes">
-          <h3>Alan Doğrulama Notları</h3>
-          <p>Bu alan yorumları kesin operasyon/muhasebe kararı değildir. Vega ekranı ve örnek satırlarla doğrulandıktan sonra kesinleştirilecektir.</p>
-          <div className="vega-stock-field-validation-grid">
-            {stockFieldValidationNotes.map((note) => (
-              <article className="vega-technical-lock-row" key={note.field}>
-                <span>{note.field}</span>
-                <strong>{note.meaning}</strong>
-                <small>{note.status}</small>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="vega-technical-gate-panel" id="vega-stock-suggested-field-labels">
-          <h3>Önerilen Alan Etiketleri</h3>
-          <p>Bu etiketler geçici öneridir. Manuel Vega karşılaştırması tamamlanmadan kesin operasyon veya muhasebe kararı olarak kullanılmaz.</p>
-          <div className="vega-stock-suggested-label-grid">
-            {stockSuggestedFieldLabels.map((item) => (
-              <article className="vega-stock-suggested-label-card" key={item.field}>
-                <span>{item.field}</span>
-                <strong>{item.label}</strong>
-                <small>{item.confidence}</small>
-                <p>{item.note}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="vega-technical-gate-panel" id="vega-stock-manual-validation-checklist">
-          <h3>Manuel Doğrulama Checklist’i</h3>
-          <p>Bu checklist yalnızca manuel karşılaştırma rehberidir. Seçimler kaydedilmez, Vega’ya yazılmaz ve uygulama kapatıldığında kalıcı sonuç oluşturmaz.</p>
-          <div className="vega-stock-manual-checklist">
-            {stockManualValidationChecklist.map((item) => (
-              <article className="vega-stock-manual-checklist-row" key={item}>
-                <strong>{item}</strong>
-                <div className="vega-stock-manual-status-list">
-                  {manualValidationStatuses.map((status) => (
-                    <button
-                      className={manualValidationState[item] === status ? "active" : ""}
-                      key={status}
-                      type="button"
-                      onClick={() => setManualValidationStatus(item, status)}
-                    >
-                      {status}
-                    </button>
+        <section className="vega-stock-preview-support-panels" id="vega-stock-preview-support-panels">
+          <div className="vega-stock-support-panel">
+            <button type="button" onClick={() => toggleReadonlySupportPanel("fieldLabels")}>
+              <span>Alan Etiketleri</span>
+              <strong>{openReadonlySupportPanels.fieldLabels ? "Kapat" : "Aç"}</strong>
+            </button>
+            {openReadonlySupportPanels.fieldLabels && (
+              <div className="vega-stock-support-panel-body" id="vega-stock-suggested-field-labels">
+                <p>Geçici öneridir; manuel Vega karşılaştırması tamamlanmadan kesin operasyon veya muhasebe kararı olarak kullanılmaz.</p>
+                <div className="vega-stock-suggested-label-grid">
+                  {stockSuggestedFieldLabels.map((item) => (
+                    <article className="vega-stock-suggested-label-card" key={item.field}>
+                      <span>{item.field}</span>
+                      <strong>{item.label}</strong>
+                      <small>{item.confidence}</small>
+                      <p>{item.note}</p>
+                    </article>
                   ))}
                 </div>
-              </article>
-            ))}
+              </div>
+            )}
+          </div>
+
+          <div className="vega-stock-support-panel">
+            <button type="button" onClick={() => toggleReadonlySupportPanel("validationNotes")}>
+              <span>Doğrulama Notları</span>
+              <strong>{openReadonlySupportPanels.validationNotes ? "Kapat" : "Aç"}</strong>
+            </button>
+            {openReadonlySupportPanels.validationNotes && (
+              <div className="vega-stock-support-panel-body" id="vega-stock-field-validation-notes">
+                <p>Alan yorumları kesin operasyon/muhasebe kararı değildir; Vega ekranı ve örnek satırlarla doğrulanacaktır.</p>
+                <div className="vega-stock-field-validation-grid">
+                  {stockFieldValidationNotes.map((note) => (
+                    <article className="vega-technical-lock-row" key={note.field}>
+                      <span>{note.field}</span>
+                      <strong>{note.meaning}</strong>
+                      <small>{note.status}</small>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="vega-stock-support-panel">
+            <button type="button" onClick={() => toggleReadonlySupportPanel("manualChecklist")}>
+              <span>Manuel Checklist</span>
+              <strong>{openReadonlySupportPanels.manualChecklist ? "Kapat" : "Aç"}</strong>
+            </button>
+            {openReadonlySupportPanels.manualChecklist && (
+              <div className="vega-stock-support-panel-body" id="vega-stock-manual-validation-checklist">
+                <p>Checklist yalnızca manuel rehberdir. Seçimler kaydedilmez, Vega’ya yazılmaz ve uygulama kapatıldığında kalıcı sonuç oluşturmaz.</p>
+                <div className="vega-stock-manual-checklist">
+                  {stockManualValidationChecklist.map((item) => (
+                    <article className="vega-stock-manual-checklist-row" key={item}>
+                      <strong>{item}</strong>
+                      <div className="vega-stock-manual-status-list">
+                        {manualValidationStatuses.map((status) => (
+                          <button
+                            className={manualValidationState[item] === status ? "active" : ""}
+                            key={status}
+                            type="button"
+                            onClick={() => setManualValidationStatus(item, status)}
+                          >
+                            {status}
+                          </button>
+                        ))}
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </section>
       </section>
