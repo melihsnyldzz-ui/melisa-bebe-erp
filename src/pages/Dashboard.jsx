@@ -94,6 +94,8 @@ const ownerViewCards = [
   { label: "Kanıt kapsamı", value: "20 satır / kolon doğrulandı" },
   { label: "Read-only stok önizleme", value: "Manuel ekran" },
   { label: "Önizleme limiti", value: "20 stok kartı" },
+  { label: "Stok önizleme teyidi", value: "Başarılı" },
+  { label: "Log / dosya sızıntısı", value: "Yok" },
   { label: "Desktop uygulama modu", value: "Local Desktop" },
   { label: "Desktop Vega bağlantısı", value: "Kapalı / terminal smoke test" },
   { label: "Desktop veri yazma", value: "Kapalı" },
@@ -304,6 +306,18 @@ const readOnlyStockPreviewSummaryCards = [
   { label: "Veri yazma/import", value: "Yok" },
 ];
 
+const stockPreviewSecurityConfirmationCards = [
+  { label: "Önizleme sonucu", value: "Başarılı" },
+  { label: "Görünen satır", value: "20" },
+  { label: "Git durumu", value: "Temiz" },
+  { label: "Dosyaya çıktı", value: "Yok" },
+  { label: "Log sızıntısı", value: "Yok" },
+  { label: "Veri yazma", value: "Yok" },
+  { label: "Import/senkron", value: "Yok" },
+  { label: ".env.local", value: "Git dışında" },
+  { label: "Sonraki hedef", value: "Stok önizleme kullanım iyileştirme" },
+];
+
 const passiveVegaConnectionSummaryCards = passiveVegaConnectionStatusRows.slice(0, 10);
 
 const closedBetaPreparationCards = closedBetaPreparationRows;
@@ -512,6 +526,8 @@ export default function Dashboard() {
 
       <ReadOnlyStockPreviewSummary />
 
+      <StockPreviewSecurityConfirmation />
+
       <SuccessfulStockReadProof />
 
       <PassiveVegaConnectionStatus />
@@ -652,6 +668,32 @@ function ReadOnlyStockPreviewSummary() {
 
       <div className="reporting-decision-status-grid">
         {readOnlyStockPreviewSummaryCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function StockPreviewSecurityConfirmation() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-stock-preview-security-confirmation")}`} id="dashboard-stock-preview-security-confirmation">
+      <DashboardNewReleaseBadge sectionId="dashboard-stock-preview-security-confirmation" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Güvenlik teyidi</p>
+          <h2>Stok Önizleme Güvenlik Teyidi</h2>
+          <span>
+            Uygulama içi read-only stok önizleme 20 satırla doğrulandı; canlı stok değerleri, bağlantı bilgileri, dosya çıktısı veya import/senkron izi repoya yazılmadı.
+          </span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {stockPreviewSecurityConfirmationCards.map((card) => (
           <article className="commerce-profitability-status-card" key={card.label}>
             <span>{card.label}</span>
             <strong>{card.value}</strong>

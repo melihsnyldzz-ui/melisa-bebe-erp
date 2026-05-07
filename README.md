@@ -6,8 +6,8 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 
 ## Mevcut Durum
 
-- Güncel sürüm: v1.52.0
-- Aşama: Vega Read-only Stok Önizleme Ekranı
+- Güncel sürüm: v1.53.0
+- Aşama: Read-only Stok Önizleme Güvenlik Teyidi
 - Build kontrolü: GitHub Actions
 - El terminali: okuma, son okutulanlar, sayım sepeti, rapor/CSV/JSON önizleme hazırlığı
 - Stok ve barkod kalite kontrolü: pasif/mock risk görünürlüğü
@@ -225,6 +225,17 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 - `.env.local`, SQL kullanıcı bilgileri, şifre, server/database ve connection string ekranda gösterilmez ve repoya eklenmez.
 - `IND` alanı yalnızca teknik ID olarak etiketlenir; kullanıcı karar alanı gibi sunulmaz.
 - Sonraki fazlardan önce yalnızca okuma yetkili ayrı SQL kullanıcısına geçilmesi önerilir.
+
+## Read-only Stok Önizleme Güvenlik Teyidi
+
+- Uygulama içi stok önizleme 20 satırla başarılı şekilde test edildi.
+- Sonuç geçici ekranda göründü.
+- Git çalışma ağacı temiz kaldı.
+- Log içinde canlı stok/veritabanı anahtar kelimeleri bulunmadı.
+- Dosyaya çıktı alınmadı.
+- Import/senkron yapılmadı.
+- Veri yazma yapılmadı.
+- `.env.local` repoya eklenmedi.
 
 ## Build Kontrolü
 

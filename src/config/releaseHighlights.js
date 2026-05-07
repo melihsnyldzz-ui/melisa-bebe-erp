@@ -1,18 +1,18 @@
-export const currentReleaseVersion = "v1.52.0";
+export const currentReleaseVersion = "v1.53.0";
 
-export const currentReleaseTitle = "Vega Read-only Stok Önizleme Ekranı";
+export const currentReleaseTitle = "Read-only Stok Önizleme Güvenlik Teyidi";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "readonly-stock-preview-status"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "readonly-stock-preview-security-status"];
 
 export const releaseHighlightItems = [
-  "Vega Read-only Stok Önizleme ekranı manuel kullanıcı aksiyonuyla çalışan geçici 20 satır stok önizleme olarak eklendi.",
-  "Electron IPC hattı sadece F0102TBLSTOKLAR ve sabit 20 satır kapsamıyla güvenli hata sınıflandırması döndürecek şekilde sınırlandı.",
-  "Otomatik bağlantı, veri yazma, import/senkron, dosyaya çıktı, cari/fiş/hareket okuma veya bağlantı bilgisi gösterimi eklenmeden read-only sınır korundu.",
+  "Uygulama içi read-only stok önizleme testinin 20 satırla başarılı olduğu güvenli teknik teyit olarak görünür hale getirildi.",
+  "Git temizliği, log sızıntısı kontrolü, dosyaya çıktı alınmaması, veri yazma/import yapılmaması ve .env.local gizliliği pasif metadata ile belgelendi.",
+  "Gerçek stok değeri, bağlantı bilgisi, yeni SQL, otomatik bağlantı, veri yazma, import/senkron veya cari/fiş/hareket okuma eklenmeden güvenlik sınırı korundu.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
-  { id: "readonly-stock-preview-status", label: "Stok Önizleme Durumu'na git" },
+  { id: "readonly-stock-preview-security-status", label: "Stok Önizleme Teyidi'ne git" },
   { id: "system-workflow-model", label: "Çalışma Modeli'ne git" },
 ];
 
@@ -28,6 +28,7 @@ export const releaseHighlightsByPage = {
     releaseHighlightItems,
     releaseJumpLinks: [
       { id: "dashboard-owner-view", label: "Patron Bakışı'na git" },
+      { id: "dashboard-stock-preview-security-confirmation", label: "Stok Önizleme Güvenlik Teyidi'ne git" },
       { id: "dashboard-readonly-stock-preview", label: "Read-only Stok Önizleme'ye git" },
       { id: "dashboard-successful-stock-read-proof", label: "Başarılı Stok Okuma Kanıtı'na git" },
       { id: "dashboard-closed-beta-preparation", label: "Kapalı Beta Hazırlığı'na git" },
@@ -52,7 +53,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-owner-view", "dashboard-readonly-stock-preview", "dashboard-successful-stock-read-proof"],
+    updatedSectionIds: ["dashboard-owner-view", "dashboard-stock-preview-security-confirmation", "dashboard-readonly-stock-preview"],
   },
   reports: {
     releaseHighlightItems,

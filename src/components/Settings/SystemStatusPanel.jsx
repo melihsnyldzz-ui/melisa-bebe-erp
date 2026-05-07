@@ -342,6 +342,18 @@ const readonlyStockPreviewStatusRows = [
   { label: "Cari/fiş/hareket", value: "Kapsam dışı" },
 ];
 
+const readonlyStockPreviewSecurityStatusRows = [
+  { label: "Önizleme sonucu", value: "Başarılı" },
+  { label: "Görünen satır", value: "20" },
+  { label: "Git durumu", value: "Temiz" },
+  { label: "Dosyaya çıktı", value: "Yok" },
+  { label: "Log sızıntısı", value: "Yok" },
+  { label: "Veri yazma", value: "Yok" },
+  { label: "Import/senkron", value: "Yok" },
+  { label: ".env.local", value: "Git dışında" },
+  { label: "Sonraki hedef", value: "Stok önizleme kullanım iyileştirme" },
+];
+
 const vegaStockFieldMapStatusRows = [
   { label: "Alan haritası", value: "Pasif dokümantasyon" },
   { label: "Kolon sayısı", value: `${vegaStockFieldMap.length} alan` },
@@ -365,6 +377,12 @@ const desktopPreparationStatusRows = [
 ];
 
 const versionHistoryRows = [
+  {
+    version: "v1.53.0",
+    title: "Read-only Stok Önizleme Güvenlik Teyidi",
+    area: "Dashboard / Sistem Durumu / README",
+    description: "Uygulama içi stok önizlemenin 20 satırla başarılı çalıştığı, sonucun geçici ekranda kaldığı, git durumunun temiz olduğu, log içinde canlı stok/veritabanı anahtar kelimeleri bulunmadığı, dosyaya çıktı alınmadığı, import/senkron ve veri yazma yapılmadığı pasif güvenlik teyidi olarak belgelendi.",
+  },
   {
     version: "v1.52.0",
     title: "Vega Read-only Stok Önizleme Ekranı",
@@ -1091,6 +1109,24 @@ export default function SystemStatusPanel() {
         </div>
         <p className="handheld-barcode-safety-note readonly-stock-preview-safety-note">
           Bu ekran Vega’dan yalnızca 20 stok kartını read-only olarak önizler. Veri yazmaz, import yapmaz, senkron başlatmaz ve bağlantı bilgilerini kullanıcıya göstermez. Sonraki fazlardan önce yalnızca okuma yetkili ayrı SQL kullanıcısı önerilir.
+        </p>
+      </div>
+
+      <div className="handheld-barcode-status-panel readonly-stock-preview-security-status-panel" {...sectionHighlightProps("readonly-stock-preview-security-status")}>
+        <div>
+          <h3>Read-only Stok Önizleme Güvenlik Teyidi <NewReleaseBadge sectionId="readonly-stock-preview-security-status" /></h3>
+          <p>Uygulama içi önizleme testinin geçici ekranda kaldığı, log/dosya/Git güvenlik sınırlarının korunduğu pasif teyit alanı.</p>
+        </div>
+        <div className="system-status-grid">
+          {readonlyStockPreviewSecurityStatusRows.map((row) => (
+            <div className="system-status-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </div>
+          ))}
+        </div>
+        <p className="handheld-barcode-safety-note readonly-stock-preview-safety-note">
+          Bu teyit gerçek stok değerlerini, .env.local içeriğini, SQL kullanıcı bilgisini veya bağlantı bilgisini göstermez; yeni sorgu, otomatik bağlantı, veri yazma veya import/senkron eklemez.
         </p>
       </div>
 
