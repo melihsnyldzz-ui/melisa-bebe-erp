@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.70.1",
+    title: "Vega Stok Read-only Bağlantı Ön Kontrolü",
+    area: "Dashboard / Sistem Durumu",
+    description: "Gerçek Vega stok read-only bağlantısından önce read-only kullanıcı, manuel yedek, .env.local, 20 satır limiti ve manuel buton şartlarını bağlantı denemesi, SQL sorgusu veya veri okuma yapmadan gösteren pasif ön kontrol paneli eklendi.",
+  },
+  {
     version: "v1.70.0",
     title: "Vega Stok Read-only Bağlantı Sağlamlaştırma",
     area: "Dashboard / Vega Stok Deneme / Sistem Durumu",

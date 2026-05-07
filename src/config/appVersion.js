@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.70.0";
-export const APP_STAGE = "Vega Stok Read-only Bağlantı Sağlamlaştırma";
+export const APP_VERSION = "v1.70.1";
+export const APP_STAGE = "Vega Stok Read-only Bağlantı Ön Kontrolü";

@@ -671,6 +671,33 @@ const vegaStockReadonlyForbiddenItems = [
   "Connection string repoya yazılmaz.",
 ];
 
+const vegaStockReadonlyPrecheckCards = [
+  { label: "Read-only SQL kullanıcısı", value: "Manuel doğrulanacak" },
+  { label: "sa kullanımı", value: "Yasak" },
+  { label: "Manuel yedek", value: "Zorunlu" },
+  { label: ".env.local", value: "Git dışında" },
+  { label: "İlk kapsam", value: "Sadece stok" },
+  { label: "İlk limit", value: "20 satır" },
+  { label: "Bağlantı şekli", value: "Sadece manuel buton" },
+];
+
+const vegaStockReadonlyStopConditions = [
+  "Read-only kullanıcı yoksa dur.",
+  "Manuel yedek yoksa dur.",
+  "sa kullanılıyorsa dur.",
+  ".env.local Git'e giriyorsa dur.",
+  "Uygulama açılışta otomatik bağlanıyorsa dur.",
+  "Satır limiti 20 değilse dur.",
+];
+
+const vegaStockReadonlyPrecheckSafetyNotes = [
+  "Bu sürüm bağlantı denemesi yapmaz.",
+  "Veri okumaz.",
+  "Veri yazmaz.",
+  "SQL sorgusu çalıştırmaz.",
+  "Sadece ön kontrol rehberidir.",
+];
+
 const stockPreviewSecurityConfirmationCards = [
   { label: "Önizleme sonucu", value: "Başarılı" },
   { label: "Görünen satır", value: "20" },
@@ -994,6 +1021,8 @@ export default function Dashboard() {
       <ReadOnlyStockPreviewSummary />
 
       <VegaStockReadonlyHardeningPanel />
+
+      <VegaStockReadonlyPrecheckPanel />
 
       <StockPreviewSecurityConfirmation />
 
@@ -1700,6 +1729,42 @@ function VegaStockReadonlyHardeningPanel() {
           ))}
         </div>
       </CommercePanel>
+    </section>
+  );
+}
+
+function VegaStockReadonlyPrecheckPanel() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-vega-stock-readonly-precheck")}`} id="dashboard-vega-stock-readonly-precheck">
+      <DashboardNewReleaseBadge sectionId="dashboard-vega-stock-readonly-precheck" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Bağlantı öncesi güvenli kontrol</p>
+          <h2>Bağlantı Ön Kontrol Paneli</h2>
+          <span>Gerçek Vega stok read-only bağlantısından önce local projenin hazır olup olmadığını gösterir; bağlantı denemesi, SQL sorgusu veya veri okuma yapmaz.</span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {vegaStockReadonlyPrecheckCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+
+      <CommercePanel title="Başlamadan Önce Durduracak Şartlar" note="Bu liste manuel ön kontrol içindir; bağlantı veya kayıt işlemi başlatmaz.">
+        <div className="commerce-performance-grid">
+          {vegaStockReadonlyStopConditions.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <p className="commerce-profitability-safety-note">{vegaStockReadonlyPrecheckSafetyNotes.join(" · ")}</p>
     </section>
   );
 }
