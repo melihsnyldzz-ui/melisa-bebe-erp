@@ -6,8 +6,8 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 
 ## Mevcut Durum
 
-- Güncel sürüm: v1.37.0
-- Aşama: Vega Read-only Teknik Ön Kapı Merkezi
+- Güncel sürüm: v1.38.0
+- Aşama: Read-only İlk Deneme Planı ve Geri Dönüş Prosedürü
 - Build kontrolü: GitHub Actions
 - El terminali: okuma, son okutulanlar, sayım sepeti, rapor/CSV/JSON önizleme hazırlığı
 - Stok ve barkod kalite kontrolü: pasif/mock risk görünürlüğü
@@ -96,6 +96,13 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 - Manuel yedek, read-only kullanıcı, 20 satır sınırı, timeout ve ham hata gizleme politikası vurgulanır.
 - Bu sürüm gerçek bağlantı, DB okuma, query, API veya veri yazma yapmaz.
 - İlk gerçek read-only bağlantı ileride ayrı küçük onaylı fazda ele alınır.
+
+## Read-only İlk Deneme Planı ve Geri Dönüş Fazı
+
+- Bu faz ilk gerçek Vega read-only bağlantıdan önce manuel yedek, rollback, başarısızlık senaryosu ve test sonrası değerlendirme akışını görünür hale getirir.
+- Bu sürüm gerçek bağlantı, DB okuma, query, API veya veri yazma yapmaz.
+- İlk gerçek read-only bağlantı ileride ayrı küçük onaylı fazda ele alınır.
+- Başarısızlıkta tekrar deneme yapılmadan önce rapor hazırlanır.
 
 ## Build Kontrolü
 

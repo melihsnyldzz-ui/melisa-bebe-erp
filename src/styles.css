@@ -7640,6 +7640,17 @@ tr:last-child td {
   background: #eff6ff;
 }
 
+.readonly-first-trial-status-panel {
+  border-color: #c7d2fe;
+  background: linear-gradient(135deg, #eef2ff, #ffffff);
+}
+
+.readonly-first-trial-safety-note {
+  border-color: #c7d2fe;
+  color: #3730a3;
+  background: #eef2ff;
+}
+
 @media (max-width: 1180px) {
   .current-account-status-grid,
   .current-account-risk-class-grid,

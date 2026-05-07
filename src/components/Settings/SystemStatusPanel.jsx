@@ -15,6 +15,8 @@ const statusRows = [
   { label: "Build kontrolü", value: "GitHub Actions + npm run build" },
   { label: "Çalışma modeli", value: "Main üzerinden manuel Codex akışı" },
   { label: "Kritik işlem politikası", value: "Stok, cari, fiş, yedekleme, import ve migration işlemleri ayrı kontrollü sürümlerle açılır." },
+  { label: "İlk deneme", value: "Plan aşaması" },
+  { label: "Rollback prosedürü", value: "Hazırlıkta" },
   { label: "Vega teknik ön kapı", value: "Pasif hazırlık" },
   { label: "İlk test sınırı", value: "20 satır" },
   { label: "ERP genel hazırlık", value: "%96" },
@@ -231,7 +233,22 @@ const vegaTechnicalGateStatusRows = [
   { label: "ERP’ye yazma/import", value: "Kapalı" },
 ];
 
+const readonlyFirstTrialPlanStatusRows = [
+  { label: "İlk deneme", value: "Plan aşaması" },
+  { label: "Manuel yedek", value: "Zorunlu" },
+  { label: "Rollback prosedürü", value: "Hazırlıkta" },
+  { label: "İlk okuma sınırı", value: "20 satır" },
+  { label: "Gerçek bağlantı", value: "Kapalı" },
+  { label: "ERP’ye yazma/import", value: "Kapalı" },
+];
+
 const versionHistoryRows = [
+  {
+    version: "v1.38.0",
+    title: "Read-only İlk Deneme Planı ve Geri Dönüş Prosedürü",
+    area: "Vega Import Önizleme / Dashboard / Sistem Durumu / README",
+    description: "İlk gerçek read-only deneme öncesi manuel yedek, rollback, başarısızlık senaryoları ve test sonrası değerlendirme şablonu pasif olarak görünür hale getirildi; gerçek bağlantı, DB okuma, query, API, connection test veya veri yazma eklenmedi.",
+  },
   {
     version: "v1.37.0",
     title: "Vega Read-only Teknik Ön Kapı Merkezi",
@@ -717,8 +734,8 @@ export default function SystemStatusPanel() {
 
       <div className="system-status-focus-card">
         <span>Bu Sürümde Test Edilecek Alan</span>
-        <strong>Vega Import Önizleme / Vega Read-only Teknik Ön Kapı Merkezi</strong>
-        <p>Bu sürümde manuel yedek, read-only kullanıcı, 20 satır sınırı, timeout politikası ve teknik kilit matrisi özellikle kontrol edilmelidir.</p>
+        <strong>Vega Import Önizleme / Read-only İlk Deneme Planı</strong>
+        <p>Bu sürümde ilk deneme zaman çizelgesi, manuel yedek, rollback prosedürü, başarısızlık senaryoları ve değerlendirme şablonu özellikle kontrol edilmelidir.</p>
       </div>
 
       <div className="system-workflow-panel" {...sectionHighlightProps("system-workflow-model")}>
@@ -736,6 +753,24 @@ export default function SystemStatusPanel() {
         </div>
         <p className="system-workflow-safety-note">
           Gerçek veri bağlantısı, DB okuma, query, import ve veri yazma işlemleri yalnızca ayrı küçük ve açık onaylı sürümlerde ele alınır.
+        </p>
+      </div>
+
+      <div className="handheld-barcode-status-panel readonly-first-trial-status-panel" {...sectionHighlightProps("readonly-first-trial-plan-status")}>
+        <div>
+          <h3>Read-only İlk Deneme Planı Durumu <NewReleaseBadge sectionId="readonly-first-trial-plan-status" /></h3>
+          <p>İlk gerçek read-only deneme öncesi yedek, rollback, sınır ve güvenli raporlama akışı pasif sistem özeti olarak takip edilir.</p>
+        </div>
+        <div className="system-status-grid">
+          {readonlyFirstTrialPlanStatusRows.map((row) => (
+            <div className="system-status-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </div>
+          ))}
+        </div>
+        <p className="handheld-barcode-safety-note readonly-first-trial-safety-note">
+          Bu sürüm ilk read-only deneme planı ve geri dönüş görünürlüğü sağlar; bağlantı, DB okuma, query, API, connection test veya veri yazma işlemi yapmaz.
         </p>
       </div>
 

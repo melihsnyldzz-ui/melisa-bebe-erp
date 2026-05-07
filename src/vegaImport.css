@@ -176,6 +176,12 @@
   grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
+.vega-post-test-template-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
 .vega-technical-gate-panel {
   display: grid;
   gap: 10px;
@@ -481,6 +487,7 @@
   .vega-technical-gate-status-grid,
   .vega-technical-gate-card-grid,
   .vega-technical-gate-lock-grid,
+  .vega-post-test-template-grid,
   .vega-operation-status-grid,
   .vega-operation-group-grid,
   .vega-owner-summary-list {
@@ -494,6 +501,7 @@
   .vega-technical-gate-status-grid,
   .vega-technical-gate-card-grid,
   .vega-technical-gate-lock-grid,
+  .vega-post-test-template-grid,
   .vega-operation-status-grid,
   .vega-operation-group-grid,
   .vega-owner-summary-list {

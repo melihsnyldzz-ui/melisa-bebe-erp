@@ -44,6 +44,9 @@ const ownerViewCards = [
   { label: "İlk bağlantı sınırı", value: "20 satır" },
   { label: "Read-only kullanıcı", value: "Manuel doğrulama bekliyor" },
   { label: "Veri yazma/import", value: "Kapalı" },
+  { label: "İlk read-only deneme", value: "Plan aşamasında" },
+  { label: "Rollback prosedürü", value: "Hazırlıkta" },
+  { label: "Manuel yedek", value: "Zorunlu" },
   { label: "Barkod operasyonu", value: "Hazırlıkta" },
   { label: "Barkod kalite kontrolü", value: "Öncelikli" },
   { label: "Riskli barkodlar", value: "İzlenecek" },
@@ -86,6 +89,10 @@ const ownerTodayItems = [
   "Manuel yedek sorumlusu belirlenecek",
   "Read-only kullanıcı yetkisi doğrulanacak",
   "İlk 20 stok kartı test kriteri netleştirilecek",
+  "İlk read-only deneme planı gözden geçirilecek",
+  "Manuel yedek sorumlusu netleştirilecek",
+  "Rollback prosedürü kontrol edilecek",
+  "Test sonrası değerlendirme şablonu okunacak",
   "Personel kullanım notları toplanacak",
   "Gerçek veri bağlantısı için yedek ve yetki kontrolü hazırlanacak",
 ];
@@ -110,7 +117,17 @@ const ownerDecisionItems = [
   "İlk gerçek bağlantı sadece read-only ve 20 satır sınırıyla yapılmalıdır.",
   "Veri yazma ve import hâlâ kapalı kalmalıdır.",
   "İlk gerçek bağlantı ayrı küçük onaylı sürümde açılmalıdır.",
+  "Başarısızlıkta tekrar deneme yapılmadan önce rapor hazırlanmalıdır.",
   "Ana hedef: güvenli geçiş, hızlı kontrol, hatasız stok görünürlüğü",
+];
+
+const readonlyFirstTrialSummaryCards = [
+  { label: "İlk deneme modu", value: "Plan aşaması" },
+  { label: "Gerçek bağlantı", value: "Kapalı" },
+  { label: "Manuel yedek", value: "Zorunlu" },
+  { label: "Rollback planı", value: "Hazırlıkta" },
+  { label: "İlk okuma sınırı", value: "20 satır" },
+  { label: "Veri yazma/import", value: "Kapalı" },
 ];
 
 const vegaTechnicalGateSummaryCards = [
@@ -273,6 +290,8 @@ export default function Dashboard() {
 
       <OwnerView />
 
+      <ReadonlyFirstTrialSummary />
+
       <VegaTechnicalGateSummary />
 
       <ModuleMaturityScoreCenter />
@@ -298,6 +317,32 @@ export default function Dashboard() {
         <DashboardNewReleaseBadge sectionId="dashboard-commerce-insights" />
       </CommerceInsights>
     </>
+  );
+}
+
+function ReadonlyFirstTrialSummary() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-readonly-first-trial-summary")}`} id="dashboard-readonly-first-trial-summary">
+      <DashboardNewReleaseBadge sectionId="dashboard-readonly-first-trial-summary" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Read-only ilk deneme planı</p>
+          <h2>İlk Deneme ve Geri Dönüş Özeti</h2>
+          <span>
+            İlk gerçek bağlantı açılmadan önce manuel yedek, rollback, başarısızlık senaryosu ve test sonrası değerlendirme akışını pasif olarak görünür tutar.
+          </span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {readonlyFirstTrialSummaryCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+    </section>
   );
 }
 

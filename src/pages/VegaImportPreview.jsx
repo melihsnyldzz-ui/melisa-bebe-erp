@@ -56,6 +56,88 @@ const technicalGateStatusCards = [
   { label: "Veri yazma/import", value: "Kapalı" },
 ];
 
+const firstTrialPlanStatusCards = [
+  { label: "İlk deneme modu", value: "Plan aşaması" },
+  { label: "Gerçek bağlantı", value: "Kapalı" },
+  { label: "Manuel yedek", value: "Zorunlu" },
+  { label: "Rollback planı", value: "Hazırlıkta" },
+  { label: "İlk okuma sınırı", value: "20 satır" },
+  { label: "Veri yazma/import", value: "Kapalı" },
+];
+
+const firstTrialTimelineStages = [
+  {
+    title: "Aşama 1: Test Öncesi",
+    items: [
+      "Main branch güncel ve build başarılı olmalı",
+      "Manuel yedek alınmalı",
+      "Read-only kullanıcı doğrulanmalı",
+      "İlk 20 stok kartı kriteri belirlenmeli",
+      "Ham hata gizleme ve timeout politikası gözden geçirilmeli",
+    ],
+  },
+  {
+    title: "Aşama 2: İlk Okuma",
+    items: [
+      "Sadece stok kartı okunacak",
+      "Sadece 20 satır hedeflenecek",
+      "Cari, fiş, hareket, ödeme, tahsilat kapsam dışı olacak",
+      "Veri yazma/import kapalı kalacak",
+      "Başarısızlıkta tekrar deneme yapılmayacak, önce raporlanacak",
+    ],
+  },
+  {
+    title: "Aşama 3: Karşılaştırma",
+    items: [
+      "Sonuç Vega ekranıyla manuel karşılaştırılacak",
+      "Stok kodu, barkod, ürün adı ve aktif/pasif tahmini kontrol edilecek",
+      "Fark varsa hata notu alınacak",
+      "Ham hata kullanıcıya gösterilmeyecek",
+    ],
+  },
+  {
+    title: "Aşama 4: Karar",
+    items: [
+      "Başarılıysa ikinci küçük kapsam planlanacak",
+      "Başarısızsa bağlantı denemesi durdurulacak",
+      "Hata nedeni raporlanacak",
+      "Veri yazma/import hâlâ açılmayacak",
+    ],
+  },
+];
+
+const rollbackProcedureGroups = [
+  { title: "Yedek Kontrolü", items: ["Test öncesi manuel yedek alınır", "Yedek konumu yazılı olarak bilinir", "Geri dönüşten sorumlu kişi belirlenir", "Bu ekranda yedek alınmaz"] },
+  { title: "Başarısız Bağlantı", items: ["Tekrar tekrar deneme yapılmaz", "Hata notu hazırlanır", "Ham hata kullanıcıya gösterilmez", "Teknik değerlendirme ayrı fazda yapılır"] },
+  { title: "Veri Tutarsızlığı", items: ["Vega ekranıyla fark karşılaştırılır", "Farklı kayıtlar not alınır", "Import/veri yazma yapılmaz", "Kapsam büyütülmez"] },
+  { title: "Acil Durdurma", items: ["Test iptal edilir", "Veri yazma kilidi kapalı tutulur", "Son durum raporlanır", "Yeni deneme için ayrı küçük sürüm hazırlanır"] },
+];
+
+const postTestTemplateRows = [
+  "Test tarihi:",
+  "Testi yapan kişi:",
+  "Test ortamı:",
+  "Okunan kayıt türü:",
+  "Okunan satır sayısı:",
+  "Beklenen sonuç:",
+  "Görülen sonuç:",
+  "Vega ekranıyla uyum:",
+  "Hata var mı:",
+  "Ham hata kullanıcıya gösterildi mi:",
+  "Veri yazma/import kapalı kaldı mı:",
+  "Son karar:",
+  "Sonraki öneri:",
+];
+
+const failureScenarioCards = [
+  { title: "Bağlantı zaman aşımı", action: "Deneme durdurulur, timeout not edilir, tekrar denenmez." },
+  { title: "Yetki hatası", action: "Read-only kullanıcı yetkisi manuel kontrol edilir." },
+  { title: "Beklenmeyen ham hata", action: "Ham hata kullanıcıya gösterilmez, güvenli hata notu hazırlanır." },
+  { title: "Eksik/yanlış veri", action: "Vega ekranıyla manuel karşılaştırma yapılır." },
+  { title: "20 satır sınırı aşımı", action: "Test başarısız sayılır, kapsam tekrar daraltılır." },
+  { title: "Yazma yetkisi şüphesi", action: "Test iptal edilir, kullanıcı yetkisi yeniden doğrulanır." },
+];
+
 const requiredConditionGroups = [
   {
     title: "Manuel Yedek",
@@ -220,6 +302,81 @@ export default function VegaImportPreview() {
           <h1>Vega Read-only Operasyon Merkezi</h1>
           <span>Bu ekran gerçek Vega bağlantısı kurmadan, ilk read-only deneme öncesi güvenlik, saha ve kapsam kontrollerini tek yerde toplar.</span>
         </div>
+      </section>
+
+      <section className="vega-technical-gate-center section-updated-highlight" id="vega-readonly-first-trial-plan">
+        <div className="vega-technical-gate-hero">
+          <p>Pasif ilk deneme planı</p>
+          <h2>Read-only İlk Deneme Planı ve Geri Dönüş Prosedürü</h2>
+          <span>
+            İlk gerçek Vega read-only bağlantı açılmadan önce test sırası, manuel yedek, başarısızlık senaryosu, rollback düşüncesi ve test sonrası değerlendirme akışını pasif olarak gösteren hazırlık ekranı.
+          </span>
+        </div>
+
+        <div className="vega-technical-gate-status-grid">
+          {firstTrialPlanStatusCards.map((card) => (
+            <article className="vega-import-summary-card" key={card.label}>
+              <span>{card.label}</span>
+              <strong>{card.value}</strong>
+            </article>
+          ))}
+        </div>
+
+        <section className="vega-technical-gate-panel" id="vega-first-trial-timeline">
+          <h3>İlk Deneme Zaman Çizelgesi</h3>
+          <div className="vega-technical-gate-card-grid">
+            {firstTrialTimelineStages.map((stage) => (
+              <article className="vega-operation-group-card" key={stage.title}>
+                <h3>{stage.title}</h3>
+                <ul>
+                  {stage.items.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="vega-technical-gate-panel" id="vega-rollback-procedure">
+          <h3>Geri Dönüş ve Rollback Prosedürü</h3>
+          <div className="vega-technical-gate-card-grid">
+            {rollbackProcedureGroups.map((group) => (
+              <article className="vega-operation-group-card" key={group.title}>
+                <h3>{group.title}</h3>
+                <ul>
+                  {group.items.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="vega-technical-gate-panel" id="vega-post-test-template">
+          <h3>Test Sonrası Değerlendirme Şablonu</h3>
+          <div className="vega-post-test-template-grid">
+            {postTestTemplateRows.map((row) => (
+              <article className="vega-technical-lock-row" key={row}>
+                <span>{row}</span>
+                <strong>Not alınacak</strong>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="vega-technical-gate-panel">
+          <h3>Başarısızlık Senaryoları</h3>
+          <div className="vega-technical-gate-card-grid">
+            {failureScenarioCards.map((card) => (
+              <article className="vega-operation-group-card" key={card.title}>
+                <h3>{card.title}</h3>
+                <p>Yapılacak: {card.action}</p>
+              </article>
+            ))}
+          </div>
+        </section>
       </section>
 
       <section className="vega-technical-gate-center section-updated-highlight" id="vega-readonly-technical-gate-center">
