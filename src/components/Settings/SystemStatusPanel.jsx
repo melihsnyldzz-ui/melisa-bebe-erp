@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.75.0",
+    title: "Veri Alan Sözlüğü",
+    area: "Dashboard / Sistem Durumu",
+    description: "ERP'nin eksik ana katmanlarından veri alan sözlüğü, stok, barkod, cari, sipariş, kasa/finans ve raporlama alan grupları için yalnızca iş seviyesi alan örnekleri, durum, risk seviyesi ve sonraki doğrulama adımıyla pasif olarak görünür hale getirildi; gerçek Vega tablo alanı, kesin alan eşlemesi, veri okuma/yazma, SQL sorgusu, dosya/export veya onay kaydı eklenmedi.",
+  },
+  {
     version: "v1.74.0",
     title: "Risk ve Uyarı Merkezi",
     area: "Dashboard / Sistem Durumu",

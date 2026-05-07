@@ -1,17 +1,18 @@
-export const currentReleaseVersion = "v1.74.0";
+export const currentReleaseVersion = "v1.75.0";
 
-export const currentReleaseTitle = "Risk ve Uyarı Merkezi";
+export const currentReleaseTitle = "Veri Alan Sözlüğü";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "dashboard-risk-warning-center"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "dashboard-data-field-dictionary"];
 
 export const releaseHighlightItems = [
-  "Dashboard'a Risk ve Uyarı Merkezi paneli eklenerek Melisa Bebe için takip edilecek risk başlıkları mimari seviyede görünür hale getirildi.",
-  "Kritik stok, barkodsuz ürün, duplicate barkod, riskli cari, geciken tahsilat, düşük marj, hatalı fiyat, finansal risk ve entegrasyon riski için seviye, veri modu, sorumlu rol ve sonraki adım gösterildi.",
-  "Bu sürüm gerçek alarm, bildirim, görev kaydı, veri okuma/yazma, SQL/Vega işlemi, import/senkron/export, dosya üretimi veya onay kaydı başlatmadan yalnızca pasif risk rehberi sağlar.",
+  "Dashboard'a Veri Alan Sözlüğü paneli eklenerek ERP modülleri için iş seviyesi alan örnekleri pasif olarak görünür hale getirildi.",
+  "Stok, barkod, cari, sipariş, kasa/finans ve raporlama alan grupları için durum, risk seviyesi ve sonraki doğrulama adımı gösterildi.",
+  "Bu sürüm gerçek Vega tablo alanı, kesin alan eşlemesi, veri okuma/yazma, SQL sorgusu, SQL/Vega işlemi, dosya/export veya onay kaydı başlatmadan yalnızca iş seviyesi sözlük sağlar.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
+  { id: "dashboard-data-field-dictionary", label: "Veri Alan Sözlüğü'ne git" },
   { id: "dashboard-risk-warning-center", label: "Risk ve Uyarı Merkezi'ne git" },
   { id: "dashboard-daily-operation-workflow-center", label: "Günlük Operasyon İş Akışı Merkezi'ne git" },
   { id: "dashboard-role-permission-matrix", label: "Rol ve Yetki Matrisi'ne git" },
@@ -35,6 +36,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-role-permission-matrix", label: "Rol ve Yetki Matrisi'ne git" },
       { id: "dashboard-daily-operation-workflow-center", label: "Günlük Operasyon İş Akışı Merkezi'ne git" },
       { id: "dashboard-risk-warning-center", label: "Risk ve Uyarı Merkezi'ne git" },
+      { id: "dashboard-data-field-dictionary", label: "Veri Alan Sözlüğü'ne git" },
       { id: "dashboard-owner-view", label: "Patron Bakışı'na git" },
       { id: "dashboard-vega-readonly-operation-center", label: "Vega Read-only Operasyon Merkezi'ne git" },
       { id: "dashboard-vega-readonly-module-matrix", label: "Vega Read-only Modül Durum Matrisi'ne git" },
@@ -83,7 +85,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-risk-warning-center", "dashboard-daily-operation-workflow-center"],
+    updatedSectionIds: ["dashboard-data-field-dictionary", "dashboard-risk-warning-center"],
   },
   reports: {
     releaseHighlightItems,

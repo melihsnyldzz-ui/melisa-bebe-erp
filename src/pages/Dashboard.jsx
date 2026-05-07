@@ -114,6 +114,22 @@ const riskWarningCenterNoActionItems = [
   "SQL/Vega işlemi yok.",
   "Dosya/export yok.",
 ];
+const dataFieldDictionaryGroups = [
+  { group: "Stok alanları", examples: "Stok kodu, ürün adı, barkod, marka, beden, renk, alış fiyatı, satış fiyatı, KDV", status: "İş seviyesi sözlük", risk: "Orta", nextStep: "Read-only örnek satırla doğrulanacak" },
+  { group: "Barkod alanları", examples: "Barkod, stok kodu, okutma durumu, duplicate kontrol etiketi", status: "Pasif hazırlık", risk: "Orta", nextStep: "Barkod senaryosu netleşecek" },
+  { group: "Cari alanları", examples: "Cari kodu, kısa unvan, risk sınıfı, bakiye durumu, tahsilat önceliği", status: "Maskeleme bekliyor", risk: "Yüksek", nextStep: "Cari maskeleme kuralı belirlenecek" },
+  { group: "Sipariş alanları", examples: "Sipariş no, tarih, cari kısa etiket, sipariş durumu, ürün adedi, tutar durumu", status: "Pasif hazırlık", risk: "Yüksek", nextStep: "Sipariş kapsamı doğrulanacak" },
+  { group: "Kasa/Finans alanları", examples: "Günlük kasa yönü, tahsilat durumu, ödeme durumu, net bakiye yönü", status: "Kapalı", risk: "Çok yüksek", nextStep: "Finans güvenlik kapsamı onaylanacak" },
+  { group: "Raporlama alanları", examples: "Test tarihi, test edilen modül, beklenen sonuç, görülen sonuç, patron kararı", status: "Manuel rapor sözlüğü", risk: "Orta", nextStep: "Test raporu şablonu netleşecek" },
+];
+const dataFieldDictionaryNoActionItems = [
+  "Gerçek Vega tablo alanı değildir.",
+  "Kesin alan eşlemesi değildir.",
+  "Veri okumaz.",
+  "SQL sorgusu çalıştırmaz.",
+  "Dosya/export üretmez.",
+  "Onay kaydetmez.",
+];
 const vegaReadonlyModuleMatrixRows = [
   { module: "Stok", status: "Hazır", read: "Manuel read-only", write: "Yok", risk: "Orta", nextStep: "Kullanıcı doğrulaması" },
   { module: "Cari", status: "Hazırlık", read: "Yok", write: "Yok", risk: "Yüksek", nextStep: "Kapsam analizi" },
@@ -1104,6 +1120,8 @@ export default function Dashboard() {
 
       <RiskWarningCenter />
 
+      <DataFieldDictionaryPanel />
+
       <VegaReadonlyOperationCenter />
 
       <VegaReadonlyModuleMatrix />
@@ -1409,6 +1427,43 @@ function RiskWarningCenter() {
       <CommercePanel title="Bu Sürümde Olmayanlar" note="Bu kutu risk merkezinin pasif sınırını gösterir; alarm, bildirim, görev veya dosya işlemi başlatmaz.">
         <div className="commerce-performance-grid">
           {riskWarningCenterNoActionItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+    </section>
+  );
+}
+
+function DataFieldDictionaryPanel() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-data-field-dictionary")}`} id="dashboard-data-field-dictionary">
+      <DashboardNewReleaseBadge sectionId="dashboard-data-field-dictionary" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Pasif iş seviyesi sözlük</p>
+          <h2>Veri Alan Sözlüğü</h2>
+          <span>ERP modülleri için iş seviyesindeki alan örneklerini ve doğrulama notlarını gösterir; gerçek Vega verisi okumaz, tablo/sorgu eklemez ve kesin alan eşlemesi yapmaz.</span>
+        </div>
+      </div>
+
+      <div className="profitability-priority-grid">
+        {dataFieldDictionaryGroups.map((group) => (
+          <article className="profitability-priority-card" key={group.group}>
+            <span>{group.group}</span>
+            <strong>{group.examples}</strong>
+            <p>Durum: {group.status}</p>
+            <p>Risk seviyesi: {group.risk}</p>
+            <small>Sonraki doğrulama adımı: {group.nextStep}</small>
+          </article>
+        ))}
+      </div>
+
+      <CommercePanel title="Bu Sözlük Ne Değildir?" note="Bu kutu sözlüğün pasif sınırını gösterir; tablo, sorgu, veri okuma veya dosya işlemi başlatmaz.">
+        <div className="commerce-performance-grid">
+          {dataFieldDictionaryNoActionItems.map((item) => (
             <article className="commerce-performance-card" key={item}>
               <strong>{item}</strong>
             </article>
