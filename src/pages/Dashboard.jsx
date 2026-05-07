@@ -77,6 +77,10 @@ const ownerViewCards = [
   { label: "Ortam read-only kullanıcı", value: "Hazırlanacak" },
   { label: "Test ortamı kararı", value: "Bekliyor" },
   { label: "Ortam gerçek bağlantı", value: "Kapalı" },
+  { label: "İlk read-only deneme", value: "Local script ile sınırlı" },
+  { label: "Smoke test kapsamı", value: "20 stok kartı" },
+  { label: "Smoke test ERP’ye yazma", value: "Kapalı" },
+  { label: "Smoke test import", value: "Kapalı" },
   { label: "Barkod operasyonu", value: "Hazırlıkta" },
   { label: "Barkod kalite kontrolü", value: "Öncelikli" },
   { label: "Riskli barkodlar", value: "İzlenecek" },
@@ -236,6 +240,15 @@ const readonlyEnvironmentPrepSummaryCards = [
   { label: "Test ortamı kararı", value: "Bekliyor" },
   { label: "Gerçek bağlantı", value: "Kapalı" },
   { label: "Credential / veri yazma", value: "Yok" },
+];
+
+const readonlyStockSmokeSummaryCards = [
+  { label: "Deneme yöntemi", value: "Local script" },
+  { label: "Kapsam", value: "20 stok kartı" },
+  { label: "Tablo", value: "F0102TBLSTOKLAR" },
+  { label: "ERP’ye yazma", value: "Kapalı" },
+  { label: "Import", value: "Kapalı" },
+  { label: "Sonuç", value: "Terminal önizleme" },
 ];
 
 const readonlyFinalDecisionSummaryCards = [
@@ -416,6 +429,8 @@ export default function Dashboard() {
 
       <OwnerView />
 
+      <ReadonlyStockSmokeSummary />
+
       <ReadonlyEnvironmentPrepSummary />
 
       <ReadonlyFailClosedSummary />
@@ -457,6 +472,30 @@ export default function Dashboard() {
         <DashboardNewReleaseBadge sectionId="dashboard-commerce-insights" />
       </CommerceInsights>
     </>
+  );
+}
+
+function ReadonlyStockSmokeSummary() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-readonly-stock-smoke-summary")}`} id="dashboard-readonly-stock-smoke-summary">
+      <DashboardNewReleaseBadge sectionId="dashboard-readonly-stock-smoke-summary" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Local read-only smoke test</p>
+          <h2>İlk Read-only Stok Okuma Özeti</h2>
+          <span>İlk gerçek okuma yalnızca local terminal scriptiyle, stok kartı ve 20 satır sınırıyla görünür; ERP arayüzü bağlantı başlatmaz.</span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {readonlyStockSmokeSummaryCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+    </section>
   );
 }
 

@@ -6,8 +6,8 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 
 ## Mevcut Durum
 
-- Güncel sürüm: v1.44.0
-- Aşama: Read-only Bağlantı Ortam Bilgisi Manuel Hazırlık Merkezi
+- Güncel sürüm: v1.45.0
+- Aşama: İlk Gerçek Read-only Stok Kartı Okuma Denemesi
 - Build kontrolü: GitHub Actions
 - El terminali: okuma, son okutulanlar, sayım sepeti, rapor/CSV/JSON önizleme hazırlığı
 - Stok ve barkod kalite kontrolü: pasif/mock risk görünürlüğü
@@ -150,6 +150,15 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 - Bu bilgiler bu projede tutulmaz; yalnızca manuel hazırlık rehberi gösterilir.
 - Gerçek bağlantı, DB okuma, query, connection test, API, credential veya veri yazma yapılmaz.
 - İlk gerçek bağlantı ileride ayrı küçük onaylı fazda ele alınır.
+
+## İlk Gerçek Read-only Stok Kartı Okuma Denemesi
+
+- Bu faz yalnızca local bilgisayarda çalışan sınırlı read-only smoke test scripti ekler.
+- Test canlı Vega üzerinde yapılacaksa manuel yedek alınmış ve read-only kullanıcı doğrulanmış olmalıdır.
+- Script sadece F0102TBLSTOKLAR tablosundan en fazla 20 stok kartı okur.
+- Sonuç sadece terminalde gösterilir.
+- ERP’ye yazma, import, cari/fiş/hareket okuma, dosyaya çıktı alma yoktur.
+- Bağlantı bilgileri .env.local içinde tutulur ve GitHub’a gönderilmez.
 
 ## Build Kontrolü
 

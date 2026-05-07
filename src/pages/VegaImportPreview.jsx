@@ -135,6 +135,15 @@ const environmentPrepStatusCards = [
   { label: "Veri yazma/import", value: "Kapalı" },
 ];
 
+const stockSmokeTestStatusCards = [
+  { label: "Bağlantı yöntemi", value: "Local script" },
+  { label: "Kapsam", value: "Sadece stok kartı" },
+  { label: "Limit", value: "20 satır" },
+  { label: "Veri yazma", value: "Kapalı" },
+  { label: "Import", value: "Kapalı" },
+  { label: "Sonuç", value: "Terminal önizleme" },
+];
+
 const roleEnvironmentPrepCards = [
   {
     title: "Teknik Sorumlu",
@@ -677,6 +686,30 @@ export default function VegaImportPreview() {
           <h1>Vega Read-only Operasyon Merkezi</h1>
           <span>Bu ekran gerçek Vega bağlantısı kurmadan, ilk read-only deneme öncesi güvenlik, saha ve kapsam kontrollerini tek yerde toplar.</span>
         </div>
+      </section>
+
+      <section className="vega-technical-gate-center section-updated-highlight" id="vega-readonly-stock-smoke-test">
+        <div className="vega-technical-gate-hero">
+          <p>Local read-only smoke test</p>
+          <h2>İlk Gerçek Read-only Stok Kartı Okuma Denemesi</h2>
+          <span>
+            Bu sürümde ilk gerçek bağlantı yalnızca local script üzerinden, sadece read-only, sadece stok kartı ve en fazla 20 satır ile denenebilir. ERP ekranı veri yazmaz, import yapmaz ve bağlantıyı arayüzden başlatmaz.
+          </span>
+        </div>
+
+        <div className="vega-technical-gate-status-grid">
+          {stockSmokeTestStatusCards.map((card) => (
+            <article className="vega-import-summary-card" key={card.label}>
+              <span>{card.label}</span>
+              <strong>{card.value}</strong>
+            </article>
+          ))}
+        </div>
+
+        <section className="vega-technical-gate-panel">
+          <h3>Local Terminal Deneme Notu</h3>
+          <p>Bu ekranda bağlantı başlatılmaz. Deneme yalnızca local terminalde npm run vega:readonly-stock-smoke komutuyla yapılır.</p>
+        </section>
       </section>
 
       <section className="vega-technical-gate-center section-updated-highlight" id="vega-readonly-environment-prep-center">

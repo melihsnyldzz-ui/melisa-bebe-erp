@@ -307,7 +307,22 @@ const readonlyEnvironmentPrepStatusRows = [
   { label: "Credential / veri yazma", value: "Yok" },
 ];
 
+const readonlyStockSmokeStatusRows = [
+  { label: "Deneme yöntemi", value: "Local script" },
+  { label: "Kapsam", value: "Sadece stok kartı" },
+  { label: "Limit", value: "20 satır" },
+  { label: "ERP arayüzünden bağlantı", value: "Yok" },
+  { label: "Veri yazma/import", value: "Kapalı" },
+  { label: "Sonuç yazma", value: "Yok" },
+];
+
 const versionHistoryRows = [
+  {
+    version: "v1.45.0",
+    title: "İlk Gerçek Read-only Stok Kartı Okuma Denemesi",
+    area: "Local script / Vega Import Önizleme / Dashboard / Sistem Durumu / README",
+    description: "İlk gerçek read-only stok kartı okuma denemesi için local terminal scripti eklendi; script yalnızca F0102TBLSTOKLAR tablosundan 20 satır okur, sonucu terminalde gösterir, ERP arayüzünden bağlantı başlatmaz ve dosyaya sonuç yazmaz.",
+  },
   {
     version: "v1.44.0",
     title: "Read-only Bağlantı Ortam Bilgisi Manuel Hazırlık Merkezi",
@@ -841,8 +856,8 @@ export default function SystemStatusPanel() {
 
       <div className="system-status-focus-card">
         <span>Bu Sürümde Test Edilecek Alan</span>
-        <strong>Vega Import Önizleme / Read-only Ortam Bilgisi Hazırlığı</strong>
-        <p>Bu sürümde ortam bilgisi hazırlığı, read-only kullanıcı, test bilgisayarı ve canlı/kopya ortam kararı özellikle kontrol edilmelidir.</p>
+        <strong>Local Script / İlk Read-only Stok Okuma</strong>
+        <p>Bu sürümde yalnızca local terminal scriptiyle 20 stok kartı okuma sınırı, .env.local güvenliği ve ERP arayüzünden bağlantı başlatılmaması özellikle kontrol edilmelidir.</p>
       </div>
 
       <div className="system-workflow-panel" {...sectionHighlightProps("system-workflow-model")}>
@@ -860,6 +875,24 @@ export default function SystemStatusPanel() {
         </div>
         <p className="system-workflow-safety-note">
           Gerçek veri bağlantısı, DB okuma, query, import ve veri yazma işlemleri yalnızca ayrı küçük ve açık onaylı sürümlerde ele alınır.
+        </p>
+      </div>
+
+      <div className="handheld-barcode-status-panel readonly-stock-smoke-status-panel" {...sectionHighlightProps("readonly-stock-smoke-status")}>
+        <div>
+          <h3>İlk Read-only Stok Okuma Denemesi Durumu <NewReleaseBadge sectionId="readonly-stock-smoke-status" /></h3>
+          <p>İlk gerçek okuma denemesi yalnızca local terminal scriptiyle, stok kartı ve 20 satır sınırıyla takip edilir.</p>
+        </div>
+        <div className="system-status-grid">
+          {readonlyStockSmokeStatusRows.map((row) => (
+            <div className="system-status-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </div>
+          ))}
+        </div>
+        <p className="handheld-barcode-safety-note readonly-stock-smoke-safety-note">
+          Bu sürüm yalnızca local read-only stok kartı okuma denemesi için sınırlı script sağlar. ERP arayüzünden bağlantı başlatmaz, DB’ye yazmaz, import yapmaz ve sonuçları dosyaya kaydetmez.
         </p>
       </div>
 

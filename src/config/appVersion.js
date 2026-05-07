@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.44.0";
-export const APP_STAGE = "Read-only Bağlantı Ortam Bilgisi Manuel Hazırlık Merkezi";
+export const APP_VERSION = "v1.45.0";
+export const APP_STAGE = "İlk Gerçek Read-only Stok Kartı Okuma Denemesi";
