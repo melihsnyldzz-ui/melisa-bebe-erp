@@ -79,6 +79,22 @@ const rolePermissionNoActionItems = [
   "Veri yazma yok.",
   "SQL/Vega işlemi yok.",
 ];
+const dailyOperationWorkflowCards = [
+  { task: "Sabah stok kontrolü", responsibleRole: "Depo", dataMode: "Read-only stok", risk: "Orta", nextStep: "20 satır test sonrası genişletilecek" },
+  { task: "Barkod / el terminali kontrolü", responsibleRole: "Depo", dataMode: "Pasif hazırlık", risk: "Orta", nextStep: "Barkod senaryosu netleşecek" },
+  { task: "Cari risk kontrolü", responsibleRole: "Muhasebe + Yönetici", dataMode: "Pasif hazırlık", risk: "Yüksek", nextStep: "Maskeleme kuralı belirlenecek" },
+  { task: "Sipariş takip kontrolü", responsibleRole: "Satış", dataMode: "Pasif hazırlık", risk: "Yüksek", nextStep: "Sipariş kapsamı belirlenecek" },
+  { task: "Tahsilat / ödeme hazırlığı", responsibleRole: "Muhasebe", dataMode: "Pasif hazırlık", risk: "Çok yüksek", nextStep: "Finans güvenlik kuralı netleşecek" },
+  { task: "Gün sonu yönetici özeti", responsibleRole: "Yönetici", dataMode: "Pasif rapor", risk: "Orta", nextStep: "Manuel test raporu hazırlanacak" },
+];
+const dailyOperationWorkflowNoActionItems = [
+  "Görev kaydı yok.",
+  "Kullanıcı ataması yok.",
+  "Otomatik hatırlatma yok.",
+  "Veri okuma/yazma yok.",
+  "SQL/Vega işlemi yok.",
+  "Dosya/export yok.",
+];
 const vegaReadonlyModuleMatrixRows = [
   { module: "Stok", status: "Hazır", read: "Manuel read-only", write: "Yok", risk: "Orta", nextStep: "Kullanıcı doğrulaması" },
   { module: "Cari", status: "Hazırlık", read: "Yok", write: "Yok", risk: "Yüksek", nextStep: "Kapsam analizi" },
@@ -1065,6 +1081,8 @@ export default function Dashboard() {
 
       <RolePermissionMatrixPanel />
 
+      <DailyOperationWorkflowCenter />
+
       <VegaReadonlyOperationCenter />
 
       <VegaReadonlyModuleMatrix />
@@ -1296,6 +1314,43 @@ function RolePermissionMatrixPanel() {
       <CommercePanel title="Bu Sürümde Olmayanlar" note="Bu kutu rol-yetki taslağının pasif sınırını gösterir; login, kayıt veya veri işlemi başlatmaz.">
         <div className="commerce-performance-grid">
           {rolePermissionNoActionItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+    </section>
+  );
+}
+
+function DailyOperationWorkflowCenter() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-daily-operation-workflow-center")}`} id="dashboard-daily-operation-workflow-center">
+      <DashboardNewReleaseBadge sectionId="dashboard-daily-operation-workflow-center" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Pasif günlük iş akışı</p>
+          <h2>Günlük Operasyon İş Akışı Merkezi</h2>
+          <span>Melisa Bebe'de günlük kontrollerin hangi sırayla ele alınacağını gösterir; görev kaydı, kullanıcı ataması, otomasyon veya veri işlemi başlatmaz.</span>
+        </div>
+      </div>
+
+      <div className="profitability-priority-grid">
+        {dailyOperationWorkflowCards.map((card) => (
+          <article className="profitability-priority-card" key={card.task}>
+            <span>{card.task}</span>
+            <strong>Sorumlu rol: {card.responsibleRole}</strong>
+            <p>Veri modu: {card.dataMode}</p>
+            <p>Risk seviyesi: {card.risk}</p>
+            <small>Sonraki adım: {card.nextStep}</small>
+          </article>
+        ))}
+      </div>
+
+      <CommercePanel title="Bu Sürümde Olmayanlar" note="Bu kutu günlük akış merkezinin pasif sınırını gösterir; görev, otomasyon veya dosya işlemi başlatmaz.">
+        <div className="commerce-performance-grid">
+          {dailyOperationWorkflowNoActionItems.map((item) => (
             <article className="commerce-performance-card" key={item}>
               <strong>{item}</strong>
             </article>

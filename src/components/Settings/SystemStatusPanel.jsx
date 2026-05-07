@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.73.0",
+    title: "Günlük Operasyon İş Akışı Merkezi",
+    area: "Dashboard / Sistem Durumu",
+    description: "ERP'nin eksik ana katmanlarından günlük operasyon iş akışı, sabah stok kontrolü, barkod/el terminali kontrolü, cari risk, sipariş takip, tahsilat/ödeme hazırlığı ve gün sonu yönetici özeti için sorumlu rol, veri modu, risk seviyesi ve sonraki adımı gösteren pasif merkezle görünür hale getirildi; görev/kullanıcı kaydı, otomatik hatırlatma, veri okuma/yazma, SQL/Vega işlemi, dosya/export veya onay kaydı eklenmedi.",
+  },
+  {
     version: "v1.72.0",
     title: "Rol ve Yetki Matrisi",
     area: "Dashboard / Sistem Durumu",

@@ -1,17 +1,18 @@
-export const currentReleaseVersion = "v1.72.0";
+export const currentReleaseVersion = "v1.73.0";
 
-export const currentReleaseTitle = "Rol ve Yetki Matrisi";
+export const currentReleaseTitle = "Günlük Operasyon İş Akışı Merkezi";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "dashboard-role-permission-matrix"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "dashboard-daily-operation-workflow-center"];
 
 export const releaseHighlightItems = [
-  "Dashboard'a Rol ve Yetki Matrisi paneli eklenerek Patron/Yönetici, Muhasebe, Depo, Satış, Sadece Görüntüleme ve Teknik Admin rollerinin görünüm seviyesi pasif olarak görünür hale getirildi.",
-  "Her rol için veri modu, risk seviyesi ve sonraki adım bilgisi mimari seviyede gösterildi; gerçek login, kullanıcı kaydı veya yetki kaydı eklenmedi.",
-  "Bu sürüm veri yazma/import/senkron/export, SQL/Vega işlemi, tablo/sorgu ekleme, dosya üretimi, onay kaydı veya hassas bilgi saklama başlatmadan yalnızca rol-yetki taslağını netleştirir.",
+  "Dashboard'a Günlük Operasyon İş Akışı Merkezi paneli eklenerek Melisa Bebe'de günlük kontrol sırası pasif kartlarla görünür hale getirildi.",
+  "Sabah stok, barkod/el terminali, cari risk, sipariş takip, tahsilat/ödeme hazırlığı ve gün sonu yönetici özeti için sorumlu rol, veri modu, risk seviyesi ve sonraki adım gösterildi.",
+  "Bu sürüm gerçek görev/kullanıcı kaydı, otomatik hatırlatma, veri okuma/yazma, SQL/Vega işlemi, import/senkron/export, dosya üretimi veya onay kaydı başlatmadan yalnızca günlük iş akışı rehberi sağlar.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
+  { id: "dashboard-daily-operation-workflow-center", label: "Günlük Operasyon İş Akışı Merkezi'ne git" },
   { id: "dashboard-role-permission-matrix", label: "Rol ve Yetki Matrisi'ne git" },
   { id: "dashboard-erp-main-backbone-module-map", label: "ERP Ana Omurga ve Modül Haritası'na git" },
   { id: "stock-preview-beta-package-status", label: "Stok Önizleme Beta Hazırlığı'na git" },
@@ -31,6 +32,7 @@ export const releaseHighlightsByPage = {
     releaseJumpLinks: [
       { id: "dashboard-erp-main-backbone-module-map", label: "ERP Ana Omurga ve Modül Haritası'na git" },
       { id: "dashboard-role-permission-matrix", label: "Rol ve Yetki Matrisi'ne git" },
+      { id: "dashboard-daily-operation-workflow-center", label: "Günlük Operasyon İş Akışı Merkezi'ne git" },
       { id: "dashboard-owner-view", label: "Patron Bakışı'na git" },
       { id: "dashboard-vega-readonly-operation-center", label: "Vega Read-only Operasyon Merkezi'ne git" },
       { id: "dashboard-vega-readonly-module-matrix", label: "Vega Read-only Modül Durum Matrisi'ne git" },
@@ -79,7 +81,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-role-permission-matrix", "dashboard-erp-main-backbone-module-map"],
+    updatedSectionIds: ["dashboard-daily-operation-workflow-center", "dashboard-role-permission-matrix"],
   },
   reports: {
     releaseHighlightItems,
