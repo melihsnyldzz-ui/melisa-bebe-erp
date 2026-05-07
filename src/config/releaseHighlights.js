@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.70.1";
+export const currentReleaseVersion = "v1.70.2";
 
-export const currentReleaseTitle = "Vega Stok Read-only Bağlantı Ön Kontrolü";
+export const currentReleaseTitle = "Vega Stok Read-only Local Test Hazırlığı";
 
 export const updatedSectionIds = ["latest-version-history", "system-workflow-model"];
 
 export const releaseHighlightItems = [
-  "Gerçek Vega stok read-only bağlantısından önce pasif Bağlantı Ön Kontrol Paneli eklendi.",
-  "Read-only kullanıcı, manuel yedek, .env.local, 20 satır limiti ve manuel buton şartları bağlantı denemesi yapılmadan görünür hale getirildi.",
-  "Bu sürüm SQL sorgusu çalıştırmadan, veri okumadan/yazmadan, import/senkron/export yapmadan ve hassas bağlantı bilgisi eklemeden yalnızca ön kontrol rehberi sağlar.",
+  "Gerçek Vega stok read-only testinden önce local terminal hazırlığını gösteren pasif Local Test Hazırlığı paneli eklendi.",
+  "Mevcut güvenli stok smoke scriptinin manuel çalıştığı, stok ve 20 satır sınırıyla kaldığı, dosyaya çıktı almadığı ve hassas hata göstermediği kaynak üzerinden kontrol edildi.",
+  "Bu sürüm bağlantı denemesi yapmadan, veri okumadan/yazmadan, import/senkron/export veya hassas bağlantı bilgisi eklemeden yalnızca test hazırlığı rehberi sağlar.",
 ];
 
 export const releaseJumpLinks = [
@@ -37,6 +37,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-management-presentation-summary", label: "Yönetici Sunum Özeti'ne git" },
       { id: "dashboard-vega-stock-readonly-hardening", label: "Vega Stok Read-only Sağlamlaştırma'ya git" },
       { id: "dashboard-vega-stock-readonly-precheck", label: "Vega Stok Read-only Ön Kontrol'e git" },
+      { id: "dashboard-vega-stock-readonly-local-test-prep", label: "Vega Stok Read-only Local Test Hazırlığı'na git" },
       { id: "dashboard-finance-preview-prep-gate", label: "Kasa/Finans Özeti Hazırlık Kapısı'na git" },
       { id: "dashboard-current-preview-prep-gate", label: "Cari Önizleme Hazırlık Kapısı'na git" },
       { id: "dashboard-order-preview-prep-gate", label: "Sipariş Önizleme Hazırlık Kapısı'na git" },
@@ -74,7 +75,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-vega-stock-readonly-precheck", "dashboard-vega-stock-readonly-hardening"],
+    updatedSectionIds: ["dashboard-vega-stock-readonly-local-test-prep", "dashboard-vega-stock-readonly-precheck"],
   },
   reports: {
     releaseHighlightItems,

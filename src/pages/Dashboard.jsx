@@ -698,6 +698,33 @@ const vegaStockReadonlyPrecheckSafetyNotes = [
   "Sadece ön kontrol rehberidir.",
 ];
 
+const vegaStockReadonlyLocalTestPrepCards = [
+  { label: "Test yöntemi", value: "Local terminal" },
+  { label: "Kapsam", value: "Sadece stok" },
+  { label: "Kullanıcı", value: "Read-only SQL kullanıcısı" },
+  { label: "Limit", value: "20 satır" },
+  { label: "Otomatik çalışma", value: "Yok" },
+  { label: "Veri yazma", value: "Yok" },
+  { label: "Export/dosya çıktısı", value: "Yok" },
+];
+
+const vegaStockReadonlyLocalTestManualChecks = [
+  "Read-only kullanıcı hazır.",
+  "sa kullanılmıyor.",
+  "Manuel yedek alındı.",
+  ".env.local Git dışında.",
+  "Bağlantı bilgileri repoda yok.",
+  "Stok limiti 20.",
+  "Test sadece terminalden manuel çalışacak.",
+];
+
+const vegaStockReadonlyLocalTestScriptChecks = [
+  "Mevcut stok smoke scripti otomatik çalışmaz.",
+  "Script sadece read-only stok ve 20 satır kapsamıyla sınırlıdır.",
+  "Script dosyaya çıktı almaz.",
+  "Script hassas ham hata mesajı göstermez.",
+];
+
 const stockPreviewSecurityConfirmationCards = [
   { label: "Önizleme sonucu", value: "Başarılı" },
   { label: "Görünen satır", value: "20" },
@@ -1023,6 +1050,8 @@ export default function Dashboard() {
       <VegaStockReadonlyHardeningPanel />
 
       <VegaStockReadonlyPrecheckPanel />
+
+      <VegaStockReadonlyLocalTestPrepPanel />
 
       <StockPreviewSecurityConfirmation />
 
@@ -1765,6 +1794,50 @@ function VegaStockReadonlyPrecheckPanel() {
       </CommercePanel>
 
       <p className="commerce-profitability-safety-note">{vegaStockReadonlyPrecheckSafetyNotes.join(" · ")}</p>
+    </section>
+  );
+}
+
+function VegaStockReadonlyLocalTestPrepPanel() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-vega-stock-readonly-local-test-prep")}`} id="dashboard-vega-stock-readonly-local-test-prep">
+      <DashboardNewReleaseBadge sectionId="dashboard-vega-stock-readonly-local-test-prep" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Local terminal test hazırlığı</p>
+          <h2>Local Test Hazırlığı</h2>
+          <span>Gerçek Vega stok read-only testinden önce local terminalden manuel çalıştırılacak güvenli test hazırlığını gösterir; bu panel bağlantı denemesi yapmaz.</span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {vegaStockReadonlyLocalTestPrepCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+
+      <CommercePanel title="Local Testten Önce Manuel Doğrula" note="Bu liste terminal testinden önce manuel kontrol içindir; test veya bağlantı başlatmaz.">
+        <div className="commerce-performance-grid">
+          {vegaStockReadonlyLocalTestManualChecks.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Mevcut Script Güvenlik Kontrolü" note="Bu bölüm kaynak kontrol özetidir; script çalıştırılmaz ve dosya üretmez.">
+        <div className="commerce-performance-grid">
+          {vegaStockReadonlyLocalTestScriptChecks.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
     </section>
   );
 }

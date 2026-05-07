@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.70.2",
+    title: "Vega Stok Read-only Local Test Hazırlığı",
+    area: "Dashboard / Sistem Durumu",
+    description: "Gerçek Vega stok read-only testinden önce local terminal hazırlığı pasif panel olarak eklendi; mevcut stok smoke scriptinin manuel, sadece stok ve 20 satır sınırlı, dosyasız ve hassas hata gizleyen yapısı bağlantı denemesi yapılmadan kaynak üzerinden kontrol edildi.",
+  },
+  {
     version: "v1.70.1",
     title: "Vega Stok Read-only Bağlantı Ön Kontrolü",
     area: "Dashboard / Sistem Durumu",
