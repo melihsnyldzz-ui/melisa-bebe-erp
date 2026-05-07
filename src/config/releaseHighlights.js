@@ -1,17 +1,18 @@
-export const currentReleaseVersion = "v1.70.2";
+export const currentReleaseVersion = "v1.71.0";
 
-export const currentReleaseTitle = "Vega Stok Read-only Local Test Hazırlığı";
+export const currentReleaseTitle = "ERP Ana Omurga ve Modül Haritası";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "dashboard-erp-main-backbone-module-map"];
 
 export const releaseHighlightItems = [
-  "Gerçek Vega stok read-only testinden önce local terminal hazırlığını gösteren pasif Local Test Hazırlığı paneli eklendi.",
-  "Mevcut güvenli stok smoke scriptinin manuel çalıştığı, stok ve 20 satır sınırıyla kaldığı, dosyaya çıktı almadığı ve hassas hata göstermediği kaynak üzerinden kontrol edildi.",
-  "Bu sürüm bağlantı denemesi yapmadan, veri okumadan/yazmadan, import/senkron/export veya hassas bağlantı bilgisi eklemeden yalnızca test hazırlığı rehberi sağlar.",
+  "Dashboard'a ERP Ana Omurga ve Modül Haritası paneli eklenerek ana modüllerin durum, veri modu, risk seviyesi ve sonraki adım görünürlüğü pasif olarak kuruldu.",
+  "Rol/yetki matrisi, operasyon iş akışı, risk merkezi, veri alan sözlüğü, test/onay disiplini ve personel ekranları gibi eksik ana katmanlar patron seviyesinde görünür hale getirildi.",
+  "Bu sürüm gerçek Vega/SQL bağlantısı, veri okuma/yazma, tablo/sorgu ekleme, import/senkron/export, dosya üretimi veya onay kaydı başlatmadan yalnızca ERP mimari haritasını netleştirir.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
+  { id: "dashboard-erp-main-backbone-module-map", label: "ERP Ana Omurga ve Modül Haritası'na git" },
   { id: "stock-preview-beta-package-status", label: "Stok Önizleme Beta Hazırlığı'na git" },
   { id: "system-workflow-model", label: "Çalışma Modeli'ne git" },
 ];
@@ -27,6 +28,7 @@ export const releaseHighlightsByPage = {
   dashboard: {
     releaseHighlightItems,
     releaseJumpLinks: [
+      { id: "dashboard-erp-main-backbone-module-map", label: "ERP Ana Omurga ve Modül Haritası'na git" },
       { id: "dashboard-owner-view", label: "Patron Bakışı'na git" },
       { id: "dashboard-vega-readonly-operation-center", label: "Vega Read-only Operasyon Merkezi'ne git" },
       { id: "dashboard-vega-readonly-module-matrix", label: "Vega Read-only Modül Durum Matrisi'ne git" },
@@ -75,7 +77,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-vega-stock-readonly-local-test-prep", "dashboard-vega-stock-readonly-precheck"],
+    updatedSectionIds: ["dashboard-erp-main-backbone-module-map", "dashboard-vega-readonly-module-matrix"],
   },
   reports: {
     releaseHighlightItems,

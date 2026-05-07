@@ -37,6 +37,32 @@ const vegaReadonlySafetyNotes = [
   "Okunan veri frontend state içinde geçicidir.",
   ".env.local Git dışında kalır.",
 ];
+const erpBackboneModuleCards = [
+  { module: "Stok Yönetimi", status: "Read-only hazırlık / Manuel test", dataMode: "Stok read-only sınırı", risk: "Orta", nextStep: "Local test ve kullanıcı doğrulaması" },
+  { module: "Barkod / El Terminali", status: "Hazırlıkta", dataMode: "Pasif tasarım", risk: "Orta", nextStep: "Operasyon senaryosu çıkarılacak" },
+  { module: "Cari Yönetimi", status: "Pasif hazırlık", dataMode: "Veri okuma yok", risk: "Yüksek", nextStep: "Maskeleme ve kapsam kararı" },
+  { module: "Sipariş Yönetimi", status: "Pasif hazırlık", dataMode: "Veri okuma yok", risk: "Yüksek", nextStep: "Read-only sınır taslağı" },
+  { module: "Kasa / Finans", status: "Pasif hazırlık / Çok hassas", dataMode: "Kapalı", risk: "Çok yüksek", nextStep: "Patron onaylı güvenlik kapsamı" },
+  { module: "Raporlama", status: "Pasif yönetici görünümü", dataMode: "Hazırlık özeti", risk: "Orta", nextStep: "Manuel test raporu disiplini" },
+  { module: "Ayarlar / Yetkiler", status: "Rol matrisi hazırlanacak", dataMode: "Kayıt yok", risk: "Yüksek", nextStep: "Rol ve yetki matrisi" },
+  { module: "Vega Entegrasyon", status: "Stok read-only sınırında", dataMode: "Manuel tetikleme", risk: "Yüksek", nextStep: "20 satır stok ön kontrolü" },
+];
+const erpBackboneMissingLayers = [
+  "Rol ve yetki matrisi",
+  "Günlük operasyon iş akışı",
+  "Risk ve uyarı merkezi",
+  "Veri alan sözlüğü",
+  "Test ve onay kayıt disiplini",
+  "Personel kullanım ekranları",
+];
+const erpBackboneNoActionItems = [
+  "Veri okumaz.",
+  "Veri yazmaz.",
+  "SQL/Vega bağlantısı başlatmaz.",
+  "Tablo/sorgu eklemez.",
+  "Dosya/export üretmez.",
+  "Onay kaydetmez.",
+];
 const vegaReadonlyModuleMatrixRows = [
   { module: "Stok", status: "Hazır", read: "Manuel read-only", write: "Yok", risk: "Orta", nextStep: "Kullanıcı doğrulaması" },
   { module: "Cari", status: "Hazırlık", read: "Yok", write: "Yok", risk: "Yüksek", nextStep: "Kapsam analizi" },
@@ -1019,6 +1045,8 @@ export default function Dashboard() {
 
       <OwnerView />
 
+      <ErpMainBackboneModuleMap />
+
       <VegaReadonlyOperationCenter />
 
       <VegaReadonlyModuleMatrix />
@@ -1172,6 +1200,53 @@ function VegaReadonlyOperationCenter() {
       </div>
 
       <p className="commerce-profitability-safety-note">{vegaReadonlySafetyNotes.join(" · ")}</p>
+    </section>
+  );
+}
+
+function ErpMainBackboneModuleMap() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-erp-main-backbone-module-map")}`} id="dashboard-erp-main-backbone-module-map">
+      <DashboardNewReleaseBadge sectionId="dashboard-erp-main-backbone-module-map" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Pasif ERP ana omurga</p>
+          <h2>ERP Ana Omurga ve Modül Haritası</h2>
+          <span>Ana modüllerin durum, veri modu, risk seviyesi ve sonraki adımı tek haritada görünür olur; bu panel bağlantı, veri işlemi, dosya üretimi veya onay kaydı başlatmaz.</span>
+        </div>
+      </div>
+
+      <div className="profitability-priority-grid">
+        {erpBackboneModuleCards.map((card) => (
+          <article className="profitability-priority-card" key={card.module}>
+            <span>{card.module}</span>
+            <strong>{card.status}</strong>
+            <p>Veri modu: {card.dataMode}</p>
+            <p>Risk seviyesi: {card.risk}</p>
+            <small>Sonraki adım: {card.nextStep}</small>
+          </article>
+        ))}
+      </div>
+
+      <CommercePanel title="ERP'de Eksik Ana Katmanlar" note="Bu liste mimari görünürlük içindir; görev kaydı veya onay oluşturmaz.">
+        <div className="commerce-performance-grid">
+          {erpBackboneMissingLayers.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Bu Sürüm Ne Yapmaz?" note="Bu güvenlik kutusu pasif sınırı netleştirir; işlem başlatmaz.">
+        <div className="commerce-performance-grid">
+          {erpBackboneNoActionItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
     </section>
   );
 }

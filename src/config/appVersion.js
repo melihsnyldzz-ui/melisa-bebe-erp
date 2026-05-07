@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.70.2";
-export const APP_STAGE = "Vega Stok Read-only Local Test Hazırlığı";
+export const APP_VERSION = "v1.71.0";
+export const APP_STAGE = "ERP Ana Omurga ve Modül Haritası";

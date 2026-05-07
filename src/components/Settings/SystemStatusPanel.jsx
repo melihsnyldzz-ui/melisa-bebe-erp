@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.71.0",
+    title: "ERP Ana Omurga ve Modül Haritası",
+    area: "Dashboard / Sistem Durumu",
+    description: "Dashboard'a ana ERP modüllerini durum, veri modu, risk seviyesi ve sonraki adımla gösteren pasif omurga paneli eklendi; eksik ana katmanlar ve bu sürümün yapmadığı güvenli işlemler veri okuma/yazma, SQL/Vega bağlantısı, tablo/sorgu, dosya/export veya onay kaydı olmadan netleştirildi.",
+  },
+  {
     version: "v1.70.2",
     title: "Vega Stok Read-only Local Test Hazırlığı",
     area: "Dashboard / Sistem Durumu",
