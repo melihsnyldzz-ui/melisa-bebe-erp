@@ -1,18 +1,18 @@
-export const currentReleaseVersion = "v1.46.0";
+export const currentReleaseVersion = "v1.47.0";
 
-export const currentReleaseTitle = "Electron Desktop Güvenlik ve Hazırlık Merkezi";
+export const currentReleaseTitle = "Read-only SQL/Vega Hata Sınıflandırma Güçlendirmesi";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "desktop-preparation-status"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "readonly-stock-smoke-status"];
 
 export const releaseHighlightItems = [
-  "Electron masaüstü başlığı ve local desktop duruşu Melisa Bebe ERP kullanımına daha net hale getirildi.",
-  "Desktop Hazırlık Merkezi ile Vega bağlantısı, veri yazma, import ve .env.local güvenliği pasif olarak görünür hale getirildi.",
-  "ERP arayüzünden canlı Vega bağlantısı, API, otomatik istek, veri yazma veya import eklenmeden güvenli desktop hazırlığı korundu.",
+  "Read-only stok smoke test scriptinde SQL/Vega hata sınıflandırması güvenli ve Türkçe açıklamalarla güçlendirildi.",
+  "ENV_MISSING, SQL_AUTH_FAILED, SQL_NETWORK_FAILED, SQL_PERMISSION_DENIED, SQL_TABLE_OR_COLUMN_MISMATCH, SQL_TIMEOUT ve SQL_UNKNOWN_SAFE sınıfları görünür hale getirildi.",
+  "Ham SQL hatası, connection string, server, database, kullanıcı adı veya şifre yazdırılmadan; ERP arayüzünden bağlantı, veri yazma veya import eklenmeden güvenli sınır korundu.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
-  { id: "desktop-preparation-status", label: "Desktop Hazırlık Durumu'na git" },
+  { id: "readonly-stock-smoke-status", label: "Read-only Smoke Test Durumu'na git" },
   { id: "system-workflow-model", label: "Çalışma Modeli'ne git" },
 ];
 

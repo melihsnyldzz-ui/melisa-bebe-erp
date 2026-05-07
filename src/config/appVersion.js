@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.46.0";
-export const APP_STAGE = "Electron Desktop Güvenlik ve Hazırlık Merkezi";
+export const APP_VERSION = "v1.47.0";
+export const APP_STAGE = "Read-only SQL/Vega Hata Sınıflandırma Güçlendirmesi";

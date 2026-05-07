@@ -311,6 +311,7 @@ const readonlyStockSmokeStatusRows = [
   { label: "Deneme yöntemi", value: "Local script" },
   { label: "Kapsam", value: "Sadece stok kartı" },
   { label: "Limit", value: "20 satır" },
+  { label: "Hata sınıfları", value: "Güvenli Türkçe özet" },
   { label: "ERP arayüzünden bağlantı", value: "Yok" },
   { label: "Veri yazma/import", value: "Kapalı" },
   { label: "Sonuç yazma", value: "Yok" },
@@ -326,6 +327,12 @@ const desktopPreparationStatusRows = [
 ];
 
 const versionHistoryRows = [
+  {
+    version: "v1.47.0",
+    title: "Read-only SQL/Vega Hata Sınıflandırma Güçlendirmesi",
+    area: "Local script / Sistem Durumu / README",
+    description: "Read-only stok smoke test scriptinde ENV_MISSING, SQL_AUTH_FAILED, SQL_NETWORK_FAILED, SQL_PERMISSION_DENIED, SQL_TABLE_OR_COLUMN_MISMATCH, SQL_TIMEOUT ve SQL_UNKNOWN_SAFE hata sınıfları güvenli Türkçe açıklamalarla görünür hale getirildi; ham hata, credential, connection string veya veri yazma eklenmedi.",
+  },
   {
     version: "v1.46.0",
     title: "Electron Desktop Güvenlik ve Hazırlık Merkezi",
@@ -871,8 +878,8 @@ export default function SystemStatusPanel() {
 
       <div className="system-status-focus-card">
         <span>Bu Sürümde Test Edilecek Alan</span>
-        <strong>Electron Desktop / Güvenli Hazırlık Merkezi</strong>
-        <p>Bu sürümde local desktop başlığı, masaüstü kullanım hissi, .env.local güvenliği ve ERP arayüzünden canlı Vega bağlantısı başlatılmaması özellikle kontrol edilmelidir.</p>
+        <strong>Read-only Smoke Test / Hata Sınıflandırması</strong>
+        <p>Bu sürümde local terminal smoke test başarısız olduğunda ham SQL hatası basılmadan güvenli hata sınıfı ve Türkçe açıklama gösterilmesi özellikle kontrol edilmelidir.</p>
       </div>
 
       <div className="system-workflow-panel" {...sectionHighlightProps("system-workflow-model")}>
@@ -914,7 +921,7 @@ export default function SystemStatusPanel() {
       <div className="handheld-barcode-status-panel readonly-stock-smoke-status-panel" {...sectionHighlightProps("readonly-stock-smoke-status")}>
         <div>
           <h3>İlk Read-only Stok Okuma Denemesi Durumu <NewReleaseBadge sectionId="readonly-stock-smoke-status" /></h3>
-          <p>İlk gerçek okuma denemesi yalnızca local terminal scriptiyle, stok kartı ve 20 satır sınırıyla takip edilir.</p>
+          <p>İlk gerçek okuma denemesi yalnızca local terminal scriptiyle, stok kartı ve 20 satır sınırıyla takip edilir; hata durumunda ham detay yerine güvenli sınıf gösterilir.</p>
         </div>
         <div className="system-status-grid">
           {readonlyStockSmokeStatusRows.map((row) => (
@@ -925,7 +932,7 @@ export default function SystemStatusPanel() {
           ))}
         </div>
         <p className="handheld-barcode-safety-note readonly-stock-smoke-safety-note">
-          Bu sürüm yalnızca local read-only stok kartı okuma denemesi için sınırlı script sağlar. ERP arayüzünden bağlantı başlatmaz, DB’ye yazmaz, import yapmaz ve sonuçları dosyaya kaydetmez.
+          Bu sürüm yalnızca local read-only stok kartı okuma denemesi için güvenli hata sınıflandırması sağlar. ERP arayüzünden bağlantı başlatmaz, DB’ye yazmaz, import yapmaz ve sonuçları dosyaya kaydetmez.
         </p>
       </div>
 

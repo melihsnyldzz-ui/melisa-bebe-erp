@@ -6,8 +6,8 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 
 ## Mevcut Durum
 
-- Güncel sürüm: v1.46.0
-- Aşama: Electron Desktop Güvenlik ve Hazırlık Merkezi
+- Güncel sürüm: v1.47.0
+- Aşama: Read-only SQL/Vega Hata Sınıflandırma Güçlendirmesi
 - Build kontrolü: GitHub Actions
 - El terminali: okuma, son okutulanlar, sayım sepeti, rapor/CSV/JSON önizleme hazırlığı
 - Stok ve barkod kalite kontrolü: pasif/mock risk görünürlüğü
@@ -165,6 +165,16 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 - Bu faz Melisa Bebe ERP'nin local desktop kullanım hissini ve güvenli entegrasyon görünürlüğünü güçlendirir.
 - ERP arayüzünden canlı Vega bağlantısı başlatılmaz; son güvenli entegrasyon seviyesi v1.45.0 read-only stock smoke olarak gösterilir.
 - Vega bağlantısı sadece terminal smoke test seviyesinde kalır; veri yazma, canlı import ve .env.local paylaşımı kapalıdır.
+
+## Read-only Smoke Test Hata Sınıfları
+
+- `ENV_MISSING`: `.env.local` yoktur veya zorunlu alanlardan biri eksiktir; bağlantı denenmez.
+- `SQL_AUTH_FAILED`: SQL kullanıcı adı, şifre veya login doğrulaması başarısız olabilir; bağlantı bilgileri gizlenir.
+- `SQL_NETWORK_FAILED`: SQL Server, instance veya port erişilemiyor olabilir; server bilgisi terminale basılmaz.
+- `SQL_PERMISSION_DENIED`: Read-only kullanıcının stok tablosunu okuma yetkisi eksik olabilir.
+- `SQL_TABLE_OR_COLUMN_MISMATCH`: `F0102TBLSTOKLAR` tablosu veya beklenen stok kolonları ortamla uyumsuz olabilir.
+- `SQL_TIMEOUT`: Bağlantı veya sorgu kısa timeout hedefini aşmıştır.
+- `SQL_UNKNOWN_SAFE`: Hata güvenli şekilde sınıflandırılamamıştır; ham hata ve credential bilgisi gösterilmez.
 
 ## Build Kontrolü
 
