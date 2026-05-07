@@ -83,6 +83,22 @@ const liveDecisionSafetyNotes = [
   "Onay kaydetmez.",
   "SQL/Vega işlemi başlatmaz.",
 ];
+const liveMissingListItems = [
+  { task: "Read-only SQL kullanıcısı oluşturulacak.", status: "Bekliyor" },
+  { task: "Stok önizleme kullanıcı doğrulaması tamamlanacak.", status: "Manuel kontrol" },
+  { task: "Cari maskeleme kuralı belirlenecek.", status: "Manuel kontrol" },
+  { task: "Sipariş maskeleme kuralı belirlenecek.", status: "Manuel kontrol" },
+  { task: "Finans maskeleme kuralı belirlenecek.", status: "Sonraki faz" },
+  { task: "Manuel yedek prosedürü yazılacak.", status: "Bekliyor" },
+  { task: "Test sonucu raporu hazırlanacak.", status: "Bekliyor" },
+  { task: "Patron onayı alınacak.", status: "Sonraki faz" },
+];
+const liveMissingListSafetyNotes = [
+  "Bu panel görev kaydı tutmaz.",
+  "Onay kaydetmez.",
+  "SQL/Vega işlemi başlatmaz.",
+  "Veri yazmaz.",
+];
 const financePreviewPrepGateCards = [
   { label: "Finans kapsam", value: "Planlandı" },
   { label: "Bağlantı", value: "Yok" },
@@ -822,6 +838,8 @@ export default function Dashboard() {
 
       <LiveDecisionPanel />
 
+      <LiveMissingListPanel />
+
       <FinancePreviewPrepGate />
 
       <CurrentPreviewPrepGate />
@@ -1030,6 +1048,33 @@ function LiveDecisionPanel() {
       </CommercePanel>
 
       <p className="commerce-profitability-safety-note">{liveDecisionSafetyNotes.join(" · ")}</p>
+    </section>
+  );
+}
+
+function LiveMissingListPanel() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-live-missing-list")}`} id="dashboard-live-missing-list">
+      <DashboardNewReleaseBadge sectionId="dashboard-live-missing-list" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Pasif eksik listesi</p>
+          <h2>Canlıya Geçiş Eksik Listesi</h2>
+          <span>Canlıya geçiş öncesi kalan işleri patron seviyesinde gösterir; görev kaydı tutmaz, onay almaz, bağlantı açmaz ve veri yazmaz.</span>
+        </div>
+      </div>
+
+      <div className="profitability-priority-grid">
+        {liveMissingListItems.map((item) => (
+          <article className="profitability-priority-card" key={item.task}>
+            <span>{item.status}</span>
+            <strong>{item.task}</strong>
+            <small>Pasif takip etiketi</small>
+          </article>
+        ))}
+      </div>
+
+      <p className="commerce-profitability-safety-note">{liveMissingListSafetyNotes.join(" · ")}</p>
     </section>
   );
 }

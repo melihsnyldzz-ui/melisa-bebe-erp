@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.66.1";
-export const APP_STAGE = "Kasa Finans Hazırlık Kapısı Durum Netleştirme";
+export const APP_VERSION = "v1.66.2";
+export const APP_STAGE = "Canlıya Geçiş Eksik Listesi";

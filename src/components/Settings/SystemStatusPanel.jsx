@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.66.2",
+    title: "Canlıya Geçiş Eksik Listesi",
+    area: "Dashboard / Sistem Durumu",
+    description: "Canlıya Geçiş Karar Paneli yakınına görev kaydı, onay kaydı, SQL/Vega işlemi veya veri yazma başlatmadan kalan işleri durum etiketleriyle gösteren pasif eksik listesi eklendi.",
+  },
+  {
     version: "v1.66.1",
     title: "Kasa Finans Hazırlık Kapısı Durum Netleştirme",
     area: "Dashboard / Sistem Durumu",
