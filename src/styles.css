@@ -7629,6 +7629,17 @@ tr:last-child td {
   background: #f0f9ff;
 }
 
+.vega-technical-gate-status-panel {
+  border-color: #bfdbfe;
+  background: linear-gradient(135deg, #eff6ff, #ffffff);
+}
+
+.vega-technical-gate-safety-note {
+  border-color: #bfdbfe;
+  color: #1d4ed8;
+  background: #eff6ff;
+}
+
 @media (max-width: 1180px) {
   .current-account-status-grid,
   .current-account-risk-class-grid,

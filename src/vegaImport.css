@@ -116,6 +116,98 @@
   background: rgba(255, 251, 235, 0.94);
 }
 
+.vega-technical-gate-center {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 14px;
+  padding: 14px;
+  border: 1px solid rgba(24, 100, 171, 0.18);
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f8fbff, #ffffff);
+}
+
+.vega-technical-gate-hero p,
+.vega-technical-gate-hero h2,
+.vega-technical-gate-hero span,
+.vega-technical-gate-panel h3,
+.vega-technical-gate-panel p {
+  margin: 0;
+}
+
+.vega-technical-gate-hero p {
+  color: #1864ab;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.vega-technical-gate-hero h2 {
+  margin-top: 4px;
+  color: var(--anthracite);
+  font-size: clamp(1.22rem, 2vw, 1.7rem);
+}
+
+.vega-technical-gate-hero span {
+  display: block;
+  max-width: 900px;
+  margin-top: 7px;
+  color: var(--muted);
+  font-weight: 760;
+  line-height: 1.55;
+}
+
+.vega-technical-gate-status-grid,
+.vega-technical-gate-card-grid,
+.vega-technical-gate-lock-grid {
+  display: grid;
+  gap: 8px;
+}
+
+.vega-technical-gate-status-grid {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.vega-technical-gate-card-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.vega-technical-gate-lock-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.vega-technical-gate-panel {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid #dbeafe;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.vega-technical-gate-panel h3 {
+  color: var(--anthracite);
+  font-size: 1rem;
+}
+
+.vega-technical-gate-panel p {
+  color: #1d4ed8;
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.vega-technical-gate-step-list {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding-left: 20px;
+  color: var(--anthracite);
+  font-size: 0.8rem;
+  font-weight: 780;
+  line-height: 1.45;
+}
+
 .vega-import-map-panel,
 .vega-import-table-panel,
 .vega-import-risk-panel,
@@ -386,6 +478,9 @@
 @media (max-width: 1180px) {
   .vega-import-summary-grid,
   .vega-import-map-grid,
+  .vega-technical-gate-status-grid,
+  .vega-technical-gate-card-grid,
+  .vega-technical-gate-lock-grid,
   .vega-operation-status-grid,
   .vega-operation-group-grid,
   .vega-owner-summary-list {
@@ -396,6 +491,9 @@
 @media (max-width: 720px) {
   .vega-import-summary-grid,
   .vega-import-map-grid,
+  .vega-technical-gate-status-grid,
+  .vega-technical-gate-card-grid,
+  .vega-technical-gate-lock-grid,
   .vega-operation-status-grid,
   .vega-operation-group-grid,
   .vega-owner-summary-list {
@@ -411,6 +509,10 @@
 
   .vega-import-warning-panel {
     grid-template-columns: 1fr;
+  }
+
+  .vega-technical-gate-center {
+    padding: 12px;
   }
 }
 

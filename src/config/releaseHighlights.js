@@ -1,18 +1,18 @@
-export const currentReleaseVersion = "v1.36.0";
+export const currentReleaseVersion = "v1.37.0";
 
-export const currentReleaseTitle = "Modül Olgunluk ve Canlıya Hazırlık Skor Merkezi";
+export const currentReleaseTitle = "Vega Read-only Teknik Ön Kapı Merkezi";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "module-maturity-status"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "vega-readonly-technical-gate-status"];
 
 export const releaseHighlightItems = [
-  "ERP modüllerinin olgunluk ve canlıya hazırlık seviyeleri tek skor merkezinde toplandı.",
-  "Dashboard, raporlama, el terminali, stok/barkod, cari/alacak, kârlılık ve Vega read-only hazırlığı yüzdeli olarak görünür hale getirildi.",
-  "Gerçek bağlantı, DB okuma, query, kayıt oluşturma, cihaz bağlantısı veya veri yazma eklenmeden güvenli hazırlık korundu.",
+  "İlk gerçek Vega read-only bağlantı öncesi teknik ön kapı ve güvenlik şartları tek merkezde toplandı.",
+  "Manuel yedek, read-only kullanıcı, 20 satır sınırı, timeout ve ham hata gizleme şartları daha görünür hale getirildi.",
+  "Gerçek Vega bağlantısı, SQL/ODBC, DB okuma, query, API veya veri yazma eklenmeden güvenli hazırlık korundu.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
-  { id: "module-maturity-status", label: "Modül Olgunluk Durumu'na git" },
+  { id: "vega-readonly-technical-gate-status", label: "Vega Read-only Teknik Ön Kapı Durumu'na git" },
   { id: "system-workflow-model", label: "Çalışma Modeli'ne git" },
 ];
 
@@ -28,6 +28,7 @@ export const releaseHighlightsByPage = {
     releaseHighlightItems,
     releaseJumpLinks: [
       { id: "dashboard-owner-view", label: "Patron Bakışı'na git" },
+      { id: "dashboard-vega-technical-gate-summary", label: "Vega Teknik Ön Kapı Özeti'ne git" },
       { id: "dashboard-module-maturity-score-center", label: "Modül Olgunluk Skor Merkezi'ne git" },
       { id: "dashboard-prelive-operation-test-center", label: "Canlı Öncesi Test Merkezi'ne git" },
       { id: "dashboard-reporting-decision-center", label: "Raporlama ve Yönetici Karar Merkezi'ne git" },
@@ -36,7 +37,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-owner-view", "dashboard-module-maturity-score-center", "dashboard-daily-operation"],
+    updatedSectionIds: ["dashboard-owner-view", "dashboard-vega-technical-gate-summary", "dashboard-daily-operation"],
   },
   reports: {
     releaseHighlightItems,
@@ -67,11 +68,15 @@ export const releaseHighlightsByPage = {
   vegaImportPreview: {
     releaseHighlightItems,
     releaseJumpLinks: [
+      { id: "vega-readonly-technical-gate-center", label: "Teknik Ön Kapı Merkezi'ne git" },
+      { id: "vega-readonly-required-conditions", label: "Zorunlu Şartlar'a git" },
+      { id: "vega-technical-lock-matrix", label: "Teknik Kilit Matrisi'ne git" },
+      { id: "vega-first-readonly-procedure", label: "İlk Deneme Prosedürü'ne git" },
       { id: "vega-import-preview-panel", label: "Vega Import Önizleme alanına git" },
       { id: "vega-import-quality-note", label: "Kalite Kontrol Notu'na git" },
       { id: "vega-readonly-roadmap", label: "Read-only Yol Haritası'na git" },
     ],
-    updatedSectionIds: ["vega-import-preview-panel", "vega-import-quality-note", "vega-readonly-roadmap"],
+    updatedSectionIds: ["vega-readonly-technical-gate-center", "vega-readonly-required-conditions", "vega-technical-lock-matrix", "vega-first-readonly-procedure"],
   },
 
   warehouseTerminal: {

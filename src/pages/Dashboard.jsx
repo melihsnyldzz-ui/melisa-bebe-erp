@@ -40,6 +40,10 @@ const ownerViewCards = [
   { label: "Gerçek bağlantı", value: "Kapalı" },
   { label: "Modül olgunluk skoru", value: "%96" },
   { label: "Canlı güvenlik skoru", value: "%92" },
+  { label: "Vega teknik ön kapı", value: "Hazırlıkta" },
+  { label: "İlk bağlantı sınırı", value: "20 satır" },
+  { label: "Read-only kullanıcı", value: "Manuel doğrulama bekliyor" },
+  { label: "Veri yazma/import", value: "Kapalı" },
   { label: "Barkod operasyonu", value: "Hazırlıkta" },
   { label: "Barkod kalite kontrolü", value: "Öncelikli" },
   { label: "Riskli barkodlar", value: "İzlenecek" },
@@ -78,6 +82,10 @@ const ownerTodayItems = [
   "Modül olgunluk skorları gözden geçirilecek",
   "Personel testinden önce eksik alanlar not alınacak",
   "Veri yazma kapalı kalacak",
+  "Vega read-only teknik ön kapısı gözden geçirilecek",
+  "Manuel yedek sorumlusu belirlenecek",
+  "Read-only kullanıcı yetkisi doğrulanacak",
+  "İlk 20 stok kartı test kriteri netleştirilecek",
   "Personel kullanım notları toplanacak",
   "Gerçek veri bağlantısı için yedek ve yetki kontrolü hazırlanacak",
 ];
@@ -101,7 +109,17 @@ const ownerDecisionItems = [
   "Veri yazma ve import bu fazın konusu değildir.",
   "İlk gerçek bağlantı sadece read-only ve 20 satır sınırıyla yapılmalıdır.",
   "Veri yazma ve import hâlâ kapalı kalmalıdır.",
+  "İlk gerçek bağlantı ayrı küçük onaylı sürümde açılmalıdır.",
   "Ana hedef: güvenli geçiş, hızlı kontrol, hatasız stok görünürlüğü",
+];
+
+const vegaTechnicalGateSummaryCards = [
+  { label: "Teknik ön kapı", value: "Pasif hazırlık" },
+  { label: "Canlı Vega bağlantısı", value: "Kapalı" },
+  { label: "İlk test sınırı", value: "20 satır" },
+  { label: "Read-only kullanıcı", value: "Manuel doğrulama" },
+  { label: "Timeout hedefi", value: "3000 ms" },
+  { label: "Veri yazma/import", value: "Kapalı" },
 ];
 
 const moduleMaturityScoreCards = [
@@ -255,6 +273,8 @@ export default function Dashboard() {
 
       <OwnerView />
 
+      <VegaTechnicalGateSummary />
+
       <ModuleMaturityScoreCenter />
 
       <PreliveOperationTestCenter />
@@ -278,6 +298,32 @@ export default function Dashboard() {
         <DashboardNewReleaseBadge sectionId="dashboard-commerce-insights" />
       </CommerceInsights>
     </>
+  );
+}
+
+function VegaTechnicalGateSummary() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-vega-technical-gate-summary")}`} id="dashboard-vega-technical-gate-summary">
+      <DashboardNewReleaseBadge sectionId="dashboard-vega-technical-gate-summary" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Vega read-only ön kapı</p>
+          <h2>Vega Read-only Teknik Ön Kapı Özeti</h2>
+          <span>
+            İlk gerçek bağlantıdan önce manuel yedek, read-only kullanıcı, 20 satır sınırı ve veri yazma kilitlerinin görünür kaldığı pasif yönetici özeti.
+          </span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {vegaTechnicalGateSummaryCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+    </section>
   );
 }
 

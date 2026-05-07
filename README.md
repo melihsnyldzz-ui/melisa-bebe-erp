@@ -6,8 +6,8 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 
 ## Mevcut Durum
 
-- Güncel sürüm: v1.36.0
-- Aşama: Modül Olgunluk ve Canlıya Hazırlık Skor Merkezi
+- Güncel sürüm: v1.37.0
+- Aşama: Vega Read-only Teknik Ön Kapı Merkezi
 - Build kontrolü: GitHub Actions
 - El terminali: okuma, son okutulanlar, sayım sepeti, rapor/CSV/JSON önizleme hazırlığı
 - Stok ve barkod kalite kontrolü: pasif/mock risk görünürlüğü
@@ -88,6 +88,13 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 - Bu faz ERP modüllerinin canlıya hazırlık seviyesini yüzdeli ve yönetici odaklı olarak gösterir.
 - Dashboard, raporlama, el terminali, stok/barkod, cari/alacak, kârlılık ve Vega read-only hazırlığı tek skor mantığında toparlanır.
 - Gerçek bağlantı, cihaz entegrasyonu, rapor export, kayıt oluşturma veya veri yazma yapılmaz.
+- İlk gerçek read-only bağlantı ileride ayrı küçük onaylı fazda ele alınır.
+
+## Vega Read-only Teknik Ön Kapı Fazı
+
+- Bu faz ilk gerçek Vega read-only bağlantıdan önce teknik güvenlik şartlarını görünür hale getirir.
+- Manuel yedek, read-only kullanıcı, 20 satır sınırı, timeout ve ham hata gizleme politikası vurgulanır.
+- Bu sürüm gerçek bağlantı, DB okuma, query, API veya veri yazma yapmaz.
 - İlk gerçek read-only bağlantı ileride ayrı küçük onaylı fazda ele alınır.
 
 ## Build Kontrolü

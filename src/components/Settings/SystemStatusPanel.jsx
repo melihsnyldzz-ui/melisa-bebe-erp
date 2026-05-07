@@ -15,6 +15,8 @@ const statusRows = [
   { label: "Build kontrolü", value: "GitHub Actions + npm run build" },
   { label: "Çalışma modeli", value: "Main üzerinden manuel Codex akışı" },
   { label: "Kritik işlem politikası", value: "Stok, cari, fiş, yedekleme, import ve migration işlemleri ayrı kontrollü sürümlerle açılır." },
+  { label: "Vega teknik ön kapı", value: "Pasif hazırlık" },
+  { label: "İlk test sınırı", value: "20 satır" },
   { label: "ERP genel hazırlık", value: "%96" },
   { label: "Canlı güvenlik", value: "%92" },
   { label: "Yönetici görünürlüğü", value: "Güçlü" },
@@ -220,7 +222,22 @@ const moduleMaturityStatusRows = [
   { label: "Veri yazma", value: "Kapalı" },
 ];
 
+const vegaTechnicalGateStatusRows = [
+  { label: "Teknik ön kapı", value: "Pasif hazırlık" },
+  { label: "Canlı Vega bağlantısı", value: "Kapalı" },
+  { label: "SQL/ODBC", value: "Kapalı" },
+  { label: "DB okuma", value: "Kapalı" },
+  { label: "İlk test sınırı", value: "20 satır" },
+  { label: "ERP’ye yazma/import", value: "Kapalı" },
+];
+
 const versionHistoryRows = [
+  {
+    version: "v1.37.0",
+    title: "Vega Read-only Teknik Ön Kapı Merkezi",
+    area: "Vega Import Önizleme / Dashboard / Sistem Durumu / README",
+    description: "İlk gerçek Vega read-only bağlantı öncesi manuel yedek, read-only kullanıcı, 20 satır sınırı, timeout ve ham hata gizleme şartları pasif teknik ön kapıda toplandı; gerçek bağlantı, DB okuma, query, API veya veri yazma eklenmedi.",
+  },
   {
     version: "v1.36.0",
     title: "Modül Olgunluk ve Canlıya Hazırlık Skor Merkezi",
@@ -700,8 +717,8 @@ export default function SystemStatusPanel() {
 
       <div className="system-status-focus-card">
         <span>Bu Sürümde Test Edilecek Alan</span>
-        <strong>Raporlar / Modül Olgunluk ve Canlıya Hazırlık Skor Merkezi</strong>
-        <p>Bu sürümde modül olgunluk skorları, canlıya geçiş barometresi, gerçek bağlantı öncesi kalanlar ve kapalı alanlar özellikle kontrol edilmelidir.</p>
+        <strong>Vega Import Önizleme / Vega Read-only Teknik Ön Kapı Merkezi</strong>
+        <p>Bu sürümde manuel yedek, read-only kullanıcı, 20 satır sınırı, timeout politikası ve teknik kilit matrisi özellikle kontrol edilmelidir.</p>
       </div>
 
       <div className="system-workflow-panel" {...sectionHighlightProps("system-workflow-model")}>
@@ -719,6 +736,24 @@ export default function SystemStatusPanel() {
         </div>
         <p className="system-workflow-safety-note">
           Gerçek veri bağlantısı, DB okuma, query, import ve veri yazma işlemleri yalnızca ayrı küçük ve açık onaylı sürümlerde ele alınır.
+        </p>
+      </div>
+
+      <div className="handheld-barcode-status-panel vega-technical-gate-status-panel" {...sectionHighlightProps("vega-readonly-technical-gate-status")}>
+        <div>
+          <h3>Vega Read-only Teknik Ön Kapı Durumu <NewReleaseBadge sectionId="vega-readonly-technical-gate-status" /></h3>
+          <p>İlk gerçek read-only bağlantı öncesi teknik şartlar ve güvenlik kilitleri pasif sistem özeti olarak takip edilir.</p>
+        </div>
+        <div className="system-status-grid">
+          {vegaTechnicalGateStatusRows.map((row) => (
+            <div className="system-status-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </div>
+          ))}
+        </div>
+        <p className="handheld-barcode-safety-note vega-technical-gate-safety-note">
+          Bu sürüm ilk gerçek read-only bağlantı öncesi teknik güvenlik görünürlüğü sağlar; bağlantı, DB okuma, query, API veya veri yazma işlemi yapmaz.
         </p>
       </div>
 

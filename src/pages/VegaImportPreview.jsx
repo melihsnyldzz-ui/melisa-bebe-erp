@@ -47,6 +47,90 @@ const readonlyRoadmapStages = [
   },
 ];
 
+const technicalGateStatusCards = [
+  { label: "Teknik ön kapı", value: "Pasif hazırlık" },
+  { label: "Canlı Vega bağlantısı", value: "Kapalı" },
+  { label: "SQL/ODBC", value: "Kapalı" },
+  { label: "DB okuma", value: "Kapalı" },
+  { label: "İlk test sınırı", value: "20 satır" },
+  { label: "Veri yazma/import", value: "Kapalı" },
+];
+
+const requiredConditionGroups = [
+  {
+    title: "Manuel Yedek",
+    items: [
+      "Vega verisi için manuel yedek alınmalı",
+      "Yedek konumu yetkili kişi tarafından doğrulanmalı",
+      "Testten önce geri dönüş planı bilinmeli",
+      "Bu ekrandan yedek alınmaz",
+    ],
+  },
+  {
+    title: "Read-only Kullanıcı",
+    items: [
+      "Kullanıcı sadece okuma yetkisine sahip olmalı",
+      "Yazma, silme, güncelleme yetkileri kapalı olmalı",
+      "Kullanıcı yetkisi manuel doğrulanmalı",
+      "Bu ekranda kullanıcı bilgisi girilmez",
+    ],
+  },
+  {
+    title: "Sınırlandırılmış İlk Okuma",
+    items: [
+      "İlk deneme sadece stok kartı kapsamında olmalı",
+      "İlk sınır 20 satır olmalı",
+      "Cari, fiş, hareket, tahsilat, ödeme kapsam dışı olmalı",
+      "Veri yazma/import olmamalı",
+    ],
+  },
+  {
+    title: "Hata ve Timeout Politikası",
+    items: [
+      "Timeout hedefi 3000 ms",
+      "Retry kapalı",
+      "Ham hata kullanıcıya gösterilmez",
+      "Güvenli hata mesajı gösterilir",
+    ],
+  },
+];
+
+const technicalLockRows = [
+  { label: "Bağlantı parametresi alma", value: "Kapalı" },
+  { label: "SQL/ODBC sürücüsü kullanımı", value: "Kapalı" },
+  { label: "DB okuma", value: "Kapalı" },
+  { label: "Query üretimi", value: "Kapalı" },
+  { label: "Query çalıştırma", value: "Kapalı" },
+  { label: "API/backend", value: "Kapalı" },
+  { label: "ERP’ye yazma", value: "Kapalı" },
+  { label: "Import", value: "Kapalı" },
+  { label: "LocalStorage", value: "Kapalı" },
+  { label: "Gerçek işlem butonu", value: "Yok" },
+];
+
+const firstReadonlyProcedureSteps = [
+  "Manuel yedek doğrulanır.",
+  "Read-only kullanıcı yetkisi doğrulanır.",
+  "Test kapsamı sadece stok kartı olarak sınırlandırılır.",
+  "İlk okuma 20 satır ile sınırlandırılır.",
+  "Timeout ve ham hata gizleme politikası uygulanır.",
+  "Sonuç Vega ekranıyla manuel karşılaştırılır.",
+  "Fark varsa hata notu hazırlanır.",
+  "Başarısız olursa bağlantı tekrar denenmez, önce raporlanır.",
+  "Veri yazma ve import kapalı kalır.",
+  "Bir sonraki faz için sadece gözlem notu hazırlanır.",
+];
+
+const connectionDecisionCards = [
+  "Test canlı Vega üzerinde mi, kopya ortamda mı yapılacak?",
+  "Read-only kullanıcıyı kim doğrulayacak?",
+  "Manuel yedeği kim alacak?",
+  "İlk 20 stok kartı hangi kritere göre seçilecek?",
+  "Hata notlarını kim toplayacak?",
+  "Başarılı test sonrası ikinci kapsam ne olacak?",
+  "Veri yazma/import ne kadar süre kapalı kalacak?",
+];
+
 function formatNumber(value) {
   return new Intl.NumberFormat("tr-TR").format(value);
 }
@@ -136,6 +220,75 @@ export default function VegaImportPreview() {
           <h1>Vega Read-only Operasyon Merkezi</h1>
           <span>Bu ekran gerçek Vega bağlantısı kurmadan, ilk read-only deneme öncesi güvenlik, saha ve kapsam kontrollerini tek yerde toplar.</span>
         </div>
+      </section>
+
+      <section className="vega-technical-gate-center section-updated-highlight" id="vega-readonly-technical-gate-center">
+        <div className="vega-technical-gate-hero">
+          <p>Pasif teknik hazırlık</p>
+          <h2>Vega Read-only Teknik Ön Kapı Merkezi</h2>
+          <span>
+            İlk gerçek Vega read-only bağlantıdan önce tamamlanması gereken teknik şartları, güvenlik kilitlerini ve ilk deneme sınırlarını gerçek bağlantı açmadan gösteren pasif hazırlık ekranı.
+          </span>
+        </div>
+
+        <div className="vega-technical-gate-status-grid">
+          {technicalGateStatusCards.map((card) => (
+            <article className="vega-import-summary-card" key={card.label}>
+              <span>{card.label}</span>
+              <strong>{card.value}</strong>
+            </article>
+          ))}
+        </div>
+
+        <section className="vega-technical-gate-panel" id="vega-readonly-required-conditions">
+          <h3>İlk Bağlantı Öncesi Zorunlu Şartlar</h3>
+          <div className="vega-technical-gate-card-grid">
+            {requiredConditionGroups.map((group) => (
+              <article className="vega-operation-group-card" key={group.title}>
+                <h3>{group.title}</h3>
+                <ul>
+                  {group.items.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="vega-technical-gate-panel" id="vega-technical-lock-matrix">
+          <h3>Teknik Kilit Matrisi</h3>
+          <div className="vega-technical-gate-lock-grid">
+            {technicalLockRows.map((row) => (
+              <article className="vega-technical-lock-row" key={row.label}>
+                <span>{row.label}</span>
+                <strong>{row.value}</strong>
+              </article>
+            ))}
+          </div>
+          <p>Bu kilitler açılmadan ilk gerçek bağlantı denenemez. Bu sürüm kilitleri sadece görünür hale getirir.</p>
+        </section>
+
+        <section className="vega-technical-gate-panel" id="vega-first-readonly-procedure">
+          <h3>İlk Read-only Deneme Taslak Prosedürü</h3>
+          <ol className="vega-technical-gate-step-list">
+            {firstReadonlyProcedureSteps.map((step) => (
+              <li key={step}>{step}</li>
+            ))}
+          </ol>
+        </section>
+
+        <section className="vega-technical-gate-panel">
+          <h3>Gerçek Bağlantıya Geçmeden Önce Bekleyen Kararlar</h3>
+          <div className="vega-technical-gate-card-grid">
+            {connectionDecisionCards.map((item) => (
+              <article className="vega-owner-summary-row" key={item}>
+                <ShieldCheck size={14} />
+                <span>{item}</span>
+              </article>
+            ))}
+          </div>
+        </section>
       </section>
 
       <section className="vega-operation-status-grid">
