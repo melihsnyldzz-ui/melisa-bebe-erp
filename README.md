@@ -6,8 +6,8 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 
 ## Mevcut Durum
 
-- Güncel sürüm: v1.59.0
-- Aşama: Stok Önizleme Panel Sadeleştirme
+- Güncel sürüm: v1.60.0
+- Aşama: Stok Önizleme Kullanıcı Testi ve Son Okuma Özeti
 - Build kontrolü: GitHub Actions
 - El terminali: okuma, son okutulanlar, sayım sepeti, rapor/CSV/JSON önizleme hazırlığı
 - Stok ve barkod kalite kontrolü: pasif/mock risk görünürlüğü
@@ -292,6 +292,15 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 - Ekran akışı güvenlik mesajı, manuel önizleme butonu, özet kartları, arama, kolon görünürlüğü, tablo ve destek panelleri olarak düzenlendi.
 - Alan etiketleri, doğrulama notları ve manuel checklist açılır/kapanır geçici bölümler haline getirildi.
 - Açılır panel durumları yalnızca frontend state içinde kalır; local DB’ye, dosyaya veya Vega’ya yazılmaz.
+- Veri kapsamı değişmedi: yalnızca manuel başlatılan 20 satırlık read-only stok önizleme korunur.
+- Yeni SQL, otomatik bağlantı, veri yazma, import/senkron veya dosyaya canlı veri çıktısı eklenmez.
+
+## Stok Önizleme Kullanıcı Testi ve Son Okuma Özeti
+
+- Bu faz read-only stok önizleme ekranına geçici son okuma özeti ve kullanıcı test notu alanı ekler.
+- Son okuma özeti yalnızca ekrandaki geçici state üzerinden sonucun durumunu, gelen satırı, filtrelenen satırı, görünür kolon sayısını ve güvenlik kilitlerini gösterir.
+- Kullanıcı test notları ekran anlaşılır mı, arama çalışıyor mu, kolon göster/gizle işe yarıyor mu gibi kısa kontrolleri işaretlemek içindir.
+- Bu notlar ve özet local DB’ye, dosyaya, Git’e veya Vega’ya yazılmaz; sayfa yenilenince/uygulama kapanınca kalıcı kayıt oluşmaz.
 - Veri kapsamı değişmedi: yalnızca manuel başlatılan 20 satırlık read-only stok önizleme korunur.
 - Yeni SQL, otomatik bağlantı, veri yazma, import/senkron veya dosyaya canlı veri çıktısı eklenmez.
 

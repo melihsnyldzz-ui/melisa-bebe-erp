@@ -379,6 +379,15 @@ const stockPreviewPanelSimplificationCards = [
   { label: "Kalıcı panel kaydı", value: "Yok" },
 ];
 
+const stockPreviewUserTestCards = [
+  { label: "Kullanıcı testi", value: "Hazır" },
+  { label: "Son okuma özeti", value: "Geçici ekran state" },
+  { label: "Kalıcı kayıt", value: "Yok" },
+  { label: "Yeni SQL", value: "Yok" },
+  { label: "Veri yazma/import", value: "Yok" },
+  { label: "Sonraki hedef", value: "Vega/stok ekranı genel sadeleştirme" },
+];
+
 const passiveVegaConnectionSummaryCards = passiveVegaConnectionStatusRows.slice(0, 10);
 
 const closedBetaPreparationCards = closedBetaPreparationRows;
@@ -600,6 +609,8 @@ export default function Dashboard() {
       <StockColumnVisibilitySummary />
 
       <StockPreviewPanelSimplificationSummary />
+
+      <StockPreviewUserTestSummary />
 
       <SuccessfulStockReadProof />
 
@@ -923,6 +934,32 @@ function StockPreviewPanelSimplificationSummary() {
 
       <div className="reporting-decision-status-grid">
         {stockPreviewPanelSimplificationCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function StockPreviewUserTestSummary() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-stock-preview-user-test")}`} id="dashboard-stock-preview-user-test">
+      <DashboardNewReleaseBadge sectionId="dashboard-stock-preview-user-test" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Geçici test özeti</p>
+          <h2>Stok Önizleme Kullanıcı Testi ve Son Okuma Özeti</h2>
+          <span>
+            Son okuma bilgileri ve kullanıcı test işaretleri yalnızca ekran state’i olarak tutulur; kayıt, dosya çıktısı, yeni SQL veya veri yazma oluşturmaz.
+          </span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {stockPreviewUserTestCards.map((card) => (
           <article className="commerce-profitability-status-card" key={card.label}>
             <span>{card.label}</span>
             <strong>{card.value}</strong>

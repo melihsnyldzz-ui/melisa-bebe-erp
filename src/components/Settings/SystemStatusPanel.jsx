@@ -411,6 +411,15 @@ const stockPreviewPanelSimplificationStatusRows = [
   { label: "Kalıcı panel kaydı", value: "Yok" },
 ];
 
+const stockPreviewUserTestStatusRows = [
+  { label: "Kullanıcı testi", value: "Hazır" },
+  { label: "Son okuma özeti", value: "Geçici ekran state" },
+  { label: "Kalıcı kayıt", value: "Yok" },
+  { label: "Yeni SQL", value: "Yok" },
+  { label: "Veri yazma/import", value: "Yok" },
+  { label: "Sonraki hedef", value: "Vega/stok ekranı genel sadeleştirme" },
+];
+
 const vegaStockFieldMapStatusRows = [
   { label: "Alan haritası", value: "Pasif dokümantasyon" },
   { label: "Kolon sayısı", value: `${vegaStockFieldMap.length} alan` },
@@ -434,6 +443,12 @@ const desktopPreparationStatusRows = [
 ];
 
 const versionHistoryRows = [
+  {
+    version: "v1.60.0",
+    title: "Stok Önizleme Kullanıcı Testi ve Son Okuma Özeti",
+    area: "Vega Import Önizleme / Dashboard / Sistem Durumu / README",
+    description: "Read-only stok önizleme ekranına geçici son okuma özeti ve kullanıcı test notu alanı eklendi; sonuç/test state’i kalıcı kaydedilmez, yeni SQL, kapsam büyütme, veri yazma, import/senkron veya dosya çıktısı oluşturmaz.",
+  },
   {
     version: "v1.59.0",
     title: "Stok Önizleme Panel Sadeleştirme",
@@ -1328,6 +1343,24 @@ export default function SystemStatusPanel() {
         </div>
         <p className="handheld-barcode-safety-note stock-preview-panel-simplification-safety-note">
           Panel sadeleştirme yalnızca frontend görünümüdür; accordion state’i kalıcı kaydedilmez, yeni SQL eklemez, veri yazmaz, import/senkron başlatmaz ve 20 satır kapsamını büyütmez.
+        </p>
+      </div>
+
+      <div className="handheld-barcode-status-panel stock-preview-user-test-status-panel" {...sectionHighlightProps("stock-preview-user-test-status")}>
+        <div>
+          <h3>Stok Önizleme Kullanıcı Testi ve Son Okuma Özeti <NewReleaseBadge sectionId="stock-preview-user-test-status" /></h3>
+          <p>Son okuma özeti ve kullanıcı test notları yalnızca geçici ekran state’i olarak görünür; kayıt veya veri yazma oluşturmaz.</p>
+        </div>
+        <div className="system-status-grid">
+          {stockPreviewUserTestStatusRows.map((row) => (
+            <div className="system-status-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </div>
+          ))}
+        </div>
+        <p className="handheld-barcode-safety-note stock-preview-user-test-safety-note">
+          Kullanıcı test notları ve son okuma özeti local DB’ye/dosyaya/Vega’ya yazılmaz; yeni SQL eklemez, import/senkron başlatmaz ve 20 satırlık read-only kapsamı büyütmez.
         </p>
       </div>
 

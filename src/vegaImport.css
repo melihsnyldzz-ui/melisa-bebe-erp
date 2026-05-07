@@ -974,16 +974,78 @@
   line-height: 1.4;
 }
 
+.vega-stock-last-read-summary,
+.vega-stock-user-test-notes {
+  display: grid;
+  gap: 12px;
+  margin: 12px 0;
+  padding: 14px;
+  border: 1px solid rgba(24, 100, 171, 0.14);
+  border-radius: 8px;
+  background: rgba(248, 250, 252, 0.92);
+}
+
+.vega-stock-last-read-summary h3,
+.vega-stock-last-read-summary p,
+.vega-stock-user-test-notes h3,
+.vega-stock-user-test-notes p {
+  margin: 0;
+}
+
+.vega-stock-last-read-summary h3,
+.vega-stock-user-test-notes h3 {
+  color: var(--anthracite);
+  font-size: 0.94rem;
+}
+
+.vega-stock-last-read-summary p,
+.vega-stock-user-test-notes p {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 780;
+  line-height: 1.4;
+}
+
+.vega-stock-user-test-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.vega-stock-user-test-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px;
+  align-items: center;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid rgba(24, 100, 171, 0.14);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--anthracite);
+  font-size: 0.78rem;
+  font-weight: 850;
+}
+
+.vega-stock-user-test-item input {
+  width: 16px;
+  height: 16px;
+  accent-color: #1864ab;
+}
+
 @media (max-width: 980px) {
   .vega-stock-suggested-label-grid,
-  .vega-readonly-column-toggle-grid {
+  .vega-readonly-column-toggle-grid,
+  .vega-stock-user-test-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 640px) {
   .vega-stock-suggested-label-grid,
-  .vega-readonly-column-toggle-grid {
+  .vega-readonly-column-toggle-grid,
+  .vega-stock-user-test-grid {
     grid-template-columns: 1fr;
   }
 }

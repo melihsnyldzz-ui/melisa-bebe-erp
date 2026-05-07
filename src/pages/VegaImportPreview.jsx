@@ -223,6 +223,15 @@ const stockManualValidationChecklist = [
   "Boş gelen kod/fiyat alanları gerçekten Vega’da da boş mu?",
 ];
 
+const stockPreviewUserTestItems = [
+  "Ekran anlaşılır mı?",
+  "Arama çalışıyor mu?",
+  "Kolon göster/gizle işe yarıyor mu?",
+  "Fiyat alanları anlaşılır mı?",
+  "Kod alanları hâlâ doğrulama istiyor mu?",
+  "Vega ekranı ile yan yana kontrol edildi mi?",
+];
+
 const roleEnvironmentPrepCards = [
   {
     title: "Teknik Sorumlu",
@@ -711,6 +720,9 @@ export default function VegaImportPreview() {
     validationNotes: false,
     manualChecklist: false,
   });
+  const [stockPreviewUserTestState, setStockPreviewUserTestState] = useState(() =>
+    Object.fromEntries(stockPreviewUserTestItems.map((item) => [item, false]))
+  );
   const [manualValidationState, setManualValidationState] = useState(() =>
     Object.fromEntries(stockManualValidationChecklist.map((item) => [item, "Bekliyor"]))
   );
@@ -802,6 +814,12 @@ export default function VegaImportPreview() {
   const visibleReadonlyPreviewColumns = readOnlyStockPreviewColumns.filter((column) =>
     visibleReadonlyStockColumns.includes(column.key)
   );
+  const lastReadResultLabel =
+    readonlyPreviewState.status === "success"
+      ? "Başarılı"
+      : readonlyPreviewState.status === "error"
+        ? "Hata"
+        : "Henüz çalışmadı";
 
   const toggleReadonlyPreviewColumn = (columnKey) => {
     setVisibleReadonlyStockColumns((current) =>
@@ -822,6 +840,13 @@ export default function VegaImportPreview() {
     setManualValidationState((current) => ({
       ...current,
       [item]: status,
+    }));
+  };
+
+  const toggleStockPreviewUserTestItem = (item) => {
+    setStockPreviewUserTestState((current) => ({
+      ...current,
+      [item]: !current[item],
     }));
   };
 
@@ -935,6 +960,47 @@ export default function VegaImportPreview() {
           </p>
         </section>
 
+        <section className="vega-stock-last-read-summary" id="vega-stock-last-read-summary">
+          <div>
+            <h3>Son Okuma Özeti</h3>
+            <p>Bu özet yalnızca geçici ekran state’idir; local DB’ye, dosyaya veya Vega’ya yazılmaz.</p>
+          </div>
+          <div className="vega-readonly-preview-result-grid">
+            <article className="vega-import-summary-card">
+              <span>Son önizleme sonucu</span>
+              <strong>{lastReadResultLabel}</strong>
+            </article>
+            <article className="vega-import-summary-card">
+              <span>Gelen satır sayısı</span>
+              <strong>{readonlyPreviewState.items.length}</strong>
+            </article>
+            <article className="vega-import-summary-card">
+              <span>Görünen/filtrelenen satır</span>
+              <strong>{filteredReadonlyPreviewItems.length}</strong>
+            </article>
+            <article className="vega-import-summary-card">
+              <span>Görünür kolon sayısı</span>
+              <strong>{visibleReadonlyPreviewColumns.length}</strong>
+            </article>
+            <article className="vega-import-summary-card">
+              <span>Veri yazma</span>
+              <strong>Yok</strong>
+            </article>
+            <article className="vega-import-summary-card">
+              <span>Import/senkron</span>
+              <strong>Yok</strong>
+            </article>
+            <article className="vega-import-summary-card">
+              <span>Dosyaya çıktı</span>
+              <strong>Yok</strong>
+            </article>
+            <article className="vega-import-summary-card">
+              <span>Bağlantı bilgisi gösterimi</span>
+              <strong>Yok</strong>
+            </article>
+          </div>
+        </section>
+
         {readonlyPreviewState.items.length > 0 && (
           <section className="vega-import-table-panel">
             <div className="vega-import-table-heading">
@@ -1041,6 +1107,25 @@ export default function VegaImportPreview() {
             <p className="vega-readonly-preview-security-box">
               Bu önizleme yalnızca geçici 20 satırlık read-only gösterimdir. Veri yazmaz, import yapmaz, dosyaya kaydetmez.
             </p>
+
+            <section className="vega-stock-user-test-notes" id="vega-stock-user-test-notes">
+              <div>
+                <h3>Kullanıcı Test Notu</h3>
+                <p>Bu işaretler yalnızca ekranda geçici kalır; sayfa yenilenince veya uygulama kapanınca kalıcı kayıt oluşmaz.</p>
+              </div>
+              <div className="vega-stock-user-test-grid">
+                {stockPreviewUserTestItems.map((item) => (
+                  <label className="vega-stock-user-test-item" key={item}>
+                    <input
+                      type="checkbox"
+                      checked={stockPreviewUserTestState[item]}
+                      onChange={() => toggleStockPreviewUserTestItem(item)}
+                    />
+                    <span>{item}</span>
+                  </label>
+                ))}
+              </div>
+            </section>
           </section>
         )}
 
