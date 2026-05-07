@@ -63,6 +63,22 @@ const erpBackboneNoActionItems = [
   "Dosya/export üretmez.",
   "Onay kaydetmez.",
 ];
+const rolePermissionMatrixRows = [
+  { role: "Patron / Yönetici", visibility: "Tüm read-only özetleri görebilir", dataMode: "Veri yazamaz", risk: "Yüksek", nextStep: "Yönetici görünüm sınırı netleşecek" },
+  { role: "Muhasebe", visibility: "Cari ve finans özetleri ileride sınırlı görebilir", dataMode: "Veri yazamaz", risk: "Çok yüksek", nextStep: "Maskeleme ve read-only kapsam kararı" },
+  { role: "Depo", visibility: "Stok ve barkod ekranları", dataMode: "Veri yazamaz", risk: "Orta", nextStep: "Depo operasyon ekranları tasarlanacak" },
+  { role: "Satış", visibility: "Cari/sipariş özetleri ileride sınırlı", dataMode: "Veri yazamaz", risk: "Yüksek", nextStep: "Sipariş ve cari özet sınırı belirlenecek" },
+  { role: "Sadece Görüntüleme", visibility: "Özet ekranlar", dataMode: "Veri yazamaz", risk: "Düşük", nextStep: "Salt görüntüleme kapsamı hazırlanacak" },
+  { role: "Teknik Admin", visibility: "Bağlantı ve test rehberleri", dataMode: "Gerçek şifre görmez", risk: "Yüksek", nextStep: "Secret görünmezlik kuralı korunacak" },
+];
+const rolePermissionNoActionItems = [
+  "Gerçek login yok.",
+  "Kullanıcı kaydı yok.",
+  "Yetki kaydı yok.",
+  "Şifre saklama yok.",
+  "Veri yazma yok.",
+  "SQL/Vega işlemi yok.",
+];
 const vegaReadonlyModuleMatrixRows = [
   { module: "Stok", status: "Hazır", read: "Manuel read-only", write: "Yok", risk: "Orta", nextStep: "Kullanıcı doğrulaması" },
   { module: "Cari", status: "Hazırlık", read: "Yok", write: "Yok", risk: "Yüksek", nextStep: "Kapsam analizi" },
@@ -1047,6 +1063,8 @@ export default function Dashboard() {
 
       <ErpMainBackboneModuleMap />
 
+      <RolePermissionMatrixPanel />
+
       <VegaReadonlyOperationCenter />
 
       <VegaReadonlyModuleMatrix />
@@ -1241,6 +1259,43 @@ function ErpMainBackboneModuleMap() {
       <CommercePanel title="Bu Sürüm Ne Yapmaz?" note="Bu güvenlik kutusu pasif sınırı netleştirir; işlem başlatmaz.">
         <div className="commerce-performance-grid">
           {erpBackboneNoActionItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+    </section>
+  );
+}
+
+function RolePermissionMatrixPanel() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-role-permission-matrix")}`} id="dashboard-role-permission-matrix">
+      <DashboardNewReleaseBadge sectionId="dashboard-role-permission-matrix" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Pasif rol ve yetki taslağı</p>
+          <h2>Rol ve Yetki Matrisi</h2>
+          <span>ERP modüllerinde hangi rolün hangi görünüm seviyesine yaklaşacağını mimari seviyede gösterir; gerçek login, kullanıcı kaydı veya yetki kaydı oluşturmaz.</span>
+        </div>
+      </div>
+
+      <div className="profitability-priority-grid">
+        {rolePermissionMatrixRows.map((row) => (
+          <article className="profitability-priority-card" key={row.role}>
+            <span>{row.role}</span>
+            <strong>{row.visibility}</strong>
+            <p>Veri modu: {row.dataMode}</p>
+            <p>Risk seviyesi: {row.risk}</p>
+            <small>Sonraki adım: {row.nextStep}</small>
+          </article>
+        ))}
+      </div>
+
+      <CommercePanel title="Bu Sürümde Olmayanlar" note="Bu kutu rol-yetki taslağının pasif sınırını gösterir; login, kayıt veya veri işlemi başlatmaz.">
+        <div className="commerce-performance-grid">
+          {rolePermissionNoActionItems.map((item) => (
             <article className="commerce-performance-card" key={item}>
               <strong>{item}</strong>
             </article>

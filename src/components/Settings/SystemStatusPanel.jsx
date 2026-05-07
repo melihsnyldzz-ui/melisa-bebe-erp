@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.72.0",
+    title: "Rol ve Yetki Matrisi",
+    area: "Dashboard / Sistem Durumu",
+    description: "ERP'nin eksik ana katmanlarından rol ve yetki yapısı, Patron/Yönetici, Muhasebe, Depo, Satış, Sadece Görüntüleme ve Teknik Admin rolleri için görünüm seviyesi, veri modu, risk seviyesi ve sonraki adımı gösteren pasif matrisle görünür hale getirildi; gerçek login, kullanıcı kaydı, yetki kaydı, veri yazma, SQL/Vega işlemi veya hassas bilgi saklama eklenmedi.",
+  },
+  {
     version: "v1.71.0",
     title: "ERP Ana Omurga ve Modül Haritası",
     area: "Dashboard / Sistem Durumu",

@@ -1,17 +1,18 @@
-export const currentReleaseVersion = "v1.71.0";
+export const currentReleaseVersion = "v1.72.0";
 
-export const currentReleaseTitle = "ERP Ana Omurga ve Modül Haritası";
+export const currentReleaseTitle = "Rol ve Yetki Matrisi";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "dashboard-erp-main-backbone-module-map"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "dashboard-role-permission-matrix"];
 
 export const releaseHighlightItems = [
-  "Dashboard'a ERP Ana Omurga ve Modül Haritası paneli eklenerek ana modüllerin durum, veri modu, risk seviyesi ve sonraki adım görünürlüğü pasif olarak kuruldu.",
-  "Rol/yetki matrisi, operasyon iş akışı, risk merkezi, veri alan sözlüğü, test/onay disiplini ve personel ekranları gibi eksik ana katmanlar patron seviyesinde görünür hale getirildi.",
-  "Bu sürüm gerçek Vega/SQL bağlantısı, veri okuma/yazma, tablo/sorgu ekleme, import/senkron/export, dosya üretimi veya onay kaydı başlatmadan yalnızca ERP mimari haritasını netleştirir.",
+  "Dashboard'a Rol ve Yetki Matrisi paneli eklenerek Patron/Yönetici, Muhasebe, Depo, Satış, Sadece Görüntüleme ve Teknik Admin rollerinin görünüm seviyesi pasif olarak görünür hale getirildi.",
+  "Her rol için veri modu, risk seviyesi ve sonraki adım bilgisi mimari seviyede gösterildi; gerçek login, kullanıcı kaydı veya yetki kaydı eklenmedi.",
+  "Bu sürüm veri yazma/import/senkron/export, SQL/Vega işlemi, tablo/sorgu ekleme, dosya üretimi, onay kaydı veya hassas bilgi saklama başlatmadan yalnızca rol-yetki taslağını netleştirir.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
+  { id: "dashboard-role-permission-matrix", label: "Rol ve Yetki Matrisi'ne git" },
   { id: "dashboard-erp-main-backbone-module-map", label: "ERP Ana Omurga ve Modül Haritası'na git" },
   { id: "stock-preview-beta-package-status", label: "Stok Önizleme Beta Hazırlığı'na git" },
   { id: "system-workflow-model", label: "Çalışma Modeli'ne git" },
@@ -29,6 +30,7 @@ export const releaseHighlightsByPage = {
     releaseHighlightItems,
     releaseJumpLinks: [
       { id: "dashboard-erp-main-backbone-module-map", label: "ERP Ana Omurga ve Modül Haritası'na git" },
+      { id: "dashboard-role-permission-matrix", label: "Rol ve Yetki Matrisi'ne git" },
       { id: "dashboard-owner-view", label: "Patron Bakışı'na git" },
       { id: "dashboard-vega-readonly-operation-center", label: "Vega Read-only Operasyon Merkezi'ne git" },
       { id: "dashboard-vega-readonly-module-matrix", label: "Vega Read-only Modül Durum Matrisi'ne git" },
@@ -77,7 +79,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-erp-main-backbone-module-map", "dashboard-vega-readonly-module-matrix"],
+    updatedSectionIds: ["dashboard-role-permission-matrix", "dashboard-erp-main-backbone-module-map"],
   },
   reports: {
     releaseHighlightItems,
