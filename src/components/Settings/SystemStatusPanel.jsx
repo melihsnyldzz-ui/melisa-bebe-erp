@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.67.1",
+    title: "Read-only Test Raporu Kontrol Netleştirme",
+    area: "Dashboard / Sistem Durumu",
+    description: "Read-only Test Raporu Hazırlık Paneli, panelin ne yapmadığını ve manuel test raporunda bulunması gereken karar özetini daha açık gösterecek şekilde pasif olarak genişletildi.",
+  },
+  {
     version: "v1.67.0",
     title: "Read-only Test Raporu Hazırlık Paneli",
     area: "Dashboard / Sistem Durumu",

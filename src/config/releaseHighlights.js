@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.67.0";
+export const currentReleaseVersion = "v1.67.1";
 
-export const currentReleaseTitle = "Read-only Test Raporu Hazırlık Paneli";
+export const currentReleaseTitle = "Read-only Test Raporu Kontrol Netleştirme";
 
 export const updatedSectionIds = ["latest-version-history", "system-workflow-model"];
 
 export const releaseHighlightItems = [
-  "Dashboard'a canlıya geçiş eksik listesi yakınında pasif Read-only Test Raporu Hazırlık Paneli eklendi.",
-  "Test raporu için manuel hazırlanacak başlıklar durum etiketleriyle patron seviyesinde görünür hale getirildi.",
-  "Panel rapor dosyası oluşturmadan, test sonucu kaydetmeden, SQL/Vega işlemi veya veri yazma/import/senkron/export başlatmadan pasif kalır.",
+  "Read-only Test Raporu Hazırlık Paneli patron için daha anlaşılır kontrol açıklamalarıyla genişletildi.",
+  "Panelin ne yapmadığı ve manuel test raporunda bulunması gereken karar özeti ayrı pasif listelerle netleştirildi.",
+  "Rapor dosyası oluşturma, test sonucu kaydetme, veri okuma, SQL/Vega işlemi, onay alma veya veri yazma/import/senkron/export başlatma eklenmeden güvenli sınır korundu.",
 ];
 
 export const releaseJumpLinks = [

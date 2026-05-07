@@ -116,6 +116,21 @@ const readonlyTestReportPrepSafetyNotes = [
   "SQL/Vega işlemi başlatmaz.",
   "Veri yazmaz.",
 ];
+const readonlyTestReportPrepNoActionItems = [
+  "Rapor dosyası oluşturmaz.",
+  "Test sonucu kaydetmez.",
+  "Veri okumaz.",
+  "SQL/Vega işlemi başlatmaz.",
+  "Onay almaz.",
+];
+const readonlyTestReportDecisionSummaryItems = [
+  "Test başarılı mı?",
+  "Hangi modül test edildi?",
+  "Kaç satır/özet kontrol edildi?",
+  "Hata/uyarı var mı?",
+  "Canlıya geçişe engel var mı?",
+  "Patron kararı nedir?",
+];
 const financePreviewPrepGateCards = [
   { label: "Finans kapsam", value: "Planlandı" },
   { label: "Bağlantı", value: "Yok" },
@@ -1119,6 +1134,26 @@ function ReadonlyTestReportPrepPanel() {
           </article>
         ))}
       </div>
+
+      <CommercePanel title="Bu Panel Ne Yapmaz?" note="Bu açıklama yalnızca güvenli sınırı netleştirir; işlem başlatmaz.">
+        <div className="commerce-performance-grid">
+          {readonlyTestReportPrepNoActionItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Manuel Test Raporunda Bulunması Gereken Karar Özeti" note="Bu liste rapor üretmez; manuel hazırlanacak karar başlıklarını görünür kılar.">
+        <div className="commerce-performance-grid">
+          {readonlyTestReportDecisionSummaryItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
 
       <p className="commerce-profitability-safety-note">{readonlyTestReportPrepSafetyNotes.join(" · ")}</p>
     </section>
