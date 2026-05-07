@@ -6946,3 +6946,239 @@ tr:last-child td {
     box-shadow: none !important;
   }
 }
+
+.current-account-risk-center {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 18px;
+  padding: 18px;
+  border: 1px solid rgba(24, 100, 171, 0.18);
+  border-radius: 18px;
+  background: linear-gradient(135deg, #f8fbff 0%, #ffffff 52%, #fff7ed 100%);
+  box-shadow: 0 18px 42px rgba(24, 26, 31, 0.07);
+}
+
+.current-account-release-badge {
+  justify-self: end;
+  margin-left: 0;
+}
+
+.current-account-risk-hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.current-account-risk-hero p,
+.current-account-risk-hero h2,
+.current-account-risk-hero span,
+.current-account-panel-heading h3,
+.current-account-panel-heading p {
+  margin: 0;
+}
+
+.current-account-risk-hero p {
+  color: #1864ab;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.current-account-risk-hero h2 {
+  margin-top: 4px;
+  color: var(--anthracite);
+  font-size: clamp(1.3rem, 2vw, 1.85rem);
+}
+
+.current-account-risk-hero span {
+  display: block;
+  max-width: 780px;
+  margin-top: 7px;
+  color: var(--muted);
+  font-weight: 760;
+  line-height: 1.55;
+}
+
+.current-account-status-grid,
+.current-account-risk-class-grid,
+.receivable-priority-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.current-account-status-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.current-account-status-card,
+.current-account-risk-class-card,
+.receivable-priority-card,
+.current-account-panel {
+  min-width: 0;
+  border: 1px solid #dbeafe;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.current-account-status-card {
+  display: grid;
+  gap: 6px;
+  padding: 13px 14px;
+}
+
+.current-account-status-card span,
+.current-account-status-card strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.current-account-status-card span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 850;
+}
+
+.current-account-status-card strong {
+  color: #0f766e;
+  font-size: 0.96rem;
+}
+
+.current-account-panel {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+}
+
+.current-account-panel-heading {
+  display: grid;
+  gap: 4px;
+}
+
+.current-account-panel-heading h3 {
+  color: var(--anthracite);
+  font-size: 1.08rem;
+}
+
+.current-account-panel-heading p {
+  color: var(--muted);
+  font-weight: 750;
+  line-height: 1.5;
+}
+
+.current-account-risk-class-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.current-account-risk-class-card {
+  padding: 14px;
+  background: linear-gradient(135deg, #f8fbff 0%, #fff 100%);
+}
+
+.current-account-risk-class-card h4 {
+  margin: 0 0 10px;
+  color: #1864ab;
+  font-size: 0.98rem;
+}
+
+.current-account-risk-class-card ul,
+.collection-preparation-guide ul {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 18px;
+  color: var(--text);
+  font-size: 0.86rem;
+  font-weight: 760;
+  line-height: 1.45;
+}
+
+.receivable-priority-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.receivable-priority-card {
+  display: grid;
+  gap: 8px;
+  padding: 14px;
+  background: #fff;
+}
+
+.receivable-priority-card span {
+  width: fit-content;
+  padding: 4px 8px;
+  border-radius: 999px;
+  color: #92400e;
+  background: #fef3c7;
+  font-size: 0.7rem;
+  font-weight: 950;
+}
+
+.receivable-priority-card strong {
+  color: var(--anthracite);
+  font-size: 1rem;
+}
+
+.receivable-priority-card p {
+  margin: 0;
+  color: var(--muted);
+  font-weight: 760;
+  line-height: 1.45;
+}
+
+.receivable-priority-card dl {
+  display: grid;
+  gap: 8px;
+  margin: 4px 0 0;
+}
+
+.receivable-priority-card dt {
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 900;
+}
+
+.receivable-priority-card dd {
+  margin: 3px 0 0;
+  color: var(--text);
+  font-weight: 820;
+  line-height: 1.35;
+}
+
+.current-account-status-panel {
+  border-color: #fed7aa;
+  background: linear-gradient(135deg, #fff7ed, #ffffff);
+}
+
+.current-account-safety-note {
+  border-color: #fed7aa;
+  color: #9a3412;
+  background: #fff7ed;
+}
+
+@media (max-width: 1180px) {
+  .current-account-status-grid,
+  .current-account-risk-class-grid,
+  .receivable-priority-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .current-account-risk-center {
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  .current-account-risk-hero {
+    display: grid;
+  }
+
+  .current-account-status-grid,
+  .current-account-risk-class-grid,
+  .receivable-priority-grid {
+    grid-template-columns: 1fr;
+  }
+}

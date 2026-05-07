@@ -7,8 +7,89 @@ import CustomerTable from "../components/Customers/CustomerTable.jsx";
 import CurrentLedgerTable from "../components/Ledger/CurrentLedgerTable.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useErpData } from "../context/ErpDataContext.jsx";
+import { currentReleaseVersion } from "../config/releaseHighlights.js";
 import { formatCurrency } from "../utils/formatters.js";
 import { buildCustomerLedger } from "../utils/ledgerCalculations.js";
+
+
+const currentAccountStatusCards = [
+  { label: "Cari takip modu", value: "Pasif/mock hazırlık" },
+  { label: "Tahsilat kaydı", value: "Kapalı" },
+  { label: "Ödeme kaydı", value: "Kapalı" },
+  { label: "Gerçek veri yazma", value: "Kapalı" },
+];
+
+const currentAccountRiskClasses = [
+  {
+    title: "Normal Takip",
+    items: [
+      "Vadesi gelmemiş cari hareketler",
+      "Düzenli ödeme yapan müşteriler",
+      "Standart takip listesi",
+      "Yönetici müdahalesi gerektirmez",
+    ],
+  },
+  {
+    title: "Yakın Vade",
+    items: [
+      "Vadesi yaklaşan alacaklar",
+      "Hatırlatma listesine alınacak müşteriler",
+      "Satış temsilcisi manuel kontrol eder",
+      "Tahsilat kaydı bu ekrandan yapılmaz",
+    ],
+  },
+  {
+    title: "Gecikmiş Alacak",
+    items: [
+      "Vadesi geçmiş cari bakiye",
+      "Yönetici kontrolü gerekir",
+      "Müşteri notu hazırlanır",
+      "Gerçek işlem ayrı fazda ele alınır",
+    ],
+  },
+  {
+    title: "Kritik Risk",
+    items: [
+      "Uzun süredir kapanmayan alacak",
+      "Yüksek bakiye veya tekrar eden gecikme",
+      "Yeni satış kararı yöneticiye bağlıdır",
+      "Tahsilat/ödeme işlemi bu ekrandan yapılmaz",
+    ],
+  },
+];
+
+const receivablePriorityRows = [
+  {
+    level: "Yüksek Öncelik",
+    riskType: "Gecikmiş yüksek bakiye",
+    staffAction: "Müşteri notu hazırla, yöneticiye bildir",
+    managerControl: "Evet",
+    note: "Tekrar eden gecikme veya ödeme sözü bozulmuş müşteri",
+  },
+  {
+    level: "Orta Öncelik",
+    riskType: "Yakın vade",
+    staffAction: "Hatırlatma listesine al",
+    managerControl: "Hayır",
+    note: "Parçalı ödeme veya dönemsel yavaş ödeme",
+  },
+  {
+    level: "Düşük Öncelik",
+    riskType: "Düzenli müşteri",
+    staffAction: "Standart takipte bırak",
+    managerControl: "Hayır",
+    note: "Vadesi gelmemiş bakiye veya düşük tutarlı açık bakiye",
+  },
+];
+
+const collectionPreparationGuideItems = [
+  "Tahsilat yapılmadan önce cari bakiye manuel kontrol edilir.",
+  "Vade tarihi ve son ödeme hareketi karşılaştırılır.",
+  "Müşteri notu varsa yöneticiye gösterilir.",
+  "Eksik veya şüpheli bakiye varsa işlem yapılmaz.",
+  "Bu ekranda tahsilat kaydı oluşturulmaz.",
+  "Gerçek tahsilat/ödeme işlemleri ayrı fazda planlanır.",
+];
 
 const emptyFilters = {
   search: "",
@@ -113,6 +194,8 @@ export default function Customers() {
         )}
       </section>
 
+      <CurrentAccountRiskCenter />
+
       <section className="kpi-grid product-summary-grid">
         {summaryCards.map((item, index) => (
           <KpiCard item={item} index={index} key={item.label} />
@@ -145,6 +228,91 @@ export default function Customers() {
         onSave={handleSaveCustomer}
       />
     </>
+  );
+}
+
+
+function CurrentAccountRiskCenter() {
+  return (
+    <section className="current-account-risk-center section-updated-highlight" id="current-account-risk-center">
+      <span className="new-release-badge current-account-release-badge">YENİ · {currentReleaseVersion}</span>
+      <div className="current-account-risk-hero">
+        <div>
+          <p>Cari risk hazırlığı</p>
+          <h2>Cari ve Alacak Riskleri Yönetici Merkezi</h2>
+          <span>
+            Müşteri borç/alacak takibi, vade riski, tahsilat önceliği ve yönetici kontrolünü gerçek veri yazmadan görünür
+            hale getiren pasif hazırlık ekranı.
+          </span>
+        </div>
+      </div>
+
+      <div className="current-account-status-grid">
+        {currentAccountStatusCards.map((card) => (
+          <article className="current-account-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+
+      <section className="current-account-panel" id="current-account-risk-classes">
+        <div className="current-account-panel-heading">
+          <h3>Cari Risk Sınıfları</h3>
+          <p>Yönetici takibi için cari riskler pasif/mock sınıflar halinde okunur.</p>
+        </div>
+        <div className="current-account-risk-class-grid">
+          {currentAccountRiskClasses.map((riskClass) => (
+            <article className="current-account-risk-class-card" key={riskClass.title}>
+              <h4>{riskClass.title}</h4>
+              <ul>
+                {riskClass.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="current-account-panel" id="receivable-priority-matrix">
+        <div className="current-account-panel-heading">
+          <h3>Alacak Öncelik Matrisi</h3>
+          <p>Risk türü, personel aksiyonu ve yönetici kontrolü gereksinimi statik olarak özetlenir.</p>
+        </div>
+        <div className="receivable-priority-grid">
+          {receivablePriorityRows.map((row) => (
+            <article className="receivable-priority-card" key={row.level}>
+              <span>{row.level}</span>
+              <strong>{row.riskType}</strong>
+              <p>{row.note}</p>
+              <dl>
+                <div>
+                  <dt>Personelin yapacağı şey</dt>
+                  <dd>{row.staffAction}</dd>
+                </div>
+                <div>
+                  <dt>Yönetici kontrolü gerekir mi?</dt>
+                  <dd>{row.managerControl}</dd>
+                </div>
+              </dl>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="current-account-panel collection-preparation-guide" id="collection-preparation-guide">
+        <div className="current-account-panel-heading">
+          <h3>Tahsilat Hazırlık Rehberi</h3>
+          <p>Gerçek finansal işlem yapılmadan önce manuel kontrol sırası görünür tutulur.</p>
+        </div>
+        <ul>
+          {collectionPreparationGuideItems.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      </section>
+    </section>
   );
 }
 

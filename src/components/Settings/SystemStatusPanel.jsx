@@ -20,6 +20,9 @@ const statusRows = [
   { label: "Barkod okutma entegrasyonu", value: "Gerçek cihazla bağlı değil" },
   { label: "Sayım raporu", value: "Önizleme" },
   { label: "Stok ve barkod kalite kontrolü", value: "Pasif/mock hazırlık" },
+  { label: "Cari risk takibi", value: "Pasif/mock hazırlık" },
+  { label: "Tahsilat kaydı", value: "Kapalı" },
+  { label: "Ödeme kaydı", value: "Kapalı" },
   { label: "ERP’ye stok yazma", value: "Kapalı" },
   { label: "Vega geçiş hazırlığı", value: "Read-only yol haritası ile kademeli hazırlık sürüyor." },
 ];
@@ -154,7 +157,22 @@ const stockBarcodeQualityStatusRows = [
   { label: "ERP’ye yazma", value: "Kapalı" },
 ];
 
+const currentAccountRiskStatusRows = [
+  { label: "Cari risk takibi", value: "Pasif/mock hazırlık" },
+  { label: "Alacak öncelik matrisi", value: "Önizleme" },
+  { label: "Tahsilat kaydı", value: "Kapalı" },
+  { label: "Ödeme kaydı", value: "Kapalı" },
+  { label: "Cari kart güncelleme", value: "Kapalı" },
+  { label: "ERP’ye yazma", value: "Kapalı" },
+];
+
 const versionHistoryRows = [
+  {
+    version: "v1.32.0",
+    title: "Cari ve Alacak Riskleri Yönetici Merkezi",
+    area: "Müşteriler / Dashboard / Sistem Durumu",
+    description: "Cari, alacak, vade ve tahsilat risk görünürlüğü pasif/mock modda güçlendirildi; gerçek tahsilat, ödeme, cari kart güncelleme, DB okuma veya veri yazma eklenmeden yönetici hazırlığı tamamlandı.",
+  },
   {
     version: "v1.31.0",
     title: "Stok Riskleri ve Barkod Kalite Kontrol Merkezi",
@@ -604,8 +622,8 @@ export default function SystemStatusPanel() {
 
       <div className="system-status-focus-card">
         <span>Bu Sürümde Test Edilecek Alan</span>
-        <strong>Depo Terminali / Stok ve Barkod Kalite Kontrol Merkezi</strong>
-        <p>Bu sürümde stok kalite kontrolü, barkod riskleri, sayım farkları ve sistem durumu özellikle kontrol edilmelidir.</p>
+        <strong>Müşteriler / Cari ve Alacak Riskleri Yönetici Merkezi</strong>
+        <p>Bu sürümde cari risk sınıfları, alacak önceliği, tahsilat hazırlığı ve sistem durumu özellikle kontrol edilmelidir.</p>
       </div>
 
       <div className="system-workflow-panel" {...sectionHighlightProps("system-workflow-model")}>
@@ -659,6 +677,24 @@ export default function SystemStatusPanel() {
         </div>
         <p className="handheld-barcode-safety-note">
           Bu sürüm kalite kontrol görünürlüğü sağlar; gerçek stok düzeltme, barkod güncelleme, cihaz bağlantısı veya veri yazma işlemi yapmaz.
+        </p>
+      </div>
+
+      <div className="handheld-barcode-status-panel current-account-status-panel" {...sectionHighlightProps("current-account-risk-status")}>
+        <div>
+          <h3>Cari ve Alacak Riskleri Durumu <NewReleaseBadge sectionId="current-account-risk-status" /></h3>
+          <p>Cari, alacak, vade ve tahsilat risk görünürlüğü pasif yönetici özeti olarak takip edilir.</p>
+        </div>
+        <div className="system-status-grid">
+          {currentAccountRiskStatusRows.map((row) => (
+            <div className="system-status-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </div>
+          ))}
+        </div>
+        <p className="handheld-barcode-safety-note current-account-safety-note">
+          Bu sürüm cari ve alacak risk görünürlüğü sağlar; gerçek tahsilat, ödeme, cari kart güncelleme, DB okuma veya veri yazma işlemi yapmaz.
         </p>
       </div>
 
