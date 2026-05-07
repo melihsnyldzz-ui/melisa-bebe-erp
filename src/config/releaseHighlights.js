@@ -1,18 +1,18 @@
-export const currentReleaseVersion = "v1.41.0";
+export const currentReleaseVersion = "v1.42.0";
 
-export const currentReleaseTitle = "Read-only Bağlantı Altyapısı Pasif Teknik İskeleti";
+export const currentReleaseTitle = "Read-only İlk Bağlantı Operatör Checklist Merkezi";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "readonly-connection-skeleton-status"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "readonly-operator-checklist-status"];
 
 export const releaseHighlightItems = [
-  "İlk gerçek read-only bağlantı öncesi bağlantı altyapısının kapalı ve pasif teknik iskeleti hazırlandı.",
-  "Bağlantı modu, güvenlik kilitleri, ilk kapsam, timeout ve hata politikası gerçek bağlantı açılmadan görünür hale getirildi.",
-  "Gerçek Vega bağlantısı, SQL/ODBC, DB okuma, query, connection test, API veya veri yazma eklenmeden güvenli teknik hazırlık korundu.",
+  "İlk gerçek read-only bağlantıdan önce operatör, teknik sorumlu ve patron kontrol checklist’i tek merkezde toplandı.",
+  "Manuel yedek, read-only kullanıcı, 20 satır sınırı, timeout, ham hata gizleme ve rollback sorumlusu görünür hale getirildi.",
+  "Gerçek Vega bağlantısı, SQL/ODBC, DB okuma, query, connection test, API veya veri yazma eklenmeden güvenli hazırlık korundu.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
-  { id: "readonly-connection-skeleton-status", label: "Read-only Altyapı Durumu'na git" },
+  { id: "readonly-operator-checklist-status", label: "Read-only Operatör Checklist Durumu'na git" },
   { id: "system-workflow-model", label: "Çalışma Modeli'ne git" },
 ];
 
@@ -28,6 +28,7 @@ export const releaseHighlightsByPage = {
     releaseHighlightItems,
     releaseJumpLinks: [
       { id: "dashboard-owner-view", label: "Patron Bakışı'na git" },
+      { id: "dashboard-readonly-operator-checklist-summary", label: "Read-only Operatör Checklist Özeti'ne git" },
       { id: "dashboard-readonly-connection-skeleton-summary", label: "Read-only Altyapı Özeti'ne git" },
       { id: "dashboard-readonly-final-security-summary", label: "Read-only Final Güvenlik Özeti'ne git" },
       { id: "dashboard-readonly-final-decision-summary", label: "Read-only Son Karar Özeti'ne git" },
@@ -41,7 +42,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-owner-view", "dashboard-readonly-connection-skeleton-summary", "dashboard-daily-operation"],
+    updatedSectionIds: ["dashboard-owner-view", "dashboard-readonly-operator-checklist-summary", "dashboard-daily-operation"],
   },
   reports: {
     releaseHighlightItems,
@@ -72,6 +73,10 @@ export const releaseHighlightsByPage = {
   vegaImportPreview: {
     releaseHighlightItems,
     releaseJumpLinks: [
+      { id: "vega-readonly-operator-checklist-center", label: "Operatör Checklist Merkezi'ne git" },
+      { id: "vega-operator-final-checklist", label: "Operatör Son Kontrol Listesi'ne git" },
+      { id: "vega-role-based-control-panel", label: "Rol Bazlı Kontrol Paneli'ne git" },
+      { id: "vega-next-small-phase-prep", label: "Sonraki Küçük Faz Hazırlığı'na git" },
       { id: "vega-readonly-connection-skeleton", label: "Pasif Teknik İskelet'e git" },
       { id: "vega-technical-infrastructure-locks", label: "Teknik Altyapı Kilitleri'ne git" },
       { id: "vega-first-connection-scope-limit", label: "İlk Bağlantı Kapsam Sınırı'na git" },
@@ -95,7 +100,7 @@ export const releaseHighlightsByPage = {
       { id: "vega-import-quality-note", label: "Kalite Kontrol Notu'na git" },
       { id: "vega-readonly-roadmap", label: "Read-only Yol Haritası'na git" },
     ],
-    updatedSectionIds: ["vega-readonly-connection-skeleton", "vega-technical-infrastructure-locks", "vega-first-connection-scope-limit"],
+    updatedSectionIds: ["vega-readonly-operator-checklist-center", "vega-operator-final-checklist", "vega-role-based-control-panel", "vega-next-small-phase-prep"],
   },
 
   warehouseTerminal: {

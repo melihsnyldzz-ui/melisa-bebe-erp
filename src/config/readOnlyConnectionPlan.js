@@ -32,3 +32,20 @@ export const readOnlyFirstScopeRules = [
   "Ham hata kullanıcıya gösterilmeyecektir.",
   "Başarısızlıkta tekrar deneme yapılmadan önce rapor hazırlanacaktır.",
 ];
+
+export const readOnlyOperatorChecklist = [
+  { role: "Operatör", item: "Manuel yedek alındığını yetkili kişiden teyit eder.", status: "Manuel kontrol" },
+  { role: "Teknik sorumlu", item: "Read-only kullanıcı yetkisinin sadece okuma olduğunu doğrular.", status: "Manuel kontrol" },
+  { role: "Patron / yönetici", item: "İlk testin sadece 20 stok kartı ile sınırlı olduğunu onaylar.", status: "Manuel karar" },
+  { role: "Operatör", item: "Ham hata mesajlarının kullanıcıya gösterilmeyeceğini kontrol eder.", status: "Manuel kontrol" },
+  { role: "Teknik sorumlu", item: "Timeout hedefinin 3000 ms olduğunu not eder.", status: "Manuel kontrol" },
+  { role: "Patron / yönetici", item: "Başarısızlık halinde tekrar deneme yapılmadan rapor hazırlanacağını kabul eder.", status: "Manuel karar" },
+];
+
+export const readOnlyNextPhaseBoundaries = [
+  "Sonraki faz yalnızca küçük read-only bağlantı denemesi olabilir.",
+  "İlk deneme sadece stok kartı okuma ile sınırlı kalacaktır.",
+  "İlk deneme en fazla 20 satır ile yapılacaktır.",
+  "Cari, fiş, hareket, tahsilat, ödeme ve import kapsam dışı kalacaktır.",
+  "Veri yazma ve import kapalı kalacaktır.",
+];

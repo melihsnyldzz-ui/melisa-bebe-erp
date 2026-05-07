@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import CommerceInsights from "../components/Dashboard/CommerceInsights.jsx";
 import KpiCard from "../components/Dashboard/KpiCard.jsx";
 import { APP_STAGE, APP_VERSION } from "../config/appVersion.js";
-import { readOnlyConnectionPlan } from "../config/readOnlyConnectionPlan.js";
+import { readOnlyConnectionPlan, readOnlyOperatorChecklist } from "../config/readOnlyConnectionPlan.js";
 import { currentReleaseVersion, releaseHighlightsByPage } from "../config/releaseHighlights.js";
 import { useErpData } from "../context/ErpDataContext.jsx";
 import { getTodayISO } from "../utils/dateUtils.js";
@@ -60,6 +60,10 @@ const ownerViewCards = [
   { label: "Altyapı bağlantı modu", value: "Kapalı" },
   { label: "Altyapı ilk kapsam", value: "20 stok kartı" },
   { label: "Altyapı connection test", value: "Kapalı" },
+  { label: "Operatör checklist", value: "Hazırlıkta" },
+  { label: "Teknik kontrol", value: "Manuel" },
+  { label: "Patron kararı", value: "Sonraki küçük faz" },
+  { label: "Checklist veri yazma/import", value: "Kapalı" },
   { label: "Barkod operasyonu", value: "Hazırlıkta" },
   { label: "Barkod kalite kontrolü", value: "Öncelikli" },
   { label: "Riskli barkodlar", value: "İzlenecek" },
@@ -117,6 +121,10 @@ const ownerTodayItems = [
   "Read-only pasif altyapı iskeleti gözden geçirilecek",
   "İlk kapsamın sadece stok kartı olduğu doğrulanacak",
   "Connection test ve DB okuma kilitlerinin kapalı kaldığı kontrol edilecek",
+  "Operatör son kontrol listesi gözden geçirilecek",
+  "Teknik sorumlu read-only kullanıcıyı doğrulayacak",
+  "İlk 20 stok kartı sınırı tekrar teyit edilecek",
+  "Başarısızlıkta tekrar deneme yapılmayacağı netleştirilecek",
   "Personel kullanım notları toplanacak",
   "Gerçek veri bağlantısı için yedek ve yetki kontrolü hazırlanacak",
 ];
@@ -167,6 +175,15 @@ const readonlyConnectionSkeletonSummaryCards = [
   { label: "SQL/ODBC", value: readOnlyConnectionPlan.sqlOdbcStatus },
   { label: "DB okuma", value: readOnlyConnectionPlan.dbReadStatus },
   { label: "Connection test", value: "Kapalı" },
+];
+
+const readonlyOperatorChecklistSummaryCards = [
+  { label: "Operatör checklist", value: "Pasif hazırlık" },
+  { label: "Teknik kontrol", value: "Manuel" },
+  { label: "Patron kararı", value: "Sonraki küçük faz" },
+  { label: "Kontrol maddesi", value: `${readOnlyOperatorChecklist.length} statik madde` },
+  { label: "Connection test", value: "Kapalı" },
+  { label: "Veri yazma/import", value: "Kapalı" },
 ];
 
 const readonlyFinalDecisionSummaryCards = [
@@ -347,6 +364,8 @@ export default function Dashboard() {
 
       <OwnerView />
 
+      <ReadonlyOperatorChecklistSummary />
+
       <ReadonlyConnectionSkeletonSummary />
 
       <ReadonlyFinalSecuritySummary />
@@ -380,6 +399,30 @@ export default function Dashboard() {
         <DashboardNewReleaseBadge sectionId="dashboard-commerce-insights" />
       </CommerceInsights>
     </>
+  );
+}
+
+function ReadonlyOperatorChecklistSummary() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-readonly-operator-checklist-summary")}`} id="dashboard-readonly-operator-checklist-summary">
+      <DashboardNewReleaseBadge sectionId="dashboard-readonly-operator-checklist-summary" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Pasif operatör checklist</p>
+          <h2>Read-only İlk Bağlantı Checklist Özeti</h2>
+          <span>Operatör, teknik sorumlu ve patron kontrol maddeleri gerçek bağlantı açılmadan kısa yönetici özeti olarak görünür.</span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {readonlyOperatorChecklistSummaryCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+    </section>
   );
 }
 

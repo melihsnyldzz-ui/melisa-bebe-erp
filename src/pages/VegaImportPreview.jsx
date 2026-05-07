@@ -3,6 +3,8 @@ import {
   readOnlyConnectionLocks,
   readOnlyConnectionPlan,
   readOnlyFirstScopeRules,
+  readOnlyNextPhaseBoundaries,
+  readOnlyOperatorChecklist,
 } from "../config/readOnlyConnectionPlan.js";
 import {
   vegaImportMapping,
@@ -86,6 +88,54 @@ const passiveConnectionSkeletonStatusCards = [
   { label: "Query", value: readOnlyConnectionPlan.queryStatus },
   { label: "Connection test", value: readOnlyConnectionPlan.connectionStatus },
   { label: "İlk kapsam", value: readOnlyConnectionPlan.firstLimit },
+];
+
+const operatorChecklistStatusCards = [
+  { label: "Checklist modu", value: "Pasif hazırlık" },
+  { label: "Gerçek bağlantı", value: "Kapalı" },
+  { label: "Operatör kontrolü", value: "Manuel" },
+  { label: "Teknik kontrol", value: "Manuel" },
+  { label: "Patron kararı", value: "Ayrı küçük faz" },
+  { label: "Veri yazma/import", value: "Kapalı" },
+];
+
+const operatorFinalChecklistItems = [
+  "Manuel yedek alındığı teyit edildi",
+  "Read-only kullanıcı yetkisi teknik sorumlu tarafından doğrulanacak",
+  "İlk test sadece stok kartı ile sınırlı kalacak",
+  "İlk test en fazla 20 satır olacak",
+  "Cari, fiş, hareket, tahsilat, ödeme kapsam dışı kalacak",
+  "Ham hata kullanıcıya gösterilmeyecek",
+  "Timeout hedefi 3000 ms olarak korunacak",
+  "Retry kapalı kalacak",
+  "Başarısızlıkta tekrar deneme yapılmayacak, rapor hazırlanacak",
+  "Veri yazma ve import kapalı kalacak",
+];
+
+const roleBasedControlCards = [
+  {
+    title: "Operatör",
+    items: ["Yedek teyidini alır", "Test sırasında not tutar", "Hata görürse ekran adı ve işlem notu hazırlar", "Tekrar deneme yapmaz"],
+  },
+  {
+    title: "Teknik Sorumlu",
+    items: ["Read-only kullanıcıyı doğrular", "Timeout ve ham hata politikasını kontrol eder", "Yazma yetkisi şüphesinde testi durdurur", "Sonucu Vega ekranıyla karşılaştırır"],
+  },
+  {
+    title: "Patron / Yönetici",
+    items: ["İlk kapsamı onaylar", "Test saatini ve sorumluları belirler", "Başarısızlıkta yeniden deneme kararını erteler", "Sonraki kapsam kararını ayrı fazda verir"],
+  },
+];
+
+const nextSmallPhasePrepItems = [
+  readOnlyNextPhaseBoundaries[0],
+  readOnlyNextPhaseBoundaries[1],
+  readOnlyNextPhaseBoundaries[2],
+  "Ham hata gizli",
+  "Retry kapalı",
+  "Veri yazma yok",
+  "Import yok",
+  "Başarısızlıkta tekrar deneme yok",
 ];
 
 const technicalInfrastructureLocks = [
@@ -497,6 +547,75 @@ export default function VegaImportPreview() {
           <h1>Vega Read-only Operasyon Merkezi</h1>
           <span>Bu ekran gerçek Vega bağlantısı kurmadan, ilk read-only deneme öncesi güvenlik, saha ve kapsam kontrollerini tek yerde toplar.</span>
         </div>
+      </section>
+
+      <section className="vega-technical-gate-center section-updated-highlight" id="vega-readonly-operator-checklist-center">
+        <div className="vega-technical-gate-hero">
+          <p>Pasif operatör checklist</p>
+          <h2>Read-only İlk Bağlantı Operatör Checklist Merkezi</h2>
+          <span>
+            İlk gerçek read-only bağlantıdan önce operatör, teknik sorumlu ve patronun manuel olarak kontrol edeceği son şartları gerçek bağlantı açmadan gösteren pasif checklist ekranı.
+          </span>
+        </div>
+
+        <div className="vega-technical-gate-status-grid">
+          {operatorChecklistStatusCards.map((card) => (
+            <article className="vega-import-summary-card" key={card.label}>
+              <span>{card.label}</span>
+              <strong>{card.value}</strong>
+            </article>
+          ))}
+        </div>
+
+        <section className="vega-technical-gate-panel" id="vega-operator-final-checklist">
+          <h3>Operatör Son Kontrol Listesi</h3>
+          <div className="vega-technical-gate-card-grid">
+            {operatorFinalChecklistItems.map((item) => (
+              <article className="vega-owner-summary-row" key={item}>
+                <ShieldCheck size={14} />
+                <span>{item}</span>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="vega-technical-gate-panel" id="vega-role-based-control-panel">
+          <h3>Rol Bazlı Kontrol Paneli</h3>
+          <div className="vega-technical-gate-card-grid">
+            {roleBasedControlCards.map((card) => (
+              <article className="vega-operation-group-card" key={card.title}>
+                <h3>{card.title}</h3>
+                <ul>
+                  {card.items.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+          <div className="vega-technical-gate-lock-grid">
+            {readOnlyOperatorChecklist.map((row) => (
+              <article className="vega-technical-lock-row" key={`${row.role}-${row.item}`}>
+                <span>{row.role}</span>
+                <strong>{row.status}</strong>
+                <small>{row.item}</small>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="vega-technical-gate-panel" id="vega-next-small-phase-prep">
+          <h3>Sonraki Küçük Faz Hazırlığı</h3>
+          <p>Bu ekrandan bağlantı başlatılmaz. Bir sonraki küçük faz yalnızca ilk read-only bağlantı denemesi için hazırlanacaktır.</p>
+          <div className="vega-technical-gate-card-grid">
+            {nextSmallPhasePrepItems.map((item) => (
+              <article className="vega-owner-summary-row" key={item}>
+                <ShieldCheck size={14} />
+                <span>{item}</span>
+              </article>
+            ))}
+          </div>
+        </section>
       </section>
 
       <section className="vega-technical-gate-center section-updated-highlight" id="vega-readonly-connection-skeleton">

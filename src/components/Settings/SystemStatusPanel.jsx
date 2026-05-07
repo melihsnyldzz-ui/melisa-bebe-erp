@@ -270,7 +270,22 @@ const readonlyConnectionSkeletonStatusRows = [
   { label: "ERP’ye yazma/import", value: "Kapalı" },
 ];
 
+const readonlyOperatorChecklistStatusRows = [
+  { label: "Operatör checklist", value: "Pasif hazırlık" },
+  { label: "Teknik kontrol", value: "Manuel" },
+  { label: "Patron kararı", value: "Sonraki küçük faz" },
+  { label: "Gerçek bağlantı", value: "Kapalı" },
+  { label: "Connection test", value: "Kapalı" },
+  { label: "ERP’ye yazma/import", value: "Kapalı" },
+];
+
 const versionHistoryRows = [
+  {
+    version: "v1.42.0",
+    title: "Read-only İlk Bağlantı Operatör Checklist Merkezi",
+    area: "Vega Import Önizleme / Dashboard / Sistem Durumu / README",
+    description: "İlk gerçek read-only bağlantı öncesi operatör, teknik sorumlu ve patron checklist'i pasif olarak görünür hale getirildi; manuel yedek, read-only kullanıcı, 20 satır sınırı, timeout, ham hata gizleme ve rollback sorumlusu netleştirildi; gerçek bağlantı, DB okuma, query, API, connection test veya veri yazma eklenmedi.",
+  },
   {
     version: "v1.41.0",
     title: "Read-only Bağlantı Altyapısı Pasif Teknik İskeleti",
@@ -780,8 +795,8 @@ export default function SystemStatusPanel() {
 
       <div className="system-status-focus-card">
         <span>Bu Sürümde Test Edilecek Alan</span>
-        <strong>Vega Import Önizleme / Read-only Pasif Altyapı İskeleti</strong>
-        <p>Bu sürümde bağlantı modunun kapalı kaldığı, DB okuma ve connection test kilitlerinin açılmadığı, ilk kapsamın 20 stok kartıyla sınırlı olduğu kontrol edilmelidir.</p>
+        <strong>Vega Import Önizleme / Read-only Operatör Checklist</strong>
+        <p>Bu sürümde operatör son kontrol listesi, teknik sorumlu doğrulaması, patron kararı ve 20 stok kartı sınırı özellikle kontrol edilmelidir.</p>
       </div>
 
       <div className="system-workflow-panel" {...sectionHighlightProps("system-workflow-model")}>
@@ -799,6 +814,24 @@ export default function SystemStatusPanel() {
         </div>
         <p className="system-workflow-safety-note">
           Gerçek veri bağlantısı, DB okuma, query, import ve veri yazma işlemleri yalnızca ayrı küçük ve açık onaylı sürümlerde ele alınır.
+        </p>
+      </div>
+
+      <div className="handheld-barcode-status-panel readonly-operator-checklist-status-panel" {...sectionHighlightProps("readonly-operator-checklist-status")}>
+        <div>
+          <h3>Read-only Operatör Checklist Durumu <NewReleaseBadge sectionId="readonly-operator-checklist-status" /></h3>
+          <p>İlk gerçek bağlantı öncesi operatör, teknik sorumlu ve patron kontrol maddeleri pasif sistem özeti olarak takip edilir.</p>
+        </div>
+        <div className="system-status-grid">
+          {readonlyOperatorChecklistStatusRows.map((row) => (
+            <div className="system-status-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </div>
+          ))}
+        </div>
+        <p className="handheld-barcode-safety-note readonly-operator-checklist-safety-note">
+          Bu sürüm yalnızca operatör ve teknik sorumlu checklist görünürlüğü sağlar; bağlantı, DB okuma, query, API, connection test veya veri yazma işlemi yapmaz.
         </p>
       </div>
 

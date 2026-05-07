@@ -7684,6 +7684,17 @@ tr:last-child td {
   background: #eff6ff;
 }
 
+.readonly-operator-checklist-status-panel {
+  border-color: #bbf7d0;
+  background: linear-gradient(135deg, #f0fdf4, #ffffff);
+}
+
+.readonly-operator-checklist-safety-note {
+  border-color: #bbf7d0;
+  color: #166534;
+  background: #f0fdf4;
+}
+
 @media (max-width: 1180px) {
   .current-account-status-grid,
   .current-account-risk-class-grid,
