@@ -316,7 +316,22 @@ const readonlyStockSmokeStatusRows = [
   { label: "Sonuç yazma", value: "Yok" },
 ];
 
+const desktopPreparationStatusRows = [
+  { label: "Uygulama modu", value: "Local Desktop" },
+  { label: "Vega bağlantısı", value: "Kapalı / sadece terminal smoke test" },
+  { label: "Veri yazma", value: "Kapalı" },
+  { label: "Canlı import", value: "Kapalı" },
+  { label: ".env.local", value: "Git dışı tutulmalı" },
+  { label: "Son güvenli entegrasyon", value: "v1.45.0 read-only stock smoke" },
+];
+
 const versionHistoryRows = [
+  {
+    version: "v1.46.0",
+    title: "Electron Desktop Güvenlik ve Hazırlık Merkezi",
+    area: "Electron / Dashboard / Sistem Durumu / README",
+    description: "Electron masaüstü başlığı ve local desktop görünürlüğü güçlendirildi; Desktop Hazırlık Merkezi ile Vega bağlantısı, veri yazma, import ve .env.local güvenliği pasif olarak görünür hale getirildi; ERP arayüzünden canlı bağlantı, API veya veri yazma eklenmedi.",
+  },
   {
     version: "v1.45.0",
     title: "İlk Gerçek Read-only Stok Kartı Okuma Denemesi",
@@ -856,8 +871,8 @@ export default function SystemStatusPanel() {
 
       <div className="system-status-focus-card">
         <span>Bu Sürümde Test Edilecek Alan</span>
-        <strong>Local Script / İlk Read-only Stok Okuma</strong>
-        <p>Bu sürümde yalnızca local terminal scriptiyle 20 stok kartı okuma sınırı, .env.local güvenliği ve ERP arayüzünden bağlantı başlatılmaması özellikle kontrol edilmelidir.</p>
+        <strong>Electron Desktop / Güvenli Hazırlık Merkezi</strong>
+        <p>Bu sürümde local desktop başlığı, masaüstü kullanım hissi, .env.local güvenliği ve ERP arayüzünden canlı Vega bağlantısı başlatılmaması özellikle kontrol edilmelidir.</p>
       </div>
 
       <div className="system-workflow-panel" {...sectionHighlightProps("system-workflow-model")}>
@@ -875,6 +890,24 @@ export default function SystemStatusPanel() {
         </div>
         <p className="system-workflow-safety-note">
           Gerçek veri bağlantısı, DB okuma, query, import ve veri yazma işlemleri yalnızca ayrı küçük ve açık onaylı sürümlerde ele alınır.
+        </p>
+      </div>
+
+      <div className="handheld-barcode-status-panel desktop-preparation-status-panel" {...sectionHighlightProps("desktop-preparation-status")}>
+        <div>
+          <h3>Desktop Hazırlık Durumu <NewReleaseBadge sectionId="desktop-preparation-status" /></h3>
+          <p>Melisa Bebe ERP'nin local desktop çalışma modu, terminal smoke test sınırı ve canlı bağlantı kilitleri pasif sistem özeti olarak takip edilir.</p>
+        </div>
+        <div className="system-status-grid">
+          {desktopPreparationStatusRows.map((row) => (
+            <div className="system-status-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </div>
+          ))}
+        </div>
+        <p className="handheld-barcode-safety-note desktop-preparation-safety-note">
+          ERP arayüzünden canlı Vega bağlantısı başlatılmaz; .env.local git dışında kalır, veri yazma ve canlı import kapalı tutulur.
         </p>
       </div>
 

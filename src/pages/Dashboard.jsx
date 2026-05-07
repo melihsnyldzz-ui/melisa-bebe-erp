@@ -81,6 +81,10 @@ const ownerViewCards = [
   { label: "Smoke test kapsamı", value: "20 stok kartı" },
   { label: "Smoke test ERP’ye yazma", value: "Kapalı" },
   { label: "Smoke test import", value: "Kapalı" },
+  { label: "Desktop uygulama modu", value: "Local Desktop" },
+  { label: "Desktop Vega bağlantısı", value: "Kapalı / terminal smoke test" },
+  { label: "Desktop veri yazma", value: "Kapalı" },
+  { label: "Desktop canlı import", value: "Kapalı" },
   { label: "Barkod operasyonu", value: "Hazırlıkta" },
   { label: "Barkod kalite kontrolü", value: "Öncelikli" },
   { label: "Riskli barkodlar", value: "İzlenecek" },
@@ -249,6 +253,15 @@ const readonlyStockSmokeSummaryCards = [
   { label: "ERP’ye yazma", value: "Kapalı" },
   { label: "Import", value: "Kapalı" },
   { label: "Sonuç", value: "Terminal önizleme" },
+];
+
+const desktopPreparationCards = [
+  { label: "Uygulama modu", value: "Local Desktop" },
+  { label: "Vega bağlantısı", value: "Kapalı / sadece terminal smoke test" },
+  { label: "Veri yazma", value: "Kapalı" },
+  { label: "Canlı import", value: "Kapalı" },
+  { label: ".env.local", value: "Git dışı tutulmalı" },
+  { label: "Son güvenli entegrasyon", value: "v1.45.0 read-only stock smoke" },
 ];
 
 const readonlyFinalDecisionSummaryCards = [
@@ -429,6 +442,8 @@ export default function Dashboard() {
 
       <OwnerView />
 
+      <DesktopPreparationCenter />
+
       <ReadonlyStockSmokeSummary />
 
       <ReadonlyEnvironmentPrepSummary />
@@ -472,6 +487,30 @@ export default function Dashboard() {
         <DashboardNewReleaseBadge sectionId="dashboard-commerce-insights" />
       </CommerceInsights>
     </>
+  );
+}
+
+function DesktopPreparationCenter() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-desktop-preparation-center")}`} id="dashboard-desktop-preparation-center">
+      <DashboardNewReleaseBadge sectionId="dashboard-desktop-preparation-center" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Melisa Bebe Tekstil San. ve Tic. Ltd. Şti.</p>
+          <h2>Desktop Hazırlık Merkezi</h2>
+          <span>ERP arayüzünden canlı Vega bağlantısı başlatılmaz; güvenli entegrasyon seviyesi local desktop ve terminal smoke test görünürlüğünde tutulur.</span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {desktopPreparationCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+    </section>
   );
 }
 

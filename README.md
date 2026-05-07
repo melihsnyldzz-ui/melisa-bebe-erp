@@ -6,8 +6,8 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 
 ## Mevcut Durum
 
-- Güncel sürüm: v1.45.0
-- Aşama: İlk Gerçek Read-only Stok Kartı Okuma Denemesi
+- Güncel sürüm: v1.46.0
+- Aşama: Electron Desktop Güvenlik ve Hazırlık Merkezi
 - Build kontrolü: GitHub Actions
 - El terminali: okuma, son okutulanlar, sayım sepeti, rapor/CSV/JSON önizleme hazırlığı
 - Stok ve barkod kalite kontrolü: pasif/mock risk görünürlüğü
@@ -159,6 +159,12 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 - Sonuç sadece terminalde gösterilir.
 - ERP’ye yazma, import, cari/fiş/hareket okuma, dosyaya çıktı alma yoktur.
 - Bağlantı bilgileri .env.local içinde tutulur ve GitHub’a gönderilmez.
+
+## Electron Desktop Güvenlik ve Hazırlık Merkezi
+
+- Bu faz Melisa Bebe ERP'nin local desktop kullanım hissini ve güvenli entegrasyon görünürlüğünü güçlendirir.
+- ERP arayüzünden canlı Vega bağlantısı başlatılmaz; son güvenli entegrasyon seviyesi v1.45.0 read-only stock smoke olarak gösterilir.
+- Vega bağlantısı sadece terminal smoke test seviyesinde kalır; veri yazma, canlı import ve .env.local paylaşımı kapalıdır.
 
 ## Build Kontrolü
 

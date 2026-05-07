@@ -6,6 +6,7 @@ const { listVegaStockReadOnly } = require("./vegaReadOnlyService.cjs");
 
 const isDev = !app.isPackaged;
 const devServerUrl = process.env.VITE_DEV_SERVER_URL || "http://127.0.0.1:5173";
+const desktopWindowTitle = "Melisa Bebe ERP | Local Desktop";
 let repositories;
 
 function createMainWindow() {
@@ -14,7 +15,9 @@ function createMainWindow() {
     height: 900,
     minWidth: 1180,
     minHeight: 720,
-    title: "Melisa Bebe ERP",
+    title: desktopWindowTitle,
+    backgroundColor: "#f8fafc",
+    autoHideMenuBar: true,
     show: false,
     webPreferences: {
       preload: path.join(__dirname, "preload.cjs"),
@@ -24,6 +27,7 @@ function createMainWindow() {
   });
 
   mainWindow.setMenuBarVisibility(false);
+  mainWindow.setTitle(desktopWindowTitle);
   mainWindow.once("ready-to-show", () => mainWindow.show());
 
   if (isDev) {
@@ -68,6 +72,7 @@ function createSlipWindow(type) {
 }
 
 app.whenReady().then(() => {
+  app.setName("Melisa Bebe ERP");
   Menu.setApplicationMenu(null);
   repositories = createRepositories(initializeDatabase(app), {
     createBackup: () => exportDatabaseBackup(app),

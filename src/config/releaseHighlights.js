@@ -1,18 +1,18 @@
-export const currentReleaseVersion = "v1.45.0";
+export const currentReleaseVersion = "v1.46.0";
 
-export const currentReleaseTitle = "İlk Gerçek Read-only Stok Kartı Okuma Denemesi";
+export const currentReleaseTitle = "Electron Desktop Güvenlik ve Hazırlık Merkezi";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "readonly-stock-smoke-status"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "desktop-preparation-status"];
 
 export const releaseHighlightItems = [
-  "İlk gerçek read-only stok kartı okuma denemesi için sadece local terminalde çalışan sınırlı smoke test scripti eklendi.",
-  "Script bağlantı bilgilerini repoya yazmadan .env.local üzerinden çalışır, sadece F0102TBLSTOKLAR tablosundan en fazla 20 satır okur.",
-  "ERP arayüzünden bağlantı, import, veri yazma, cari/fiş/hareket okuma veya dosyaya sonuç yazma eklenmeden güvenli deneme kabuğu korundu.",
+  "Electron masaüstü başlığı ve local desktop duruşu Melisa Bebe ERP kullanımına daha net hale getirildi.",
+  "Desktop Hazırlık Merkezi ile Vega bağlantısı, veri yazma, import ve .env.local güvenliği pasif olarak görünür hale getirildi.",
+  "ERP arayüzünden canlı Vega bağlantısı, API, otomatik istek, veri yazma veya import eklenmeden güvenli desktop hazırlığı korundu.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
-  { id: "readonly-stock-smoke-status", label: "İlk Stok Okuma Denemesi Durumu'na git" },
+  { id: "desktop-preparation-status", label: "Desktop Hazırlık Durumu'na git" },
   { id: "system-workflow-model", label: "Çalışma Modeli'ne git" },
 ];
 
@@ -28,6 +28,7 @@ export const releaseHighlightsByPage = {
     releaseHighlightItems,
     releaseJumpLinks: [
       { id: "dashboard-owner-view", label: "Patron Bakışı'na git" },
+      { id: "dashboard-desktop-preparation-center", label: "Desktop Hazırlık Merkezi'ne git" },
       { id: "dashboard-readonly-stock-smoke-summary", label: "İlk Stok Okuma Denemesi'ne git" },
       { id: "dashboard-readonly-environment-prep-summary", label: "Read-only Ortam Hazırlığı'na git" },
       { id: "dashboard-readonly-fail-closed-summary", label: "Read-only Fail-closed Özeti'ne git" },
@@ -46,7 +47,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-owner-view", "dashboard-readonly-stock-smoke-summary", "dashboard-daily-operation"],
+    updatedSectionIds: ["dashboard-owner-view", "dashboard-desktop-preparation-center", "dashboard-daily-operation"],
   },
   reports: {
     releaseHighlightItems,
