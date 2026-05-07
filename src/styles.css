@@ -2078,10 +2078,17 @@ button {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
+.approval-matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
 .reporting-status-card,
 .reporting-decision-card,
 .risk-report-card,
 .manager-priority-card,
+.approval-matrix-card,
 .report-security-card,
 .reporting-manager-panel {
   min-width: 0;
@@ -2149,16 +2156,39 @@ button {
 
 .reporting-decision-card,
 .risk-report-card,
-.manager-priority-card {
+.manager-priority-card,
+.approval-matrix-card {
   padding: 13px;
 }
 
 .reporting-decision-card strong,
 .risk-report-card h4,
-.manager-priority-card h4 {
+.manager-priority-card h4,
+.approval-matrix-card span {
   margin: 0;
   color: #1864ab;
   font-size: 0.96rem;
+}
+
+.approval-matrix-card {
+  display: grid;
+  gap: 7px;
+}
+
+.approval-matrix-card span {
+  font-weight: 900;
+}
+
+.approval-matrix-card strong {
+  color: var(--anthracite);
+  font-size: 0.93rem;
+}
+
+.approval-matrix-card p {
+  margin: 0;
+  color: var(--muted);
+  font-weight: 760;
+  line-height: 1.45;
 }
 
 .reporting-decision-card p {
@@ -6643,6 +6673,7 @@ tr:last-child td {
   .reporting-status-grid,
   .risk-report-card-grid,
   .manager-priority-grid,
+  .approval-matrix-grid,
   .report-security-grid,
   .dashboard-distribution-strip .dashboard-distribution-list,
   .quick-sale-controls,
@@ -6726,6 +6757,7 @@ tr:last-child td {
   .reporting-status-grid,
   .risk-report-card-grid,
   .manager-priority-grid,
+  .approval-matrix-grid,
   .report-security-grid,
   .system-workflow-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -6899,6 +6931,7 @@ tr:last-child td {
   .reporting-status-grid,
   .risk-report-card-grid,
   .manager-priority-grid,
+  .approval-matrix-grid,
   .report-security-grid,
   .system-workflow-grid {
     grid-template-columns: 1fr;
@@ -7572,6 +7605,17 @@ tr:last-child td {
   border-color: #bfdbfe;
   color: #1d4ed8;
   background: #eff6ff;
+}
+
+.prelive-operation-test-status-panel {
+  border-color: #ddd6fe;
+  background: linear-gradient(135deg, #f5f3ff, #ffffff);
+}
+
+.prelive-operation-test-safety-note {
+  border-color: #ddd6fe;
+  color: #5b21b6;
+  background: #f5f3ff;
 }
 
 @media (max-width: 1180px) {

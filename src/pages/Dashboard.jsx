@@ -34,6 +34,10 @@ const ownerViewCards = [
   { label: "Risk raporları", value: "Hazırlıkta" },
   { label: "Günlük karar özeti", value: "Aktif görünüm" },
   { label: "Rapor export", value: "Kapalı" },
+  { label: "Canlı öncesi test", value: "Hazırlıkta" },
+  { label: "Personel denemesi", value: "Planlandı" },
+  { label: "Yönetici onayı", value: "Bekliyor" },
+  { label: "Gerçek bağlantı", value: "Kapalı" },
   { label: "Barkod operasyonu", value: "Hazırlıkta" },
   { label: "Barkod kalite kontrolü", value: "Öncelikli" },
   { label: "Riskli barkodlar", value: "İzlenecek" },
@@ -65,6 +69,10 @@ const ownerTodayItems = [
   "Cari/alacak risk raporu yöneticiyle kontrol edilecek",
   "Kârlılık riskleri patron karar listesine alınacak",
   "El terminali saha notları rapor görünümünde değerlendirilecek",
+  "Personel deneme planı gözden geçirilecek",
+  "Canlı öncesi eksikler listesi kontrol edilecek",
+  "Yönetici onay matrisi okunacak",
+  "Vega read-only ilk deneme şartları tekrar doğrulanacak",
   "Personel kullanım notları toplanacak",
   "Gerçek veri bağlantısı için yedek ve yetki kontrolü hazırlanacak",
 ];
@@ -83,7 +91,26 @@ const ownerDecisionItems = [
   "Gerçek rapor export bu fazın konusu değildir.",
   "Yönetici raporları şu an pasif/mock görünürlük sağlar.",
   "Gerçek veri okuma ve veri yazma ayrı küçük onaylı fazlarda ele alınır.",
+  "Canlı kullanıma geçmeden önce personel denemesi yapılmalıdır.",
+  "Gerçek read-only bağlantı ayrı küçük sürümde açılmalıdır.",
+  "Veri yazma ve import bu fazın konusu değildir.",
   "Ana hedef: güvenli geçiş, hızlı kontrol, hatasız stok görünürlüğü",
+];
+
+const preliveTestStatusCards = [
+  { label: "Test modu", value: "Pasif/mock hazırlık" },
+  { label: "Gerçek veri bağlantısı", value: "Kapalı" },
+  { label: "Personel denemesi", value: "Hazırlıkta" },
+  { label: "Saha kontrolü", value: "Önizleme" },
+  { label: "Veri yazma", value: "Kapalı" },
+  { label: "Canlıya geçiş", value: "Başlamadı" },
+];
+
+const preliveTestCards = [
+  { title: "Patron", text: "Günlük karar özeti, risk raporları ve yönetici karar alanı okunabilirlik açısından kontrol edilir." },
+  { title: "Personel", text: "Ekran dili, el terminali akışı ve barkod/sayım mantığı gerçek işlem yapmadan değerlendirilir." },
+  { title: "Saha", text: "Barkodsuz ürün, duplicate barkod, sayım farkı ve personel notu akışı pasif olarak gözden geçirilir." },
+  { title: "Güvenlik", text: "Gerçek bağlantı, cihaz entegrasyonu, veri yazma, import ve rapor export kilitleri açıkça kapalı tutulur." },
 ];
 
 const reportingDecisionStatusCards = [
@@ -212,6 +239,8 @@ export default function Dashboard() {
 
       <OwnerView />
 
+      <PreliveOperationTestCenter />
+
       <ReportingDecisionCenter />
 
       <CommerceProfitabilityCenter />
@@ -231,6 +260,43 @@ export default function Dashboard() {
         <DashboardNewReleaseBadge sectionId="dashboard-commerce-insights" />
       </CommerceInsights>
     </>
+  );
+}
+
+function PreliveOperationTestCenter() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-prelive-operation-test-center")}`} id="dashboard-prelive-operation-test-center">
+      <DashboardNewReleaseBadge sectionId="dashboard-prelive-operation-test-center" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Pasif canlı öncesi test</p>
+          <h2>Canlı Kullanım Öncesi Operasyon Test Merkezi</h2>
+          <span>
+            ERP’nin gerçek kullanıma geçmeden önce patron, personel, saha ve güvenlik açısından nasıl kontrol edileceğini gerçek işlem yapmadan gösteren pasif test merkezi.
+          </span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {preliveTestStatusCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+
+      <CommercePanel title="Canlı Öncesi Kontrol Özeti">
+        <div className="reporting-decision-card-grid">
+          {preliveTestCards.map((card) => (
+            <article className="brand-category-performance-card reporting-decision-card" key={card.title}>
+              <strong>{card.title}</strong>
+              <span>{card.text}</span>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+    </section>
   );
 }
 

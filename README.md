@@ -6,8 +6,8 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 
 ## Mevcut Durum
 
-- Güncel sürüm: v1.34.0
-- Aşama: Raporlama ve Yönetici Karar Merkezi
+- Güncel sürüm: v1.35.0
+- Aşama: Canlı Kullanım Öncesi Operasyon Test Merkezi
 - Build kontrolü: GitHub Actions
 - El terminali: okuma, son okutulanlar, sayım sepeti, rapor/CSV/JSON önizleme hazırlığı
 - Stok ve barkod kalite kontrolü: pasif/mock risk görünürlüğü
@@ -69,6 +69,13 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 - Raporlar pasif/mock görünürlük sağlar.
 - Gerçek veri okuma, rapor export, kayıt oluşturma veya veri yazma yapılmaz.
 - Gerçek raporlama bağlantısı ileride ayrı küçük onaylı fazda ele alınır.
+
+## Canlı Kullanım Öncesi Operasyon Test Fazı
+
+- Bu faz patron, personel, saha ve güvenlik testlerini tek hazırlık merkezi altında toplar.
+- Testler pasif/mock görünürlük sağlar.
+- Gerçek bağlantı, cihaz entegrasyonu, rapor export, kayıt oluşturma veya veri yazma yapılmaz.
+- Gerçek read-only bağlantı ve canlı kullanım denemesi ileride ayrı küçük onaylı fazlarda ele alınır.
 
 ## Build Kontrolü
 

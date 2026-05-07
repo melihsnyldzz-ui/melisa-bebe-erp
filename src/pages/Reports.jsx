@@ -28,6 +28,63 @@ const reportingStatusCards = [
   { label: "Günlük kontrol akışı", value: "Hazırlıkta" },
 ];
 
+const preliveStatusCards = [
+  { label: "Test modu", value: "Pasif/mock hazırlık" },
+  { label: "Gerçek veri bağlantısı", value: "Kapalı" },
+  { label: "Personel denemesi", value: "Hazırlıkta" },
+  { label: "Saha kontrolü", value: "Önizleme" },
+  { label: "Veri yazma", value: "Kapalı" },
+  { label: "Canlıya geçiş", value: "Başlamadı" },
+];
+
+const preliveScenarioGroups = [
+  { title: "Patron Kokpiti Testi", items: ["Günlük karar özeti okunuyor mu?", "Risk raporları anlaşılır mı?", "Kârlılık ve cari risk alanları net mi?", "Yönetici karar alanı yeterince sade mi?"] },
+  { title: "El Terminali ve Barkod Testi", items: ["Son okutulanlar alanı anlaşılır mı?", "Sayım sepeti önizleme mantığı net mi?", "Barkod riskleri personel için sade mi?", "Gerçek cihaz bağlantısı olmadığı açık mı?"] },
+  { title: "Stok ve Barkod Kalite Testi", items: ["Duplicate barkod riski görünür mü?", "Barkodsuz ürün takibi anlaşılır mı?", "Eksik stok kodu ve yanlış eşleşme riskleri net mi?", "Risk öncelik matrisi kullanılabilir mi?"] },
+  { title: "Cari ve Alacak Testi", items: ["Yakın vade, gecikmiş alacak ve kritik risk ayrımı net mi?", "Tahsilat/ödeme kaydı yapılmadığı açık mı?", "Yönetici kontrolü gereken alanlar anlaşılır mı?", "Müşteri risk görünürlüğü yeterli mi?"] },
+  { title: "Alış Satış ve Kârlılık Testi", items: ["Düşük marjlı ürün mantığı anlaşılır mı?", "Marka/kategori performansı okunur mu?", "Fiyat güncelleme yapılmadığı net mi?", "Ticari risk matrisi karar için yeterli mi?"] },
+  { title: "Vega Read-only Hazırlık Testi", items: ["Gerçek bağlantı başlamadığı açık mı?", "Read-only ilk deneme şartları net mi?", "20 satır sınırı ve manuel yedek vurgusu görünür mü?", "Import/veri yazma kapalı olduğu açık mı?"] },
+];
+
+const staffTrialPlan = [
+  { day: "Gün 1", items: ["Dashboard ve patron kokpiti gösterimi", "Personelin ekran diliyle ilgili notları"] },
+  { day: "Gün 2", items: ["El terminali ve barkod ekranı anlatımı", "Son okutulanlar / sayım sepeti mantığı"] },
+  { day: "Gün 3", items: ["Stok ve barkod kalite kontrol ekranı", "Barkodsuz/duplicate barkod örnekleri"] },
+  { day: "Gün 4", items: ["Cari ve alacak riskleri ekranı", "Tahsilat kaydı yapılmadığı güvenlik notu"] },
+  { day: "Gün 5", items: ["Kârlılık ve raporlama ekranı", "Patron karar notlarının toplanması"] },
+];
+
+const preliveMissingGroups = [
+  { title: "Güvenlik Eksikleri", items: ["Manuel yedek prosedürü", "Rollback planı", "Yetki modeli", "Ham hata gizleme", "Veri yazma kilidi"] },
+  { title: "Teknik Eksikler", items: ["Read-only kullanıcı", "20 satır ilk test sınırı", "Timeout politikası", "Test ortamı", "Build/CI doğrulaması"] },
+  { title: "Operasyon Eksikleri", items: ["Personel deneme kullanımı", "Hata notu formatı", "Yönetici onay süreci", "Saha kontrol listesi", "Ekran görüntüsü toplama yöntemi"] },
+  { title: "Veri Eksikleri", items: ["Vega ekranı ile manuel karşılaştırma", "Stok/barkod risk listesi", "Cari/alacak doğrulama notları", "Kârlılık/maliyet kontrol notları", "Rapor doğrulama şablonu"] },
+];
+
+const managerApprovalRows = [
+  { area: "Dashboard anlaşılır mı?", status: "Önizleme hazır", next: "Personel/patron yorumu beklenir" },
+  { area: "El terminali saha kullanımı net mi?", status: "Pasif akış görünür", next: "Personel denemesiyle kontrol edilir" },
+  { area: "Barkod/stok riskleri yeterli mi?", status: "Risk kartları hazır", next: "Saha örnekleriyle sadeleştirilir" },
+  { area: "Cari/alacak riskleri yeterli mi?", status: "Yönetici görünümü hazır", next: "Patron kontrolü beklenir" },
+  { area: "Kârlılık karar alanı yeterli mi?", status: "Önizleme hazır", next: "Maliyet notlarıyla doğrulanır" },
+  { area: "Raporlama merkezi yeterli mi?", status: "Pasif rapor görünür", next: "Yönetici onayı beklenir" },
+  { area: "Vega read-only denemeye hazır mı?", status: "Hazırlık yüksek", next: "Ayrı küçük sürümde ele alınır" },
+  { area: "Gerçek veri yazma hâlâ kapalı mı?", status: "Kapalı", next: "Kapalı kalır" },
+];
+
+const preliveSecurityRows = [
+  { label: "Canlı Vega bağlantısı", value: "Kapalı" },
+  { label: "SQL/ODBC", value: "Kapalı" },
+  { label: "DB okuma", value: "Kapalı" },
+  { label: "Query", value: "Yok" },
+  { label: "API/backend", value: "Yok" },
+  { label: "Gerçek cihaz bağlantısı", value: "Kapalı" },
+  { label: "Rapor export", value: "Kapalı" },
+  { label: "ERP’ye yazma", value: "Kapalı" },
+  { label: "Import", value: "Kapalı" },
+  { label: "Gerçek işlem butonu", value: "Yok" },
+];
+
 const dailyDecisionCards = [
   { title: "Stok / Barkod", text: "Barkodsuz ürün, duplicate barkod ve sayım farkı riskleri izlenecek." },
   { title: "Cari / Alacak", text: "Gecikmiş alacak, yakın vade ve kritik müşteri riskleri yönetici kontrolünde tutulacak." },
@@ -77,6 +134,7 @@ export default function Reports() {
         </div>
       </section>
 
+      <PreliveOperationTestCenter />
       <ReportingDecisionCenter />
 
       <ManagementSummaryPanel summary={managementReport.summary} />
@@ -104,6 +162,100 @@ export default function Reports() {
         <p>Ürün bazlı kârlılık raporu, alış fişi ve satış fişi gerçek stok maliyetiyle bağlandığında aktif edilecektir.</p>
       </section>
     </>
+  );
+}
+
+function PreliveOperationTestCenter() {
+  return (
+    <section className={`reporting-manager-center ${reportsSectionClass("reports-prelive-test-center")}`} id="reports-prelive-test-center">
+      <ReportsNewReleaseBadge sectionId="reports-prelive-test-center" />
+      <div className="reporting-manager-hero">
+        <div>
+          <p>Pasif canlı öncesi test</p>
+          <h2>Canlı Kullanım Öncesi Operasyon Test Merkezi</h2>
+          <span>
+            ERP’nin gerçek kullanıma geçmeden önce patron, personel, saha ve güvenlik açısından nasıl kontrol edileceğini gerçek işlem yapmadan gösteren pasif test merkezi.
+          </span>
+        </div>
+      </div>
+
+      <div className="reporting-status-grid">
+        {preliveStatusCards.map((card) => (
+          <article className="reporting-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+
+      <ReportingPanel title="Canlı Öncesi Test Senaryoları" sectionId="reports-prelive-scenarios">
+        <div className="risk-report-card-grid prelive-scenario-grid">
+          {preliveScenarioGroups.map((group) => (
+            <article className="risk-report-card" key={group.title}>
+              <h4>{group.title}</h4>
+              <ul>
+                {group.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </ReportingPanel>
+
+      <ReportingPanel title="Personel Deneme Planı" note="Bu plan gerçek veri yazmaz, sadece personel kullanım değerlendirmesi içindir." sectionId="reports-staff-trial-plan">
+        <div className="manager-priority-grid">
+          {staffTrialPlan.map((day) => (
+            <article className="manager-priority-card" key={day.day}>
+              <h4>{day.day}</h4>
+              <ul>
+                {day.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </ReportingPanel>
+
+      <ReportingPanel title="Canlıya Geçiş Öncesi Eksikler">
+        <div className="manager-priority-grid">
+          {preliveMissingGroups.map((group) => (
+            <article className="manager-priority-card" key={group.title}>
+              <h4>{group.title}</h4>
+              <ul>
+                {group.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </ReportingPanel>
+
+      <ReportingPanel title="Yönetici Onay Matrisi">
+        <div className="approval-matrix-grid">
+          {managerApprovalRows.map((row) => (
+            <article className="approval-matrix-card" key={row.area}>
+              <span>{row.area}</span>
+              <strong>{row.status}</strong>
+              <p>{row.next}</p>
+            </article>
+          ))}
+        </div>
+      </ReportingPanel>
+
+      <ReportingPanel title="Test Güvenlik Kilidi" note="Bu test merkezi yalnızca görünürlük ve hazırlık sağlar. Gerçek bağlantı, kayıt oluşturma, cihaz bağlantısı, dosya indirme veya veri yazma işlemi yapmaz." sectionId="reports-prelive-security-lock">
+        <div className="report-security-grid prelive-security-grid">
+          {preliveSecurityRows.map((row) => (
+            <article className="report-security-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </article>
+          ))}
+        </div>
+      </ReportingPanel>
+    </section>
   );
 }
 

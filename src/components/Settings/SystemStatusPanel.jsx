@@ -15,6 +15,10 @@ const statusRows = [
   { label: "Build kontrolü", value: "GitHub Actions + npm run build" },
   { label: "Çalışma modeli", value: "Main üzerinden manuel Codex akışı" },
   { label: "Kritik işlem politikası", value: "Stok, cari, fiş, yedekleme, import ve migration işlemleri ayrı kontrollü sürümlerle açılır." },
+  { label: "Test merkezi", value: "Pasif/mock hazırlık" },
+  { label: "Personel denemesi", value: "Planlandı" },
+  { label: "Yönetici onayı", value: "Bekliyor" },
+  { label: "Canlıya geçiş", value: "Başlamadı" },
   { label: "Yönetici raporlama", value: "Pasif/mock hazırlık" },
   { label: "Risk raporları", value: "Önizleme" },
   { label: "Günlük karar özeti", value: "Görünür" },
@@ -194,7 +198,22 @@ const reportingDecisionStatusRows = [
   { label: "ERP’ye yazma", value: "Kapalı" },
 ];
 
+const preliveOperationTestStatusRows = [
+  { label: "Test merkezi", value: "Pasif/mock hazırlık" },
+  { label: "Personel denemesi", value: "Planlandı" },
+  { label: "Yönetici onayı", value: "Bekliyor" },
+  { label: "Gerçek bağlantı", value: "Kapalı" },
+  { label: "Veri yazma", value: "Kapalı" },
+  { label: "Canlıya geçiş", value: "Başlamadı" },
+];
+
 const versionHistoryRows = [
+  {
+    version: "v1.35.0",
+    title: "Canlı Kullanım Öncesi Operasyon Test Merkezi",
+    area: "Raporlar / Dashboard / Sistem Durumu / README",
+    description: "Patron, personel, saha ve güvenlik testleri tek pasif/mock merkezde toparlandı; gerçek Vega bağlantısı, cihaz entegrasyonu, DB okuma, kayıt oluşturma, rapor export veya veri yazma eklenmedi.",
+  },
   {
     version: "v1.34.0",
     title: "Raporlama ve Yönetici Karar Merkezi",
@@ -662,8 +681,8 @@ export default function SystemStatusPanel() {
 
       <div className="system-status-focus-card">
         <span>Bu Sürümde Test Edilecek Alan</span>
-        <strong>Raporlar / Raporlama ve Yönetici Karar Merkezi</strong>
-        <p>Bu sürümde patron günlük karar özeti, risk raporları, yönetici öncelik matrisi ve rapor güvenlik kilidi özellikle kontrol edilmelidir.</p>
+        <strong>Raporlar / Canlı Kullanım Öncesi Operasyon Test Merkezi</strong>
+        <p>Bu sürümde canlı öncesi test senaryoları, personel deneme planı, yönetici onay matrisi ve test güvenlik kilidi özellikle kontrol edilmelidir.</p>
       </div>
 
       <div className="system-workflow-panel" {...sectionHighlightProps("system-workflow-model")}>
@@ -681,6 +700,24 @@ export default function SystemStatusPanel() {
         </div>
         <p className="system-workflow-safety-note">
           Gerçek veri bağlantısı, DB okuma, query, import ve veri yazma işlemleri yalnızca ayrı küçük ve açık onaylı sürümlerde ele alınır.
+        </p>
+      </div>
+
+      <div className="handheld-barcode-status-panel prelive-operation-test-status-panel" {...sectionHighlightProps("prelive-operation-test-status")}>
+        <div>
+          <h3>Canlı Öncesi Operasyon Test Durumu <NewReleaseBadge sectionId="prelive-operation-test-status" /></h3>
+          <p>Personel denemesi, yönetici onayı, saha kontrolü ve canlıya geçiş hazırlığı pasif test özeti olarak takip edilir.</p>
+        </div>
+        <div className="system-status-grid">
+          {preliveOperationTestStatusRows.map((row) => (
+            <div className="system-status-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </div>
+          ))}
+        </div>
+        <p className="handheld-barcode-safety-note prelive-operation-test-safety-note">
+          Bu sürüm canlı kullanım öncesi test görünürlüğü sağlar; gerçek bağlantı, cihaz entegrasyonu, DB okuma, kayıt oluşturma veya veri yazma işlemi yapmaz.
         </p>
       </div>
 

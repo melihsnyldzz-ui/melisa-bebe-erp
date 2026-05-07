@@ -1,18 +1,18 @@
-export const currentReleaseVersion = "v1.34.0";
+export const currentReleaseVersion = "v1.35.0";
 
-export const currentReleaseTitle = "Raporlama ve Yönetici Karar Merkezi";
+export const currentReleaseTitle = "Canlı Kullanım Öncesi Operasyon Test Merkezi";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "reporting-decision-status"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "prelive-operation-test-status"];
 
 export const releaseHighlightItems = [
-  "Yönetici raporlama merkezi; stok, barkod, cari, alacak, kârlılık ve Vega hazırlık durumlarını tek bakışta toparladı.",
-  "Patron günlük karar özeti, risk raporları ve operasyon kontrol alanları pasif/mock modda güçlendirildi.",
-  "Gerçek Vega bağlantısı, DB okuma, query, rapor export, kayıt oluşturma veya veri yazma eklenmeden güvenli hazırlık korundu.",
+  "Canlı kullanım öncesi personel, patron, saha ve güvenlik testleri tek merkezde toparlandı.",
+  "Dashboard, raporlama, el terminali, cari, stok ve Vega hazırlık modülleri için pasif test senaryoları görünür hale getirildi.",
+  "Gerçek Vega bağlantısı, DB okuma, query, kayıt oluşturma, cihaz bağlantısı veya veri yazma eklenmeden güvenli hazırlık korundu.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
-  { id: "reporting-decision-status", label: "Raporlama ve Yönetici Karar Durumu'na git" },
+  { id: "prelive-operation-test-status", label: "Canlı Öncesi Operasyon Test Durumu'na git" },
   { id: "system-workflow-model", label: "Çalışma Modeli'ne git" },
 ];
 
@@ -28,23 +28,24 @@ export const releaseHighlightsByPage = {
     releaseHighlightItems,
     releaseJumpLinks: [
       { id: "dashboard-owner-view", label: "Patron Bakışı'na git" },
+      { id: "dashboard-prelive-operation-test-center", label: "Canlı Öncesi Test Merkezi'ne git" },
       { id: "dashboard-reporting-decision-center", label: "Raporlama ve Yönetici Karar Merkezi'ne git" },
       { id: "dashboard-commerce-profitability-center", label: "Alış Satış ve Kârlılık Merkezi'ne git" },
       { id: "dashboard-daily-operation", label: "Bugünkü Operasyon Özeti'ne git" },
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-owner-view", "dashboard-reporting-decision-center", "dashboard-daily-operation"],
+    updatedSectionIds: ["dashboard-owner-view", "dashboard-prelive-operation-test-center", "dashboard-daily-operation"],
   },
   reports: {
     releaseHighlightItems,
     releaseJumpLinks: [
-      { id: "reports-decision-center", label: "Yönetici Karar Merkezi'ne git" },
-      { id: "reports-risk-reports", label: "Risk Raporları'na git" },
-      { id: "reports-priority-matrix", label: "Yönetici Öncelik Matrisi'ne git" },
-      { id: "reports-security-lock", label: "Rapor Güvenlik Kilidi'ne git" },
+      { id: "reports-prelive-test-center", label: "Canlı Öncesi Test Merkezi'ne git" },
+      { id: "reports-prelive-scenarios", label: "Test Senaryoları'na git" },
+      { id: "reports-staff-trial-plan", label: "Personel Deneme Planı'na git" },
+      { id: "reports-prelive-security-lock", label: "Test Güvenlik Kilidi'ne git" },
     ],
-    updatedSectionIds: ["reports-decision-center", "reports-risk-reports", "reports-priority-matrix", "reports-security-lock"],
+    updatedSectionIds: ["reports-prelive-test-center", "reports-prelive-scenarios", "reports-staff-trial-plan", "reports-prelive-security-lock"],
   },
   customers: {
     releaseHighlightItems,
