@@ -15,6 +15,11 @@ const statusRows = [
   { label: "Build kontrolü", value: "GitHub Actions + npm run build" },
   { label: "Çalışma modeli", value: "Main üzerinden manuel Codex akışı" },
   { label: "Kritik işlem politikası", value: "Stok, cari, fiş, yedekleme, import ve migration işlemleri ayrı kontrollü sürümlerle açılır." },
+  { label: "Yönetici raporlama", value: "Pasif/mock hazırlık" },
+  { label: "Risk raporları", value: "Önizleme" },
+  { label: "Günlük karar özeti", value: "Görünür" },
+  { label: "Rapor export", value: "Kapalı" },
+  { label: "Gerçek veri okuma", value: "Kapalı" },
   { label: "Ticari analiz", value: "Pasif/mock hazırlık" },
   { label: "Kâr marjı kontrolü", value: "Önizleme" },
   { label: "Satış kaydı", value: "Kapalı" },
@@ -180,7 +185,22 @@ const commerceProfitabilityStatusRows = [
   { label: "ERP’ye yazma", value: "Kapalı" },
 ];
 
+const reportingDecisionStatusRows = [
+  { label: "Yönetici raporlama", value: "Pasif/mock hazırlık" },
+  { label: "Risk raporları", value: "Önizleme" },
+  { label: "Günlük karar özeti", value: "Görünür" },
+  { label: "Rapor export", value: "Kapalı" },
+  { label: "Gerçek veri okuma", value: "Kapalı" },
+  { label: "ERP’ye yazma", value: "Kapalı" },
+];
+
 const versionHistoryRows = [
+  {
+    version: "v1.34.0",
+    title: "Raporlama ve Yönetici Karar Merkezi",
+    area: "Raporlar / Dashboard / Sistem Durumu / README",
+    description: "Stok, barkod, cari, alacak, kârlılık, saha operasyonu ve Vega hazırlık durumları tek yönetici rapor mantığında pasif/mock olarak toparlandı; gerçek rapor export, DB okuma, query, kayıt oluşturma veya veri yazma eklenmedi.",
+  },
   {
     version: "v1.33.0",
     title: "Alış Satış ve Kârlılık Yönetici Merkezi",
@@ -642,8 +662,8 @@ export default function SystemStatusPanel() {
 
       <div className="system-status-focus-card">
         <span>Bu Sürümde Test Edilecek Alan</span>
-        <strong>Dashboard / Alış Satış ve Kârlılık Yönetici Merkezi</strong>
-        <p>Bu sürümde ticari performans sınıfları, kârlılık öncelik matrisi, marka/kategori takibi ve sistem durumu özellikle kontrol edilmelidir.</p>
+        <strong>Raporlar / Raporlama ve Yönetici Karar Merkezi</strong>
+        <p>Bu sürümde patron günlük karar özeti, risk raporları, yönetici öncelik matrisi ve rapor güvenlik kilidi özellikle kontrol edilmelidir.</p>
       </div>
 
       <div className="system-workflow-panel" {...sectionHighlightProps("system-workflow-model")}>
@@ -661,6 +681,24 @@ export default function SystemStatusPanel() {
         </div>
         <p className="system-workflow-safety-note">
           Gerçek veri bağlantısı, DB okuma, query, import ve veri yazma işlemleri yalnızca ayrı küçük ve açık onaylı sürümlerde ele alınır.
+        </p>
+      </div>
+
+      <div className="handheld-barcode-status-panel reporting-decision-status-panel" {...sectionHighlightProps("reporting-decision-status")}>
+        <div>
+          <h3>Raporlama ve Yönetici Karar Durumu <NewReleaseBadge sectionId="reporting-decision-status" /></h3>
+          <p>Stok, barkod, cari, alacak, kârlılık ve Vega hazırlık durumları pasif yönetici raporu olarak takip edilir.</p>
+        </div>
+        <div className="system-status-grid">
+          {reportingDecisionStatusRows.map((row) => (
+            <div className="system-status-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </div>
+          ))}
+        </div>
+        <p className="handheld-barcode-safety-note reporting-decision-safety-note">
+          Bu sürüm yönetici raporlama görünürlüğü sağlar; gerçek rapor export, DB okuma, query, kayıt oluşturma veya veri yazma işlemi yapmaz.
         </p>
       </div>
 

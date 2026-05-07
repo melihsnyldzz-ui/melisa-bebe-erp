@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.33.0";
-export const APP_STAGE = "Alış Satış ve Kârlılık Yönetici Merkezi";
+export const APP_VERSION = "v1.34.0";
+export const APP_STAGE = "Raporlama ve Yönetici Karar Merkezi";

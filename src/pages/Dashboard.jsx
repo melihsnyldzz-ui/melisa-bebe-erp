@@ -30,6 +30,10 @@ const ownerViewCards = [
   { label: "Düşük marj kontrolü", value: "İzlenecek" },
   { label: "Marka performansı", value: "Önizleme" },
   { label: "Fiyat güncelleme", value: "Kapalı" },
+  { label: "Yönetici raporlama", value: "Önizleme" },
+  { label: "Risk raporları", value: "Hazırlıkta" },
+  { label: "Günlük karar özeti", value: "Aktif görünüm" },
+  { label: "Rapor export", value: "Kapalı" },
   { label: "Barkod operasyonu", value: "Hazırlıkta" },
   { label: "Barkod kalite kontrolü", value: "Öncelikli" },
   { label: "Riskli barkodlar", value: "İzlenecek" },
@@ -57,6 +61,10 @@ const ownerTodayItems = [
   "Yüksek stoklu yavaş ürünler gözden geçirilecek",
   "Marka/kategori performansı yönetici notuna eklenecek",
   "Fiyat güncellemesi yapılmadan önce maliyet doğrulama kuralı netleştirilecek",
+  "Stok/barkod risk raporu gözden geçirilecek",
+  "Cari/alacak risk raporu yöneticiyle kontrol edilecek",
+  "Kârlılık riskleri patron karar listesine alınacak",
+  "El terminali saha notları rapor görünümünde değerlendirilecek",
   "Personel kullanım notları toplanacak",
   "Gerçek veri bağlantısı için yedek ve yetki kontrolü hazırlanacak",
 ];
@@ -72,7 +80,28 @@ const ownerDecisionItems = [
   "Yüksek stoklu ve yavaş satan ürünlerde kampanya kararı patrona bağlıdır",
   "Düşük marjlı çok satan ürünlerde fiyat/maliyet kontrolü yapılmadan karar verilmez",
   "Gerçek fiyat güncelleme bu fazın konusu değildir",
+  "Gerçek rapor export bu fazın konusu değildir.",
+  "Yönetici raporları şu an pasif/mock görünürlük sağlar.",
+  "Gerçek veri okuma ve veri yazma ayrı küçük onaylı fazlarda ele alınır.",
   "Ana hedef: güvenli geçiş, hızlı kontrol, hatasız stok görünürlüğü",
+];
+
+const reportingDecisionStatusCards = [
+  { label: "Raporlama modu", value: "Pasif/mock hazırlık" },
+  { label: "Gerçek veri bağlantısı", value: "Kapalı" },
+  { label: "Rapor export", value: "Kapalı" },
+  { label: "Veri yazma", value: "Kapalı" },
+  { label: "Yönetici karar özeti", value: "Önizleme" },
+  { label: "Günlük kontrol akışı", value: "Hazırlıkta" },
+];
+
+const reportingDecisionCards = [
+  { title: "Stok / Barkod", text: "Barkodsuz ürün, duplicate barkod ve sayım farkı riskleri izlenecek." },
+  { title: "Cari / Alacak", text: "Gecikmiş alacak, yakın vade ve kritik müşteri riskleri yönetici kontrolünde tutulacak." },
+  { title: "Alış / Satış", text: "Düşük marjlı çok satan ürünler ve yüksek stoklu yavaş ürünler kontrol edilecek." },
+  { title: "El Terminali", text: "Sayım sepeti, son okutulanlar ve personel saha notları manuel değerlendirilecek." },
+  { title: "Vega Read-only", text: "İlk gerçek deneme henüz başlamadı; read-only hazırlık güvenli kapıda tutulacak." },
+  { title: "Genel Karar", text: "Gerçek veri bağlantısı ve veri yazma ayrı küçük onaylı fazda ele alınacak." },
 ];
 
 const commerceStatusCards = [
@@ -183,6 +212,8 @@ export default function Dashboard() {
 
       <OwnerView />
 
+      <ReportingDecisionCenter />
+
       <CommerceProfitabilityCenter />
 
       <section className={`kpi-grid dashboard-compact-kpis ${dashboardSectionClass("dashboard-daily-operation")}`} id="dashboard-daily-operation">
@@ -200,6 +231,43 @@ export default function Dashboard() {
         <DashboardNewReleaseBadge sectionId="dashboard-commerce-insights" />
       </CommerceInsights>
     </>
+  );
+}
+
+function ReportingDecisionCenter() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-reporting-decision-center")}`} id="dashboard-reporting-decision-center">
+      <DashboardNewReleaseBadge sectionId="dashboard-reporting-decision-center" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Pasif raporlama hazırlığı</p>
+          <h2>Raporlama ve Yönetici Karar Merkezi</h2>
+          <span>
+            Stok, barkod, cari, alacak, kârlılık, el terminali ve Vega hazırlık durumlarını gerçek veri yazmadan yönetici seviyesinde tek rapor akışında özetleyen pasif hazırlık ekranı.
+          </span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {reportingDecisionStatusCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+
+      <CommercePanel title="Patron Günlük Karar Özeti">
+        <div className="reporting-decision-card-grid">
+          {reportingDecisionCards.map((card) => (
+            <article className="brand-category-performance-card reporting-decision-card" key={card.title}>
+              <strong>{card.title}</strong>
+              <span>{card.text}</span>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+    </section>
   );
 }
 

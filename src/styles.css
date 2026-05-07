@@ -622,6 +622,8 @@ button {
 }
 
 .commerce-profitability-status-grid,
+.reporting-decision-status-grid,
+.reporting-decision-card-grid,
 .commerce-performance-grid,
 .profitability-priority-grid,
 .brand-category-performance-grid {
@@ -630,9 +632,18 @@ button {
 }
 
 .commerce-profitability-status-grid,
+.reporting-decision-card-grid,
 .commerce-performance-grid,
 .brand-category-performance-grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.reporting-decision-status-grid {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.reporting-decision-card span {
+  white-space: normal;
 }
 
 .profitability-priority-grid {
@@ -2003,6 +2014,173 @@ button {
   display: grid;
   grid-template-columns: minmax(0, 1.35fr) minmax(340px, 0.65fr);
   gap: 14px;
+}
+
+.reporting-manager-center {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 16px;
+  padding: 16px;
+  border: 1px solid rgba(24, 100, 171, 0.18);
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f8fbff 0%, #ffffff 54%, #f0fdf4 100%);
+}
+
+.reporting-manager-hero p,
+.reporting-manager-hero h2,
+.reporting-manager-hero span,
+.reporting-manager-panel-heading h3,
+.reporting-manager-panel-heading p {
+  margin: 0;
+}
+
+.reporting-manager-hero p {
+  color: #1864ab;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.reporting-manager-hero h2 {
+  margin-top: 4px;
+  color: var(--anthracite);
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+}
+
+.reporting-manager-hero span {
+  display: block;
+  max-width: 920px;
+  margin-top: 7px;
+  color: var(--muted);
+  font-weight: 760;
+  line-height: 1.55;
+}
+
+.reporting-status-grid,
+.risk-report-card-grid,
+.manager-priority-grid,
+.report-security-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.reporting-status-grid {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.risk-report-card-grid,
+.manager-priority-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.report-security-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.reporting-status-card,
+.reporting-decision-card,
+.risk-report-card,
+.manager-priority-card,
+.report-security-card,
+.reporting-manager-panel {
+  min-width: 0;
+  border: 1px solid #dbeafe;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.reporting-status-card,
+.report-security-card {
+  display: grid;
+  gap: 6px;
+  padding: 12px;
+}
+
+.reporting-status-card span,
+.reporting-status-card strong,
+.report-security-card span,
+.report-security-card strong {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.reporting-status-card span,
+.report-security-card span {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 850;
+}
+
+.reporting-status-card strong {
+  color: #0f766e;
+  font-size: 0.94rem;
+}
+
+.report-security-card strong {
+  color: #9a3412;
+  font-size: 0.94rem;
+}
+
+.reporting-manager-panel {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+}
+
+.reporting-manager-panel-heading {
+  display: grid;
+  gap: 4px;
+}
+
+.reporting-manager-panel-heading h3 {
+  color: var(--anthracite);
+  font-size: 1.04rem;
+}
+
+.reporting-manager-panel-heading p {
+  color: var(--muted);
+  font-weight: 750;
+  line-height: 1.5;
+}
+
+.reporting-decision-card,
+.risk-report-card,
+.manager-priority-card {
+  padding: 13px;
+}
+
+.reporting-decision-card strong,
+.risk-report-card h4,
+.manager-priority-card h4 {
+  margin: 0;
+  color: #1864ab;
+  font-size: 0.96rem;
+}
+
+.reporting-decision-card p {
+  margin: 7px 0 0;
+  color: var(--muted);
+  font-weight: 760;
+  line-height: 1.45;
+}
+
+.risk-report-card ul,
+.manager-priority-card ul {
+  display: grid;
+  gap: 7px;
+  margin: 9px 0 0;
+  padding-left: 18px;
+  color: var(--text);
+  font-weight: 740;
+  line-height: 1.45;
+}
+
+.reports-release-badge {
+  justify-self: end;
 }
 
 .reports-chart-panel {
@@ -6460,6 +6638,12 @@ tr:last-child td {
   .dashboard-bottom-grid,
   .dashboard-owner-panel-grid,
   .profitability-priority-grid,
+  .reporting-decision-status-grid,
+  .reporting-decision-card-grid,
+  .reporting-status-grid,
+  .risk-report-card-grid,
+  .manager-priority-grid,
+  .report-security-grid,
   .dashboard-distribution-strip .dashboard-distribution-list,
   .quick-sale-controls,
   .quick-sale-totals,
@@ -6535,8 +6719,14 @@ tr:last-child td {
 
   .dashboard-owner-card-grid,
   .commerce-profitability-status-grid,
+  .reporting-decision-status-grid,
+  .reporting-decision-card-grid,
   .commerce-performance-grid,
   .brand-category-performance-grid,
+  .reporting-status-grid,
+  .risk-report-card-grid,
+  .manager-priority-grid,
+  .report-security-grid,
   .system-workflow-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -6701,14 +6891,21 @@ tr:last-child td {
   .system-status-grid,
   .dashboard-owner-card-grid,
   .commerce-profitability-status-grid,
+  .reporting-decision-status-grid,
+  .reporting-decision-card-grid,
   .commerce-performance-grid,
   .profitability-priority-grid,
   .brand-category-performance-grid,
+  .reporting-status-grid,
+  .risk-report-card-grid,
+  .manager-priority-grid,
+  .report-security-grid,
   .system-workflow-grid {
     grid-template-columns: 1fr;
   }
 
-  .commerce-profitability-center {
+  .commerce-profitability-center,
+  .reporting-manager-center {
     padding: 13px;
     border-radius: 10px;
   }
@@ -7364,6 +7561,17 @@ tr:last-child td {
   border-color: #bbf7d0;
   color: #166534;
   background: #f0fdf4;
+}
+
+.reporting-decision-status-panel {
+  border-color: #bfdbfe;
+  background: linear-gradient(135deg, #eff6ff, #ffffff);
+}
+
+.reporting-decision-safety-note {
+  border-color: #bfdbfe;
+  color: #1d4ed8;
+  background: #eff6ff;
 }
 
 @media (max-width: 1180px) {

@@ -1,18 +1,18 @@
-export const currentReleaseVersion = "v1.33.0";
+export const currentReleaseVersion = "v1.34.0";
 
-export const currentReleaseTitle = "Alış Satış ve Kârlılık Yönetici Merkezi";
+export const currentReleaseTitle = "Raporlama ve Yönetici Karar Merkezi";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "commerce-profitability-status"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "reporting-decision-status"];
 
 export const releaseHighlightItems = [
-  "Alış, satış ve kârlılık görünürlüğü yönetici kararları için daha net hale getirildi.",
-  "Kâr marjı, düşük kârlı ürün, marka/kategori performansı ve ticari riskler pasif/mock modda toparlandı.",
-  "GitHub çalışma modeli main üzerinden manuel Codex akışına göre güncellendi; gerçek Vega bağlantısı, DB okuma, query, satış/alış kaydı, fiyat güncelleme veya veri yazma eklenmeden güvenli hazırlık korundu.",
+  "Yönetici raporlama merkezi; stok, barkod, cari, alacak, kârlılık ve Vega hazırlık durumlarını tek bakışta toparladı.",
+  "Patron günlük karar özeti, risk raporları ve operasyon kontrol alanları pasif/mock modda güçlendirildi.",
+  "Gerçek Vega bağlantısı, DB okuma, query, rapor export, kayıt oluşturma veya veri yazma eklenmeden güvenli hazırlık korundu.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
-  { id: "commerce-profitability-status", label: "Alış Satış ve Kârlılık Durumu'na git" },
+  { id: "reporting-decision-status", label: "Raporlama ve Yönetici Karar Durumu'na git" },
   { id: "system-workflow-model", label: "Çalışma Modeli'ne git" },
 ];
 
@@ -28,12 +28,23 @@ export const releaseHighlightsByPage = {
     releaseHighlightItems,
     releaseJumpLinks: [
       { id: "dashboard-owner-view", label: "Patron Bakışı'na git" },
+      { id: "dashboard-reporting-decision-center", label: "Raporlama ve Yönetici Karar Merkezi'ne git" },
       { id: "dashboard-commerce-profitability-center", label: "Alış Satış ve Kârlılık Merkezi'ne git" },
       { id: "dashboard-daily-operation", label: "Bugünkü Operasyon Özeti'ne git" },
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-owner-view", "dashboard-commerce-profitability-center", "dashboard-daily-operation"],
+    updatedSectionIds: ["dashboard-owner-view", "dashboard-reporting-decision-center", "dashboard-daily-operation"],
+  },
+  reports: {
+    releaseHighlightItems,
+    releaseJumpLinks: [
+      { id: "reports-decision-center", label: "Yönetici Karar Merkezi'ne git" },
+      { id: "reports-risk-reports", label: "Risk Raporları'na git" },
+      { id: "reports-priority-matrix", label: "Yönetici Öncelik Matrisi'ne git" },
+      { id: "reports-security-lock", label: "Rapor Güvenlik Kilidi'ne git" },
+    ],
+    updatedSectionIds: ["reports-decision-center", "reports-risk-reports", "reports-priority-matrix", "reports-security-lock"],
   },
   customers: {
     releaseHighlightItems,

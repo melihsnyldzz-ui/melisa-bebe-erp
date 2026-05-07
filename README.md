@@ -6,8 +6,8 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 
 ## Mevcut Durum
 
-- Güncel sürüm: v1.33.0
-- Aşama: Alış Satış ve Kârlılık Yönetici Merkezi
+- Güncel sürüm: v1.34.0
+- Aşama: Raporlama ve Yönetici Karar Merkezi
 - Build kontrolü: GitHub Actions
 - El terminali: okuma, son okutulanlar, sayım sepeti, rapor/CSV/JSON önizleme hazırlığı
 - Stok ve barkod kalite kontrolü: pasif/mock risk görünürlüğü
@@ -62,6 +62,13 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 - Düşük marj, yüksek stok, yavaş satış ve maliyet belirsizliği gibi riskler pasif olarak takip edilir.
 - Gerçek satış, alış, fiyat güncelleme veya veri yazma yapılmaz.
 - Gerçek ticari işlem akışı ileride ayrı küçük onaylı fazda ele alınır.
+
+## Raporlama ve Yönetici Karar Merkezi Fazı
+
+- Bu faz stok, barkod, cari, alacak, kârlılık, saha operasyonu ve Vega hazırlık durumlarını tek yönetici rapor mantığında toplar.
+- Raporlar pasif/mock görünürlük sağlar.
+- Gerçek veri okuma, rapor export, kayıt oluşturma veya veri yazma yapılmaz.
+- Gerçek raporlama bağlantısı ileride ayrı küçük onaylı fazda ele alınır.
 
 ## Build Kontrolü
 
