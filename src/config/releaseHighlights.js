@@ -1,18 +1,18 @@
-export const currentReleaseVersion = "v1.50.0";
+export const currentReleaseVersion = "v1.51.0";
 
-export const currentReleaseTitle = "İlk Kapalı Beta Desktop Hazırlığı";
+export const currentReleaseTitle = "İlk Başarılı Read-only Vega Stok Okuma Kanıtı";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "closed-beta-preparation-status"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "readonly-stock-proof-status"];
 
 export const releaseHighlightItems = [
-  "İlk kapalı beta desktop hazırlığı patron bilgisayarında deneme kapsamı için görünür hale getirildi.",
-  "Local Desktop, Windows masaüstü hedefi, build kontrolü, Electron paket doğrulaması ve kapalı Vega/veri yazma kilitleri tek merkezde toplandı.",
-  "Canlı Vega bağlantısı, yeni SQL, .env.local okuma, canlı veri çekme, ERP arayüzünden bağlantı, veri yazma veya import eklenmeden güvenli beta hazırlığı korundu.",
+  "İlk başarılı read-only Vega stok smoke test sonucu canlı stok değerleri repoya yazılmadan teknik kanıt olarak görünür hale getirildi.",
+  "20 satır stok kartı okunduğu, beklenen kolonların geldiği ve sonucun yalnızca terminalde kaldığı pasif metadata ile belgelendi.",
+  "Veri yazma, import/senkron, ERP arayüzünden bağlantı, bağlantı bilgisi paylaşımı veya canlı stok değerlerini repoya ekleme yapılmadan güvenli sınır korundu.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
-  { id: "closed-beta-preparation-status", label: "Kapalı Beta Durumu'na git" },
+  { id: "readonly-stock-proof-status", label: "Stok Okuma Kanıtı'na git" },
   { id: "system-workflow-model", label: "Çalışma Modeli'ne git" },
 ];
 
@@ -28,6 +28,7 @@ export const releaseHighlightsByPage = {
     releaseHighlightItems,
     releaseJumpLinks: [
       { id: "dashboard-owner-view", label: "Patron Bakışı'na git" },
+      { id: "dashboard-successful-stock-read-proof", label: "Başarılı Stok Okuma Kanıtı'na git" },
       { id: "dashboard-closed-beta-preparation", label: "Kapalı Beta Hazırlığı'na git" },
       { id: "dashboard-desktop-preparation-center", label: "Desktop Hazırlık Merkezi'ne git" },
       { id: "dashboard-passive-vega-connection-status", label: "Vega Bağlantı Durumu'na git" },
@@ -50,7 +51,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-owner-view", "dashboard-closed-beta-preparation", "dashboard-daily-operation"],
+    updatedSectionIds: ["dashboard-owner-view", "dashboard-successful-stock-read-proof", "dashboard-readonly-stock-smoke-summary"],
   },
   reports: {
     releaseHighlightItems,

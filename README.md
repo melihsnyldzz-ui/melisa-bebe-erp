@@ -6,8 +6,8 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 
 ## Mevcut Durum
 
-- Güncel sürüm: v1.50.0
-- Aşama: İlk Kapalı Beta Desktop Hazırlığı
+- Güncel sürüm: v1.51.0
+- Aşama: İlk Başarılı Read-only Vega Stok Okuma Kanıtı
 - Build kontrolü: GitHub Actions
 - El terminali: okuma, son okutulanlar, sayım sepeti, rapor/CSV/JSON önizleme hazırlığı
 - Stok ve barkod kalite kontrolü: pasif/mock risk görünürlüğü
@@ -203,6 +203,17 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 - SQL/Vega bağlantısı hâlâ sadece local terminalde `npm run vega:readonly-stock-smoke` smoke test seviyesinde kalır.
 - Electron paket kontrolü `npm run electron:build` ile manuel doğrulama bekler.
 - Bu kapalı beta sürümü canlı Vega'ya arayüzden bağlanmaz ve veri yazmaz. Amaç masaüstü uygulama akışını, ekranları ve güvenlik kilitlerini patron bilgisayarında test etmektir.
+
+## İlk Başarılı Read-only Vega Stok Okuma Kanıtı
+
+- İlk read-only stok smoke test başarılı oldu.
+- 20 stok kartı okundu.
+- Okunan kolonlar: `IND`, `STOKKODU`, `MALINCINSI`, `KOD1`, `KOD2`, `KOD4`, `KOD6`, `ALISFIYATI`, `ISKSATISFIYATI2`, `ISKSATISFIYATI3`, `KDVGRUBU`.
+- Veri yazma, import, senkron, cari/fiş/hareket okuma yapılmadı.
+- Sonuç dosyaya yazılmadı.
+- Gerçek stok verileri repoya eklenmedi.
+- SQL kullanıcı bilgileri ve bağlantı bilgileri repoya eklenmedi.
+- Sonraki canlı bağlantı fazlarından önce yalnızca okuma yetkili ayrı SQL kullanıcısına geçilmesi önerilir.
 
 ## Build Kontrolü
 

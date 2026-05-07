@@ -320,6 +320,17 @@ const readonlyStockSmokeStatusRows = [
   { label: "Sonuç yazma", value: "Yok" },
 ];
 
+const readonlyStockProofStatusRows = [
+  { label: "Test türü", value: "Read-only stok smoke test" },
+  { label: "Sonuç", value: "Başarılı" },
+  { label: "Okunan satır", value: "20" },
+  { label: "Tablo kapsamı", value: "F0102TBLSTOKLAR" },
+  { label: "Kolon doğrulama", value: "Başarılı" },
+  { label: "Veri yazma/import", value: "Yapılmadı" },
+  { label: "Dosyaya çıktı", value: "Alınmadı" },
+  { label: "ERP arayüzünden bağlantı", value: "Yok" },
+];
+
 const vegaStockFieldMapStatusRows = [
   { label: "Alan haritası", value: "Pasif dokümantasyon" },
   { label: "Kolon sayısı", value: `${vegaStockFieldMap.length} alan` },
@@ -343,6 +354,12 @@ const desktopPreparationStatusRows = [
 ];
 
 const versionHistoryRows = [
+  {
+    version: "v1.51.0",
+    title: "İlk Başarılı Read-only Vega Stok Okuma Kanıtı",
+    area: "Dashboard / Sistem Durumu / README",
+    description: "İlk başarılı read-only stok smoke test sonucu canlı stok değerleri, SQL kullanıcı bilgileri veya bağlantı bilgileri repoya yazılmadan teknik metadata olarak görünür hale getirildi; 20 satır ve beklenen kolonlar doğrulandı, veri yazma/import/senkron/dosyaya çıktı yapılmadı.",
+  },
   {
     version: "v1.50.0",
     title: "İlk Kapalı Beta Desktop Hazırlığı",
@@ -1021,6 +1038,24 @@ export default function SystemStatusPanel() {
         </div>
         <p className="handheld-barcode-safety-note readonly-stock-smoke-safety-note">
           Bu sürüm yalnızca local read-only stok kartı okuma denemesi için güvenli hata sınıflandırması sağlar. ERP arayüzünden bağlantı başlatmaz, DB’ye yazmaz, import yapmaz ve sonuçları dosyaya kaydetmez.
+        </p>
+      </div>
+
+      <div className="handheld-barcode-status-panel readonly-stock-proof-status-panel" {...sectionHighlightProps("readonly-stock-proof-status")}>
+        <div>
+          <h3>İlk Başarılı Read-only Vega Stok Okuma Kanıtı <NewReleaseBadge sectionId="readonly-stock-proof-status" /></h3>
+          <p>Başarılı stok smoke test sonucu yalnızca teknik metadata olarak tutulur; gerçek stok kodu, ürün adı, fiyat, SQL kullanıcısı veya bağlantı bilgisi gösterilmez.</p>
+        </div>
+        <div className="system-status-grid">
+          {readonlyStockProofStatusRows.map((row) => (
+            <div className="system-status-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </div>
+          ))}
+        </div>
+        <p className="handheld-barcode-safety-note readonly-stock-proof-safety-note">
+          Sonraki canlı bağlantı fazlarından önce yalnızca okuma yetkili ayrı SQL kullanıcısına geçilmesi önerilir. Bu kanıt canlı stok değerlerini repoya yazmaz ve ERP arayüzünden bağlantı başlatmaz.
         </p>
       </div>
 

@@ -90,6 +90,8 @@ const ownerViewCards = [
   { label: "ERP bağlantı başlatma", value: "Yok" },
   { label: "Stok alan haritası", value: "Pasif dokümantasyon" },
   { label: "Alan eşleştirme kararı", value: "Kesin değil" },
+  { label: "İlk stok okuma kanıtı", value: "Başarılı" },
+  { label: "Kanıt kapsamı", value: "20 satır / kolon doğrulandı" },
   { label: "Desktop uygulama modu", value: "Local Desktop" },
   { label: "Desktop Vega bağlantısı", value: "Kapalı / terminal smoke test" },
   { label: "Desktop veri yazma", value: "Kapalı" },
@@ -262,6 +264,33 @@ const readonlyStockSmokeSummaryCards = [
   { label: "ERP’ye yazma", value: "Kapalı" },
   { label: "Import", value: "Kapalı" },
   { label: "Sonuç", value: "Terminal önizleme" },
+];
+
+const successfulStockReadProofCards = [
+  { label: "Test türü", value: "Read-only stok smoke test" },
+  { label: "Sonuç", value: "Başarılı" },
+  { label: "Okunan satır", value: "20" },
+  { label: "Tablo kapsamı", value: "F0102TBLSTOKLAR" },
+  { label: "Kolon doğrulama", value: "Başarılı" },
+  { label: "Veri yazma", value: "Yapılmadı" },
+  { label: "Import/senkron", value: "Yapılmadı" },
+  { label: "Dosyaya çıktı", value: "Alınmadı" },
+  { label: "ERP arayüzünden bağlantı", value: "Yok" },
+  { label: "Sonraki hedef", value: "Read-only stok önizleme hazırlığı" },
+];
+
+const successfulStockReadProofColumns = [
+  "IND",
+  "STOKKODU",
+  "MALINCINSI",
+  "KOD1",
+  "KOD2",
+  "KOD4",
+  "KOD6",
+  "ALISFIYATI",
+  "ISKSATISFIYATI2",
+  "ISKSATISFIYATI3",
+  "KDVGRUBU",
 ];
 
 const passiveVegaConnectionSummaryCards = passiveVegaConnectionStatusRows.slice(0, 10);
@@ -470,6 +499,8 @@ export default function Dashboard() {
 
       <ReadonlyStockSmokeSummary />
 
+      <SuccessfulStockReadProof />
+
       <PassiveVegaConnectionStatus />
 
       <VegaStockFieldMapSummary />
@@ -588,6 +619,50 @@ function ReadonlyStockSmokeSummary() {
           </article>
         ))}
       </div>
+    </section>
+  );
+}
+
+function SuccessfulStockReadProof() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-successful-stock-read-proof")}`} id="dashboard-successful-stock-read-proof">
+      <DashboardNewReleaseBadge sectionId="dashboard-successful-stock-read-proof" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Güvenli teknik kanıt</p>
+          <h2>İlk Başarılı Stok Okuma Kanıtı</h2>
+          <span>
+            İlk read-only Vega stok smoke test başarısı yalnızca teknik metadata olarak gösterilir; gerçek stok kodu, ürün adı, fiyat veya bağlantı bilgisi bu ekranda yer almaz.
+          </span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {successfulStockReadProofCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+
+      <CommercePanel
+        title="Doğrulanan Kolonlar"
+        note="Bu liste sadece kolon adlarını gösterir; canlı stok satır değerleri repoya veya uygulama koduna yazılmaz."
+      >
+        <div className="brand-category-performance-grid">
+          {successfulStockReadProofColumns.map((column) => (
+            <article className="brand-category-performance-card" key={column}>
+              <strong>{column}</strong>
+              <span>Kolon geldi</span>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <p className="commerce-profitability-safety-note">
+        Sonraki canlı bağlantı fazlarından önce yalnızca okuma yetkili ayrı SQL kullanıcısına geçilmesi önerilir. Bu kanıt veri yazma, import, senkron, dosyaya çıktı veya ERP arayüzünden bağlantı başlatma içermez.
+      </p>
     </section>
   );
 }
