@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { AlertTriangle, Database, Search, ShieldCheck } from "lucide-react";
 import { currentReleaseVersion } from "../config/releaseHighlights.js";
 import { canUseVegaReadOnlyBridge, listVegaStockReadOnly } from "../utils/desktopBridge.js";
@@ -32,7 +32,9 @@ const demoStockRows = [
 const statusLabels = {
   not_configured: "Vega bağlantısı yok",
   demo: "Demo veri",
+  loading: "Manuel deneme",
   ready: "Read-only bağlantı hazır",
+  success: "Read-only bağlantı hazır",
   error: "Bağlantı hatası",
 };
 
@@ -86,46 +88,51 @@ export default function VegaStockTrial() {
   const [query, setQuery] = useState("");
   const [stockState, setStockState] = useState({
     status: "not_configured",
-    message: "Vega bağlantısı henüz yapılandırılmadı. Gerçek stok okunmuyor.",
+    message: "Vega stok read-only bağlantısı otomatik başlamaz. Manuel deneme yapılana kadar gerçek stok okunmuyor.",
     items: [],
     metadata: defaultConnectionMetadata,
   });
 
-  useEffect(() => {
-    let isActive = true;
-
-    async function loadStockTrial() {
-      if (!canUseVegaReadOnlyBridge()) {
-        return;
-      }
-
-      try {
-        const result = await listVegaStockReadOnly();
-        if (isActive && result) {
-          setStockState(result);
-        }
-      } catch (error) {
-        if (isActive) {
-          setStockState({
-            status: "error",
-            message: error?.message || "Vega read-only denemesi sırasında hata oluştu.",
-            items: [],
-            metadata: defaultConnectionMetadata,
-          });
-        }
-      }
+  const handleManualStockTrial = async () => {
+    if (!canUseVegaReadOnlyBridge()) {
+      setStockState({
+        status: "error",
+        message: "Electron güvenli köprüsü bulunamadı. Vega stok read-only denemesi yalnızca desktop uygulamada manuel çalışır.",
+        items: [],
+        metadata: defaultConnectionMetadata,
+      });
+      return;
     }
 
-    loadStockTrial();
+    setStockState({
+      status: "loading",
+      message: "Manuel Vega stok read-only denemesi çalışıyor...",
+      items: [],
+      metadata: defaultConnectionMetadata,
+    });
 
-    return () => {
-      isActive = false;
-    };
-  }, []);
+    try {
+      const result = await listVegaStockReadOnly();
+      setStockState(result || {
+        status: "error",
+        message: "Vega read-only denemesi güvenli şekilde tamamlanamadı.",
+        items: [],
+        metadata: defaultConnectionMetadata,
+      });
+    } catch {
+      setStockState({
+        status: "error",
+        message: "Vega read-only denemesi sırasında hata oluştu. Ham hata gizlendi.",
+        items: [],
+        metadata: defaultConnectionMetadata,
+      });
+    }
+  };
 
   const hasVegaRows = stockState.items?.length > 0;
   const visibleRows = hasVegaRows ? stockState.items : demoStockRows;
   const visibleStatus = stockState.status;
+  const isStockTrialLoading = stockState.status === "loading";
   const connectionMetadata = { ...defaultConnectionMetadata, ...(stockState.metadata || {}) };
   const connectionCards = [
     { label: "Read-only mod", value: connectionMetadata.readOnlyEnabled ? "Açık" : "Kapalı" },
@@ -384,6 +391,16 @@ export default function VegaStockTrial() {
             <span>
               {stockState.message} {!hasVegaRows && "Gösterilen satırlar demo veridir; gerçek Vega stoğu değildir."}
             </span>
+          </div>
+
+          <div className="vega-readonly-preview-action">
+            <div>
+              <h3>Manuel Read-only Stok Denemesi</h3>
+              <p>Bu işlem otomatik başlamaz; sadece kullanıcı bu butona bastığında 20 satırlık stok read-only önizleme denenir.</p>
+            </div>
+            <button type="button" onClick={handleManualStockTrial} disabled={isStockTrialLoading}>
+              {isStockTrialLoading ? "Deneme çalışıyor..." : "Manuel read-only stok dene"}
+            </button>
           </div>
 
           <div className="vega-readiness-panel">

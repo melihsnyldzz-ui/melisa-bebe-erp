@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.70.0",
+    title: "Vega Stok Read-only Bağlantı Sağlamlaştırma",
+    area: "Dashboard / Vega Stok Deneme / Sistem Durumu",
+    description: "Stok read-only kapsamı sadece stok kartı, manuel tetikleme ve 20 satır sınırıyla sağlamlaştırıldı; Vega Stok Deneme ekranındaki otomatik okuma çağrısı manuel butona taşındı ve veri yazma/import/senkron/export ile cari/sipariş/kasa-finans kapsamı kapalı tutuldu.",
+  },
+  {
     version: "v1.69.1",
     title: "Yönetici Sunum Özeti Netleştirme",
     area: "Dashboard / Sistem Durumu",

@@ -639,6 +639,38 @@ const readOnlyStockPreviewSummaryCards = [
   { label: "Veri yazma/import", value: "Yok" },
 ];
 
+const vegaStockReadonlyHardeningCards = [
+  { label: "Kapsam", value: "Sadece stok kartı" },
+  { label: "Bağlantı", value: "Manuel tetikleme" },
+  { label: "Satır limiti", value: "20" },
+  { label: "Veri yazma", value: "Kapalı" },
+  { label: "Import/Senkron", value: "Kapalı" },
+  { label: "Export", value: "Kapalı" },
+  { label: "Cari/Sipariş/Finans", value: "Kapalı" },
+];
+
+const vegaStockReadonlyPreConnectionChecks = [
+  "Read-only SQL kullanıcısı hazır mı?",
+  "SQL kullanıcısında sadece SELECT yetkisi var mı?",
+  "Manuel yedek alındı mı?",
+  ".env.local Git dışında mı?",
+  "Satır limiti 20 olarak korunuyor mu?",
+  "Bağlantı yalnızca manuel butonla mı çalışıyor?",
+  "Hata halinde otomatik tekrar deneme kapalı mı?",
+];
+
+const vegaStockReadonlyForbiddenItems = [
+  "sa kullanıcısı ile test yapılmaz.",
+  "Veri yazma yapılmaz.",
+  "Import yapılmaz.",
+  "Senkron yapılmaz.",
+  "Export yapılmaz.",
+  "Cari okunmaz.",
+  "Sipariş okunmaz.",
+  "Kasa/finans okunmaz.",
+  "Connection string repoya yazılmaz.",
+];
+
 const stockPreviewSecurityConfirmationCards = [
   { label: "Önizleme sonucu", value: "Başarılı" },
   { label: "Görünen satır", value: "20" },
@@ -960,6 +992,8 @@ export default function Dashboard() {
       <ReadonlyStockSmokeSummary />
 
       <ReadOnlyStockPreviewSummary />
+
+      <VegaStockReadonlyHardeningPanel />
 
       <StockPreviewSecurityConfirmation />
 
@@ -1622,6 +1656,50 @@ function ReadOnlyStockPreviewSummary() {
           </article>
         ))}
       </div>
+    </section>
+  );
+}
+
+function VegaStockReadonlyHardeningPanel() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-vega-stock-readonly-hardening")}`} id="dashboard-vega-stock-readonly-hardening">
+      <DashboardNewReleaseBadge sectionId="dashboard-vega-stock-readonly-hardening" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Stok read-only sağlamlaştırma</p>
+          <h2>Vega Stok Read-only Bağlantı Sağlamlaştırma</h2>
+          <span>Bu faz tam canlı entegrasyon değildir; yalnızca stok kartı için manuel tetiklenen, 20 satır limitli read-only bağlantı güvenliğini görünür kılar.</span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {vegaStockReadonlyHardeningCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+
+      <CommercePanel title="Bağlantı Öncesi Zorunlu Kontroller" note="Bu liste manuel güvenlik kontrolüdür; bağlantı, kayıt veya dosya işlemi başlatmaz.">
+        <div className="commerce-performance-grid">
+          {vegaStockReadonlyPreConnectionChecks.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Bu Fazda Kesin Yasaklar" note="Stok dışı kapsam, yazma işlemi ve hassas bağlantı bilgisi bu fazın dışında kalır.">
+        <div className="commerce-performance-grid">
+          {vegaStockReadonlyForbiddenItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
     </section>
   );
 }

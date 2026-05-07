@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.69.1";
+export const currentReleaseVersion = "v1.70.0";
 
-export const currentReleaseTitle = "Yönetici Sunum Özeti Netleştirme";
+export const currentReleaseTitle = "Vega Stok Read-only Bağlantı Sağlamlaştırma";
 
 export const updatedSectionIds = ["latest-version-history", "system-workflow-model"];
 
 export const releaseHighlightItems = [
-  "Yönetici Sunum Özeti Paneli tek cümlelik yönetici özetiyle daha anlaşılır hale getirildi.",
-  "Sunumun amacı ve panelin yapmadığı işlemler ayrı pasif listelerle netleştirildi.",
-  "Veri okuma/yazma, SQL/Vega işlemi, dosya/rapor üretimi, onay kaydı veya export/import/senkron başlatmadan pasif güvenlik sınırı korundu.",
+  "Vega stok read-only bağlantı sağlamlaştırma fazı sadece stok kartı ve 20 satır sınırıyla görünür hale getirildi.",
+  "Vega Stok Deneme ekranındaki stok okuma denemesi otomatik açılış çağrısından manuel buton tetiklemesine taşındı.",
+  "Cari, sipariş, kasa/finans kapsamı; veri yazma, import, senkron, export ve hassas bağlantı bilgisi eklenmeden güvenli sınır korundu.",
 ];
 
 export const releaseJumpLinks = [
@@ -35,6 +35,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-readonly-test-report-prep", label: "Read-only Test Raporu Hazırlığı'na git" },
       { id: "dashboard-owner-approval-package-prep", label: "Patron Onay Paketi Hazırlığı'na git" },
       { id: "dashboard-management-presentation-summary", label: "Yönetici Sunum Özeti'ne git" },
+      { id: "dashboard-vega-stock-readonly-hardening", label: "Vega Stok Read-only Sağlamlaştırma'ya git" },
       { id: "dashboard-finance-preview-prep-gate", label: "Kasa/Finans Özeti Hazırlık Kapısı'na git" },
       { id: "dashboard-current-preview-prep-gate", label: "Cari Önizleme Hazırlık Kapısı'na git" },
       { id: "dashboard-order-preview-prep-gate", label: "Sipariş Önizleme Hazırlık Kapısı'na git" },
@@ -72,7 +73,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-management-presentation-summary", "dashboard-owner-approval-package-prep"],
+    updatedSectionIds: ["dashboard-vega-stock-readonly-hardening", "dashboard-readonly-stock-preview"],
   },
   reports: {
     releaseHighlightItems,
