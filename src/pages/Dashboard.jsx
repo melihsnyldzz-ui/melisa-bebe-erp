@@ -94,6 +94,53 @@ const currentPreviewForbiddenItems = [
   "Vega'ya veri yazma yok.",
 ];
 
+const orderPreviewPrepGateCards = [
+  { label: "Sipariş kapsam", value: "Planlandı" },
+  { label: "Bağlantı", value: "Yok" },
+  { label: "Veri okuma", value: "Yok" },
+  { label: "Veri yazma", value: "Yok" },
+  { label: "Tablo/sorgu", value: "Eklenmedi" },
+  { label: "Sonraki adım", value: "Sipariş tablo/kapsam analizi" },
+];
+
+const orderPreviewPrepChecklist = [
+  "Sipariş kapsamı netleştirilecek.",
+  "Read-only kullanıcı yetkisi doğrulanacak.",
+  "İlk satır limiti belirlenecek.",
+  "Müşteri/sipariş bilgisi maskeleme kuralı belirlenecek.",
+  "Sipariş durumu alanları ayrıca doğrulanacak.",
+  "Riskli/iade/iptal sipariş görünümü ayrı fazda ele alınacak.",
+];
+
+const orderPreviewCandidateLabels = [
+  "Sipariş no",
+  "Tarih",
+  "Cari kısa etiket",
+  "Sipariş durumu",
+  "Ürün adedi",
+  "Tutar durumu",
+  "Teslimat/termin durumu",
+];
+
+const orderPreviewPrepSafetyNotes = [
+  "Bu sürümde sipariş verisi okunmaz.",
+  "SQL sorgusu yoktur.",
+  "Tablo adı yoktur.",
+  "Müşteri/sipariş verisi repoya yazılmaz.",
+  "Veri yazma/import/senkron/export yoktur.",
+];
+
+const orderPreviewForbiddenItems = [
+  "Sipariş verisi okuma yok.",
+  "SQL sorgusu yok.",
+  "Tablo adı yok.",
+  "Müşteri adı yok.",
+  "Sipariş numarası yok.",
+  "Tutar verisi yok.",
+  "Export/import/senkron yok.",
+  "Vega'ya veri yazma yok.",
+];
+
 const ownerViewCards = [
   { label: "Günlük operasyon durumu", value: "Takipte" },
   { label: "Stok görünürlüğü", value: "Hazırlıkta" },
@@ -682,6 +729,8 @@ export default function Dashboard() {
 
       <CurrentPreviewPrepGate />
 
+      <OrderPreviewPrepGate />
+
       <ClosedBetaPreparationCenter />
 
       <DesktopPreparationCenter />
@@ -885,6 +934,62 @@ function CurrentPreviewPrepGate() {
       </CommercePanel>
 
       <p className="commerce-profitability-safety-note">{currentPreviewPrepSafetyNotes.join(" · ")}</p>
+    </section>
+  );
+}
+
+function OrderPreviewPrepGate() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-order-preview-prep-gate")}`} id="dashboard-order-preview-prep-gate">
+      <DashboardNewReleaseBadge sectionId="dashboard-order-preview-prep-gate" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Pasif sipariş hazırlık kapısı</p>
+          <h2>Sipariş Önizleme Hazırlık Kapısı</h2>
+          <span>Sipariş önizleme modülü için yalnızca güvenli kapsam hazırlığı gösterilir; bağlantı açılmaz, tablo adı veya sorgu eklenmez, veri okunmaz.</span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {orderPreviewPrepGateCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+
+      <CommercePanel title="Sipariş Açılmadan Önce Gereken Şartlar" note="Bu liste sadece manuel kapsam hazırlığı içindir; onay veya kayıt tutmaz.">
+        <div className="commerce-performance-grid">
+          {orderPreviewPrepChecklist.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="İlk Read-only Sipariş Önizlemede Gösterilebilecek Aday Alanlar" note="Bu liste gerçek tablo alanı değildir; yalnızca iş seviyesi aday etiketleri gösterir.">
+        <div className="commerce-performance-grid">
+          {orderPreviewCandidateLabels.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Kesin Yasaklar" note="Bu panel pasif kalır; bağlantı, sorgu, veri okuma veya kayıt işlemi başlatmaz.">
+        <div className="commerce-performance-grid">
+          {orderPreviewForbiddenItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <p className="commerce-profitability-safety-note">{orderPreviewPrepSafetyNotes.join(" · ")}</p>
     </section>
   );
 }

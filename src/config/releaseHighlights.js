@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.64.1";
+export const currentReleaseVersion = "v1.65.0";
 
-export const currentReleaseTitle = "Cari Önizleme Hazırlık Kapısı Durum Netleştirme";
+export const currentReleaseTitle = "Sipariş Önizleme Hazırlık Kapısı";
 
 export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "stock-preview-beta-package-status"];
 
 export const releaseHighlightItems = [
-  "Cari Önizleme Hazırlık Kapısı içinde cari verisinin neden henüz okunmadığı daha net açıklandı.",
-  "Cari açılmadan önce gereken 5 şart, aday alanlar ve kesin yasaklar pasif bilgi kutuları olarak eklendi.",
-  "Gerçek cari verisi, tablo adı, SQL sorgusu, import, senkron, export veya SQL/Vega otomatik bağlantısı eklenmeden read-only güvenlik modeli korundu.",
+  "Sipariş Önizleme için pasif hazırlık kapısı eklendi.",
+  "Sipariş kapsamı, aday alanlar, güvenlik notları ve kesin yasaklar bağlantı açmadan görünür hale getirildi.",
+  "Gerçek sipariş verisi, tablo adı, SQL sorgusu, import, senkron, export veya SQL/Vega otomatik bağlantısı eklenmeden read-only güvenlik modeli korundu.",
 ];
 
 export const releaseJumpLinks = [
@@ -30,6 +30,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-owner-view", label: "Patron Bakışı'na git" },
       { id: "dashboard-vega-readonly-operation-center", label: "Vega Read-only Operasyon Merkezi'ne git" },
       { id: "dashboard-current-preview-prep-gate", label: "Cari Önizleme Hazırlık Kapısı'na git" },
+      { id: "dashboard-order-preview-prep-gate", label: "Sipariş Önizleme Hazırlık Kapısı'na git" },
       { id: "dashboard-stock-preview-beta-package", label: "Stok Önizleme Beta Hazırlığı'na git" },
       { id: "dashboard-vega-stock-screen-simplification", label: "Vega Stok Sadeleştirme'ye git" },
       { id: "dashboard-stock-preview-user-test", label: "Stok Önizleme Kullanıcı Testi'ne git" },
@@ -64,7 +65,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-current-preview-prep-gate", "dashboard-vega-readonly-operation-center", "dashboard-owner-view"],
+    updatedSectionIds: ["dashboard-order-preview-prep-gate", "dashboard-current-preview-prep-gate", "dashboard-vega-readonly-operation-center"],
   },
   reports: {
     releaseHighlightItems,
