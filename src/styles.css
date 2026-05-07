@@ -7662,6 +7662,17 @@ tr:last-child td {
   background: #fff1f2;
 }
 
+.readonly-final-security-status-panel {
+  border-color: #fde68a;
+  background: linear-gradient(135deg, #fffbeb, #ffffff);
+}
+
+.readonly-final-security-safety-note {
+  border-color: #fde68a;
+  color: #92400e;
+  background: #fffbeb;
+}
+
 @media (max-width: 1180px) {
   .current-account-status-grid,
   .current-account-risk-class-grid,

@@ -1,18 +1,18 @@
-export const currentReleaseVersion = "v1.39.0";
+export const currentReleaseVersion = "v1.40.0";
 
-export const currentReleaseTitle = "Read-only İlk Deneme Son Karar Merkezi";
+export const currentReleaseTitle = "Read-only Bağlantı Öncesi Final Güvenlik Kapanışı";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "readonly-final-decision-status"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "readonly-final-security-status"];
 
 export const releaseHighlightItems = [
-  "İlk gerçek read-only deneme öncesi son karar kriterleri ve başla/başlama mantığı tek merkezde toplandı.",
-  "Manuel yedek, read-only kullanıcı, 20 satır sınırı, rollback ve hata yönetimi şartları son kontrol ekranında görünür hale getirildi.",
-  "Gerçek Vega bağlantısı, SQL/ODBC, DB okuma, query, API, connection test veya veri yazma eklenmeden güvenli hazırlık korundu.",
+  "İlk gerçek read-only bağlantı öncesi hazırlık fazı final güvenlik kapanışıyla tamamlandı.",
+  "Yapılmayacak işlemler, kapalı kilitler, modül hazırlık özeti ve sonraki küçük bağlantı fazı netleştirildi.",
+  "Gerçek Vega bağlantısı, SQL/ODBC, DB okuma, query, API, connection test veya veri yazma eklenmeden güvenli hazırlık kapatıldı.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
-  { id: "readonly-final-decision-status", label: "Read-only Son Karar Durumu'na git" },
+  { id: "readonly-final-security-status", label: "Read-only Final Güvenlik Durumu'na git" },
   { id: "system-workflow-model", label: "Çalışma Modeli'ne git" },
 ];
 
@@ -28,6 +28,7 @@ export const releaseHighlightsByPage = {
     releaseHighlightItems,
     releaseJumpLinks: [
       { id: "dashboard-owner-view", label: "Patron Bakışı'na git" },
+      { id: "dashboard-readonly-final-security-summary", label: "Read-only Final Güvenlik Özeti'ne git" },
       { id: "dashboard-readonly-final-decision-summary", label: "Read-only Son Karar Özeti'ne git" },
       { id: "dashboard-readonly-first-trial-summary", label: "İlk Deneme Planı Özeti'ne git" },
       { id: "dashboard-vega-technical-gate-summary", label: "Vega Teknik Ön Kapı Özeti'ne git" },
@@ -39,7 +40,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-owner-view", "dashboard-readonly-final-decision-summary", "dashboard-daily-operation"],
+    updatedSectionIds: ["dashboard-owner-view", "dashboard-readonly-final-security-summary", "dashboard-daily-operation"],
   },
   reports: {
     releaseHighlightItems,
@@ -70,6 +71,10 @@ export const releaseHighlightsByPage = {
   vegaImportPreview: {
     releaseHighlightItems,
     releaseJumpLinks: [
+      { id: "vega-readonly-final-security-closure", label: "Final Güvenlik Kapanışı'na git" },
+      { id: "vega-closed-security-locks", label: "Kapatılan Kilitler'e git" },
+      { id: "vega-not-to-do-list", label: "Yapılmayacak İşlemler'e git" },
+      { id: "vega-next-small-phase-boundary", label: "Sonraki Küçük Faz Sınırı'na git" },
       { id: "vega-readonly-final-decision-center", label: "Son Karar Merkezi'ne git" },
       { id: "vega-start-stop-decision-logic", label: "Başla / Başlama Mantığı'na git" },
       { id: "vega-final-decision-matrix", label: "Son Karar Matrisi'ne git" },
@@ -86,7 +91,7 @@ export const releaseHighlightsByPage = {
       { id: "vega-import-quality-note", label: "Kalite Kontrol Notu'na git" },
       { id: "vega-readonly-roadmap", label: "Read-only Yol Haritası'na git" },
     ],
-    updatedSectionIds: ["vega-readonly-final-decision-center", "vega-start-stop-decision-logic", "vega-final-decision-matrix", "vega-final-security-lock"],
+    updatedSectionIds: ["vega-readonly-final-security-closure", "vega-closed-security-locks", "vega-not-to-do-list", "vega-next-small-phase-boundary"],
   },
 
   warehouseTerminal: {

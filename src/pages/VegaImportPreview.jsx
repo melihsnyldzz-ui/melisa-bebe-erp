@@ -74,6 +74,69 @@ const finalDecisionStatusCards = [
   { label: "Veri yazma/import", value: "Kapalı" },
 ];
 
+const finalSecurityClosureStatusCards = [
+  { label: "Hazırlık fazı", value: "Kapanış kontrolü" },
+  { label: "Gerçek bağlantı", value: "Kapalı" },
+  { label: "İlk bağlantı fazı", value: "Sonraki küçük sürüm" },
+  { label: "İlk kapsam", value: "Sadece 20 stok kartı" },
+  { label: "Veri yazma/import", value: "Kapalı" },
+  { label: "Karar", value: "Ayrı bağlantı fazına hazırlanıyor" },
+];
+
+const closedSecurityLockRows = [
+  { label: "Canlı Vega bağlantısı", value: "Kapalı" },
+  { label: "SQL/ODBC", value: "Kapalı" },
+  { label: "DB okuma", value: "Kapalı" },
+  { label: "Query üretimi", value: "Kapalı" },
+  { label: "Query çalıştırma", value: "Kapalı" },
+  { label: "API/backend", value: "Kapalı" },
+  { label: "Connection test", value: "Kapalı" },
+  { label: "ERP’ye yazma", value: "Kapalı" },
+  { label: "Import", value: "Kapalı" },
+  { label: "LocalStorage", value: "Kapalı" },
+  { label: "Gerçek işlem butonu", value: "Yok" },
+  { label: "Cihaz/scanner bağlantısı", value: "Kapalı" },
+];
+
+const notToDoItems = [
+  "Vega’ya bağlanılmayacak",
+  "SQL/ODBC açılmayacak",
+  "DB okunmayacak",
+  "Query yazılmayacak veya çalıştırılmayacak",
+  "Bağlantı testi yapılmayacak",
+  "Cari/fiş/hareket/tahsilat/ödeme okunmayacak",
+  "ERP’ye veri yazılmayacak",
+  "Import yapılmayacak",
+  "Rapor export yapılmayacak",
+  "Dosya indirilmeyecek",
+  "Cihaz/scanner entegrasyonu yapılmayacak",
+  "Form/input/onay state’i eklenmeyecek",
+];
+
+const completedPreparationCards = [
+  { title: "Dashboard / Patron kokpiti", note: "Yönetici görünürlüğü hazır" },
+  { title: "Raporlama / Karar merkezi", note: "Pasif rapor mantığı hazır" },
+  { title: "Modül olgunluk skoru", note: "Canlıya hazırlık görünür" },
+  { title: "El terminali / barkod", note: "Saha akışı hazır" },
+  { title: "Stok / barkod kalite", note: "Risk matrisi hazır" },
+  { title: "Cari / alacak riskleri", note: "Yönetici risk sınıfları hazır" },
+  { title: "Alış / satış / kârlılık", note: "Ticari karar mantığı hazır" },
+  { title: "Vega read-only hazırlığı", note: "Teknik ön kapı ve son karar ekranı hazır" },
+];
+
+const nextSmallPhaseBoundaryItems = [
+  "Sadece read-only bağlantı",
+  "Sadece stok kartı",
+  "En fazla 20 satır",
+  "Timeout 3000 ms",
+  "Retry kapalı",
+  "Ham hata gizli",
+  "Veri yazma yok",
+  "Import yok",
+  "Cari/fiş/hareket kapsam dışı",
+  "Başarısızlıkta tekrar deneme yok, önce rapor",
+];
+
 const startStopDecisionGroups = [
   {
     title: "Başlamaya Yakın Görünen Şartlar",
@@ -399,6 +462,76 @@ export default function VegaImportPreview() {
           <h1>Vega Read-only Operasyon Merkezi</h1>
           <span>Bu ekran gerçek Vega bağlantısı kurmadan, ilk read-only deneme öncesi güvenlik, saha ve kapsam kontrollerini tek yerde toplar.</span>
         </div>
+      </section>
+
+      <section className="vega-technical-gate-center section-updated-highlight" id="vega-readonly-final-security-closure">
+        <div className="vega-technical-gate-hero">
+          <p>Pasif final güvenlik kapanışı</p>
+          <h2>Read-only Bağlantı Öncesi Final Güvenlik Kapanışı</h2>
+          <span>
+            İlk gerçek Vega read-only bağlantıdan önce hazırlık fazını kapatan, kapalı kilitleri, yapılmayacak işlemleri ve sonraki küçük bağlantı fazının sınırlarını gösteren pasif final güvenlik ekranı.
+          </span>
+        </div>
+
+        <div className="vega-technical-gate-status-grid">
+          {finalSecurityClosureStatusCards.map((card) => (
+            <article className="vega-import-summary-card" key={card.label}>
+              <span>{card.label}</span>
+              <strong>{card.value}</strong>
+            </article>
+          ))}
+        </div>
+
+        <section className="vega-technical-gate-panel" id="vega-closed-security-locks">
+          <h3>Kapatılan Güvenlik Kilitleri</h3>
+          <div className="vega-technical-gate-lock-grid">
+            {closedSecurityLockRows.map((row) => (
+              <article className="vega-technical-lock-row" key={row.label}>
+                <span>{row.label}</span>
+                <strong>{row.value}</strong>
+              </article>
+            ))}
+          </div>
+          <p>Bu sürüm hiçbir kilidi açmaz. Sadece kapalı kilitleri final güvenlik kapanışı olarak görünür hale getirir.</p>
+        </section>
+
+        <section className="vega-technical-gate-panel" id="vega-not-to-do-list">
+          <h3>Bu Fazda Yapılmayacak İşlemler</h3>
+          <div className="vega-technical-gate-card-grid">
+            {notToDoItems.map((item) => (
+              <article className="vega-owner-summary-row" key={item}>
+                <ShieldCheck size={14} />
+                <span>{item}</span>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="vega-technical-gate-panel">
+          <h3>Hazırlığı Tamamlanan Alanlar</h3>
+          <div className="vega-technical-gate-card-grid">
+            {completedPreparationCards.map((card) => (
+              <article className="vega-operation-group-card" key={card.title}>
+                <h3>{card.title}</h3>
+                <p>{card.note}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="vega-technical-gate-panel" id="vega-next-small-phase-boundary">
+          <h3>Sonraki Küçük Faz Sınırı</h3>
+          <p>Bundan sonraki faz artık büyük frontend hazırlık fazı değil, ayrı küçük ve kontrollü ilk read-only bağlantı denemesi olabilir.</p>
+          <div className="vega-technical-gate-card-grid">
+            {nextSmallPhaseBoundaryItems.map((item) => (
+              <article className="vega-owner-summary-row" key={item}>
+                <ShieldCheck size={14} />
+                <span>{item}</span>
+              </article>
+            ))}
+          </div>
+          <p>Bu sürümde bağlantı açılmaz. Bu yalnızca sonraki küçük fazın sınırlarını gösterir.</p>
+        </section>
       </section>
 
       <section className="vega-technical-gate-center section-updated-highlight" id="vega-readonly-final-decision-center">

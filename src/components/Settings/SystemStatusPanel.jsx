@@ -251,7 +251,22 @@ const readonlyFinalDecisionStatusRows = [
   { label: "ERP’ye yazma/import", value: "Kapalı" },
 ];
 
+const readonlyFinalSecurityStatusRows = [
+  { label: "Hazırlık fazı", value: "Kapanış kontrolü" },
+  { label: "Gerçek bağlantı", value: "Kapalı" },
+  { label: "Sonraki faz", value: "Küçük read-only deneme" },
+  { label: "İlk kapsam", value: "20 stok kartı" },
+  { label: "Connection test", value: "Kapalı" },
+  { label: "ERP’ye yazma/import", value: "Kapalı" },
+];
+
 const versionHistoryRows = [
+  {
+    version: "v1.40.0",
+    title: "Read-only Bağlantı Öncesi Final Güvenlik Kapanışı",
+    area: "Vega Import Önizleme / Dashboard / Sistem Durumu / README",
+    description: "İlk gerçek read-only bağlantı öncesi hazırlık fazı final güvenlik kapanışıyla kapatıldı; yapılmayacak işlemler, kapalı kilitler ve sonraki küçük read-only bağlantı sınırı görünür hale getirildi; gerçek bağlantı, DB okuma, query, API, connection test veya veri yazma eklenmedi.",
+  },
   {
     version: "v1.39.0",
     title: "Read-only İlk Deneme Son Karar Merkezi",
@@ -749,8 +764,8 @@ export default function SystemStatusPanel() {
 
       <div className="system-status-focus-card">
         <span>Bu Sürümde Test Edilecek Alan</span>
-        <strong>Vega Import Önizleme / Read-only Son Karar Merkezi</strong>
-        <p>Bu sürümde başla/başlama mantığı, son karar matrisi, kapsam sınırı ve güvenlik kilitleri özellikle kontrol edilmelidir.</p>
+        <strong>Vega Import Önizleme / Read-only Final Güvenlik Kapanışı</strong>
+        <p>Bu sürümde kapalı kilitler, yapılmayacak işlemler, tamamlanan hazırlık alanları ve sonraki küçük bağlantı fazı sınırları özellikle kontrol edilmelidir.</p>
       </div>
 
       <div className="system-workflow-panel" {...sectionHighlightProps("system-workflow-model")}>
@@ -768,6 +783,24 @@ export default function SystemStatusPanel() {
         </div>
         <p className="system-workflow-safety-note">
           Gerçek veri bağlantısı, DB okuma, query, import ve veri yazma işlemleri yalnızca ayrı küçük ve açık onaylı sürümlerde ele alınır.
+        </p>
+      </div>
+
+      <div className="handheld-barcode-status-panel readonly-final-security-status-panel" {...sectionHighlightProps("readonly-final-security-status")}>
+        <div>
+          <h3>Read-only Final Güvenlik Kapanışı Durumu <NewReleaseBadge sectionId="readonly-final-security-status" /></h3>
+          <p>İlk gerçek bağlantı öncesi hazırlık kapanışı, kapalı kilitler ve sonraki küçük read-only sınırı pasif sistem özeti olarak takip edilir.</p>
+        </div>
+        <div className="system-status-grid">
+          {readonlyFinalSecurityStatusRows.map((row) => (
+            <div className="system-status-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </div>
+          ))}
+        </div>
+        <p className="handheld-barcode-safety-note readonly-final-security-safety-note">
+          Bu sürüm final güvenlik kapanışı görünürlüğü sağlar; bağlantı, DB okuma, query, API, connection test veya veri yazma işlemi yapmaz.
         </p>
       </div>
 

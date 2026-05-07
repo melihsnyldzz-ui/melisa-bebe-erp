@@ -51,6 +51,10 @@ const ownerViewCards = [
   { label: "Başlama şartları", value: "Kontrol edilecek" },
   { label: "Başlamayı engelleyenler", value: "Görünür" },
   { label: "Son karar veri yazma/import", value: "Kapalı" },
+  { label: "Final güvenlik kapanışı", value: "Tamamlanıyor" },
+  { label: "İlk bağlantı fazı", value: "Sonraki küçük sürüm" },
+  { label: "Final ilk kapsam", value: "20 stok kartı" },
+  { label: "Final veri yazma/import", value: "Kapalı" },
   { label: "Barkod operasyonu", value: "Hazırlıkta" },
   { label: "Barkod kalite kontrolü", value: "Öncelikli" },
   { label: "Riskli barkodlar", value: "İzlenecek" },
@@ -101,6 +105,10 @@ const ownerTodayItems = [
   "Başlamayı engelleyen durumlar kontrol edilecek",
   "İlk deneme kapsam sınırı tekrar doğrulanacak",
   "Veri yazma/import kilidi kapalı kalacak",
+  "Final güvenlik kapanışı gözden geçirilecek",
+  "Yapılmayacak işlemler listesi kontrol edilecek",
+  "Sonraki küçük read-only bağlantı fazı sınırları okunacak",
+  "Final veri yazma/import kilidi kapalı kalacak",
   "Personel kullanım notları toplanacak",
   "Gerçek veri bağlantısı için yedek ve yetki kontrolü hazırlanacak",
 ];
@@ -129,7 +137,19 @@ const ownerDecisionItems = [
   "Bu ekrandan gerçek bağlantı başlatılmaz.",
   "İlk gerçek bağlantı ayrı küçük sürümde açılmalıdır.",
   "Başlama kararı yedek, read-only kullanıcı ve 20 satır sınırı doğrulandıktan sonra verilmelidir.",
+  "Bu sürüm bağlantı açmaz.",
+  "Sonraki faz küçük ve sadece read-only stok okuma olmalıdır.",
+  "Veri yazma, import, cari/fiş/hareket kapsamı hâlâ kapalı kalmalıdır.",
   "Ana hedef: güvenli geçiş, hızlı kontrol, hatasız stok görünürlüğü",
+];
+
+const readonlyFinalSecuritySummaryCards = [
+  { label: "Hazırlık fazı", value: "Kapanış kontrolü" },
+  { label: "Gerçek bağlantı", value: "Kapalı" },
+  { label: "İlk bağlantı fazı", value: "Sonraki küçük sürüm" },
+  { label: "İlk kapsam", value: "20 stok kartı" },
+  { label: "Veri yazma/import", value: "Kapalı" },
+  { label: "Karar", value: "Ayrı bağlantı fazına hazırlık" },
 ];
 
 const readonlyFinalDecisionSummaryCards = [
@@ -310,6 +330,8 @@ export default function Dashboard() {
 
       <OwnerView />
 
+      <ReadonlyFinalSecuritySummary />
+
       <ReadonlyFinalDecisionSummary />
 
       <ReadonlyFirstTrialSummary />
@@ -339,6 +361,30 @@ export default function Dashboard() {
         <DashboardNewReleaseBadge sectionId="dashboard-commerce-insights" />
       </CommerceInsights>
     </>
+  );
+}
+
+function ReadonlyFinalSecuritySummary() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-readonly-final-security-summary")}`} id="dashboard-readonly-final-security-summary">
+      <DashboardNewReleaseBadge sectionId="dashboard-readonly-final-security-summary" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Pasif final güvenlik kapanışı</p>
+          <h2>Read-only Bağlantı Öncesi Final Güvenlik Özeti</h2>
+          <span>Hazırlık fazı kapanırken kapalı kilitler, yapılmayacak işlemler ve sonraki küçük read-only sınırı tek bakışta görünür.</span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {readonlyFinalSecuritySummaryCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+    </section>
   );
 }
 
