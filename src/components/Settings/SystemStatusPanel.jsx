@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.76.0",
+    title: "Personel Kullanım Ekranları Haritası",
+    area: "Dashboard / Sistem Durumu",
+    description: "ERP'nin eksik ana katmanlarından personel kullanım ekranları, depo stok kontrol, barkod/el terminali kontrol, satış sipariş takip, muhasebe cari risk, tahsilat hazırlık, yönetici gün sonu ve teknik entegrasyon ekranları için kullanacak rol, veri modu, risk seviyesi ve sonraki adımı gösteren pasif haritayla görünür hale getirildi; gerçek login, kullanıcı kaydı, görev atama, veri okuma/yazma, SQL/Vega işlemi, dosya/export veya onay kaydı eklenmedi.",
+  },
+  {
     version: "v1.75.0",
     title: "Veri Alan Sözlüğü",
     area: "Dashboard / Sistem Durumu",

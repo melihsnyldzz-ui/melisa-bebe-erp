@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.75.0";
-export const APP_STAGE = "Veri Alan Sözlüğü";
+export const APP_VERSION = "v1.76.0";
+export const APP_STAGE = "Personel Kullanım Ekranları Haritası";

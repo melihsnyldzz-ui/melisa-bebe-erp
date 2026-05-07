@@ -130,6 +130,23 @@ const dataFieldDictionaryNoActionItems = [
   "Dosya/export üretmez.",
   "Onay kaydetmez.",
 ];
+const staffUsageScreenMapCards = [
+  { screen: "Depo Stok Kontrol Ekranı", role: "Depo", dataMode: "Read-only stok", risk: "Orta", nextStep: "Manuel stok test sonrası" },
+  { screen: "Barkod / El Terminali Kontrol Ekranı", role: "Depo", dataMode: "Pasif hazırlık", risk: "Orta", nextStep: "Barkod senaryosu netleşecek" },
+  { screen: "Satış Sipariş Takip Ekranı", role: "Satış", dataMode: "Pasif hazırlık", risk: "Yüksek", nextStep: "Sipariş maskeleme kararı" },
+  { screen: "Muhasebe Cari Risk Ekranı", role: "Muhasebe", dataMode: "Pasif hazırlık", risk: "Yüksek", nextStep: "Cari maskeleme kararı" },
+  { screen: "Muhasebe Tahsilat Hazırlık Ekranı", role: "Muhasebe", dataMode: "Pasif hazırlık", risk: "Çok yüksek", nextStep: "Finans güvenlik kapsamı" },
+  { screen: "Yönetici Gün Sonu Özet Ekranı", role: "Yönetici", dataMode: "Pasif rapor", risk: "Orta", nextStep: "Test raporu disiplini" },
+  { screen: "Teknik Entegrasyon Kontrol Ekranı", role: "Teknik Admin", dataMode: "Manuel test rehberi", risk: "Yüksek", nextStep: "Bağlantı test protokolü" },
+];
+const staffUsageScreenMapNoActionItems = [
+  "Gerçek personel login yok.",
+  "Kullanıcı kaydı yok.",
+  "Görev atama yok.",
+  "Veri okuma/yazma yok.",
+  "SQL/Vega işlemi yok.",
+  "Dosya/export yok.",
+];
 const vegaReadonlyModuleMatrixRows = [
   { module: "Stok", status: "Hazır", read: "Manuel read-only", write: "Yok", risk: "Orta", nextStep: "Kullanıcı doğrulaması" },
   { module: "Cari", status: "Hazırlık", read: "Yok", write: "Yok", risk: "Yüksek", nextStep: "Kapsam analizi" },
@@ -1118,6 +1135,8 @@ export default function Dashboard() {
 
       <DailyOperationWorkflowCenter />
 
+      <StaffUsageScreenMapPanel />
+
       <RiskWarningCenter />
 
       <DataFieldDictionaryPanel />
@@ -1390,6 +1409,43 @@ function DailyOperationWorkflowCenter() {
       <CommercePanel title="Bu Sürümde Olmayanlar" note="Bu kutu günlük akış merkezinin pasif sınırını gösterir; görev, otomasyon veya dosya işlemi başlatmaz.">
         <div className="commerce-performance-grid">
           {dailyOperationWorkflowNoActionItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+    </section>
+  );
+}
+
+function StaffUsageScreenMapPanel() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-staff-usage-screen-map")}`} id="dashboard-staff-usage-screen-map">
+      <DashboardNewReleaseBadge sectionId="dashboard-staff-usage-screen-map" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Pasif personel ekran haritası</p>
+          <h2>Personel Kullanım Ekranları Haritası</h2>
+          <span>İleride hangi personel rolünün hangi ekranı kullanacağını mimari seviyede gösterir; gerçek login, kullanıcı kaydı, görev atama veya veri işlemi başlatmaz.</span>
+        </div>
+      </div>
+
+      <div className="profitability-priority-grid">
+        {staffUsageScreenMapCards.map((card) => (
+          <article className="profitability-priority-card" key={card.screen}>
+            <span>{card.screen}</span>
+            <strong>Kullanacak rol: {card.role}</strong>
+            <p>Veri modu: {card.dataMode}</p>
+            <p>Risk seviyesi: {card.risk}</p>
+            <small>Sonraki adım: {card.nextStep}</small>
+          </article>
+        ))}
+      </div>
+
+      <CommercePanel title="Bu Sürümde Olmayanlar" note="Bu kutu personel ekran haritasının pasif sınırını gösterir; login, kayıt, görev veya dosya işlemi başlatmaz.">
+        <div className="commerce-performance-grid">
+          {staffUsageScreenMapNoActionItems.map((item) => (
             <article className="commerce-performance-card" key={item}>
               <strong>{item}</strong>
             </article>
