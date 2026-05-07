@@ -361,6 +361,15 @@ const stockFieldLabelingPrepCards = [
   { label: "Veri yazma/import", value: "Yok" },
 ];
 
+const stockColumnVisibilityCards = [
+  { label: "Kolon görünürlüğü", value: "Hazır" },
+  { label: "Geçici seçim", value: "Evet" },
+  { label: "Kalıcı kayıt", value: "Yok" },
+  { label: "Yeni SQL", value: "Yok" },
+  { label: "Veri yazma/import", value: "Yok" },
+  { label: "Sonraki hedef", value: "Stok önizleme ekranını sadeleştirme" },
+];
+
 const passiveVegaConnectionSummaryCards = passiveVegaConnectionStatusRows.slice(0, 10);
 
 const closedBetaPreparationCards = closedBetaPreparationRows;
@@ -578,6 +587,8 @@ export default function Dashboard() {
       <StockManualValidationChecklistSummary />
 
       <StockFieldLabelingPrepSummary />
+
+      <StockColumnVisibilitySummary />
 
       <SuccessfulStockReadProof />
 
@@ -849,6 +860,32 @@ function StockFieldLabelingPrepSummary() {
 
       <div className="reporting-decision-status-grid">
         {stockFieldLabelingPrepCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function StockColumnVisibilitySummary() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-stock-column-visibility")}`} id="dashboard-stock-column-visibility">
+      <DashboardNewReleaseBadge sectionId="dashboard-stock-column-visibility" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Geçici ekran tercihi</p>
+          <h2>Stok Önizleme Kolon Görünürlüğü Kontrolü</h2>
+          <span>
+            Read-only önizlemede zaten gelen 20 satırın kolonları ekranda geçici olarak gösterilip gizlenebilir; seçimler kaydedilmez ve SQL kapsamını değiştirmez.
+          </span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {stockColumnVisibilityCards.map((card) => (
           <article className="commerce-profitability-status-card" key={card.label}>
             <span>{card.label}</span>
             <strong>{card.value}</strong>

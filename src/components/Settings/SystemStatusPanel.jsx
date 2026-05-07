@@ -393,6 +393,15 @@ const stockFieldLabelingStatusRows = [
   { label: "Veri yazma/import", value: "Yok" },
 ];
 
+const stockColumnVisibilityStatusRows = [
+  { label: "Kolon görünürlüğü", value: "Hazır" },
+  { label: "Geçici seçim", value: "Evet" },
+  { label: "Kalıcı kayıt", value: "Yok" },
+  { label: "Yeni SQL", value: "Yok" },
+  { label: "Veri yazma/import", value: "Yok" },
+  { label: "Sonraki hedef", value: "Stok önizleme ekranını sadeleştirme" },
+];
+
 const vegaStockFieldMapStatusRows = [
   { label: "Alan haritası", value: "Pasif dokümantasyon" },
   { label: "Kolon sayısı", value: `${vegaStockFieldMap.length} alan` },
@@ -416,6 +425,12 @@ const desktopPreparationStatusRows = [
 ];
 
 const versionHistoryRows = [
+  {
+    version: "v1.58.0",
+    title: "Stok Önizleme Kolon Görünürlüğü Kontrolü",
+    area: "Vega Import Önizleme / Dashboard / Sistem Durumu / README",
+    description: "Read-only stok önizleme ekranında zaten gelen 20 satırın kolonları geçici olarak gösterilip gizlenebilir hale getirildi; görünürlük seçimi frontend state içinde kalır, local DB/dosya/Vega yazma, yeni SQL veya kapsam büyütme oluşturmaz.",
+  },
   {
     version: "v1.57.0",
     title: "Doğrulama Sonrası Stok Alan Etiketleme Hazırlığı",
@@ -1262,6 +1277,24 @@ export default function SystemStatusPanel() {
         </div>
         <p className="handheld-barcode-safety-note stock-field-labeling-safety-note">
           Etiket hazırlığı yalnızca görünürlük sağlar; checklist/etiket sonucu kaydetmez, yeni SQL eklemez, canlı stok değerlerini repoya yazmaz ve Vega’ya veri yazmaz.
+        </p>
+      </div>
+
+      <div className="handheld-barcode-status-panel stock-column-visibility-status-panel" {...sectionHighlightProps("stock-column-visibility-status")}>
+        <div>
+          <h3>Stok Önizleme Kolon Görünürlüğü Kontrolü <NewReleaseBadge sectionId="stock-column-visibility-status" /></h3>
+          <p>Read-only stok önizlemede kolon göster/gizle tercihi yalnızca geçici ekran state’i olarak çalışır; veri kapsamını veya SQL sorgusunu değiştirmez.</p>
+        </div>
+        <div className="system-status-grid">
+          {stockColumnVisibilityStatusRows.map((row) => (
+            <div className="system-status-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </div>
+          ))}
+        </div>
+        <p className="handheld-barcode-safety-note stock-column-visibility-safety-note">
+          Kolon görünürlüğü kalıcı kayıt oluşturmaz; local DB’ye/dosyaya yazmaz, Vega’ya yazmaz, yeni SQL eklemez ve 20 satırlık read-only kapsamı büyütmez.
         </p>
       </div>
 

@@ -168,6 +168,16 @@ const readOnlyStockPreviewColumns = [
   { key: "KDVGRUBU", label: "KDV Grubu Adayı", note: "Muhasebe kontrolü gerekir" },
 ];
 
+const defaultVisibleReadonlyStockColumns = [
+  "STOKKODU",
+  "MALINCINSI",
+  "KOD1",
+  "KOD2",
+  "ALISFIYATI",
+  "ISKSATISFIYATI2",
+  "KDVGRUBU",
+];
+
 const stockFieldValidationNotes = [
   { field: "STOKKODU", meaning: "Stok kodu olarak yüksek güven", status: "Yüksek güven" },
   { field: "MALINCINSI", meaning: "Ürün adı / malın cinsi olarak yüksek güven", status: "Yüksek güven" },
@@ -695,6 +705,7 @@ export default function VegaImportPreview() {
     status: "idle",
   });
   const [readonlyPreviewSearch, setReadonlyPreviewSearch] = useState("");
+  const [visibleReadonlyStockColumns, setVisibleReadonlyStockColumns] = useState(defaultVisibleReadonlyStockColumns);
   const [manualValidationState, setManualValidationState] = useState(() =>
     Object.fromEntries(stockManualValidationChecklist.map((item) => [item, "Bekliyor"]))
   );
@@ -783,6 +794,17 @@ export default function VegaImportPreview() {
           .some((value) => String(value).toLocaleLowerCase("tr-TR").includes(normalizedPreviewSearch))
       )
     : readonlyPreviewState.items;
+  const visibleReadonlyPreviewColumns = readOnlyStockPreviewColumns.filter((column) =>
+    visibleReadonlyStockColumns.includes(column.key)
+  );
+
+  const toggleReadonlyPreviewColumn = (columnKey) => {
+    setVisibleReadonlyStockColumns((current) =>
+      current.includes(columnKey)
+        ? current.filter((key) => key !== columnKey)
+        : [...current, columnKey]
+    );
+  };
 
   const setManualValidationStatus = (item, status) => {
     setManualValidationState((current) => ({
@@ -919,6 +941,26 @@ export default function VegaImportPreview() {
               <p>Arama yalnızca ekranda görünen geçici 20 satır üzerinde çalışır; yeni bağlantı veya SQL sorgusu başlatmaz.</p>
             </div>
 
+            <section className="vega-readonly-column-visibility" id="vega-stock-column-visibility">
+              <div>
+                <h3>Kolon Görünürlüğü</h3>
+                <p>Kolon görünürlüğü yalnızca geçici ekran tercihidir. Veri kaydetmez, Vega’ya yazmaz ve SQL sorgusunu değiştirmez.</p>
+              </div>
+              <div className="vega-readonly-column-toggle-grid">
+                {readOnlyStockPreviewColumns.map((column) => (
+                  <label className="vega-readonly-column-toggle" key={column.key}>
+                    <input
+                      type="checkbox"
+                      checked={visibleReadonlyStockColumns.includes(column.key)}
+                      onChange={() => toggleReadonlyPreviewColumn(column.key)}
+                    />
+                    <span>{column.label}</span>
+                    <small>{defaultVisibleReadonlyStockColumns.includes(column.key) ? "Varsayılan görünür" : "Varsayılan gizli / açılabilir"}</small>
+                  </label>
+                ))}
+              </div>
+            </section>
+
             <div className="vega-readonly-preview-result-grid">
               <article className="vega-import-summary-card">
                 <span>Gelen satır</span>
@@ -940,13 +982,17 @@ export default function VegaImportPreview() {
                 <span>Dosyaya çıktı</span>
                 <strong>Yok</strong>
               </article>
+              <article className="vega-import-summary-card">
+                <span>Görünür kolon</span>
+                <strong>{visibleReadonlyPreviewColumns.length}</strong>
+              </article>
             </div>
 
             <div className="vega-import-table-wrap">
               <table className="vega-import-table">
                 <thead>
                   <tr>
-                    {readOnlyStockPreviewColumns.map((column) => (
+                    {visibleReadonlyPreviewColumns.map((column) => (
                       <th key={column.key}>
                         <span>{column.label}</span>
                         {column.note && <small>{column.note}</small>}
@@ -955,16 +1001,21 @@ export default function VegaImportPreview() {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredReadonlyPreviewItems.map((row, rowIndex) => (
+                  {visibleReadonlyPreviewColumns.length > 0 && filteredReadonlyPreviewItems.map((row, rowIndex) => (
                     <tr key={`${row.IND ?? "row"}-${rowIndex}`}>
-                      {readOnlyStockPreviewColumns.map((column) => (
+                      {visibleReadonlyPreviewColumns.map((column) => (
                         <td key={column.key}>{formatPreviewCellValue(row[column.key], column)}</td>
                       ))}
                     </tr>
                   ))}
                   {filteredReadonlyPreviewItems.length === 0 && (
                     <tr>
-                      <td colSpan={readOnlyStockPreviewColumns.length}>Arama sonucunda eşleşen geçici satır bulunamadı.</td>
+                      <td colSpan={Math.max(visibleReadonlyPreviewColumns.length, 1)}>Arama sonucunda eşleşen geçici satır bulunamadı.</td>
+                    </tr>
+                  )}
+                  {filteredReadonlyPreviewItems.length > 0 && visibleReadonlyPreviewColumns.length === 0 && (
+                    <tr>
+                      <td>Gösterilecek kolon seçilmedi. Kolon görünürlüğü bölümünden en az bir kolon açılabilir.</td>
                     </tr>
                   )}
                 </tbody>

@@ -6,8 +6,8 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 
 ## Mevcut Durum
 
-- Güncel sürüm: v1.57.0
-- Aşama: Doğrulama Sonrası Stok Alan Etiketleme Hazırlığı
+- Güncel sürüm: v1.58.0
+- Aşama: Stok Önizleme Kolon Görünürlüğü Kontrolü
 - Build kontrolü: GitHub Actions
 - El terminali: okuma, son okutulanlar, sayım sepeti, rapor/CSV/JSON önizleme hazırlığı
 - Stok ve barkod kalite kontrolü: pasif/mock risk görünürlüğü
@@ -276,6 +276,15 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 - Etiketler kesin operasyon veya muhasebe kararı değildir; manuel Vega karşılaştırması tamamlandıktan sonra netleştirilecektir.
 - Gerçek stok değerleri, checklist sonucu, SQL kullanıcı bilgileri veya bağlantı bilgileri repoya yazılmaz.
 - Yeni SQL, kapsam büyütme, otomatik bağlantı, veri yazma, import/senkron veya dosyaya canlı veri çıktısı eklenmez.
+
+## Stok Önizleme Kolon Görünürlüğü Kontrolü
+
+- Bu faz read-only stok önizleme ekranında zaten gelen 20 satırın kolonlarını geçici olarak gösterip gizleme kontrolü ekler.
+- Varsayılan görünür kolonlar `STOKKODU`, `MALINCINSI`, `KOD1`, `KOD2`, `ALISFIYATI`, `ISKSATISFIYATI2` ve `KDVGRUBU` olarak sadeleştirildi.
+- `IND`, `KOD4`, `KOD6` ve `ISKSATISFIYATI3` varsayılan gizli ama kullanıcı tarafından geçici olarak açılabilir kaldı.
+- Kolon görünürlüğü yalnızca frontend state içinde geçici ekran tercihidir; local DB’ye, dosyaya veya Vega’ya yazılmaz.
+- Bu seçim veri kapsamını değiştirmez, yeni SQL sorgusu başlatmaz ve 20 satırlık read-only sınırı büyütmez.
+- Gerçek stok değerleri, bağlantı bilgileri, import/senkron veya dosyaya canlı veri çıktısı repoya eklenmez.
 
 ## Build Kontrolü
 
