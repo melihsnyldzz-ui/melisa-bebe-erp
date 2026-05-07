@@ -26,6 +26,10 @@ const ownerViewCards = [
   { label: "Gecikmiş tahsilatlar", value: "İzlenecek" },
   { label: "Gerçek tahsilat kaydı", value: "Kapalı" },
   { label: "Alış / satış özeti", value: "Geliştiriliyor" },
+  { label: "Ticari kârlılık", value: "Hazırlıkta" },
+  { label: "Düşük marj kontrolü", value: "İzlenecek" },
+  { label: "Marka performansı", value: "Önizleme" },
+  { label: "Fiyat güncelleme", value: "Kapalı" },
   { label: "Barkod operasyonu", value: "Hazırlıkta" },
   { label: "Barkod kalite kontrolü", value: "Öncelikli" },
   { label: "Riskli barkodlar", value: "İzlenecek" },
@@ -49,6 +53,10 @@ const ownerTodayItems = [
   "Yakın vade müşterileri manuel takip listesine alınacak",
   "Kritik cari riskler yöneticiye bildirilecek",
   "Tahsilat kaydı yapılmadan önce bakiye doğrulama kuralı netleştirilecek",
+  "Düşük marjlı ürünler manuel kontrol listesine alınacak",
+  "Yüksek stoklu yavaş ürünler gözden geçirilecek",
+  "Marka/kategori performansı yönetici notuna eklenecek",
+  "Fiyat güncellemesi yapılmadan önce maliyet doğrulama kuralı netleştirilecek",
   "Personel kullanım notları toplanacak",
   "Gerçek veri bağlantısı için yedek ve yetki kontrolü hazırlanacak",
 ];
@@ -61,7 +69,64 @@ const ownerDecisionItems = [
   "Kritik riskli müşterilerde yeni satış kararı yöneticiye bağlıdır",
   "Gerçek tahsilat/ödeme kaydı bu fazın konusu değildir",
   "Cari risk görünürlüğü gerçek veri bağlantısından önce pasif olarak olgunlaştırılır",
+  "Yüksek stoklu ve yavaş satan ürünlerde kampanya kararı patrona bağlıdır",
+  "Düşük marjlı çok satan ürünlerde fiyat/maliyet kontrolü yapılmadan karar verilmez",
+  "Gerçek fiyat güncelleme bu fazın konusu değildir",
   "Ana hedef: güvenli geçiş, hızlı kontrol, hatasız stok görünürlüğü",
+];
+
+const commerceStatusCards = [
+  { label: "Ticari analiz modu", value: "Pasif/mock hazırlık" },
+  { label: "Satış kaydı", value: "Kapalı" },
+  { label: "Alış kaydı", value: "Kapalı" },
+  { label: "Fiyat/stok güncelleme", value: "Kapalı" },
+];
+
+const commercePerformanceClasses = [
+  {
+    title: "Güçlü Performans",
+    items: ["Yüksek satış hacmi", "Sağlıklı kâr marjı", "Düzenli stok devri", "Satın alma tekrar planlanabilir"],
+  },
+  {
+    title: "İzlenecek Ürünler",
+    items: ["Satış var ama marj düşük", "Stok devri yavaşlıyor", "Kampanya veya fiyat kontrolü gerekebilir", "Yönetici kontrolü önerilir"],
+  },
+  {
+    title: "Riskli Ürünler",
+    items: ["Düşük satış", "Düşük veya belirsiz kâr marjı", "Stokta bekleme riski", "Yeni alış kararı dikkatli verilmeli"],
+  },
+  {
+    title: "Kritik Ticari Risk",
+    items: ["Yüksek stok / düşük satış", "Yanlış fiyat veya eksik maliyet riski", "Marka/kategori performansı zayıf", "Patron kararı gerekir"],
+  },
+];
+
+const profitabilityPriorityRows = [
+  { risk: "Düşük marjlı çok satan ürün", action: "Maliyet ve satış fiyatını manuel karşılaştır", ownerDecision: "Evet", priority: "Yüksek Öncelik" },
+  { risk: "Yüksek stoklu yavaş ürün", action: "Kampanya veya vitrin önerisine al", ownerDecision: "Evet", priority: "Yüksek Öncelik" },
+  { risk: "Maliyeti belirsiz ürün", action: "Maliyet doğrulaması tamamlanana kadar fiyat kararını beklet", ownerDecision: "Evet", priority: "Yüksek Öncelik" },
+  { risk: "Orta marjlı ürün", action: "Satış hızı ve stok devrini haftalık takip et", ownerDecision: "Hayır", priority: "Orta Öncelik" },
+  { risk: "Kampanya ihtiyacı olan ürün", action: "Yönetici notuna kampanya önerisi olarak ekle", ownerDecision: "Evet", priority: "Orta Öncelik" },
+  { risk: "Sezon geçiş ürünü", action: "Kategori performansını dönemsel olarak izle", ownerDecision: "Hayır", priority: "Orta Öncelik" },
+  { risk: "Sağlıklı marjlı ürün", action: "Standart takipte bırak", ownerDecision: "Hayır", priority: "Düşük Öncelik" },
+  { risk: "Hızlı dönen ürün", action: "Stok devrini rutin yönetici özetinde göster", ownerDecision: "Hayır", priority: "Düşük Öncelik" },
+  { risk: "Düşük riskli kategori", action: "Normal takip listesinde tut", ownerDecision: "Hayır", priority: "Düşük Öncelik" },
+];
+
+const brandCategoryPerformanceCards = [
+  { title: "Güçlü marka grubu", note: "Satış ve marj dengesi izlenecek" },
+  { title: "Yavaşlayan marka grubu", note: "Stok ve satış hızı kontrol edilecek" },
+  { title: "Sezonluk kategori", note: "Dönemsel takip yapılacak" },
+  { title: "Riskli kategori", note: "Stok bekleme ve düşük marj kontrol edilecek" },
+];
+
+const priceMarginGuideItems = [
+  "Satış fiyatı değerlendirilmeden önce alış maliyeti manuel kontrol edilir.",
+  "Düşük marjlı ürünler ayrı listeye alınır.",
+  "Yüksek stoklu ürünlerde kampanya kararı patron tarafından verilir.",
+  "Maliyeti belirsiz ürünlerde fiyat güncellemesi yapılmaz.",
+  "Bu ekranda fiyat güncelleme, satış kaydı veya alış kaydı oluşturulmaz.",
+  "Gerçek fiyat/marj işlemleri ayrı fazda planlanır.",
 ];
 
 
@@ -118,6 +183,8 @@ export default function Dashboard() {
 
       <OwnerView />
 
+      <CommerceProfitabilityCenter />
+
       <section className={`kpi-grid dashboard-compact-kpis ${dashboardSectionClass("dashboard-daily-operation")}`} id="dashboard-daily-operation">
         <DashboardNewReleaseBadge sectionId="dashboard-daily-operation" />
         {dashboardData.kpis.map((item, index) => (
@@ -133,6 +200,91 @@ export default function Dashboard() {
         <DashboardNewReleaseBadge sectionId="dashboard-commerce-insights" />
       </CommerceInsights>
     </>
+  );
+}
+
+function CommerceProfitabilityCenter() {
+  return (
+    <section className={`commerce-profitability-center ${dashboardSectionClass("dashboard-commerce-profitability-center")}`} id="dashboard-commerce-profitability-center">
+      <DashboardNewReleaseBadge sectionId="dashboard-commerce-profitability-center" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Pasif yönetici hazırlığı</p>
+          <h2>Alış Satış ve Kârlılık Yönetici Merkezi</h2>
+          <span>
+            Alış, satış, kâr marjı, düşük kârlı ürünler ve marka/kategori performansını gerçek veri yazmadan yönetici seviyesinde görünür hale getiren pasif hazırlık ekranı.
+          </span>
+        </div>
+      </div>
+
+      <div className="commerce-profitability-status-grid">
+        {commerceStatusCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+
+      <CommercePanel title="Ticari Performans Sınıfları">
+        <div className="commerce-performance-grid">
+          {commercePerformanceClasses.map((group) => (
+            <article className="commerce-performance-card" key={group.title}>
+              <h4>{group.title}</h4>
+              <ul>
+                {group.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Kârlılık Öncelik Matrisi">
+        <div className="profitability-priority-grid">
+          {profitabilityPriorityRows.map((row) => (
+            <article className="profitability-priority-card" key={`${row.priority}-${row.risk}`}>
+              <span>{row.priority}</span>
+              <strong>{row.risk}</strong>
+              <p>{row.action}</p>
+              <small>Patron kararı gerekir mi? {row.ownerDecision}</small>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Marka ve Kategori Performansı" note="Bu panel gerçek veri okumaz, sadece yönetici takip mantığını hazırlar.">
+        <div className="brand-category-performance-grid">
+          {brandCategoryPerformanceCards.map((card) => (
+            <article className="brand-category-performance-card" key={card.title}>
+              <strong>{card.title}</strong>
+              <span>{card.note}</span>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Fiyat ve Marj Kontrol Rehberi">
+        <ul className="price-margin-guide-list">
+          {priceMarginGuideItems.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      </CommercePanel>
+    </section>
+  );
+}
+
+function CommercePanel({ children, note, title }) {
+  return (
+    <article className="commerce-profitability-panel">
+      <div className="commerce-profitability-panel-heading">
+        <h3>{title}</h3>
+        {note && <p>{note}</p>}
+      </div>
+      {children}
+    </article>
   );
 }
 

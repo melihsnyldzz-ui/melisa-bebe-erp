@@ -580,6 +580,190 @@ button {
   background: #047857;
 }
 
+.commerce-profitability-center {
+  display: grid;
+  gap: 14px;
+  margin: 8px 0 16px;
+  padding: 16px;
+  border: 1px solid rgba(24, 100, 171, 0.18);
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f8fbff 0%, #ffffff 54%, #f7fee7 100%);
+}
+
+.commerce-profitability-hero p,
+.commerce-profitability-hero h2,
+.commerce-profitability-hero span,
+.commerce-profitability-panel-heading h3,
+.commerce-profitability-panel-heading p {
+  margin: 0;
+}
+
+.commerce-profitability-hero p {
+  color: #1864ab;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.commerce-profitability-hero h2 {
+  margin-top: 4px;
+  color: var(--anthracite);
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+}
+
+.commerce-profitability-hero span {
+  display: block;
+  max-width: 900px;
+  margin-top: 7px;
+  color: var(--muted);
+  font-weight: 760;
+  line-height: 1.55;
+}
+
+.commerce-profitability-status-grid,
+.commerce-performance-grid,
+.profitability-priority-grid,
+.brand-category-performance-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.commerce-profitability-status-grid,
+.commerce-performance-grid,
+.brand-category-performance-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.profitability-priority-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.commerce-profitability-status-card,
+.commerce-performance-card,
+.profitability-priority-card,
+.brand-category-performance-card,
+.commerce-profitability-panel {
+  min-width: 0;
+  border: 1px solid #dbeafe;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.commerce-profitability-status-card {
+  display: grid;
+  gap: 6px;
+  padding: 12px;
+}
+
+.commerce-profitability-status-card span,
+.commerce-profitability-status-card strong,
+.brand-category-performance-card strong,
+.brand-category-performance-card span {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.commerce-profitability-status-card span,
+.profitability-priority-card span {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 850;
+}
+
+.commerce-profitability-status-card strong {
+  color: #0f766e;
+  font-size: 0.95rem;
+}
+
+.commerce-profitability-panel {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+}
+
+.commerce-profitability-panel-heading {
+  display: grid;
+  gap: 4px;
+}
+
+.commerce-profitability-panel-heading h3 {
+  color: var(--anthracite);
+  font-size: 1.04rem;
+}
+
+.commerce-profitability-panel-heading p {
+  color: var(--muted);
+  font-weight: 750;
+  line-height: 1.5;
+}
+
+.commerce-performance-card {
+  padding: 13px;
+  background: linear-gradient(135deg, #ffffff, #f8fbff);
+}
+
+.commerce-performance-card h4 {
+  margin: 0 0 9px;
+  color: #1864ab;
+  font-size: 0.96rem;
+}
+
+.commerce-performance-card ul,
+.price-margin-guide-list {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding-left: 18px;
+  color: var(--text);
+  font-weight: 740;
+  line-height: 1.45;
+}
+
+.profitability-priority-card {
+  display: grid;
+  gap: 6px;
+  padding: 12px;
+  background: #fffdf7;
+}
+
+.profitability-priority-card strong {
+  color: var(--anthracite);
+  font-size: 0.95rem;
+}
+
+.profitability-priority-card p,
+.profitability-priority-card small {
+  margin: 0;
+  color: var(--muted);
+  font-weight: 740;
+  line-height: 1.4;
+}
+
+.profitability-priority-card small {
+  color: #9a3412;
+}
+
+.brand-category-performance-card {
+  display: grid;
+  gap: 6px;
+  padding: 12px;
+}
+
+.brand-category-performance-card strong {
+  color: #0f766e;
+  font-size: 0.94rem;
+}
+
+.brand-category-performance-card span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
 .dashboard-report-preview {
   display: grid;
   gap: 8px;
@@ -6275,6 +6459,7 @@ tr:last-child td {
   .dashboard-middle-grid,
   .dashboard-bottom-grid,
   .dashboard-owner-panel-grid,
+  .profitability-priority-grid,
   .dashboard-distribution-strip .dashboard-distribution-list,
   .quick-sale-controls,
   .quick-sale-totals,
@@ -6349,6 +6534,9 @@ tr:last-child td {
   }
 
   .dashboard-owner-card-grid,
+  .commerce-profitability-status-grid,
+  .commerce-performance-grid,
+  .brand-category-performance-grid,
   .system-workflow-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -6512,8 +6700,17 @@ tr:last-child td {
 
   .system-status-grid,
   .dashboard-owner-card-grid,
+  .commerce-profitability-status-grid,
+  .commerce-performance-grid,
+  .profitability-priority-grid,
+  .brand-category-performance-grid,
   .system-workflow-grid {
     grid-template-columns: 1fr;
+  }
+
+  .commerce-profitability-center {
+    padding: 13px;
+    border-radius: 10px;
   }
 
   .vega-stock-trial-header {
@@ -7156,6 +7353,17 @@ tr:last-child td {
   border-color: #fed7aa;
   color: #9a3412;
   background: #fff7ed;
+}
+
+.commerce-profitability-status-panel {
+  border-color: #bbf7d0;
+  background: linear-gradient(135deg, #f0fdf4, #ffffff);
+}
+
+.commerce-profitability-safety-note {
+  border-color: #bbf7d0;
+  color: #166534;
+  background: #f0fdf4;
 }
 
 @media (max-width: 1180px) {

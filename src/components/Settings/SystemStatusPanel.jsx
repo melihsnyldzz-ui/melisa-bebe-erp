@@ -13,8 +13,13 @@ const statusRows = [
   { label: "Uygulama sürümü", value: APP_VERSION },
   { label: "Geliştirme aşaması", value: APP_STAGE },
   { label: "Build kontrolü", value: "GitHub Actions + npm run build" },
-  { label: "Çalışma modeli", value: "GitHub PR kontrollü manuel geliştirme" },
+  { label: "Çalışma modeli", value: "Main üzerinden manuel Codex akışı" },
   { label: "Kritik işlem politikası", value: "Stok, cari, fiş, yedekleme, import ve migration işlemleri ayrı kontrollü sürümlerle açılır." },
+  { label: "Ticari analiz", value: "Pasif/mock hazırlık" },
+  { label: "Kâr marjı kontrolü", value: "Önizleme" },
+  { label: "Satış kaydı", value: "Kapalı" },
+  { label: "Alış kaydı", value: "Kapalı" },
+  { label: "Fiyat güncelleme", value: "Kapalı" },
   { label: "El terminali operasyonu", value: "Pasif/mock hazırlık" },
   { label: "Gerçek cihaz bağlantısı", value: "Kapalı" },
   { label: "Barkod okutma entegrasyonu", value: "Gerçek cihazla bağlı değil" },
@@ -28,10 +33,10 @@ const statusRows = [
 ];
 
 const workflowRows = [
-  { label: "ChatGPT", value: "PR/diff kontrolü ve Codex prompt hazırlığı" },
-  { label: "Codex", value: "Branch üzerinde kodlama, build, commit, PR açma" },
-  { label: "Kullanıcı", value: "PR onayı ve merge kararı" },
-  { label: "Main branch", value: "Doğrudan push yapılmayacak" },
+  { label: "Çalışma modeli", value: "Main üzerinden manuel Codex akışı" },
+  { label: "Codex", value: "Local main üzerinde kodlama, build, commit ve push" },
+  { label: "ChatGPT", value: "GitHub main kontrolü, risk raporu ve sonraki prompt" },
+  { label: "Kritik veri işleri", value: "Ayrı küçük onaylı faz" },
 ];
 
 const maturityRows = [
@@ -166,7 +171,22 @@ const currentAccountRiskStatusRows = [
   { label: "ERP’ye yazma", value: "Kapalı" },
 ];
 
+const commerceProfitabilityStatusRows = [
+  { label: "Ticari analiz", value: "Pasif/mock hazırlık" },
+  { label: "Satış kaydı", value: "Kapalı" },
+  { label: "Alış kaydı", value: "Kapalı" },
+  { label: "Fiyat güncelleme", value: "Kapalı" },
+  { label: "Kâr marjı kontrolü", value: "Önizleme" },
+  { label: "ERP’ye yazma", value: "Kapalı" },
+];
+
 const versionHistoryRows = [
+  {
+    version: "v1.33.0",
+    title: "Alış Satış ve Kârlılık Yönetici Merkezi",
+    area: "Dashboard / Sistem Durumu / README",
+    description: "Alış, satış, kâr marjı, marka/kategori performansı ve ticari risk görünürlüğü pasif/mock modda güçlendirildi; gerçek satış, alış, fiyat güncelleme, DB okuma, query veya veri yazma eklenmeden main üzerinden manuel Codex çalışma modeli güncellendi.",
+  },
   {
     version: "v1.32.0",
     title: "Cari ve Alacak Riskleri Yönetici Merkezi",
@@ -189,7 +209,7 @@ const versionHistoryRows = [
     version: "v1.29.0",
     title: "Yönetici Kokpiti ve Read-only Yol Haritası",
     area: "Dashboard / Vega / Sistem Durumu",
-    description: "Patron Bakışı yönetici özeti, Vega read-only yol haritası ve GitHub PR kontrollü manuel çalışma modeli statik/pasif olarak güncellendi.",
+    description: "Patron Bakışı yönetici özeti, Vega read-only yol haritası ve manuel GitHub kontrol notları statik/pasif olarak güncellendi.",
   },
   {
     version: "v1.27.0",
@@ -622,14 +642,14 @@ export default function SystemStatusPanel() {
 
       <div className="system-status-focus-card">
         <span>Bu Sürümde Test Edilecek Alan</span>
-        <strong>Müşteriler / Cari ve Alacak Riskleri Yönetici Merkezi</strong>
-        <p>Bu sürümde cari risk sınıfları, alacak önceliği, tahsilat hazırlığı ve sistem durumu özellikle kontrol edilmelidir.</p>
+        <strong>Dashboard / Alış Satış ve Kârlılık Yönetici Merkezi</strong>
+        <p>Bu sürümde ticari performans sınıfları, kârlılık öncelik matrisi, marka/kategori takibi ve sistem durumu özellikle kontrol edilmelidir.</p>
       </div>
 
       <div className="system-workflow-panel" {...sectionHighlightProps("system-workflow-model")}>
         <div>
-          <h3>GitHub PR Kontrollü Çalışma Modeli <NewReleaseBadge sectionId="system-workflow-model" /></h3>
-          <p>Geliştirme main branch'e dokunmadan, ayrı branch ve manuel PR onayıyla ilerler.</p>
+          <h3>GitHub Main Üzerinden Manuel Codex Çalışma Modeli <NewReleaseBadge sectionId="system-workflow-model" /></h3>
+          <p>Kullanıcı bilgisayarda main branch'i güncel tutar; Codex değişiklikleri local main üzerinde uygular ve build başarılıysa origin main'e pushlar.</p>
         </div>
         <div className="system-workflow-grid">
           {workflowRows.map((row) => (
@@ -641,6 +661,24 @@ export default function SystemStatusPanel() {
         </div>
         <p className="system-workflow-safety-note">
           Gerçek veri bağlantısı, DB okuma, query, import ve veri yazma işlemleri yalnızca ayrı küçük ve açık onaylı sürümlerde ele alınır.
+        </p>
+      </div>
+
+      <div className="handheld-barcode-status-panel commerce-profitability-status-panel" {...sectionHighlightProps("commerce-profitability-status")}>
+        <div>
+          <h3>Alış Satış ve Kârlılık Durumu <NewReleaseBadge sectionId="commerce-profitability-status" /></h3>
+          <p>Alış, satış, kâr marjı, düşük kârlı ürün ve marka/kategori performansı pasif yönetici özeti olarak takip edilir.</p>
+        </div>
+        <div className="system-status-grid">
+          {commerceProfitabilityStatusRows.map((row) => (
+            <div className="system-status-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </div>
+          ))}
+        </div>
+        <p className="handheld-barcode-safety-note commerce-profitability-safety-note">
+          Bu sürüm ticari görünürlük sağlar; gerçek satış, alış, fiyat güncelleme, DB okuma veya veri yazma işlemi yapmaz.
         </p>
       </div>
 

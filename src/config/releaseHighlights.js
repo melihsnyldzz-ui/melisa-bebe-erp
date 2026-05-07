@@ -1,19 +1,19 @@
-export const currentReleaseVersion = "v1.32.0";
+export const currentReleaseVersion = "v1.33.0";
 
-export const currentReleaseTitle = "Cari ve Alacak Riskleri Yönetici Merkezi";
+export const currentReleaseTitle = "Alış Satış ve Kârlılık Yönetici Merkezi";
 
-export const updatedSectionIds = ["latest-version-history", "live-test-center", "system-workflow-model", "current-account-risk-status"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "commerce-profitability-status"];
 
 export const releaseHighlightItems = [
-  "Cari, alacak ve tahsilat riskleri yönetici takibi için daha görünür hale getirildi.",
-  "Vade, gecikme, alacak önceliği ve müşteri risk sınıfları pasif/mock modda toparlandı.",
-  "Gerçek Vega bağlantısı, DB okuma, query, tahsilat kaydı, ödeme kaydı veya veri yazma eklenmeden güvenli hazırlık korundu.",
+  "Alış, satış ve kârlılık görünürlüğü yönetici kararları için daha net hale getirildi.",
+  "Kâr marjı, düşük kârlı ürün, marka/kategori performansı ve ticari riskler pasif/mock modda toparlandı.",
+  "GitHub çalışma modeli main üzerinden manuel Codex akışına göre güncellendi; gerçek Vega bağlantısı, DB okuma, query, satış/alış kaydı, fiyat güncelleme veya veri yazma eklenmeden güvenli hazırlık korundu.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
-  { id: "current-account-risk-status", label: "Cari ve Alacak Durumu'na git" },
-  { id: "live-test-center", label: "Canlı Test Merkezi'ne git" },
+  { id: "commerce-profitability-status", label: "Alış Satış ve Kârlılık Durumu'na git" },
+  { id: "system-workflow-model", label: "Çalışma Modeli'ne git" },
 ];
 
 export const releaseVisibilityChecklist = [
@@ -28,11 +28,12 @@ export const releaseHighlightsByPage = {
     releaseHighlightItems,
     releaseJumpLinks: [
       { id: "dashboard-owner-view", label: "Patron Bakışı'na git" },
+      { id: "dashboard-commerce-profitability-center", label: "Alış Satış ve Kârlılık Merkezi'ne git" },
       { id: "dashboard-daily-operation", label: "Bugünkü Operasyon Özeti'ne git" },
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-owner-view", "dashboard-daily-operation"],
+    updatedSectionIds: ["dashboard-owner-view", "dashboard-commerce-profitability-center", "dashboard-daily-operation"],
   },
   customers: {
     releaseHighlightItems,

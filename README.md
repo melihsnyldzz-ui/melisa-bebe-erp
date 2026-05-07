@@ -6,8 +6,8 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 
 ## Mevcut Durum
 
-- Güncel sürüm: v1.32.0
-- Aşama: Cari ve Alacak Riskleri Yönetici Merkezi
+- Güncel sürüm: v1.33.0
+- Aşama: Alış Satış ve Kârlılık Yönetici Merkezi
 - Build kontrolü: GitHub Actions
 - El terminali: okuma, son okutulanlar, sayım sepeti, rapor/CSV/JSON önizleme hazırlığı
 - Stok ve barkod kalite kontrolü: pasif/mock risk görünürlüğü
@@ -18,18 +18,14 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 - Veri yazan stok, cari, fiş, yedek, import ve migration işleri küçük ve kontrollü sürümlere bölünür.
 - Build geçmeden main branch’e push yapılmamalıdır.
 
-## Manuel Çalışma Modeli
+## GitHub Main Üzerinden Manuel Codex Çalışma Modeli
 
-Bu proje manuel kontrollü geliştirme modeliyle ilerler. ChatGPT GitHub main’i kontrol eder ve sonraki Codex promptunu hazırlar. Kullanıcı promptu Codex’e manuel verir. Codex uygulama, build ve commit/push işlemini yapar. Harici mesajlaşma aracı veya tekrarlı işlem akışı kullanılmaz.
-
-## GitHub PR Kontrollü Çalışma Modeli
-
-- Main branch’e doğrudan push yapılmaz.
-- Codex her geliştirme için ayrı branch açar.
-- Build başarılı olursa PR açılır.
-- ChatGPT PR/diff kontrolü yapar.
-- Kullanıcı onay verirse merge edilir.
-- Gerçek veri bağlantısı ve veri yazma işleri ayrı küçük onaylı fazlarda yapılır.
+- Main branch bilgisayarda güncel tutulur.
+- Codex değişiklikleri local main üzerinde uygular.
+- Build başarılıysa commit ve push yapılır.
+- ChatGPT GitHub main’i kontrol eder.
+- Kritik veri bağlantısı ve veri yazma işleri küçük, ayrı ve açık onaylı sürümlerle yapılır.
+- Bu model UI, mock ekranlar, pasif rehberler, CSS, README ve yönetici panelleri için kullanılır.
 
 ## Modül Durumu
 
@@ -59,6 +55,13 @@ Bu proje manuel kontrollü geliştirme modeliyle ilerler. ChatGPT GitHub main’
 - Gecikmiş alacak, yakın vade, kritik risk ve düzenli müşteri ayrımı pasif olarak gösterilir.
 - Gerçek tahsilat, ödeme, cari kart güncelleme veya veri yazma yapılmaz.
 - Gerçek finansal işlem akışı ileride ayrı küçük onaylı fazda ele alınır.
+
+## Alış Satış ve Kârlılık Fazı
+
+- Bu faz alış, satış, kâr marjı, marka/kategori performansı ve ticari riskleri patron/yönetici için görünür hale getirir.
+- Düşük marj, yüksek stok, yavaş satış ve maliyet belirsizliği gibi riskler pasif olarak takip edilir.
+- Gerçek satış, alış, fiyat güncelleme veya veri yazma yapılmaz.
+- Gerçek ticari işlem akışı ileride ayrı küçük onaylı fazda ele alınır.
 
 ## Build Kontrolü
 
