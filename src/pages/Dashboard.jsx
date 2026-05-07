@@ -38,6 +38,32 @@ const vegaReadonlySafetyNotes = [
   ".env.local Git dışında kalır.",
 ];
 
+const currentPreviewPrepGateCards = [
+  { label: "Cari kapsam", value: "Planlandı" },
+  { label: "Bağlantı", value: "Yok" },
+  { label: "Veri okuma", value: "Yok" },
+  { label: "Veri yazma", value: "Yok" },
+  { label: "Tablo/sorgu", value: "Eklenmedi" },
+  { label: "Sonraki adım", value: "Cari tablo/kapsam analizi" },
+];
+
+const currentPreviewPrepChecklist = [
+  "Cari tablo adı doğrulanacak.",
+  "Read-only kullanıcı yetkisi doğrulanacak.",
+  "İlk deneme satır limiti belirlenecek.",
+  "Müşteri bilgisi maskeleme kuralı belirlenecek.",
+  "Cari bakiye alanları ayrıca doğrulanacak.",
+  "Riskli/veresiye müşteri görünümü ayrı fazda ele alınacak.",
+];
+
+const currentPreviewPrepSafetyNotes = [
+  "Bu sürümde cari verisi okunmaz.",
+  "SQL sorgusu yoktur.",
+  "Tablo adı yoktur.",
+  "Müşteri/cari verisi repoya yazılmaz.",
+  "Veri yazma/import/senkron/export yoktur.",
+];
+
 const ownerViewCards = [
   { label: "Günlük operasyon durumu", value: "Takipte" },
   { label: "Stok görünürlüğü", value: "Hazırlıkta" },
@@ -624,6 +650,8 @@ export default function Dashboard() {
 
       <VegaReadonlyOperationCenter />
 
+      <CurrentPreviewPrepGate />
+
       <ClosedBetaPreparationCenter />
 
       <DesktopPreparationCenter />
@@ -751,6 +779,42 @@ function VegaReadonlyOperationCenter() {
       </div>
 
       <p className="commerce-profitability-safety-note">{vegaReadonlySafetyNotes.join(" · ")}</p>
+    </section>
+  );
+}
+
+function CurrentPreviewPrepGate() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-current-preview-prep-gate")}`} id="dashboard-current-preview-prep-gate">
+      <DashboardNewReleaseBadge sectionId="dashboard-current-preview-prep-gate" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Pasif cari hazırlık kapısı</p>
+          <h2>Cari Önizleme Hazırlık Kapısı</h2>
+          <span>Cari önizleme modülü için yalnızca güvenli kapsam hazırlığı gösterilir; bağlantı açılmaz, tablo adı veya sorgu eklenmez, veri okunmaz.</span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {currentPreviewPrepGateCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+
+      <CommercePanel title="Hazırlık Kontrol Listesi" note="Bu liste sadece manuel kapsam hazırlığı içindir; onay veya kayıt tutmaz.">
+        <div className="commerce-performance-grid">
+          {currentPreviewPrepChecklist.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <p className="commerce-profitability-safety-note">{currentPreviewPrepSafetyNotes.join(" · ")}</p>
     </section>
   );
 }

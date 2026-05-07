@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.63.2";
+export const currentReleaseVersion = "v1.64.0";
 
-export const currentReleaseTitle = "Stok Önizleme Kullanıcı Doğrulama Paneli";
+export const currentReleaseTitle = "Cari Önizleme Hazırlık Kapısı";
 
 export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "stock-preview-beta-package-status"];
 
 export const releaseHighlightItems = [
-  "Stok önizleme ekranına kullanıcı doğrulama paneli eklendi.",
-  "20 satırlık read-only stok önizlemesinde stok kodu, ürün adı, fiyat, KDV ve şüpheli alan kontrolleri daha görünür hale getirildi.",
-  "Kontrol sonucu kaydı, veri yazma, import, senkron, export veya SQL/Vega otomatik bağlantısı eklenmeden read-only güvenlik modeli korundu.",
+  "Cari Önizleme için pasif hazırlık kapısı eklendi.",
+  "Cari kapsam, bağlantı, veri okuma, veri yazma, tablo/sorgu ve sonraki güvenli adım bilgileri netleştirildi.",
+  "Gerçek cari verisi, tablo adı, SQL sorgusu, import, senkron, export veya SQL/Vega otomatik bağlantısı eklenmeden read-only güvenlik modeli korundu.",
 ];
 
 export const releaseJumpLinks = [
@@ -29,6 +29,7 @@ export const releaseHighlightsByPage = {
     releaseJumpLinks: [
       { id: "dashboard-owner-view", label: "Patron Bakışı'na git" },
       { id: "dashboard-vega-readonly-operation-center", label: "Vega Read-only Operasyon Merkezi'ne git" },
+      { id: "dashboard-current-preview-prep-gate", label: "Cari Önizleme Hazırlık Kapısı'na git" },
       { id: "dashboard-stock-preview-beta-package", label: "Stok Önizleme Beta Hazırlığı'na git" },
       { id: "dashboard-vega-stock-screen-simplification", label: "Vega Stok Sadeleştirme'ye git" },
       { id: "dashboard-stock-preview-user-test", label: "Stok Önizleme Kullanıcı Testi'ne git" },
@@ -63,7 +64,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-vega-readonly-operation-center", "dashboard-owner-view", "dashboard-stock-preview-beta-package"],
+    updatedSectionIds: ["dashboard-current-preview-prep-gate", "dashboard-vega-readonly-operation-center", "dashboard-owner-view"],
   },
   reports: {
     releaseHighlightItems,
