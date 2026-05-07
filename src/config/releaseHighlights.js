@@ -1,17 +1,18 @@
-export const currentReleaseVersion = "v1.76.0";
+export const currentReleaseVersion = "v1.77.0";
 
-export const currentReleaseTitle = "Personel Kullanım Ekranları Haritası";
+export const currentReleaseTitle = "ERP Modül Öncelik Sıralaması";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "dashboard-staff-usage-screen-map"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "dashboard-erp-module-priority-order"];
 
 export const releaseHighlightItems = [
-  "Dashboard'a Personel Kullanım Ekranları Haritası paneli eklenerek ileride hangi personel rolünün hangi ekranı kullanacağı mimari seviyede görünür hale getirildi.",
-  "Depo, barkod/el terminali, satış sipariş takip, muhasebe cari risk, tahsilat hazırlık, yönetici gün sonu ve teknik entegrasyon ekranları için rol, veri modu, risk seviyesi ve sonraki adım gösterildi.",
-  "Bu sürüm gerçek personel login, kullanıcı kaydı, görev atama, veri okuma/yazma, SQL/Vega işlemi, dosya/export veya onay kaydı başlatmadan yalnızca pasif ekran haritası sağlar.",
+  "Dashboard'a ERP Modül Öncelik Sıralaması paneli eklenerek hangi modülün önce tamamlanması gerektiği patron ve teknik ekip için pasif olarak görünür hale getirildi.",
+  "Stok, barkod/el terminali, cari, sipariş, kasa/finans, raporlama, rol-yetki ve canlıya geçiş için öncelik, gerekçe, risk seviyesi ve sonraki teknik adım gösterildi.",
+  "Bu sürüm modül açma, görev oluşturma, veri okuma/yazma, SQL/Vega işlemi, dosya/export veya onay kaydı başlatmadan yalnızca geliştirme önceliği rehberi sağlar.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
+  { id: "dashboard-erp-module-priority-order", label: "ERP Modül Öncelik Sıralaması'na git" },
   { id: "dashboard-staff-usage-screen-map", label: "Personel Kullanım Ekranları Haritası'na git" },
   { id: "dashboard-data-field-dictionary", label: "Veri Alan Sözlüğü'ne git" },
   { id: "dashboard-risk-warning-center", label: "Risk ve Uyarı Merkezi'ne git" },
@@ -37,6 +38,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-role-permission-matrix", label: "Rol ve Yetki Matrisi'ne git" },
       { id: "dashboard-daily-operation-workflow-center", label: "Günlük Operasyon İş Akışı Merkezi'ne git" },
       { id: "dashboard-staff-usage-screen-map", label: "Personel Kullanım Ekranları Haritası'na git" },
+      { id: "dashboard-erp-module-priority-order", label: "ERP Modül Öncelik Sıralaması'na git" },
       { id: "dashboard-risk-warning-center", label: "Risk ve Uyarı Merkezi'ne git" },
       { id: "dashboard-data-field-dictionary", label: "Veri Alan Sözlüğü'ne git" },
       { id: "dashboard-owner-view", label: "Patron Bakışı'na git" },
@@ -87,7 +89,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-staff-usage-screen-map", "dashboard-daily-operation-workflow-center"],
+    updatedSectionIds: ["dashboard-erp-module-priority-order", "dashboard-staff-usage-screen-map"],
   },
   reports: {
     releaseHighlightItems,

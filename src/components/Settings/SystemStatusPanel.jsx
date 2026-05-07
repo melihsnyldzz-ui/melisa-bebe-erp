@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.77.0",
+    title: "ERP Modül Öncelik Sıralaması",
+    area: "Dashboard / Sistem Durumu",
+    description: "ERP geliştirme sürecinde Stok Yönetimi, Barkod/El Terminali, Cari Yönetimi, Sipariş Yönetimi, Kasa/Finans, Raporlama, Rol ve Yetki ile Canlıya Geçiş modülleri için öncelik, neden önemli olduğu, risk seviyesi ve sonraki teknik adım pasif olarak görünür hale getirildi; modül açma, görev oluşturma, veri okuma/yazma, SQL/Vega işlemi, dosya/export veya onay kaydı eklenmedi.",
+  },
+  {
     version: "v1.76.0",
     title: "Personel Kullanım Ekranları Haritası",
     area: "Dashboard / Sistem Durumu",

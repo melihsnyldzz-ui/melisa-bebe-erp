@@ -147,6 +147,23 @@ const staffUsageScreenMapNoActionItems = [
   "SQL/Vega işlemi yok.",
   "Dosya/export yok.",
 ];
+const erpModulePriorityRows = [
+  { priority: "1. Stok Yönetimi", reason: "İlk güvenli read-only bağlantı alanı", risk: "Orta", nextStep: "Şirket ortamı smoke test" },
+  { priority: "2. Barkod / El Terminali", reason: "Depo operasyonunun kalbi", risk: "Orta", nextStep: "Barkod senaryosu" },
+  { priority: "3. Cari Yönetimi", reason: "Müşteri ve bakiye hassas", risk: "Yüksek", nextStep: "Maskeleme kuralı" },
+  { priority: "4. Sipariş Yönetimi", reason: "Satış takibi için kritik", risk: "Yüksek", nextStep: "Kapsam analizi" },
+  { priority: "5. Kasa / Finans", reason: "En hassas alan", risk: "Çok yüksek", nextStep: "Patron onaylı sınır" },
+  { priority: "6. Raporlama", reason: "Yönetici kararlarının ortak görünümü", risk: "Orta", nextStep: "Manuel test raporu disiplini" },
+  { priority: "7. Rol ve Yetki", reason: "Ekran erişim sınırlarını belirler", risk: "Yüksek", nextStep: "Pasif rol matrisi doğrulaması" },
+  { priority: "8. Canlıya Geçiş", reason: "Tüm güvenlik şartları kapandıktan sonra ele alınır", risk: "Çok yüksek", nextStep: "Eksik listesi ve patron onayı" },
+];
+const erpModulePriorityNoActionItems = [
+  "Modül açmaz.",
+  "Veri okumaz.",
+  "Görev oluşturmaz.",
+  "SQL/Vega işlemi başlatmaz.",
+  "Dosya/export üretmez.",
+];
 const vegaReadonlyModuleMatrixRows = [
   { module: "Stok", status: "Hazır", read: "Manuel read-only", write: "Yok", risk: "Orta", nextStep: "Kullanıcı doğrulaması" },
   { module: "Cari", status: "Hazırlık", read: "Yok", write: "Yok", risk: "Yüksek", nextStep: "Kapsam analizi" },
@@ -1137,6 +1154,8 @@ export default function Dashboard() {
 
       <StaffUsageScreenMapPanel />
 
+      <ErpModulePriorityOrderPanel />
+
       <RiskWarningCenter />
 
       <DataFieldDictionaryPanel />
@@ -1446,6 +1465,42 @@ function StaffUsageScreenMapPanel() {
       <CommercePanel title="Bu Sürümde Olmayanlar" note="Bu kutu personel ekran haritasının pasif sınırını gösterir; login, kayıt, görev veya dosya işlemi başlatmaz.">
         <div className="commerce-performance-grid">
           {staffUsageScreenMapNoActionItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+    </section>
+  );
+}
+
+function ErpModulePriorityOrderPanel() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-erp-module-priority-order")}`} id="dashboard-erp-module-priority-order">
+      <DashboardNewReleaseBadge sectionId="dashboard-erp-module-priority-order" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Pasif geliştirme önceliği</p>
+          <h2>ERP Modül Öncelik Sıralaması</h2>
+          <span>Patron ve teknik ekip için hangi ERP modülünün önce tamamlanması gerektiğini gösterir; modül açmaz, görev oluşturmaz, bağlantı veya veri işlemi başlatmaz.</span>
+        </div>
+      </div>
+
+      <div className="profitability-priority-grid">
+        {erpModulePriorityRows.map((row) => (
+          <article className="profitability-priority-card" key={row.priority}>
+            <span>{row.priority}</span>
+            <strong>{row.reason}</strong>
+            <p>Risk seviyesi: {row.risk}</p>
+            <small>Sonraki teknik adım: {row.nextStep}</small>
+          </article>
+        ))}
+      </div>
+
+      <CommercePanel title="Bu Sürümde Olmayanlar" note="Bu kutu öncelik sıralamasının pasif sınırını gösterir; modül, görev, bağlantı veya dosya işlemi başlatmaz.">
+        <div className="commerce-performance-grid">
+          {erpModulePriorityNoActionItems.map((item) => (
             <article className="commerce-performance-card" key={item}>
               <strong>{item}</strong>
             </article>
