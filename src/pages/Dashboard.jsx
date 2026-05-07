@@ -63,6 +63,36 @@ const currentPreviewPrepSafetyNotes = [
   "Müşteri/cari verisi repoya yazılmaz.",
   "Veri yazma/import/senkron/export yoktur.",
 ];
+const currentPreviewWhyClosedItems = [
+  "Cari verisi müşteri ve bakiye bilgisi içerdiği için stoktan daha hassastır.",
+  "Önce tablo/kapsam doğrulaması yapılmalıdır.",
+  "İlk cari deneme sadece read-only ve küçük satır limitiyle yapılmalıdır.",
+  "Müşteri bilgisi maskeleme kuralı belirlenmeden canlı cari gösterimi açılmamalıdır.",
+];
+const currentPreviewRequiredConditions = [
+  "Read-only kullanıcı yetkisi doğrulandı.",
+  "Cari tablo/kapsam doğrulandı.",
+  "İlk satır limiti belirlendi.",
+  "Müşteri bilgisi maskeleme kuralı belirlendi.",
+  "Patron onayı alındı.",
+];
+const currentPreviewCandidateLabels = [
+  "Cari kodu",
+  "Kısa unvan",
+  "Risk sınıfı",
+  "Bakiye durumu",
+  "Son işlem tarihi",
+  "Tahsilat önceliği",
+];
+const currentPreviewForbiddenItems = [
+  "Cari verisi okuma yok.",
+  "SQL sorgusu yok.",
+  "Tablo adı yok.",
+  "Müşteri adı yok.",
+  "Bakiye verisi yok.",
+  "Export/import/senkron yok.",
+  "Vega'ya veri yazma yok.",
+];
 
 const ownerViewCards = [
   { label: "Günlük operasyon durumu", value: "Takipte" },
@@ -807,6 +837,46 @@ function CurrentPreviewPrepGate() {
       <CommercePanel title="Hazırlık Kontrol Listesi" note="Bu liste sadece manuel kapsam hazırlığı içindir; onay veya kayıt tutmaz.">
         <div className="commerce-performance-grid">
           {currentPreviewPrepChecklist.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Neden Henüz Cari Verisi Okunmuyor?" note="Cari önizleme, stok önizlemeden daha hassas veri sınıfına girer ve ayrı güvenlik kararları gerektirir.">
+        <div className="commerce-performance-grid">
+          {currentPreviewWhyClosedItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Cari Açılmadan Önce Gereken 5 Şart" note="Bu şartlar bu ekranda onaylanmaz; sadece sonraki read-only faz öncesi görünür kılınır.">
+        <div className="commerce-performance-grid">
+          {currentPreviewRequiredConditions.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="İlk Read-only Cari Önizlemede Gösterilebilecek Aday Alanlar" note="Bu liste gerçek tablo alanı değildir; yalnızca iş seviyesi aday etiketleri gösterir.">
+        <div className="commerce-performance-grid">
+          {currentPreviewCandidateLabels.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Kesin Yasaklar" note="Bu panel pasif kalır; bağlantı, sorgu, veri okuma veya kayıt işlemi başlatmaz.">
+        <div className="commerce-performance-grid">
+          {currentPreviewForbiddenItems.map((item) => (
             <article className="commerce-performance-card" key={item}>
               <strong>{item}</strong>
             </article>

@@ -1,12 +1,12 @@
-export const currentReleaseVersion = "v1.64.0";
+export const currentReleaseVersion = "v1.64.1";
 
-export const currentReleaseTitle = "Cari Önizleme Hazırlık Kapısı";
+export const currentReleaseTitle = "Cari Önizleme Hazırlık Kapısı Durum Netleştirme";
 
 export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "stock-preview-beta-package-status"];
 
 export const releaseHighlightItems = [
-  "Cari Önizleme için pasif hazırlık kapısı eklendi.",
-  "Cari kapsam, bağlantı, veri okuma, veri yazma, tablo/sorgu ve sonraki güvenli adım bilgileri netleştirildi.",
+  "Cari Önizleme Hazırlık Kapısı içinde cari verisinin neden henüz okunmadığı daha net açıklandı.",
+  "Cari açılmadan önce gereken 5 şart, aday alanlar ve kesin yasaklar pasif bilgi kutuları olarak eklendi.",
   "Gerçek cari verisi, tablo adı, SQL sorgusu, import, senkron, export veya SQL/Vega otomatik bağlantısı eklenmeden read-only güvenlik modeli korundu.",
 ];
 
