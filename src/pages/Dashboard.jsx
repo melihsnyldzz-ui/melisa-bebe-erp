@@ -4,6 +4,7 @@ import CommerceInsights from "../components/Dashboard/CommerceInsights.jsx";
 import KpiCard from "../components/Dashboard/KpiCard.jsx";
 import { APP_STAGE, APP_VERSION } from "../config/appVersion.js";
 import { readOnlyConnectionPlan, readOnlyOperatorChecklist } from "../config/readOnlyConnectionPlan.js";
+import { readOnlyFailClosedPolicy } from "../config/readOnlyFailClosedPolicy.js";
 import { currentReleaseVersion, releaseHighlightsByPage } from "../config/releaseHighlights.js";
 import { useErpData } from "../context/ErpDataContext.jsx";
 import { getTodayISO } from "../utils/dateUtils.js";
@@ -68,6 +69,10 @@ const ownerViewCards = [
   { label: "Credential / query", value: "Yok" },
   { label: "Son tarama gerçek bağlantı", value: "Kapalı" },
   { label: "Sonraki faz", value: "Küçük read-only deneme" },
+  { label: "Fail-closed politika", value: "Pasif hazırlık" },
+  { label: "Varsayılan bağlantı", value: "Kapalı" },
+  { label: "Fail-closed credential / query", value: "Yok" },
+  { label: "Fail-closed sonraki faz", value: "Küçük read-only deneme" },
   { label: "Barkod operasyonu", value: "Hazırlıkta" },
   { label: "Barkod kalite kontrolü", value: "Öncelikli" },
   { label: "Riskli barkodlar", value: "İzlenecek" },
@@ -133,6 +138,10 @@ const ownerTodayItems = [
   "readOnlyConnectionPlan dosyasının pasif kaldığı doğrulanacak",
   "Credential ve query bulunmadığı kontrol edilecek",
   "Sonraki küçük read-only deneme fazı sınırları okunacak",
+  "Fail-closed kuralları gözden geçirilecek",
+  "Bloke edilen davranışlar kontrol edilecek",
+  "Read-only kullanıcı ve manuel yedek olmadan bağlantı denenmeyeceği teyit edilecek",
+  "Sonraki küçük bağlantı fazı sınırları okunacak",
   "Personel kullanım notları toplanacak",
   "Gerçek veri bağlantısı için yedek ve yetki kontrolü hazırlanacak",
 ];
@@ -201,6 +210,15 @@ const readonlyFinalSecurityScanSummaryCards = [
   { label: "Credential / query", value: "Yok" },
   { label: "Gerçek bağlantı", value: "Kapalı" },
   { label: "Sonraki faz", value: "Küçük read-only deneme" },
+];
+
+const readonlyFailClosedSummaryCards = [
+  { label: "Fail-closed politika", value: "Pasif hazırlık" },
+  { label: "Varsayılan bağlantı", value: readOnlyFailClosedPolicy.defaultConnectionState },
+  { label: "DB okuma/query", value: "Yok" },
+  { label: "Connection test", value: "Kapalı" },
+  { label: "Credential", value: "Yok" },
+  { label: "Veri yazma/import", value: "Kapalı" },
 ];
 
 const readonlyFinalDecisionSummaryCards = [
@@ -381,6 +399,8 @@ export default function Dashboard() {
 
       <OwnerView />
 
+      <ReadonlyFailClosedSummary />
+
       <ReadonlyFinalSecurityScanSummary />
 
       <ReadonlyOperatorChecklistSummary />
@@ -418,6 +438,30 @@ export default function Dashboard() {
         <DashboardNewReleaseBadge sectionId="dashboard-commerce-insights" />
       </CommerceInsights>
     </>
+  );
+}
+
+function ReadonlyFailClosedSummary() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-readonly-fail-closed-summary")}`} id="dashboard-readonly-fail-closed-summary">
+      <DashboardNewReleaseBadge sectionId="dashboard-readonly-fail-closed-summary" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Pasif fail-closed görünürlük</p>
+          <h2>Read-only Fail-closed Hazırlık Özeti</h2>
+          <span>Eksik yedek, doğrulanmamış read-only kullanıcı veya kapsam aşımında bağlantının kapalı kalacağı yönetici özetinde görünür.</span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {readonlyFailClosedSummaryCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+    </section>
   );
 }
 

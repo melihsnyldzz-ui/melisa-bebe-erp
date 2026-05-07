@@ -1,18 +1,18 @@
-export const currentReleaseVersion = "v1.42.1";
+export const currentReleaseVersion = "v1.43.0";
 
-export const currentReleaseTitle = "Read-only Öncesi Son Güvenlik Tarama ve Temizlik";
+export const currentReleaseTitle = "İlk Read-only Bağlantı Denemesi Fail-closed Hazırlık Kabuğu";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "readonly-final-security-scan-status"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "readonly-fail-closed-status"];
 
 export const releaseHighlightItems = [
-  "İlk gerçek read-only bağlantı öncesi sürüm, mavi nokta, güvenlik metni ve pasif teknik iskelet son kez kontrol edildi.",
-  "Eski otomasyon kalıntısı, gerçek bağlantı davranışı, credential, query ve veri yazma riski için görünür güvenlik taraması eklendi.",
-  "Gerçek Vega bağlantısı, SQL/ODBC, DB okuma, query, connection test, API veya veri yazma eklenmeden son temizlik yapıldı.",
+  "İlk read-only bağlantı denemesi öncesi fail-closed güvenlik kabuğu pasif olarak hazırlandı.",
+  "Bağlantı kapalıyken uygulanacak DB okuma, query, connection test, credential ve veri yazma kilitleri görünür hale getirildi.",
+  "Gerçek Vega bağlantısı, SQL/ODBC, DB okuma, query, connection test, API veya veri yazma eklenmeden güvenli teknik hazırlık korundu.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
-  { id: "readonly-final-security-scan-status", label: "Read-only Son Güvenlik Tarama Durumu'na git" },
+  { id: "readonly-fail-closed-status", label: "Read-only Fail-closed Durumu'na git" },
   { id: "system-workflow-model", label: "Çalışma Modeli'ne git" },
 ];
 
@@ -28,6 +28,7 @@ export const releaseHighlightsByPage = {
     releaseHighlightItems,
     releaseJumpLinks: [
       { id: "dashboard-owner-view", label: "Patron Bakışı'na git" },
+      { id: "dashboard-readonly-fail-closed-summary", label: "Read-only Fail-closed Özeti'ne git" },
       { id: "dashboard-readonly-final-security-scan-summary", label: "Read-only Son Güvenlik Taraması'na git" },
       { id: "dashboard-readonly-operator-checklist-summary", label: "Read-only Operatör Checklist Özeti'ne git" },
       { id: "dashboard-readonly-connection-skeleton-summary", label: "Read-only Altyapı Özeti'ne git" },
@@ -43,7 +44,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-owner-view", "dashboard-readonly-final-security-scan-summary", "dashboard-daily-operation"],
+    updatedSectionIds: ["dashboard-owner-view", "dashboard-readonly-fail-closed-summary", "dashboard-daily-operation"],
   },
   reports: {
     releaseHighlightItems,
@@ -74,6 +75,10 @@ export const releaseHighlightsByPage = {
   vegaImportPreview: {
     releaseHighlightItems,
     releaseJumpLinks: [
+      { id: "vega-readonly-fail-closed-shell", label: "Fail-closed Hazırlık Kabuğu'na git" },
+      { id: "vega-fail-closed-rules", label: "Fail-closed Kuralları'na git" },
+      { id: "vega-blocked-behaviors", label: "Bloke Edilen Davranışlar'a git" },
+      { id: "vega-first-real-connection-boundary", label: "Teknik Sınır'a git" },
       { id: "vega-readonly-final-security-scan", label: "Son Güvenlik Taraması'na git" },
       { id: "vega-final-security-cleanup-list", label: "Son Güvenlik Kontrol Listesi'ne git" },
       { id: "vega-readonly-operator-checklist-center", label: "Operatör Checklist Merkezi'ne git" },
@@ -103,7 +108,7 @@ export const releaseHighlightsByPage = {
       { id: "vega-import-quality-note", label: "Kalite Kontrol Notu'na git" },
       { id: "vega-readonly-roadmap", label: "Read-only Yol Haritası'na git" },
     ],
-    updatedSectionIds: ["vega-readonly-final-security-scan", "vega-final-security-cleanup-list"],
+    updatedSectionIds: ["vega-readonly-fail-closed-shell", "vega-fail-closed-rules", "vega-blocked-behaviors", "vega-first-real-connection-boundary"],
   },
 
   warehouseTerminal: {

@@ -2,6 +2,7 @@ import { ShieldCheck } from "lucide-react";
 import ReleaseHighlightsPanel from "../Common/ReleaseHighlightsPanel.jsx";
 import { APP_STAGE, APP_VERSION } from "../../config/appVersion.js";
 import { readOnlyConnectionPlan } from "../../config/readOnlyConnectionPlan.js";
+import { readOnlyFailClosedPolicy } from "../../config/readOnlyFailClosedPolicy.js";
 import {
   currentReleaseVersion,
   releaseHighlightsByPage,
@@ -288,7 +289,22 @@ const readonlyFinalSecurityScanStatusRows = [
   { label: "ERP’ye yazma/import", value: "Kapalı" },
 ];
 
+const readonlyFailClosedStatusRows = [
+  { label: "Fail-closed politika", value: "Pasif hazırlık" },
+  { label: "Varsayılan bağlantı", value: readOnlyFailClosedPolicy.defaultConnectionState },
+  { label: "DB okuma/query", value: "Yok" },
+  { label: "Connection test", value: "Kapalı" },
+  { label: "Credential saklama", value: "Yok" },
+  { label: "ERP’ye yazma/import", value: "Kapalı" },
+];
+
 const versionHistoryRows = [
+  {
+    version: "v1.43.0",
+    title: "İlk Read-only Bağlantı Denemesi Fail-closed Hazırlık Kabuğu",
+    area: "Vega Import Önizleme / Dashboard / Sistem Durumu / README",
+    description: "İlk read-only bağlantı denemesi öncesi fail-closed güvenlik kabuğu pasif olarak hazırlandı; DB okuma, query, connection test, credential ve veri yazma kilitleri görünür hale getirildi; gerçek bağlantı, API veya veri yazma eklenmedi.",
+  },
   {
     version: "v1.42.1",
     title: "Read-only Öncesi Son Güvenlik Tarama ve Temizlik",
@@ -810,8 +826,8 @@ export default function SystemStatusPanel() {
 
       <div className="system-status-focus-card">
         <span>Bu Sürümde Test Edilecek Alan</span>
-        <strong>Vega Import Önizleme / Read-only Son Güvenlik Taraması</strong>
-        <p>Bu sürümde sürüm uyumu, mavi nokta görünürlüğü, pasif metadata ve credential/query yokluğu özellikle kontrol edilmelidir.</p>
+        <strong>Vega Import Önizleme / Read-only Fail-closed Kabuğu</strong>
+        <p>Bu sürümde fail-closed varsayılan kapalı politika, bloke edilen davranışlar ve ilk bağlantı öncesi teknik sınırlar özellikle kontrol edilmelidir.</p>
       </div>
 
       <div className="system-workflow-panel" {...sectionHighlightProps("system-workflow-model")}>
@@ -829,6 +845,24 @@ export default function SystemStatusPanel() {
         </div>
         <p className="system-workflow-safety-note">
           Gerçek veri bağlantısı, DB okuma, query, import ve veri yazma işlemleri yalnızca ayrı küçük ve açık onaylı sürümlerde ele alınır.
+        </p>
+      </div>
+
+      <div className="handheld-barcode-status-panel readonly-fail-closed-status-panel" {...sectionHighlightProps("readonly-fail-closed-status")}>
+        <div>
+          <h3>Read-only Fail-closed Hazırlık Durumu <NewReleaseBadge sectionId="readonly-fail-closed-status" /></h3>
+          <p>İlk bağlantı denemesi öncesi varsayılan kapalı duruş, bloke davranışlar ve credential/query yokluğu pasif sistem özeti olarak takip edilir.</p>
+        </div>
+        <div className="system-status-grid">
+          {readonlyFailClosedStatusRows.map((row) => (
+            <div className="system-status-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </div>
+          ))}
+        </div>
+        <p className="handheld-barcode-safety-note readonly-fail-closed-safety-note">
+          Bu sürüm yalnızca fail-closed güvenlik kabuğu görünürlüğü sağlar; bağlantı, DB okuma, query, API, connection test, credential veya veri yazma işlemi yapmaz.
         </p>
       </div>
 

@@ -5,8 +5,14 @@ import {
   readOnlyFirstScopeRules,
   readOnlyNextPhaseBoundaries,
   readOnlyOperatorChecklist,
+  readOnlyFailClosedPreparationNotes,
   readOnlyPreConnectionCleanupNotes,
 } from "../config/readOnlyConnectionPlan.js";
+import {
+  readOnlyBlockedBehaviors,
+  readOnlyFailClosedPolicy,
+  readOnlyFailClosedRules,
+} from "../config/readOnlyFailClosedPolicy.js";
 import {
   vegaImportMapping,
   vegaImportSummary,
@@ -107,6 +113,43 @@ const finalSecurityScanStatusCards = [
   { label: "Gerçek bağlantı", value: "Kapalı" },
   { label: "Query / DB okuma", value: "Yok" },
   { label: "Veri yazma/import", value: "Kapalı" },
+];
+
+const failClosedStatusCards = [
+  { label: "Politika modu", value: "Fail-closed / Pasif" },
+  { label: "Varsayılan bağlantı", value: readOnlyFailClosedPolicy.defaultConnectionState },
+  { label: "DB okuma", value: readOnlyFailClosedPolicy.defaultDbReadState },
+  { label: "Query", value: readOnlyFailClosedPolicy.defaultQueryState },
+  { label: "Connection test", value: "Kapalı" },
+  { label: "Veri yazma/import", value: "Kapalı" },
+];
+
+const failClosedRuleItems = [
+  "Manuel yedek doğrulanmadıysa bağlantı denenmez.",
+  "Read-only kullanıcı doğrulanmadıysa bağlantı denenmez.",
+  "İlk kapsam 20 stok kartını aşacaksa bağlantı denenmez.",
+  "Ham hata gizleme politikası hazır değilse bağlantı denenmez.",
+  "Yazma yetkisi şüphesi varsa bağlantı denenmez.",
+  "Timeout politikası net değilse bağlantı denenmez.",
+  "Başarısızlıkta tekrar deneme yapılmaz, önce rapor hazırlanır.",
+  ...readOnlyFailClosedPreparationNotes,
+];
+
+const blockedBehaviorRows = readOnlyBlockedBehaviors.map((label) => ({
+  label,
+  value: "Bloke",
+}));
+
+const firstRealConnectionBoundaryItems = [
+  "Bir sonraki faz küçük ve ayrı olmalıdır.",
+  "Sadece read-only bağlantı denenebilir.",
+  `İlk kapsam ${readOnlyFailClosedPolicy.firstAttemptScope}.`,
+  `İlk limit ${readOnlyFailClosedPolicy.firstAttemptLimit}.`,
+  "Query üretimi bu sürümde yoktur.",
+  "Connection test bu sürümde yoktur.",
+  "Credential bu sürümde yoktur.",
+  "Veri yazma ve import kapalı kalır.",
+  "Başarısızlıkta tekrar deneme yapılmaz.",
 ];
 
 const finalSecurityCleanupItems = [
@@ -571,6 +614,62 @@ export default function VegaImportPreview() {
           <h1>Vega Read-only Operasyon Merkezi</h1>
           <span>Bu ekran gerçek Vega bağlantısı kurmadan, ilk read-only deneme öncesi güvenlik, saha ve kapsam kontrollerini tek yerde toplar.</span>
         </div>
+      </section>
+
+      <section className="vega-technical-gate-center section-updated-highlight" id="vega-readonly-fail-closed-shell">
+        <div className="vega-technical-gate-hero">
+          <p>Pasif fail-closed kabuk</p>
+          <h2>Read-only Fail-closed Hazırlık Kabuğu</h2>
+          <span>
+            İlk gerçek read-only bağlantı denemesi öncesinde sistemin varsayılan olarak kapalı kalacağını, eksik şartlarda bağlantının denenmeyeceğini ve veri yazma/import kilitlerinin kapalı olduğunu gösteren pasif güvenlik kabuğu.
+          </span>
+        </div>
+
+        <div className="vega-technical-gate-status-grid">
+          {failClosedStatusCards.map((card) => (
+            <article className="vega-import-summary-card" key={card.label}>
+              <span>{card.label}</span>
+              <strong>{card.value}</strong>
+            </article>
+          ))}
+        </div>
+
+        <section className="vega-technical-gate-panel" id="vega-fail-closed-rules">
+          <h3>Fail-closed Kuralları</h3>
+          <div className="vega-technical-gate-card-grid">
+            {failClosedRuleItems.map((item) => (
+              <article className="vega-owner-summary-row" key={item}>
+                <ShieldCheck size={14} />
+                <span>{item}</span>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="vega-technical-gate-panel" id="vega-blocked-behaviors">
+          <h3>Bloke Edilen Davranışlar</h3>
+          <div className="vega-technical-gate-lock-grid">
+            {blockedBehaviorRows.map((row) => (
+              <article className="vega-technical-lock-row" key={row.label}>
+                <span>{row.label}</span>
+                <strong>{row.value}</strong>
+              </article>
+            ))}
+          </div>
+          <p>Bu sürümde hiçbir blok kaldırılmaz. Bu bölüm yalnızca fail-closed güvenlik görünürlüğü sağlar.</p>
+        </section>
+
+        <section className="vega-technical-gate-panel" id="vega-first-real-connection-boundary">
+          <h3>İlk Gerçek Bağlantıya Geçiş Öncesi Teknik Sınır</h3>
+          <div className="vega-technical-gate-card-grid">
+            {firstRealConnectionBoundaryItems.map((item) => (
+              <article className="vega-owner-summary-row" key={item}>
+                <ShieldCheck size={14} />
+                <span>{item}</span>
+              </article>
+            ))}
+          </div>
+        </section>
       </section>
 
       <section className="vega-technical-gate-center section-updated-highlight" id="vega-readonly-final-security-scan">

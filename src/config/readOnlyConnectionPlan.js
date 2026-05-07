@@ -55,3 +55,9 @@ export const readOnlyPreConnectionCleanupNotes = [
   "Gerçek bağlantı bilgisi, credential veya query içermez.",
   "İlk gerçek bağlantı ayrı küçük onaylı fazda ele alınacaktır.",
 ];
+
+export const readOnlyFailClosedPreparationNotes = [
+  "İlk gerçek bağlantı fazı açılana kadar sistem kapalı kalır.",
+  "Fail-closed prensibi gereği eksik şart varsa bağlantı denenmez.",
+  "Bu hazırlık dosyaları gerçek bağlantı davranışı içermez.",
+];
