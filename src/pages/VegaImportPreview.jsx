@@ -946,6 +946,10 @@ export default function VegaImportPreview() {
           Read-only · 20 satır · Yazma yok · Import yok · Dosyaya çıktı yok. Önizleme otomatik başlamaz; sadece butonla çalışır.
         </p>
 
+        <p className="vega-import-warning-panel" id="vega-stock-preview-beta-note">
+          Kapalı beta test notu: Bu ekran kapalı beta testinde stok önizleme amacıyla kullanılır. Gerçek stok güncellemesi veya import yapmaz.
+        </p>
+
         <section className="vega-technical-gate-panel">
           <div className="vega-readonly-preview-action">
             <div>

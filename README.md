@@ -6,8 +6,8 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 
 ## Mevcut Durum
 
-- Güncel sürüm: v1.61.0
-- Aşama: Vega Stok Ekranı Genel Sadeleştirme
+- Güncel sürüm: v1.62.0
+- Aşama: Stok Önizleme Test Sonrası Temizlik ve Paket Hazırlığı
 - Build kontrolü: GitHub Actions
 - El terminali: okuma, son okutulanlar, sayım sepeti, rapor/CSV/JSON önizleme hazırlığı
 - Stok ve barkod kalite kontrolü: pasif/mock risk görünürlüğü
@@ -312,6 +312,14 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 - Gelişmiş destek panelleri varsayılan kapalı gelir ve yalnızca kullanıcı açınca görünür.
 - Panel/test state’i sadece frontend state içinde kalır; local DB’ye, dosyaya, Git’e veya Vega’ya yazılmaz.
 - Veri kapsamı değişmedi: yalnızca manuel başlatılan 20 satırlık read-only stok önizleme korunur.
+- Yeni SQL, otomatik bağlantı, veri yazma, import/senkron veya dosyaya canlı veri çıktısı eklenmez.
+
+## Stok Önizleme Test Sonrası Temizlik ve Paket Hazırlığı
+
+- Bu faz stok önizleme modülünü kapalı beta paketi öncesi son temizlik ve hazırlık görünürlüğüne alır.
+- Kapalı beta test notu uygulama içinde görünür: ekran stok önizleme içindir, gerçek stok güncellemesi veya import yapmaz.
+- Veri kapsamı değişmedi: yalnızca manuel başlatılan 20 satırlık read-only stok önizleme korunur.
+- Paket testi manuel doğrulama bekler; `.env.local`, canlı stok değerleri ve bağlantı bilgileri repoya eklenmez.
 - Yeni SQL, otomatik bağlantı, veri yazma, import/senkron veya dosyaya canlı veri çıktısı eklenmez.
 
 ## Build Kontrolü

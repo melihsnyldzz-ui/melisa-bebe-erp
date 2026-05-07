@@ -397,6 +397,15 @@ const vegaStockScreenSimplificationCards = [
   { label: "Kalıcı panel/test kaydı", value: "Yok" },
 ];
 
+const stockPreviewBetaPackageCards = [
+  { label: "Stok önizleme beta hazırlığı", value: "Hazır" },
+  { label: "Veri kapsamı", value: "20 satır read-only" },
+  { label: "Paket testi", value: "Bekliyor" },
+  { label: "Yeni SQL", value: "Yok" },
+  { label: "Veri yazma/import", value: "Yok" },
+  { label: "Dosyaya çıktı", value: "Yok" },
+];
+
 const passiveVegaConnectionSummaryCards = passiveVegaConnectionStatusRows.slice(0, 10);
 
 const closedBetaPreparationCards = closedBetaPreparationRows;
@@ -622,6 +631,8 @@ export default function Dashboard() {
       <StockPreviewUserTestSummary />
 
       <VegaStockScreenSimplificationSummary />
+
+      <StockPreviewBetaPackageSummary />
 
       <SuccessfulStockReadProof />
 
@@ -997,6 +1008,32 @@ function VegaStockScreenSimplificationSummary() {
 
       <div className="reporting-decision-status-grid">
         {vegaStockScreenSimplificationCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function StockPreviewBetaPackageSummary() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-stock-preview-beta-package")}`} id="dashboard-stock-preview-beta-package">
+      <DashboardNewReleaseBadge sectionId="dashboard-stock-preview-beta-package" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Kapalı beta hazırlığı</p>
+          <h2>Stok Önizleme Test Sonrası Temizlik ve Paket Hazırlığı</h2>
+          <span>
+            Stok önizleme modülü kapalı beta paketi öncesi hazır gösterilir; veri kapsamı ve güvenlik sınırları değişmeden kalır.
+          </span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {stockPreviewBetaPackageCards.map((card) => (
           <article className="commerce-profitability-status-card" key={card.label}>
             <span>{card.label}</span>
             <strong>{card.value}</strong>

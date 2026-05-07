@@ -429,6 +429,15 @@ const vegaStockScreenSimplificationStatusRows = [
   { label: "Kalıcı panel/test kaydı", value: "Yok" },
 ];
 
+const stockPreviewBetaPackageStatusRows = [
+  { label: "Stok önizleme beta hazırlığı", value: "Hazır" },
+  { label: "Veri kapsamı", value: "20 satır read-only" },
+  { label: "Paket testi", value: "Bekliyor" },
+  { label: "Yeni SQL", value: "Yok" },
+  { label: "Veri yazma/import", value: "Yok" },
+  { label: "Dosyaya çıktı", value: "Yok" },
+];
+
 const vegaStockFieldMapStatusRows = [
   { label: "Alan haritası", value: "Pasif dokümantasyon" },
   { label: "Kolon sayısı", value: `${vegaStockFieldMap.length} alan` },
@@ -452,6 +461,12 @@ const desktopPreparationStatusRows = [
 ];
 
 const versionHistoryRows = [
+  {
+    version: "v1.62.0",
+    title: "Stok Önizleme Test Sonrası Temizlik ve Paket Hazırlığı",
+    area: "Vega Import Önizleme / Dashboard / Sistem Durumu / README",
+    description: "Read-only stok önizleme modülü kapalı beta paketi öncesi son temizlik ve hazırlık görünürlüğüne alındı; kapalı beta test notu, paket hazırlık durumu ve 20 satırlık read-only güvenlik sınırı netleştirildi.",
+  },
   {
     version: "v1.61.0",
     title: "Vega Stok Ekranı Genel Sadeleştirme",
@@ -1394,6 +1409,24 @@ export default function SystemStatusPanel() {
         </div>
         <p className="handheld-barcode-safety-note vega-stock-screen-simplification-safety-note">
           Bu sadeleştirme yalnızca ekran yerleşimidir; panel/test state’i kalıcı kaydedilmez, yeni SQL eklemez, veri yazmaz, import/senkron başlatmaz ve 20 satır read-only kapsamı büyütmez.
+        </p>
+      </div>
+
+      <div className="handheld-barcode-status-panel stock-preview-beta-package-status-panel" {...sectionHighlightProps("stock-preview-beta-package-status")}>
+        <div>
+          <h3>Stok Önizleme Test Sonrası Temizlik ve Paket Hazırlığı <NewReleaseBadge sectionId="stock-preview-beta-package-status" /></h3>
+          <p>Stok önizleme modülü kapalı beta paketi öncesi hazır görünür; paket testi manuel doğrulama bekler.</p>
+        </div>
+        <div className="system-status-grid">
+          {stockPreviewBetaPackageStatusRows.map((row) => (
+            <div className="system-status-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </div>
+          ))}
+        </div>
+        <p className="handheld-barcode-safety-note stock-preview-beta-package-safety-note">
+          Paket hazırlığı veri kapsamını büyütmez; yeni SQL, otomatik bağlantı, veri yazma/import veya dosyaya canlı veri çıktısı eklemez.
         </p>
       </div>
 
