@@ -182,6 +182,20 @@ const stockFieldValidationNotes = [
   { field: "KDVGRUBU", meaning: "KDV grubu adayı, muhasebe kontrolü gerekir", status: "Muhasebe kontrolü" },
 ];
 
+const stockSuggestedFieldLabels = [
+  { field: "IND", label: "Teknik ID", confidence: "Yüksek güven", note: "Kullanıcı karar alanı değildir." },
+  { field: "STOKKODU", label: "Stok Kodu", confidence: "Yüksek güven", note: "Vega stok kartı kodu ile karşılaştırılacak ana alan." },
+  { field: "MALINCINSI", label: "Ürün Adı / Malın Cinsi", confidence: "Yüksek güven", note: "Ürün adı karşılığı olarak doğrulama sonrası netleşmeye en yakın alan." },
+  { field: "KOD1", label: "Doğrulanacak Kod Alanı 1", confidence: "Düşük / doğrulanacak", note: "Vega ekranındaki karşılığı manuel karşılaştırma ile netleşmelidir." },
+  { field: "KOD2", label: "Doğrulanacak Kod Alanı 2", confidence: "Düşük / doğrulanacak", note: "Vega ekranındaki karşılığı manuel karşılaştırma ile netleşmelidir." },
+  { field: "KOD4", label: "Doğrulanacak Kod Alanı 4", confidence: "Düşük / doğrulanacak", note: "Vega ekranındaki karşılığı manuel karşılaştırma ile netleşmelidir." },
+  { field: "KOD6", label: "Doğrulanacak Kod Alanı 6", confidence: "Düşük / doğrulanacak", note: "Vega ekranındaki karşılığı manuel karşılaştırma ile netleşmelidir." },
+  { field: "ALISFIYATI", label: "Alış Fiyatı Adayı", confidence: "Orta güven", note: "Kesin maliyet kararı değildir; Vega ekranı ve muhasebe kontrolü gerekir." },
+  { field: "ISKSATISFIYATI2", label: "Satış Fiyatı Adayı 2", confidence: "Orta güven", note: "Fiyat seviyesi manuel olarak doğrulanmalıdır." },
+  { field: "ISKSATISFIYATI3", label: "Satış Fiyatı Adayı 3", confidence: "Orta güven", note: "Fiyat seviyesi manuel olarak doğrulanmalıdır." },
+  { field: "KDVGRUBU", label: "KDV Grubu Adayı", confidence: "Orta güven", note: "Muhasebe kontrolü tamamlanmadan kesin kabul edilmez." },
+];
+
 const manualValidationStatuses = ["Bekliyor", "Uyumlu", "Fark var", "Emin değilim"];
 
 const stockManualValidationChecklist = [
@@ -976,6 +990,21 @@ export default function VegaImportPreview() {
                 <span>{note.field}</span>
                 <strong>{note.meaning}</strong>
                 <small>{note.status}</small>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="vega-technical-gate-panel" id="vega-stock-suggested-field-labels">
+          <h3>Önerilen Alan Etiketleri</h3>
+          <p>Bu etiketler geçici öneridir. Manuel Vega karşılaştırması tamamlanmadan kesin operasyon veya muhasebe kararı olarak kullanılmaz.</p>
+          <div className="vega-stock-suggested-label-grid">
+            {stockSuggestedFieldLabels.map((item) => (
+              <article className="vega-stock-suggested-label-card" key={item.field}>
+                <span>{item.field}</span>
+                <strong>{item.label}</strong>
+                <small>{item.confidence}</small>
+                <p>{item.note}</p>
               </article>
             ))}
           </div>

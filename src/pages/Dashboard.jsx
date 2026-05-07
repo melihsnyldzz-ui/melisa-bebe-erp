@@ -352,6 +352,15 @@ const stockManualValidationChecklistCards = [
   { label: "Sonraki hedef", value: "Doğrulanan alanlara göre kolonları netleştirme" },
 ];
 
+const stockFieldLabelingPrepCards = [
+  { label: "Önerilen etiketler", value: "Hazır" },
+  { label: "Kesinleşmiş alanlar", value: "STOKKODU / MALINCINSI / IND" },
+  { label: "Doğrulanacak alanlar", value: "KOD1 / KOD2 / KOD4 / KOD6 / fiyat / KDV" },
+  { label: "Kalıcı kayıt", value: "Yok" },
+  { label: "Yeni SQL", value: "Yok" },
+  { label: "Veri yazma/import", value: "Yok" },
+];
+
 const passiveVegaConnectionSummaryCards = passiveVegaConnectionStatusRows.slice(0, 10);
 
 const closedBetaPreparationCards = closedBetaPreparationRows;
@@ -567,6 +576,8 @@ export default function Dashboard() {
       <StockFieldValidationPrepSummary />
 
       <StockManualValidationChecklistSummary />
+
+      <StockFieldLabelingPrepSummary />
 
       <SuccessfulStockReadProof />
 
@@ -812,6 +823,32 @@ function StockManualValidationChecklistSummary() {
 
       <div className="reporting-decision-status-grid">
         {stockManualValidationChecklistCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function StockFieldLabelingPrepSummary() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-stock-field-labeling-prep")}`} id="dashboard-stock-field-labeling-prep">
+      <DashboardNewReleaseBadge sectionId="dashboard-stock-field-labeling-prep" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Geçici etiket hazırlığı</p>
+          <h2>Doğrulama Sonrası Stok Alan Etiketleme Hazırlığı</h2>
+          <span>
+            Stok önizleme kolonları için önerilen etiketler ve güven seviyeleri görünürdür; KOD, fiyat ve KDV alanları kesinleşmiş karar olarak sunulmaz.
+          </span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {stockFieldLabelingPrepCards.map((card) => (
           <article className="commerce-profitability-status-card" key={card.label}>
             <span>{card.label}</span>
             <strong>{card.value}</strong>

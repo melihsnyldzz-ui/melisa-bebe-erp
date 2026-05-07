@@ -809,3 +809,63 @@
   font-weight: 800;
   line-height: 1.35;
 }
+
+.vega-stock-suggested-label-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.vega-stock-suggested-label-card {
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid rgba(24, 100, 171, 0.14);
+  border-radius: 8px;
+  background: rgba(248, 250, 252, 0.92);
+}
+
+.vega-stock-suggested-label-card span,
+.vega-stock-suggested-label-card strong,
+.vega-stock-suggested-label-card small,
+.vega-stock-suggested-label-card p {
+  display: block;
+}
+
+.vega-stock-suggested-label-card span {
+  color: #64748b;
+  font-size: 0.72rem;
+  font-weight: 850;
+}
+
+.vega-stock-suggested-label-card strong {
+  margin-top: 4px;
+  color: var(--anthracite);
+  font-size: 0.88rem;
+}
+
+.vega-stock-suggested-label-card small {
+  margin-top: 6px;
+  color: #1864ab;
+  font-size: 0.72rem;
+  font-weight: 850;
+}
+
+.vega-stock-suggested-label-card p {
+  margin: 7px 0 0;
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 760;
+  line-height: 1.35;
+}
+
+@media (max-width: 980px) {
+  .vega-stock-suggested-label-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .vega-stock-suggested-label-grid {
+    grid-template-columns: 1fr;
+  }
+}

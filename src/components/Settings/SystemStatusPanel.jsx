@@ -384,6 +384,15 @@ const stockManualValidationChecklistStatusRows = [
   { label: "Sonraki hedef", value: "Doğrulanan alanlara göre stok önizleme kolonlarını netleştirme" },
 ];
 
+const stockFieldLabelingStatusRows = [
+  { label: "Önerilen etiketler", value: "Hazır" },
+  { label: "Kesinleşmiş alanlar", value: "STOKKODU / MALINCINSI / IND" },
+  { label: "Doğrulanacak alanlar", value: "KOD1 / KOD2 / KOD4 / KOD6 / fiyat / KDV" },
+  { label: "Kalıcı kayıt", value: "Yok" },
+  { label: "Yeni SQL", value: "Yok" },
+  { label: "Veri yazma/import", value: "Yok" },
+];
+
 const vegaStockFieldMapStatusRows = [
   { label: "Alan haritası", value: "Pasif dokümantasyon" },
   { label: "Kolon sayısı", value: `${vegaStockFieldMap.length} alan` },
@@ -407,6 +416,12 @@ const desktopPreparationStatusRows = [
 ];
 
 const versionHistoryRows = [
+  {
+    version: "v1.57.0",
+    title: "Doğrulama Sonrası Stok Alan Etiketleme Hazırlığı",
+    area: "Vega Import Önizleme / Dashboard / Sistem Durumu / README",
+    description: "Read-only stok önizleme alanları için geçici önerilen etiketler ve güven seviyeleri görünür hale getirildi; KOD, fiyat ve KDV alanları doğrulanacak aday olarak kaldı, yeni SQL, kalıcı kayıt, dosya çıktısı, veri yazma veya import/senkron eklenmedi.",
+  },
   {
     version: "v1.56.0",
     title: "Stok Alan Manuel Doğrulama Checklist’i",
@@ -1229,6 +1244,24 @@ export default function SystemStatusPanel() {
         </div>
         <p className="handheld-barcode-safety-note stock-manual-validation-safety-note">
           Checklist yalnızca manuel rehberdir; gerçek değerleri repoya yazmaz, local DB’ye kaydetmez, Vega’ya yazmaz, import/senkron veya yeni SQL eklemez.
+        </p>
+      </div>
+
+      <div className="handheld-barcode-status-panel stock-field-labeling-status-panel" {...sectionHighlightProps("stock-field-labeling-status")}>
+        <div>
+          <h3>Doğrulama Sonrası Stok Alan Etiketleme Hazırlığı <NewReleaseBadge sectionId="stock-field-labeling-status" /></h3>
+          <p>Önerilen stok alan etiketleri geçici hazırlıktır; fiyat, KOD ve KDV alanları kesinleşmiş operasyon/muhasebe kararı olarak sunulmaz.</p>
+        </div>
+        <div className="system-status-grid">
+          {stockFieldLabelingStatusRows.map((row) => (
+            <div className="system-status-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </div>
+          ))}
+        </div>
+        <p className="handheld-barcode-safety-note stock-field-labeling-safety-note">
+          Etiket hazırlığı yalnızca görünürlük sağlar; checklist/etiket sonucu kaydetmez, yeni SQL eklemez, canlı stok değerlerini repoya yazmaz ve Vega’ya veri yazmaz.
         </p>
       </div>
 
