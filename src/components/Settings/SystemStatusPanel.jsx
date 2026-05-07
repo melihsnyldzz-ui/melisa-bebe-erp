@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.66.1",
+    title: "Kasa Finans Hazırlık Kapısı Durum Netleştirme",
+    area: "Dashboard / Sistem Durumu",
+    description: "Kasa/Finans Hazırlık Kapısı patron bakışı için neden kapalı kaldığını, finans açılmadan önce gereken 5 şartı ve yalnızca iş seviyesi aday özet etiketlerini pasif güvenlik sınırlarıyla netleştirdi.",
+  },
+  {
     version: "v1.62.0",
     title: "Stok Önizleme Test Sonrası Temizlik ve Paket Hazırlığı",
     area: "Vega Import Önizleme / Dashboard / Sistem Durumu / README",

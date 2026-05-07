@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.66.0";
+export const currentReleaseVersion = "v1.66.1";
 
-export const currentReleaseTitle = "Kasa Finans Özeti Hazırlık Kapısı";
+export const currentReleaseTitle = "Kasa Finans Hazırlık Kapısı Durum Netleştirme";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "stock-preview-beta-package-status"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model"];
 
 export const releaseHighlightItems = [
-  "Kasa/Finans Özeti için pasif hazırlık kapısı eklendi.",
-  "Finans kapsamı, aday alanlar, güvenlik notları ve kesin yasaklar bağlantı açmadan görünür hale getirildi.",
-  "Gerçek kasa, banka, tahsilat, ödeme, bakiye veya hareket verisi; tablo adı, SQL sorgusu, import, senkron, export ya da SQL/Vega otomatik bağlantısı eklenmeden read-only güvenlik modeli korundu.",
+  "Kasa/Finans Hazırlık Kapısı patron bakışı için neden kapalı kaldığını daha açık anlatacak şekilde netleştirildi.",
+  "Finans açılmadan önce gereken 5 şart ve ilk read-only önizlemede yalnızca iş seviyesi aday özet etiketleri görünür hale getirildi.",
+  "Gerçek kasa, banka, tahsilat, ödeme, bakiye veya hareket verisi; tablo adı, SQL sorgusu, import, senkron, export ya da SQL/Vega otomatik bağlantısı eklenmeden pasif güvenlik modeli korundu.",
 ];
 
 export const releaseJumpLinks = [

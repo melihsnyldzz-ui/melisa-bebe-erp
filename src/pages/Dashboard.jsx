@@ -91,19 +91,24 @@ const financePreviewPrepGateCards = [
   { label: "Tablo/sorgu", value: "Eklenmedi" },
   { label: "Sonraki adım", value: "Finans raporlama sınırı analizi" },
 ];
+const financePreviewWhyClosedItems = [
+  "Finans verisi kasa, banka, tahsilat, ödeme ve bakiye bilgisi içerdiği için en hassas modüldür.",
+  "Önce raporlama sınırı ve maskeleme kuralı belirlenmelidir.",
+  "İlk deneme sadece read-only ve küçük özet kapsamıyla yapılmalıdır.",
+  "Patron onayı olmadan finans görünümü açılmamalıdır.",
+];
 const financePreviewPrepChecklist = [
-  "Kasa/banka/tahsilat kapsamı netleştirilecek.",
-  "Read-only kullanıcı yetkisi doğrulanacak.",
-  "İlk satır/özet limiti belirlenecek.",
-  "Finansal veri maskeleme kuralı belirlenecek.",
-  "Bakiye ve hareket alanları ayrıca doğrulanacak.",
-  "Patron onayı olmadan finans görünümü açılmayacak.",
+  "Read-only kullanıcı yetkisi doğrulandı.",
+  "Finans raporlama kapsamı netleşti.",
+  "İlk özet/satır limiti belirlendi.",
+  "Finansal veri maskeleme kuralı belirlendi.",
+  "Patron onayı alındı.",
 ];
 const financePreviewCandidateLabels = [
-  "Günlük kasa özeti",
-  "Tahsilat durumu",
-  "Ödeme durumu",
-  "Bakiye yönü",
+  "Günlük kasa yönü",
+  "Tahsilat toplam durumu",
+  "Ödeme toplam durumu",
+  "Net bakiye yönü",
   "Riskli hareket etiketi",
   "Son işlem tarihi",
 ];
@@ -115,14 +120,13 @@ const financePreviewPrepSafetyNotes = [
   "Veri yazma/import/senkron/export yoktur.",
 ];
 const financePreviewForbiddenItems = [
-  "Finans verisi okuma yok.",
-  "SQL sorgusu yok.",
-  "Tablo adı yok.",
-  "Kasa/banka hareketi yok.",
-  "Tahsilat/ödeme verisi yok.",
-  "Bakiye verisi yok.",
-  "Export/import/senkron yok.",
-  "Vega'ya veri yazma yok.",
+  "Finans verisi okunmayacak.",
+  "Gerçek finans tablo adı eklenmeyecek.",
+  "SQL sorgusu eklenmeyecek veya çalıştırılmayacak.",
+  "Kasa, banka, tahsilat, ödeme, bakiye veya hareket verisi gösterilmeyecek.",
+  "Export, import, senkron, write, update veya delete işlemi eklenmeyecek.",
+  "SQL/Vega otomatik bağlantısı başlatılmayacak.",
+  "Patron onayı olmadan finans görünümü açılmayacak.",
 ];
 
 const currentPreviewPrepGateCards = [
@@ -1050,6 +1054,16 @@ function FinancePreviewPrepGate() {
           </article>
         ))}
       </div>
+
+      <CommercePanel title="Neden Finans Verisi Henüz Okunmuyor?" note="Bu alan yalnızca karar gerekçesini açıklar; finans bağlantısı veya veri okuma işlemi başlatmaz.">
+        <div className="commerce-performance-grid">
+          {financePreviewWhyClosedItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
 
       <CommercePanel title="Finans Açılmadan Önce Gereken Şartlar" note="Bu liste sadece manuel kapsam hazırlığı içindir; onay veya kayıt tutmaz.">
         <div className="commerce-performance-grid">
