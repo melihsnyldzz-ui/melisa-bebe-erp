@@ -162,6 +162,29 @@ const ownerApprovalPackageNoActionItems = [
   "Veri okumaz/yazmaz.",
   "SQL/Vega işlemi başlatmaz.",
 ];
+const managementPresentationSummaryCards = [
+  { title: "Genel durum", value: "Read-only hazırlık" },
+  { title: "Stok", value: "Manuel read-only önizleme hazır" },
+  { title: "Cari", value: "Hazırlık kapısı" },
+  { title: "Sipariş", value: "Hazırlık kapısı" },
+  { title: "Kasa/Finans", value: "Hazırlık kapısı" },
+  { title: "Canlı geçiş", value: "Bekliyor" },
+];
+const managementPresentationNotDoingItems = [
+  "Veri yazma yok.",
+  "Otomatik bağlantı yok.",
+  "SQL sorgusu yok.",
+  "Tablo adı yok.",
+  "Export/import/senkron yok.",
+  "Onay kaydı yok.",
+];
+const managementPresentationNextDecisionItems = [
+  "Read-only test raporu manuel hazırlanacak.",
+  "Eksik listesi kapatılacak.",
+  "Maskeleme kuralları belirlenecek.",
+  "Manuel yedek prosedürü netleşecek.",
+  "Patron onayı alınmadan canlıya geçilmeyecek.",
+];
 const financePreviewPrepGateCards = [
   { label: "Finans kapsam", value: "Planlandı" },
   { label: "Bağlantı", value: "Yok" },
@@ -907,6 +930,8 @@ export default function Dashboard() {
 
       <OwnerApprovalPackagePrepPanel />
 
+      <ManagementPresentationSummaryPanel />
+
       <FinancePreviewPrepGate />
 
       <CurrentPreviewPrepGate />
@@ -1236,6 +1261,50 @@ function OwnerApprovalPackagePrepPanel() {
       </CommercePanel>
 
       <p className="commerce-profitability-safety-note">{ownerApprovalPackageSafetyNotes.join(" · ")}</p>
+    </section>
+  );
+}
+
+function ManagementPresentationSummaryPanel() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-management-presentation-summary")}`} id="dashboard-management-presentation-summary">
+      <DashboardNewReleaseBadge sectionId="dashboard-management-presentation-summary" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Pasif yönetici sunum özeti</p>
+          <h2>Yönetici Sunum Özeti Paneli</h2>
+          <span>Patrona ve şirket içine anlatılacak ERP durumunu tek sayfalık özet gibi gösterir; veri okumaz, dosya oluşturmaz ve rapor üretmez.</span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {managementPresentationSummaryCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.title}>
+            <span>{card.title}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+
+      <CommercePanel title="Şu An Yapılmayanlar" note="Bu liste güvenli sınırları görünür kılar; işlem veya kayıt başlatmaz.">
+        <div className="commerce-performance-grid">
+          {managementPresentationNotDoingItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Sıradaki Yönetici Kararı" note="Bu liste yalnızca manuel karar hazırlığıdır; onay kaydetmez.">
+        <div className="commerce-performance-grid">
+          {managementPresentationNextDecisionItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
     </section>
   );
 }

@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.69.0",
+    title: "Yönetici Sunum Özeti Paneli",
+    area: "Dashboard / Sistem Durumu",
+    description: "Patron onay paketi paneli yakınına ERP'nin read-only hazırlık durumunu, yapılmayan işlemleri ve sıradaki yönetici kararlarını dosya/rapor üretmeden, onay kaydetmeden ve SQL/Vega işlemi başlatmadan gösteren pasif sunum özeti eklendi.",
+  },
+  {
     version: "v1.68.1",
     title: "Patron Onay Paketi Netleştirme",
     area: "Dashboard / Sistem Durumu",
