@@ -7618,6 +7618,17 @@ tr:last-child td {
   background: #f5f3ff;
 }
 
+.module-maturity-status-panel {
+  border-color: #bae6fd;
+  background: linear-gradient(135deg, #f0f9ff, #ffffff);
+}
+
+.module-maturity-safety-note {
+  border-color: #bae6fd;
+  color: #0369a1;
+  background: #f0f9ff;
+}
+
 @media (max-width: 1180px) {
   .current-account-status-grid,
   .current-account-risk-class-grid,

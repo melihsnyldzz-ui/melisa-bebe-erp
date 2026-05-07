@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.35.1";
-export const APP_STAGE = "Mavi Nokta ve Yeni Sürüm Görünürlüğü Düzeltmesi";
+export const APP_VERSION = "v1.36.0";
+export const APP_STAGE = "Modül Olgunluk ve Canlıya Hazırlık Skor Merkezi";

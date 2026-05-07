@@ -38,6 +38,8 @@ const ownerViewCards = [
   { label: "Personel denemesi", value: "Planlandı" },
   { label: "Yönetici onayı", value: "Bekliyor" },
   { label: "Gerçek bağlantı", value: "Kapalı" },
+  { label: "Modül olgunluk skoru", value: "%96" },
+  { label: "Canlı güvenlik skoru", value: "%92" },
   { label: "Barkod operasyonu", value: "Hazırlıkta" },
   { label: "Barkod kalite kontrolü", value: "Öncelikli" },
   { label: "Riskli barkodlar", value: "İzlenecek" },
@@ -73,6 +75,9 @@ const ownerTodayItems = [
   "Canlı öncesi eksikler listesi kontrol edilecek",
   "Yönetici onay matrisi okunacak",
   "Vega read-only ilk deneme şartları tekrar doğrulanacak",
+  "Modül olgunluk skorları gözden geçirilecek",
+  "Personel testinden önce eksik alanlar not alınacak",
+  "Veri yazma kapalı kalacak",
   "Personel kullanım notları toplanacak",
   "Gerçek veri bağlantısı için yedek ve yetki kontrolü hazırlanacak",
 ];
@@ -94,7 +99,18 @@ const ownerDecisionItems = [
   "Canlı kullanıma geçmeden önce personel denemesi yapılmalıdır.",
   "Gerçek read-only bağlantı ayrı küçük sürümde açılmalıdır.",
   "Veri yazma ve import bu fazın konusu değildir.",
+  "İlk gerçek bağlantı sadece read-only ve 20 satır sınırıyla yapılmalıdır.",
+  "Veri yazma ve import hâlâ kapalı kalmalıdır.",
   "Ana hedef: güvenli geçiş, hızlı kontrol, hatasız stok görünürlüğü",
+];
+
+const moduleMaturityScoreCards = [
+  { label: "ERP genel hazırlık", value: "%96" },
+  { label: "Canlı kullanım güvenliği", value: "%92" },
+  { label: "Yönetici kokpiti", value: "%94" },
+  { label: "Saha/barkod hazırlığı", value: "%85" },
+  { label: "Vega read-only hazırlığı", value: "%90" },
+  { label: "Gerçek bağlantı / veri yazma", value: "%0" },
 ];
 
 const preliveTestStatusCards = [
@@ -239,6 +255,8 @@ export default function Dashboard() {
 
       <OwnerView />
 
+      <ModuleMaturityScoreCenter />
+
       <PreliveOperationTestCenter />
 
       <ReportingDecisionCenter />
@@ -260,6 +278,32 @@ export default function Dashboard() {
         <DashboardNewReleaseBadge sectionId="dashboard-commerce-insights" />
       </CommerceInsights>
     </>
+  );
+}
+
+function ModuleMaturityScoreCenter() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-module-maturity-score-center")}`} id="dashboard-module-maturity-score-center">
+      <DashboardNewReleaseBadge sectionId="dashboard-module-maturity-score-center" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Pasif canlıya hazırlık skoru</p>
+          <h2>Modül Olgunluk ve Canlıya Hazırlık Skor Merkezi</h2>
+          <span>
+            ERP’nin hangi modüllerinin canlı kullanıma ne kadar hazır olduğunu, hangi alanların hâlâ pasif/mock hazırlıkta kaldığını ve gerçek bağlantıya geçmeden önce hangi kararların beklediğini gösteren yönetici skor ekranı.
+          </span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {moduleMaturityScoreCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+    </section>
   );
 }
 

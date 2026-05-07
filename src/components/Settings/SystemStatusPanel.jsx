@@ -15,6 +15,10 @@ const statusRows = [
   { label: "Build kontrolü", value: "GitHub Actions + npm run build" },
   { label: "Çalışma modeli", value: "Main üzerinden manuel Codex akışı" },
   { label: "Kritik işlem politikası", value: "Stok, cari, fiş, yedekleme, import ve migration işlemleri ayrı kontrollü sürümlerle açılır." },
+  { label: "ERP genel hazırlık", value: "%96" },
+  { label: "Canlı güvenlik", value: "%92" },
+  { label: "Yönetici görünürlüğü", value: "Güçlü" },
+  { label: "Saha hazırlığı", value: "Test bekliyor" },
   { label: "Test merkezi", value: "Pasif/mock hazırlık" },
   { label: "Personel denemesi", value: "Planlandı" },
   { label: "Yönetici onayı", value: "Bekliyor" },
@@ -207,7 +211,22 @@ const preliveOperationTestStatusRows = [
   { label: "Canlıya geçiş", value: "Başlamadı" },
 ];
 
+const moduleMaturityStatusRows = [
+  { label: "ERP genel hazırlık", value: "%96" },
+  { label: "Canlı güvenlik", value: "%92" },
+  { label: "Yönetici görünürlüğü", value: "Güçlü" },
+  { label: "Saha hazırlığı", value: "Test bekliyor" },
+  { label: "Gerçek bağlantı", value: "Kapalı" },
+  { label: "Veri yazma", value: "Kapalı" },
+];
+
 const versionHistoryRows = [
+  {
+    version: "v1.36.0",
+    title: "Modül Olgunluk ve Canlıya Hazırlık Skor Merkezi",
+    area: "Raporlar / Dashboard / Sistem Durumu / README",
+    description: "ERP modüllerinin olgunluk ve canlıya hazırlık seviyeleri yüzdeli skorlarla tek pasif/mock merkezde toplandı; gerçek bağlantı, cihaz entegrasyonu, DB okuma, kayıt oluşturma veya veri yazma eklenmedi.",
+  },
   {
     version: "v1.35.0",
     title: "Canlı Kullanım Öncesi Operasyon Test Merkezi",
@@ -681,8 +700,8 @@ export default function SystemStatusPanel() {
 
       <div className="system-status-focus-card">
         <span>Bu Sürümde Test Edilecek Alan</span>
-        <strong>Raporlar / Canlı Kullanım Öncesi Operasyon Test Merkezi</strong>
-        <p>Bu sürümde canlı öncesi test senaryoları, personel deneme planı, yönetici onay matrisi ve test güvenlik kilidi özellikle kontrol edilmelidir.</p>
+        <strong>Raporlar / Modül Olgunluk ve Canlıya Hazırlık Skor Merkezi</strong>
+        <p>Bu sürümde modül olgunluk skorları, canlıya geçiş barometresi, gerçek bağlantı öncesi kalanlar ve kapalı alanlar özellikle kontrol edilmelidir.</p>
       </div>
 
       <div className="system-workflow-panel" {...sectionHighlightProps("system-workflow-model")}>
@@ -700,6 +719,24 @@ export default function SystemStatusPanel() {
         </div>
         <p className="system-workflow-safety-note">
           Gerçek veri bağlantısı, DB okuma, query, import ve veri yazma işlemleri yalnızca ayrı küçük ve açık onaylı sürümlerde ele alınır.
+        </p>
+      </div>
+
+      <div className="handheld-barcode-status-panel module-maturity-status-panel" {...sectionHighlightProps("module-maturity-status")}>
+        <div>
+          <h3>Modül Olgunluk ve Canlıya Hazırlık Durumu <NewReleaseBadge sectionId="module-maturity-status" /></h3>
+          <p>ERP modüllerinin canlıya hazırlık skoru ve gerçek bağlantı öncesi güvenli sınırları pasif yönetici özeti olarak takip edilir.</p>
+        </div>
+        <div className="system-status-grid">
+          {moduleMaturityStatusRows.map((row) => (
+            <div className="system-status-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </div>
+          ))}
+        </div>
+        <p className="handheld-barcode-safety-note module-maturity-safety-note">
+          Bu sürüm modül olgunluk ve canlıya hazırlık görünürlüğü sağlar; gerçek bağlantı, cihaz entegrasyonu, DB okuma, kayıt oluşturma veya veri yazma işlemi yapmaz.
         </p>
       </div>
 

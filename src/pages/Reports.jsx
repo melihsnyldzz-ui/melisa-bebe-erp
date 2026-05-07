@@ -37,6 +37,61 @@ const preliveStatusCards = [
   { label: "Canlıya geçiş", value: "Başlamadı" },
 ];
 
+const moduleMaturityScoreCards = [
+  { label: "ERP genel hazırlık", value: "%96" },
+  { label: "Canlı kullanım güvenliği", value: "%92" },
+  { label: "Yönetici kokpiti", value: "%94" },
+  { label: "Saha/barkod hazırlığı", value: "%85" },
+  { label: "Vega read-only hazırlığı", value: "%90" },
+  { label: "Gerçek bağlantı / veri yazma", value: "%0" },
+];
+
+const moduleMaturityRows = [
+  { module: "Dashboard / Patron kokpiti", score: "%94", status: "Yönetici görünürlüğü güçlü", next: "Personel yorumu bekler" },
+  { module: "Raporlama / Karar merkezi", score: "%86", status: "Pasif rapor mantığı hazır", next: "Gerçek veri bağlantısı yok" },
+  { module: "El terminali / barkod", score: "%85", status: "Saha akışı görünür", next: "Gerçek cihaz bağlantısı yok" },
+  { module: "Stok / barkod kalite kontrol", score: "%83", status: "Risk matrisi hazır", next: "Gerçek düzeltme yok" },
+  { module: "Cari / alacak riskleri", score: "%82", status: "Risk sınıfları hazır", next: "Tahsilat/ödeme kaydı yok" },
+  { module: "Alış / satış / kârlılık", score: "%80", status: "Ticari karar mantığı hazır", next: "Gerçek fiyat güncelleme yok" },
+  { module: "Vega read-only hazırlığı", score: "%90", status: "Güvenlik kapısı hazır", next: "İlk gerçek okuma başlamadı" },
+  { module: "Gerçek import / veri yazma", score: "%0", status: "Kapalı", next: "Ayrı onaylı faz bekler" },
+];
+
+const goLiveBarometerGroups = [
+  { title: "Hazır Görünenler", items: ["Dashboard görünürlüğü", "Yönetici raporlama mantığı", "El terminali akış tasarımı", "Barkod risk görünürlüğü"] },
+  { title: "Personel Testi Bekleyenler", items: ["Saha kullanım notları", "Personel ekran dili", "Barkod okutma alışkanlığı", "Hata notu formatı"] },
+  { title: "Teknik Onay Bekleyenler", items: ["Manuel yedek prosedürü", "Read-only kullanıcı", "20 satır ilk test sınırı", "Timeout ve ham hata gizleme"] },
+  { title: "Ayrı Fazda Açılacaklar", items: ["Gerçek Vega read-only bağlantı", "SQL/ODBC / DB okuma", "Gerçek rapor export", "Veri yazma / import"] },
+];
+
+const realConnectionRemainingItems = [
+  "Manuel yedek alma prosedürü netleşmeli",
+  "Read-only kullanıcı yetkisi doğrulanmalı",
+  "İlk okuma 20 satır ile sınırlandırılmalı",
+  "Timeout 3000 ms hedefi korunmalı",
+  "Ham hata kullanıcıya gösterilmemeli",
+  "Sonuç Vega ekranıyla manuel karşılaştırılmalı",
+  "Test canlı dışı/kopya ortamda denenmeli",
+  "Veri yazma ve import kapalı kalmalı",
+  "Rollback prosedürü yazılmalı",
+  "Yetki modeli kesinleşmeli",
+];
+
+const closedAreaRows = [
+  { label: "Canlı Vega bağlantısı", value: "Kapalı" },
+  { label: "SQL/ODBC", value: "Kapalı" },
+  { label: "DB okuma", value: "Kapalı" },
+  { label: "Query", value: "Yok" },
+  { label: "API/backend", value: "Yok" },
+  { label: "Gerçek cihaz bağlantısı", value: "Kapalı" },
+  { label: "Rapor export", value: "Kapalı" },
+  { label: "ERP’ye yazma", value: "Kapalı" },
+  { label: "Import", value: "Kapalı" },
+  { label: "Gerçek işlem butonu", value: "Yok" },
+  { label: "LocalStorage", value: "Yok" },
+  { label: "Agent loop / OpenClaw", value: "Yok" },
+];
+
 const preliveScenarioGroups = [
   { title: "Patron Kokpiti Testi", items: ["Günlük karar özeti okunuyor mu?", "Risk raporları anlaşılır mı?", "Kârlılık ve cari risk alanları net mi?", "Yönetici karar alanı yeterince sade mi?"] },
   { title: "El Terminali ve Barkod Testi", items: ["Son okutulanlar alanı anlaşılır mı?", "Sayım sepeti önizleme mantığı net mi?", "Barkod riskleri personel için sade mi?", "Gerçek cihaz bağlantısı olmadığı açık mı?"] },
@@ -134,6 +189,7 @@ export default function Reports() {
         </div>
       </section>
 
+      <ModuleMaturityScoreCenter />
       <PreliveOperationTestCenter />
       <ReportingDecisionCenter />
 
@@ -162,6 +218,80 @@ export default function Reports() {
         <p>Ürün bazlı kârlılık raporu, alış fişi ve satış fişi gerçek stok maliyetiyle bağlandığında aktif edilecektir.</p>
       </section>
     </>
+  );
+}
+
+function ModuleMaturityScoreCenter() {
+  return (
+    <section className={`reporting-manager-center ${reportsSectionClass("reports-module-maturity-center")}`} id="reports-module-maturity-center">
+      <ReportsNewReleaseBadge sectionId="reports-module-maturity-center" />
+      <div className="reporting-manager-hero">
+        <div>
+          <p>Pasif canlıya hazırlık skoru</p>
+          <h2>Modül Olgunluk ve Canlıya Hazırlık Skor Merkezi</h2>
+          <span>
+            ERP’nin hangi modüllerinin canlı kullanıma ne kadar hazır olduğunu, hangi alanların hâlâ pasif/mock hazırlıkta kaldığını ve gerçek bağlantıya geçmeden önce hangi kararların beklediğini gösteren yönetici skor ekranı.
+          </span>
+        </div>
+      </div>
+
+      <div className="reporting-status-grid">
+        {moduleMaturityScoreCards.map((card) => (
+          <article className="reporting-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+
+      <ReportingPanel title="Modül Bazlı Olgunluk Tablosu" sectionId="reports-module-maturity-table">
+        <div className="approval-matrix-grid">
+          {moduleMaturityRows.map((row) => (
+            <article className="approval-matrix-card" key={row.module}>
+              <span>{row.module}</span>
+              <strong>{row.score} · {row.status}</strong>
+              <p>{row.next}</p>
+            </article>
+          ))}
+        </div>
+      </ReportingPanel>
+
+      <ReportingPanel title="Canlıya Geçiş Karar Barometresi" sectionId="reports-go-live-barometer">
+        <div className="manager-priority-grid">
+          {goLiveBarometerGroups.map((group) => (
+            <article className="manager-priority-card" key={group.title}>
+              <h4>{group.title}</h4>
+              <ul>
+                {group.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </ReportingPanel>
+
+      <ReportingPanel title="Gerçek Bağlantı Öncesi Kalanlar">
+        <div className="manager-priority-grid">
+          {realConnectionRemainingItems.map((item) => (
+            <article className="manager-priority-card" key={item}>
+              <h4>{item}</h4>
+            </article>
+          ))}
+        </div>
+      </ReportingPanel>
+
+      <ReportingPanel title="Kapalı ve Yasaklı Alanlar" note="Bu panel yalnızca güvenlik görünürlüğü sağlar. Gerçek bağlantı, kayıt oluşturma, cihaz bağlantısı, dosya indirme veya veri yazma işlemi yapmaz." sectionId="reports-closed-areas">
+        <div className="report-security-grid">
+          {closedAreaRows.map((row) => (
+            <article className="report-security-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </article>
+          ))}
+        </div>
+      </ReportingPanel>
+    </section>
   );
 }
 
