@@ -6,8 +6,8 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 
 ## Mevcut Durum
 
-- Güncel sürüm: v1.49.0
-- Aşama: Pasif Vega Bağlantı Durumu
+- Güncel sürüm: v1.50.0
+- Aşama: İlk Kapalı Beta Desktop Hazırlığı
 - Build kontrolü: GitHub Actions
 - El terminali: okuma, son okutulanlar, sayım sepeti, rapor/CSV/JSON önizleme hazırlığı
 - Stok ve barkod kalite kontrolü: pasif/mock risk görünürlüğü
@@ -193,6 +193,16 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 - Güvenli kapsam `F0102TBLSTOKLAR` ve en fazla 20 stok kartıdır.
 - Veri yazma, import/senkron, cari/fiş/hareket okuma ve canlı veri çıktısı kapalıdır.
 - Bu ekran canlı Vega bağlantısı başlatmaz. Bağlantı testleri yalnızca local terminalden ve read-only smoke test olarak yapılır.
+
+## İlk Kapalı Beta Desktop Hazırlığı
+
+- Bu faz Melisa Bebe ERP'nin patron bilgisayarında kapalı beta olarak denenmeye hazır olduğunu gösterir.
+- Kapalı beta yalnızca masaüstü uygulama akışını, ekranları, menüleri ve güvenlik kilitlerini test eder.
+- Uygulama modu Local Desktop, kurulum hedefi Windows masaüstüdür.
+- Canlı Vega bağlantısı, ERP arayüzünden SQL bağlantısı, veri yazma, import/senkron ve cari/fiş/hareket okuma kapalıdır.
+- SQL/Vega bağlantısı hâlâ sadece local terminalde `npm run vega:readonly-stock-smoke` smoke test seviyesinde kalır.
+- Electron paket kontrolü `npm run electron:build` ile manuel doğrulama bekler.
+- Bu kapalı beta sürümü canlı Vega'ya arayüzden bağlanmaz ve veri yazmaz. Amaç masaüstü uygulama akışını, ekranları ve güvenlik kilitlerini patron bilgisayarında test etmektir.
 
 ## Build Kontrolü
 

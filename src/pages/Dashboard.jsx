@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import CommerceInsights from "../components/Dashboard/CommerceInsights.jsx";
 import KpiCard from "../components/Dashboard/KpiCard.jsx";
 import { APP_STAGE, APP_VERSION } from "../config/appVersion.js";
+import { closedBetaPreparationMessage, closedBetaPreparationRows } from "../config/closedBetaPreparation.js";
 import { readOnlyConnectionPlan, readOnlyEnvironmentPreparationItems, readOnlyOperatorChecklist } from "../config/readOnlyConnectionPlan.js";
 import { readOnlyFailClosedPolicy } from "../config/readOnlyFailClosedPolicy.js";
 import { currentReleaseVersion, releaseHighlightsByPage } from "../config/releaseHighlights.js";
@@ -83,6 +84,8 @@ const ownerViewCards = [
   { label: "Smoke test kapsamı", value: "20 stok kartı" },
   { label: "Smoke test ERP’ye yazma", value: "Kapalı" },
   { label: "Smoke test import", value: "Kapalı" },
+  { label: "Kapalı beta", value: "Patron bilgisayarı" },
+  { label: "Beta canlı kullanım", value: "Değil" },
   { label: "Vega bağlantı durumu", value: "Kapalı" },
   { label: "ERP bağlantı başlatma", value: "Yok" },
   { label: "Stok alan haritası", value: "Pasif dokümantasyon" },
@@ -262,6 +265,8 @@ const readonlyStockSmokeSummaryCards = [
 ];
 
 const passiveVegaConnectionSummaryCards = passiveVegaConnectionStatusRows.slice(0, 10);
+
+const closedBetaPreparationCards = closedBetaPreparationRows;
 
 const vegaStockFieldMapSummaryCards = [
   { label: "Harita modu", value: "Pasif dokümantasyon" },
@@ -459,6 +464,8 @@ export default function Dashboard() {
 
       <OwnerView />
 
+      <ClosedBetaPreparationCenter />
+
       <DesktopPreparationCenter />
 
       <ReadonlyStockSmokeSummary />
@@ -531,6 +538,32 @@ function DesktopPreparationCenter() {
           </article>
         ))}
       </div>
+    </section>
+  );
+}
+
+function ClosedBetaPreparationCenter() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-closed-beta-preparation")}`} id="dashboard-closed-beta-preparation">
+      <DashboardNewReleaseBadge sectionId="dashboard-closed-beta-preparation" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Melisa Bebe Tekstil San. ve Tic. Ltd. Şti.</p>
+          <h2>Kapalı Beta Hazırlık Merkezi</h2>
+          <span>Patron bilgisayarında masaüstü akışı, ekranlar ve güvenlik kilitleri test edilir; canlı kullanım veya arayüzden Vega bağlantısı başlatılmaz.</span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {closedBetaPreparationCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+
+      <p className="commerce-profitability-safety-note">{closedBetaPreparationMessage}</p>
     </section>
   );
 }

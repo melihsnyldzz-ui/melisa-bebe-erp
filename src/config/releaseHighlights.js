@@ -1,18 +1,18 @@
-export const currentReleaseVersion = "v1.49.0";
+export const currentReleaseVersion = "v1.50.0";
 
-export const currentReleaseTitle = "Pasif Vega Bağlantı Durumu";
+export const currentReleaseTitle = "İlk Kapalı Beta Desktop Hazırlığı";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "passive-vega-connection-status"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "closed-beta-preparation-status"];
 
 export const releaseHighlightItems = [
-  "ERP içinde canlı bağlantı başlatmayan pasif Vega Bağlantı Durumu görünürlüğü oluşturuldu.",
-  "Local terminal smoke test seviyesi, F0102TBLSTOKLAR kapsamı, 20 stok kartı limiti, veri yazma ve import kilitleri tek özet altında toplandı.",
-  "Yeni SQL, .env.local okuma, canlı veri çekme, ERP arayüzünden bağlantı, veri yazma veya import eklenmeden güvenli entegrasyon görünürlüğü korundu.",
+  "İlk kapalı beta desktop hazırlığı patron bilgisayarında deneme kapsamı için görünür hale getirildi.",
+  "Local Desktop, Windows masaüstü hedefi, build kontrolü, Electron paket doğrulaması ve kapalı Vega/veri yazma kilitleri tek merkezde toplandı.",
+  "Canlı Vega bağlantısı, yeni SQL, .env.local okuma, canlı veri çekme, ERP arayüzünden bağlantı, veri yazma veya import eklenmeden güvenli beta hazırlığı korundu.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
-  { id: "passive-vega-connection-status", label: "Vega Bağlantı Durumu'na git" },
+  { id: "closed-beta-preparation-status", label: "Kapalı Beta Durumu'na git" },
   { id: "system-workflow-model", label: "Çalışma Modeli'ne git" },
 ];
 
@@ -28,6 +28,7 @@ export const releaseHighlightsByPage = {
     releaseHighlightItems,
     releaseJumpLinks: [
       { id: "dashboard-owner-view", label: "Patron Bakışı'na git" },
+      { id: "dashboard-closed-beta-preparation", label: "Kapalı Beta Hazırlığı'na git" },
       { id: "dashboard-desktop-preparation-center", label: "Desktop Hazırlık Merkezi'ne git" },
       { id: "dashboard-passive-vega-connection-status", label: "Vega Bağlantı Durumu'na git" },
       { id: "dashboard-vega-stock-field-map", label: "Stok Alan Haritası'na git" },
@@ -49,7 +50,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-owner-view", "dashboard-passive-vega-connection-status", "dashboard-daily-operation"],
+    updatedSectionIds: ["dashboard-owner-view", "dashboard-closed-beta-preparation", "dashboard-daily-operation"],
   },
   reports: {
     releaseHighlightItems,

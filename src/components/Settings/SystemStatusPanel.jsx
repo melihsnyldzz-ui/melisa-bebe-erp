@@ -1,6 +1,7 @@
 import { ShieldCheck } from "lucide-react";
 import ReleaseHighlightsPanel from "../Common/ReleaseHighlightsPanel.jsx";
 import { APP_STAGE, APP_VERSION } from "../../config/appVersion.js";
+import { closedBetaPreparationMessage, closedBetaPreparationRows } from "../../config/closedBetaPreparation.js";
 import { readOnlyConnectionPlan } from "../../config/readOnlyConnectionPlan.js";
 import { readOnlyFailClosedPolicy } from "../../config/readOnlyFailClosedPolicy.js";
 import { passiveVegaConnectionStatusMessage, passiveVegaConnectionStatusRows } from "../../config/vegaConnectionStatus.js";
@@ -330,6 +331,8 @@ const vegaStockFieldMapStatusRows = [
 
 const passiveVegaConnectionStatusCards = passiveVegaConnectionStatusRows;
 
+const closedBetaPreparationStatusRows = closedBetaPreparationRows;
+
 const desktopPreparationStatusRows = [
   { label: "Uygulama modu", value: "Local Desktop" },
   { label: "Vega bağlantısı", value: "Kapalı / sadece terminal smoke test" },
@@ -340,6 +343,12 @@ const desktopPreparationStatusRows = [
 ];
 
 const versionHistoryRows = [
+  {
+    version: "v1.50.0",
+    title: "İlk Kapalı Beta Desktop Hazırlığı",
+    area: "Dashboard / Sistem Durumu / README",
+    description: "Kapalı beta hazırlık merkezi patron bilgisayarında masaüstü deneme kapsamını görünür hale getirdi; Local Desktop, Windows hedefi, build kontrolü, Electron paket doğrulaması ve canlı Vega/veri yazma/import kilitleri pasif olarak gösterildi; canlı kullanım veya arayüzden bağlantı eklenmedi.",
+  },
   {
     version: "v1.49.0",
     title: "Pasif Vega Bağlantı Durumu",
@@ -903,8 +912,8 @@ export default function SystemStatusPanel() {
 
       <div className="system-status-focus-card">
         <span>Bu Sürümde Test Edilecek Alan</span>
-        <strong>Pasif Vega Bağlantı Durumu</strong>
-        <p>Bu sürümde ERP arayüzünden canlı Vega bağlantısı başlatılmadığı, bağlantı seviyesinin yalnızca local terminal smoke test olarak gösterildiği kontrol edilmelidir.</p>
+        <strong>İlk Kapalı Beta Desktop Hazırlığı</strong>
+        <p>Bu sürümde patron bilgisayarındaki kapalı beta deneme kapsamı, masaüstü akışı ve kapalı kalan canlı Vega/veri yazma kilitleri kontrol edilmelidir.</p>
       </div>
 
       <div className="system-workflow-panel" {...sectionHighlightProps("system-workflow-model")}>
@@ -922,6 +931,24 @@ export default function SystemStatusPanel() {
         </div>
         <p className="system-workflow-safety-note">
           Gerçek veri bağlantısı, DB okuma, query, import ve veri yazma işlemleri yalnızca ayrı küçük ve açık onaylı sürümlerde ele alınır.
+        </p>
+      </div>
+
+      <div className="handheld-barcode-status-panel closed-beta-preparation-status-panel" {...sectionHighlightProps("closed-beta-preparation-status")}>
+        <div>
+          <h3>Kapalı Beta Hazırlık Durumu <NewReleaseBadge sectionId="closed-beta-preparation-status" /></h3>
+          <p>Patron bilgisayarında yapılacak kapalı beta denemesi yalnızca masaüstü uygulama akışını, ekranları ve güvenlik kilitlerini doğrular.</p>
+        </div>
+        <div className="system-status-grid">
+          {closedBetaPreparationStatusRows.map((row) => (
+            <div className="system-status-card" key={row.label}>
+              <span>{row.label}</span>
+              <strong>{row.value}</strong>
+            </div>
+          ))}
+        </div>
+        <p className="handheld-barcode-safety-note closed-beta-preparation-safety-note">
+          {closedBetaPreparationMessage}
         </p>
       </div>
 
