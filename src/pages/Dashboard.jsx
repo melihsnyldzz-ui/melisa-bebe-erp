@@ -164,6 +164,23 @@ const erpModulePriorityNoActionItems = [
   "SQL/Vega işlemi başlatmaz.",
   "Dosya/export üretmez.",
 ];
+const stockManagementRoadmapPhases = [
+  { phase: "Faz 1: Stok read-only bağlantı doğrulama", status: "Hazırlık tamamlanıyor", dataMode: "Manuel read-only", risk: "Orta", nextStep: "Şirket ortamı smoke test" },
+  { phase: "Faz 2: 20 satır kullanıcı doğrulaması", status: "Sıradaki kontrol", dataMode: "Geçici 20 satır", risk: "Orta", nextStep: "Patron/depo kullanıcı teyidi" },
+  { phase: "Faz 3: Stok arama ve filtre olgunlaştırma", status: "Planlandı", dataMode: "Read-only ekran davranışı", risk: "Orta", nextStep: "Arama ve filtre kullanım senaryosu" },
+  { phase: "Faz 4: Barkod/duplicate kontrol hazırlığı", status: "Pasif hazırlık", dataMode: "İş seviyesi etiket", risk: "Yüksek", nextStep: "Barkod kalite kuralı" },
+  { phase: "Faz 5: Stok detay görünümü", status: "Planlandı", dataMode: "Read-only detay taslağı", risk: "Orta", nextStep: "Gösterilecek alan sınırı" },
+  { phase: "Faz 6: Stok risk etiketleri", status: "Planlandı", dataMode: "Pasif risk etiketi", risk: "Orta", nextStep: "Kritik stok eşik kararı" },
+  { phase: "Faz 7: Depo/personel kullanım ekranı", status: "Sonraki faz", dataMode: "Pasif ekran haritası", risk: "Orta", nextStep: "Depo kullanım akışı" },
+];
+const stockManagementRoadmapNoActionItems = [
+  "Yeni stok verisi okuma yok.",
+  "SQL sorgusu yok.",
+  "Veri yazma yok.",
+  "Import/senkron/export yok.",
+  "Dosya/export yok.",
+  "Stok dışı kapsam yok.",
+];
 const vegaReadonlyModuleMatrixRows = [
   { module: "Stok", status: "Hazır", read: "Manuel read-only", write: "Yok", risk: "Orta", nextStep: "Kullanıcı doğrulaması" },
   { module: "Cari", status: "Hazırlık", read: "Yok", write: "Yok", risk: "Yüksek", nextStep: "Kapsam analizi" },
@@ -1156,6 +1173,8 @@ export default function Dashboard() {
 
       <ErpModulePriorityOrderPanel />
 
+      <StockManagementRoadmapPanel />
+
       <RiskWarningCenter />
 
       <DataFieldDictionaryPanel />
@@ -1501,6 +1520,43 @@ function ErpModulePriorityOrderPanel() {
       <CommercePanel title="Bu Sürümde Olmayanlar" note="Bu kutu öncelik sıralamasının pasif sınırını gösterir; modül, görev, bağlantı veya dosya işlemi başlatmaz.">
         <div className="commerce-performance-grid">
           {erpModulePriorityNoActionItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+    </section>
+  );
+}
+
+function StockManagementRoadmapPanel() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-stock-management-roadmap")}`} id="dashboard-stock-management-roadmap">
+      <DashboardNewReleaseBadge sectionId="dashboard-stock-management-roadmap" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Pasif stok geliştirme yol haritası</p>
+          <h2>Stok Yönetimi Geliştirme Yol Haritası</h2>
+          <span>ERP öncelik sıralamasında ilk sıradaki stok modülünün hangi fazlarla tamamlanacağını gösterir; stok verisi okumaz, SQL sorgusu eklemez ve veri yazmaz.</span>
+        </div>
+      </div>
+
+      <div className="profitability-priority-grid">
+        {stockManagementRoadmapPhases.map((phase) => (
+          <article className="profitability-priority-card" key={phase.phase}>
+            <span>{phase.phase}</span>
+            <strong>{phase.status}</strong>
+            <p>Veri modu: {phase.dataMode}</p>
+            <p>Risk seviyesi: {phase.risk}</p>
+            <small>Sonraki adım: {phase.nextStep}</small>
+          </article>
+        ))}
+      </div>
+
+      <CommercePanel title="Bu Sürümde Olmayanlar" note="Bu kutu stok yol haritasının pasif sınırını gösterir; sorgu, veri, import, senkron veya export işlemi başlatmaz.">
+        <div className="commerce-performance-grid">
+          {stockManagementRoadmapNoActionItems.map((item) => (
             <article className="commerce-performance-card" key={item}>
               <strong>{item}</strong>
             </article>

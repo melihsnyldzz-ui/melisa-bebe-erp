@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.78.0",
+    title: "Stok Yönetimi Geliştirme Yol Haritası",
+    area: "Dashboard / Sistem Durumu",
+    description: "ERP öncelik sıralamasında ilk sıradaki Stok Yönetimi için read-only bağlantı doğrulama, 20 satır kullanıcı doğrulaması, arama/filtre olgunlaştırma, barkod/duplicate kontrol hazırlığı, stok detay görünümü, stok risk etiketleri ve depo/personel kullanım ekranı fazları pasif yol haritası olarak eklendi; yeni stok verisi okuma, SQL sorgusu, veri yazma, import/senkron/export, dosya/export veya stok dışı kapsam eklenmedi.",
+  },
+  {
     version: "v1.77.0",
     title: "ERP Modül Öncelik Sıralaması",
     area: "Dashboard / Sistem Durumu",

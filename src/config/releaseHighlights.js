@@ -1,17 +1,18 @@
-export const currentReleaseVersion = "v1.77.0";
+export const currentReleaseVersion = "v1.78.0";
 
-export const currentReleaseTitle = "ERP Modül Öncelik Sıralaması";
+export const currentReleaseTitle = "Stok Yönetimi Geliştirme Yol Haritası";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "dashboard-erp-module-priority-order"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "dashboard-stock-management-roadmap"];
 
 export const releaseHighlightItems = [
-  "Dashboard'a ERP Modül Öncelik Sıralaması paneli eklenerek hangi modülün önce tamamlanması gerektiği patron ve teknik ekip için pasif olarak görünür hale getirildi.",
-  "Stok, barkod/el terminali, cari, sipariş, kasa/finans, raporlama, rol-yetki ve canlıya geçiş için öncelik, gerekçe, risk seviyesi ve sonraki teknik adım gösterildi.",
-  "Bu sürüm modül açma, görev oluşturma, veri okuma/yazma, SQL/Vega işlemi, dosya/export veya onay kaydı başlatmadan yalnızca geliştirme önceliği rehberi sağlar.",
+  "Dashboard'a Stok Yönetimi Geliştirme Yol Haritası paneli eklenerek öncelik sıralamasındaki ilk modülün hangi fazlarla tamamlanacağı pasif olarak görünür hale getirildi.",
+  "Stok read-only doğrulama, 20 satır kullanıcı doğrulaması, arama/filtre, barkod/duplicate hazırlığı, detay görünümü, risk etiketleri ve depo/personel ekranı fazları durum, veri modu, risk ve sonraki adımla listelendi.",
+  "Bu sürüm yeni stok verisi okuma, SQL sorgusu, veri yazma, import/senkron/export, dosya üretimi veya stok dışı kapsam başlatmadan yalnızca stok geliştirme rehberi sağlar.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
+  { id: "dashboard-stock-management-roadmap", label: "Stok Yönetimi Geliştirme Yol Haritası'na git" },
   { id: "dashboard-erp-module-priority-order", label: "ERP Modül Öncelik Sıralaması'na git" },
   { id: "dashboard-staff-usage-screen-map", label: "Personel Kullanım Ekranları Haritası'na git" },
   { id: "dashboard-data-field-dictionary", label: "Veri Alan Sözlüğü'ne git" },
@@ -39,6 +40,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-daily-operation-workflow-center", label: "Günlük Operasyon İş Akışı Merkezi'ne git" },
       { id: "dashboard-staff-usage-screen-map", label: "Personel Kullanım Ekranları Haritası'na git" },
       { id: "dashboard-erp-module-priority-order", label: "ERP Modül Öncelik Sıralaması'na git" },
+      { id: "dashboard-stock-management-roadmap", label: "Stok Yönetimi Geliştirme Yol Haritası'na git" },
       { id: "dashboard-risk-warning-center", label: "Risk ve Uyarı Merkezi'ne git" },
       { id: "dashboard-data-field-dictionary", label: "Veri Alan Sözlüğü'ne git" },
       { id: "dashboard-owner-view", label: "Patron Bakışı'na git" },
@@ -89,7 +91,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-erp-module-priority-order", "dashboard-staff-usage-screen-map"],
+    updatedSectionIds: ["dashboard-stock-management-roadmap", "dashboard-erp-module-priority-order"],
   },
   reports: {
     releaseHighlightItems,
