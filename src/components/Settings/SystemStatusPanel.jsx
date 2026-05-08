@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.83.0",
+    title: "Stok Ekranı Alan Etiketi Netleştirme Planı",
+    area: "Dashboard / Sistem Durumu",
+    description: "Stok kullanıcı test oturumu sonrası stok ekranında kullanıcıların anlayacağı iş seviyesi alan etiketleri ve etiket düzeltme planı pasif panel olarak eklendi; gerçek Vega alan eşlemesi, bağlantı denemesi, SQL sorgusu, yeni stok verisi okuma, veri yazma, form/input/localStorage, kullanıcı notu kaydı, import/senkron/export veya hassas bilgi eklenmedi.",
+  },
+  {
     version: "v1.82.1",
     title: "Stok Kullanıcı Test Oturumu Karar Netleştirme",
     area: "Dashboard / Sistem Durumu",

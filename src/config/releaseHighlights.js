@@ -1,17 +1,18 @@
-export const currentReleaseVersion = "v1.82.1";
+export const currentReleaseVersion = "v1.83.0";
 
-export const currentReleaseTitle = "Stok Kullanıcı Test Oturumu Karar Netleştirme";
+export const currentReleaseTitle = "Stok Ekranı Alan Etiketi Netleştirme Planı";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "dashboard-stock-preview-user-test-session"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "dashboard-stock-field-label-clarification-plan"];
 
 export const releaseHighlightItems = [
-  "Stok Önizleme Kullanıcı Test Oturumu Paneli, oturum sonunda verilecek manuel kararları Geçti, Küçük düzeltme, Ertelendi ve Durduruldu sınıflarıyla pasif olarak netleştirecek şekilde genişletildi.",
-  "Karar kartlarında kararın anlamı, kim tarafından verileceği, sonraki adım ve risk seviyesi görünür hale getirildi; canlıya geçiş kararının bu oturumda verilmediği tekrar vurgulandı.",
-  "Bu sürüm karar kaydetmez, onay almaz, test çalıştırmaz, bağlantı açmaz, veri okumaz/yazmaz, form/input/localStorage eklemez ve dosya/export üretmez.",
+  "Dashboard'a Stok Ekranı Alan Etiketi Netleştirme Planı paneli eklenerek stok ekranında kullanıcıların anlayacağı iş seviyesi alan adları pasif olarak görünür hale getirildi.",
+  "Panelde stok kodu, ürün adı, barkod, marka, kategori, beden, renk, alış/satış fiyatı, KDV ve şüpheli/boş alan için kontrol amacı, sorumlu rol, risk ve sonraki adım listelendi.",
+  "Bu sürüm gerçek Vega alan eşlemesi yapmaz, yeni veri okumaz, SQL sorgusu çalıştırmaz, veri yazmaz, form/input/localStorage eklemez ve dosya/export üretmez.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
+  { id: "dashboard-stock-field-label-clarification-plan", label: "Stok Alan Etiketi Planı'na git" },
   { id: "dashboard-stock-preview-user-test-session", label: "Stok Önizleme Kullanıcı Test Oturumu'na git" },
   { id: "dashboard-stock-preview-user-validation-flow", label: "Stok Önizleme Kullanıcı Doğrulama Akışı'na git" },
   { id: "dashboard-stock-smoke-test-result-summary", label: "Stok Smoke Test Sonuç Özeti'ne git" },
@@ -58,6 +59,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-barcode-handheld-roadmap", label: "Barkod / El Terminali Geliştirme Yol Haritası'na git" },
       { id: "dashboard-risk-warning-center", label: "Risk ve Uyarı Merkezi'ne git" },
       { id: "dashboard-data-field-dictionary", label: "Veri Alan Sözlüğü'ne git" },
+      { id: "dashboard-stock-field-label-clarification-plan", label: "Stok Alan Etiketi Planı'na git" },
       { id: "dashboard-owner-view", label: "Patron Bakışı'na git" },
       { id: "dashboard-vega-readonly-operation-center", label: "Vega Read-only Operasyon Merkezi'ne git" },
       { id: "dashboard-vega-readonly-module-matrix", label: "Vega Read-only Modül Durum Matrisi'ne git" },
@@ -106,7 +108,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-stock-preview-user-test-session", "dashboard-stock-preview-user-validation-flow", "dashboard-stock-smoke-test-result-summary"],
+    updatedSectionIds: ["dashboard-stock-field-label-clarification-plan", "dashboard-stock-preview-user-test-session", "dashboard-data-field-dictionary"],
   },
   reports: {
     releaseHighlightItems,

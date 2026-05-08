@@ -489,6 +489,35 @@ const stockPreviewUserTestSessionDecisionNotes = [
   "Cari/sipariş/finans talepleri bu oturumda açılmaz.",
   "sa kullanımı nedeniyle teknik güvenlik notu korunur.",
 ];
+const stockFieldLabelClarificationCards = [
+  { label: "Stok Kodu", purpose: "Ürünün stok ekranındaki kısa takip anahtarını kullanıcıya anlaşılır göstermek.", role: "Depo + Teknik Admin", risk: "Orta", nextStep: "Kullanıcı doğrulamasında okunabilirlik kontrolü" },
+  { label: "Ürün Adı", purpose: "Ürünün kullanıcı tarafından hızlı tanınmasını sağlamak.", role: "Depo + Yönetici", risk: "Orta", nextStep: "Alan etiketi ve karakter görünümü kontrolü" },
+  { label: "Barkod", purpose: "Etiket ve okutma akışı için barkod bilgisinin iş seviyesinde ayrılmasını sağlamak.", role: "Depo", risk: "Yüksek", nextStep: "Barkod fazında netleştirme" },
+  { label: "Marka", purpose: "Ürün grubunu kullanıcı gözünde ayırmaya yardımcı olmak.", role: "Yönetici", risk: "Orta", nextStep: "Kesin eşleme öncesi iş etiketi kontrolü" },
+  { label: "Kategori", purpose: "Ürün ailesi veya raf grubu yorumunu sadeleştirmek.", role: "Depo + Yönetici", risk: "Orta", nextStep: "Kategori adlandırma kararı" },
+  { label: "Beden", purpose: "Beden bilgisini satış ve depo kontrolünde okunur hale getirmek.", role: "Depo", risk: "Orta", nextStep: "Kullanıcı ekranı doğrulaması" },
+  { label: "Renk", purpose: "Renk ayrımını stok kontrolünde görünür kılmak.", role: "Depo", risk: "Orta", nextStep: "Etiket tutarlılığı kontrolü" },
+  { label: "Alış Fiyatı", purpose: "Maliyet yorumu için yönetici kontrolüne aday alanı ayırmak.", role: "Yönetici", risk: "Yüksek", nextStep: "Yönetici doğrulaması olmadan kesinleştirme yok" },
+  { label: "Satış Fiyatı", purpose: "Satış fiyatı yorumunun yönetici kontrolünde ele alınmasını sağlamak.", role: "Yönetici", risk: "Yüksek", nextStep: "Fiyat kontrol kuralı" },
+  { label: "KDV", purpose: "Vergi yorumunun muhasebe doğrulamasıyla yapılmasını sağlamak.", role: "Muhasebe", risk: "Orta", nextStep: "KDV doğrulama fazı" },
+  { label: "Şüpheli / Boş Alan", purpose: "Boş veya anlamı net olmayan alanların canlıya geçiş öncesi işaretlenmesini sağlamak.", role: "Teknik Admin + Yönetici", risk: "Yüksek", nextStep: "Canlı kullanım öncesi karar bekletme" },
+];
+const stockFieldLabelClarificationPrinciples = [
+  "Teknik alan adı yerine iş dilinde anlaşılır etiket kullanılacak.",
+  "Kesin Vega alan eşlemesi yapılmadan canlı yorum yapılmayacak.",
+  "Fiyat/KDV alanları yönetici ve muhasebe doğrulaması olmadan kesinleştirilmeyecek.",
+  "Barkod alanı ayrı barkod fazında netleştirilecek.",
+  "Boş veya şüpheli alanlar canlıya geçiş öncesi işaretlenecek.",
+];
+const stockFieldLabelClarificationNoActionItems = [
+  "Gerçek alan eşlemesi yapmaz.",
+  "Veri okumaz.",
+  "Veri yazmaz.",
+  "SQL sorgusu çalıştırmaz.",
+  "Form/input/localStorage eklemez.",
+  "Kullanıcı notu kaydetmez.",
+  "Dosya/export üretmez.",
+];
 const barcodeHandheldRoadmapPhases = [
   { phase: "Faz 1: Barkod senaryosu tanımı", status: "Hazırlıkta", dataMode: "Pasif iş akışı", risk: "Orta", nextStep: "Depo senaryosu netleşecek" },
   { phase: "Faz 2: Barkodsuz ürün listesi hazırlığı", status: "Planlandı", dataMode: "Pasif liste taslağı", risk: "Orta", nextStep: "Barkodsuz ürün etiketi tanımı" },
@@ -1518,6 +1547,8 @@ export default function Dashboard() {
 
       <DataFieldDictionaryPanel />
 
+      <StockFieldLabelClarificationPlanPanel />
+
       <VegaReadonlyOperationCenter />
 
       <VegaReadonlyModuleMatrix />
@@ -2335,6 +2366,53 @@ function DataFieldDictionaryPanel() {
       <CommercePanel title="Bu Sözlük Ne Değildir?" note="Bu kutu sözlüğün pasif sınırını gösterir; tablo, sorgu, veri okuma veya dosya işlemi başlatmaz.">
         <div className="commerce-performance-grid">
           {dataFieldDictionaryNoActionItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+    </section>
+  );
+}
+
+function StockFieldLabelClarificationPlanPanel() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-stock-field-label-clarification-plan")}`} id="dashboard-stock-field-label-clarification-plan">
+      <DashboardNewReleaseBadge sectionId="dashboard-stock-field-label-clarification-plan" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>İş seviyesi stok etiketi planı</p>
+          <h2>Stok Ekranı Alan Etiketi Netleştirme Planı</h2>
+          <span>Stok ekranındaki alanların kullanıcı dilinde nasıl adlandırılacağını planlar; gerçek Vega alan eşlemesi yapmaz, yeni veri okumaz ve kayıt oluşturmaz.</span>
+        </div>
+      </div>
+
+      <div className="profitability-priority-grid">
+        {stockFieldLabelClarificationCards.map((item) => (
+          <article className="profitability-priority-card" key={item.label}>
+            <span>Kullanıcıya görünen etiket: {item.label}</span>
+            <strong>Kontrol amacı: {item.purpose}</strong>
+            <p>Sorumlu rol: {item.role}</p>
+            <p>Risk seviyesi: {item.risk}</p>
+            <small>Sonraki adım: {item.nextStep}</small>
+          </article>
+        ))}
+      </div>
+
+      <CommercePanel title="Etiketleme İlkeleri" note="Bu ilkeler iş seviyesi adlandırmayı netleştirir; teknik alan eşlemesi veya canlı yorum değildir.">
+        <div className="commerce-performance-grid">
+          {stockFieldLabelClarificationPrinciples.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Bu Plan Ne Yapmaz?" note="Bu kutu planın pasif sınırlarını gösterir; form, kayıt veya işlem başlatmaz.">
+        <div className="commerce-performance-grid">
+          {stockFieldLabelClarificationNoActionItems.map((item) => (
             <article className="commerce-performance-card" key={item}>
               <strong>{item}</strong>
             </article>
