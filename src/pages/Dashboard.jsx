@@ -181,6 +181,40 @@ const stockManagementRoadmapNoActionItems = [
   "Dosya/export yok.",
   "Stok dışı kapsam yok.",
 ];
+const companyReadonlyPretestCards = [
+  { label: "Ortam", value: "Şirket bilgisayarı" },
+  { label: "Local main", value: "GitHub ile güncel" },
+  { label: "Build", value: "Başarılı" },
+  { label: "Stash", value: "Yok" },
+  { label: "Test kapsamı", value: "Sadece stok" },
+  { label: "Satır limiti", value: "20" },
+  { label: "Veri yazma", value: "Kapalı" },
+  { label: "Bağlantı", value: "Henüz denenmedi" },
+];
+const companyReadonlyRequiredConditions = [
+  "Read-only SQL kullanıcısı hazır.",
+  "sa kullanılmayacak.",
+  "Manuel yedek alındı.",
+  ".env.local Git dışında.",
+  "Uygulama açılışta otomatik bağlanmıyor.",
+  "Test sadece manuel buton veya terminal ile yapılacak.",
+  "Test sadece stok ve 20 satırla sınırlı olacak.",
+];
+const companyReadonlyStopConditions = [
+  "Read-only kullanıcı yoksa dur.",
+  "sa kullanılıyorsa dur.",
+  "Yedek yoksa dur.",
+  ".env.local Git'e giriyorsa dur.",
+  "Otomatik bağlantı varsa dur.",
+  "20 satır limiti yoksa dur.",
+];
+const companyReadonlySafetyNotes = [
+  "Bu sürüm bağlantı denemesi yapmaz.",
+  "Veri okumaz/yazmaz.",
+  "SQL sorgusu çalıştırmaz.",
+  "Import/senkron/export yapmaz.",
+  "Sadece şirket ortamı ön test hazırlığıdır.",
+];
 const barcodeHandheldRoadmapPhases = [
   { phase: "Faz 1: Barkod senaryosu tanımı", status: "Hazırlıkta", dataMode: "Pasif iş akışı", risk: "Orta", nextStep: "Depo senaryosu netleşecek" },
   { phase: "Faz 2: Barkodsuz ürün listesi hazırlığı", status: "Planlandı", dataMode: "Pasif liste taslağı", risk: "Orta", nextStep: "Barkodsuz ürün etiketi tanımı" },
@@ -1192,6 +1226,8 @@ export default function Dashboard() {
 
       <StockManagementRoadmapPanel />
 
+      <CompanyReadonlyPretestPanel />
+
       <BarcodeHandheldRoadmapPanel />
 
       <RiskWarningCenter />
@@ -1582,6 +1618,52 @@ function StockManagementRoadmapPanel() {
           ))}
         </div>
       </CommercePanel>
+    </section>
+  );
+}
+
+function CompanyReadonlyPretestPanel() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-company-readonly-pretest")}`} id="dashboard-company-readonly-pretest">
+      <DashboardNewReleaseBadge sectionId="dashboard-company-readonly-pretest" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Şirket ortamı ön test hazırlığı</p>
+          <h2>Vega Stok Read-only Şirket Ortamı Ön Test</h2>
+          <span>Gerçek Vega stok read-only smoke testinden önce şirket bilgisayarındaki güvenli başlangıç şartlarını gösterir; bağlantı denemesi yapmaz, SQL sorgusu çalıştırmaz ve veri okumaz.</span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {companyReadonlyPretestCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+
+      <CommercePanel title="Gerçek Testten Önce Zorunlu Şartlar" note="Bu liste yalnızca manuel ön test kontrolüdür; onay kaydı, bağlantı veya dosya işlemi başlatmaz.">
+        <div className="commerce-performance-grid">
+          {companyReadonlyRequiredConditions.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Testi Durduracak Durumlar" note="Bu durumlardan biri görülürse gerçek read-only smoke test başlatılmamalıdır.">
+        <div className="commerce-performance-grid">
+          {companyReadonlyStopConditions.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <p className="commerce-profitability-safety-note">{companyReadonlySafetyNotes.join(" · ")}</p>
     </section>
   );
 }

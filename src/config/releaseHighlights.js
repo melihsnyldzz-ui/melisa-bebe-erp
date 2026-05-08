@@ -1,19 +1,21 @@
-export const currentReleaseVersion = "v1.79.0";
+export const currentReleaseVersion = "v1.80.0";
 
-export const currentReleaseTitle = "Barkod El Terminali Geliştirme Yol Haritası";
+export const currentReleaseTitle = "Vega Stok Read-only Şirket Ortamı Ön Test";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "dashboard-barcode-handheld-roadmap"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "dashboard-company-readonly-pretest"];
 
 export const releaseHighlightItems = [
-  "Dashboard'a Barkod / El Terminali Geliştirme Yol Haritası paneli eklenerek öncelik sıralamasındaki ikinci modülün hangi fazlarla tamamlanacağı pasif olarak görünür hale getirildi.",
-  "Barkod senaryosu, barkodsuz ürün listesi, duplicate kontrol, Honeywell okutma akışı, sayım farkı, depo personel ekranı ve Vega'ya yazmadan read-only karşılaştırma fazları durum, veri modu, risk ve sonraki adımla listelendi.",
-  "Bu sürüm gerçek barkod okutma, cihaz bağlantısı, Honeywell bağlantısı, veri okuma/yazma, SQL/Vega işlemi, import/senkron/export, dosya üretimi veya görev/onay kaydı başlatmadan yalnızca pasif barkod yol haritası sağlar.",
+  "Dashboard'a Vega Stok Read-only Şirket Ortamı Ön Test paneli eklenerek gerçek şirket ortamı smoke testinden önceki durum, kapsam ve güvenlik şartları pasif olarak görünür hale getirildi.",
+  "Ön test panelinde şirket bilgisayarı, GitHub ile güncel local main, başarılı build, stash durumu, sadece stok kapsamı, 20 satır limiti, veri yazma kilidi ve henüz denenmemiş bağlantı durumu listelendi.",
+  "Bu sürüm bağlantı denemesi yapmaz, veri okumaz/yazmaz, SQL sorgusu çalıştırmaz, import/senkron/export başlatmaz ve yalnızca şirket ortamı ön test hazırlığı sağlar.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
-  { id: "dashboard-barcode-handheld-roadmap", label: "Barkod / El Terminali Geliştirme Yol Haritası'na git" },
+  { id: "dashboard-company-readonly-pretest", label: "Şirket Ortamı Ön Test'e git" },
+  { id: "dashboard-vega-stock-readonly-precheck", label: "Vega Stok Read-only Ön Kontrol'e git" },
   { id: "dashboard-stock-management-roadmap", label: "Stok Yönetimi Geliştirme Yol Haritası'na git" },
+  { id: "dashboard-barcode-handheld-roadmap", label: "Barkod / El Terminali Geliştirme Yol Haritası'na git" },
   { id: "dashboard-erp-module-priority-order", label: "ERP Modül Öncelik Sıralaması'na git" },
   { id: "dashboard-staff-usage-screen-map", label: "Personel Kullanım Ekranları Haritası'na git" },
   { id: "dashboard-data-field-dictionary", label: "Veri Alan Sözlüğü'ne git" },
@@ -42,6 +44,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-staff-usage-screen-map", label: "Personel Kullanım Ekranları Haritası'na git" },
       { id: "dashboard-erp-module-priority-order", label: "ERP Modül Öncelik Sıralaması'na git" },
       { id: "dashboard-stock-management-roadmap", label: "Stok Yönetimi Geliştirme Yol Haritası'na git" },
+      { id: "dashboard-company-readonly-pretest", label: "Şirket Ortamı Ön Test'e git" },
       { id: "dashboard-barcode-handheld-roadmap", label: "Barkod / El Terminali Geliştirme Yol Haritası'na git" },
       { id: "dashboard-risk-warning-center", label: "Risk ve Uyarı Merkezi'ne git" },
       { id: "dashboard-data-field-dictionary", label: "Veri Alan Sözlüğü'ne git" },
@@ -93,7 +96,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-barcode-handheld-roadmap", "dashboard-stock-management-roadmap"],
+    updatedSectionIds: ["dashboard-company-readonly-pretest", "dashboard-vega-stock-readonly-precheck", "dashboard-stock-management-roadmap"],
   },
   reports: {
     releaseHighlightItems,

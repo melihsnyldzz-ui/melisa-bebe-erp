@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.80.0",
+    title: "Vega Stok Read-only Şirket Ortamı Ön Test",
+    area: "Dashboard / Sistem Durumu",
+    description: "Gerçek Vega stok read-only smoke testinden önce şirket bilgisayarında local main, build, stash, sadece stok kapsamı, 20 satır sınırı, veri yazma kilidi ve manuel test şartları pasif panel olarak görünür hale getirildi; bağlantı denemesi, SQL sorgusu, veri okuma/yazma, import/senkron/export, dosya/export veya hassas bağlantı bilgisi eklenmedi.",
+  },
+  {
     version: "v1.79.0",
     title: "Barkod El Terminali Geliştirme Yol Haritası",
     area: "Dashboard / Sistem Durumu",
