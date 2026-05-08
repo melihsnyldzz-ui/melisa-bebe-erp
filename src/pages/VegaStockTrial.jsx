@@ -120,6 +120,46 @@ const topStockOutValidationRows = [
   { label: "Tarih alanı", value: "Doğrulanamadı" },
 ];
 
+const stockMovementDiscoveryStatusCards = [
+  { label: "Amaç", value: "Top 100 stok çıkışı için alan doğrulama" },
+  { label: "Veri türü", value: "Şema/metadata keşfi" },
+  { label: "Canlı hareket verisi", value: "Okunmayacak" },
+  { label: "Top 100 sorgusu", value: "Çalıştırılmayacak" },
+  { label: "Veri yazma", value: "Yok" },
+  { label: "Çalışma şekli", value: "Manuel doğrulama" },
+  { label: "SQL kullanıcısı", value: "sa / geçici riskli test" },
+  { label: "Risk seviyesi", value: "Orta-yüksek" },
+];
+
+const stockMovementDiscoveryFields = [
+  "Stok hareket tablosu",
+  "Stok kodu alanı",
+  "Çıkış miktarı alanı",
+  "Hareket yönü / giriş-çıkış ayrımı",
+  "Hareket tarihi alanı",
+  "Stok kartı bağlantı alanı",
+];
+
+const stockMovementDiscoveryLocks = [
+  "Top 100 sorgusu çalışmaz.",
+  "Son 30 gün filtresi çalışmaz.",
+  "Çıkış miktarına göre sıralama çalışmaz.",
+  "Manuel Top 100 butonu aktif olmaz.",
+  "Canlı stok çıkışı yorumu yapılmaz.",
+];
+
+const stockMovementDiscoverySafetyNotes = [
+  "Bu ekran canlı stok hareket verisi okumaz.",
+  "Bu ekran Top 100 sorgusu çalıştırmaz.",
+  "Bu ekran sadece alan doğrulama hazırlığıdır.",
+  "Veri kaydetmez.",
+  "Vega'ya veri yazmaz.",
+  "Import/senkron/export yapılmaz.",
+  "Cari/sipariş/kasa/finans verisi okunmaz.",
+  "sa kullanımı geçici ve orta-yüksek risklidir.",
+  "Metadata keşif fonksiyonu sonraki sürümde manuel ve maskeli şekilde eklenecek.",
+];
+
 const topStockOutSafetyNotes = [
   "Bu ekran Vega'dan sadece read-only stok çıkış özeti okumak için hazırlanır.",
   "Sonuç ileride sadece geçici olarak ekranda görünür.",
@@ -839,6 +879,61 @@ export default function VegaStockTrial() {
                 <strong>{card.value}</strong>
               </div>
             ))}
+          </div>
+
+          <div className="vega-security-checklist-panel section-updated-highlight" id="vega-stock-movement-field-discovery">
+            <span className="new-release-badge">YENİ · {currentReleaseVersion}</span>
+            <div>
+              <h2>Stok Hareket Alanları Keşif Hazırlığı</h2>
+              <p>Top 100 stok çıkışı sorgusuna geçmeden önce yalnızca tablo/kolon doğrulama hazırlığı yapılır; canlı hareket verisi okunmaz.</p>
+            </div>
+
+            <div className="vega-connection-grid" aria-label="Stok hareket alanları keşif durum kartları">
+              {stockMovementDiscoveryStatusCards.map((card) => (
+                <div className="vega-connection-card" key={card.label}>
+                  <span>{card.label}</span>
+                  <strong>{card.value}</strong>
+                </div>
+              ))}
+            </div>
+
+            <div className="vega-readiness-panel">
+              <div>
+                <h2>Doğrulanacak Alanlar</h2>
+                <p>Bu liste gerçek tablo veya kolon adı değildir; sadece manuel doğrulama başlıklarını gösterir.</p>
+              </div>
+              <div className="vega-security-checklist-grid" aria-label="Doğrulanacak stok hareket alanları">
+                {stockMovementDiscoveryFields.map((item) => (
+                  <div className="vega-security-checklist-item" key={item}>
+                    <span aria-hidden="true">•</span>
+                    <strong>{item}</strong>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="vega-readiness-panel">
+              <div>
+                <h2>Alanlar Doğrulanmadan Çalışmayacaklar</h2>
+                <p>Bu koşullar tamamlanmadan Top 100 önizleme kilitli kalır.</p>
+              </div>
+              <div className="vega-security-checklist-grid" aria-label="Alanlar doğrulanmadan çalışmayacaklar">
+                {stockMovementDiscoveryLocks.map((item) => (
+                  <div className="vega-security-checklist-item" key={item}>
+                    <span aria-hidden="true">•</span>
+                    <strong>{item}</strong>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="vega-stock-safety-box">
+              <ShieldCheck size={18} />
+              <div>
+                <strong>Keşif Güvenlik Notu</strong>
+                <span>{stockMovementDiscoverySafetyNotes.join(" ")}</span>
+              </div>
+            </div>
           </div>
 
           <div className="vega-readonly-preview-action">

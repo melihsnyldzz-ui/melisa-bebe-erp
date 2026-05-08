@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.84.1",
+    title: "Vega Stok Hareket Alanları Keşif Hazırlığı",
+    area: "Vega Stok Deneme / Sistem Durumu",
+    description: "Top 100 stok çıkışı sorgusuna geçmeden önce stok hareket tablosu, stok kodu, çıkış miktarı, hareket yönü, hareket tarihi ve stok kartı bağlantı alanları için pasif keşif hazırlık paneli eklendi; canlı hareket verisi okunmadı, Top 100 sorgusu çalıştırılmadı, gerçek sorgu veya tablo/kolon eşlemesi eklenmedi, veri yazma, import, senkron, export, local DB kaydı, dosya üretimi veya hassas bilgi eklenmedi.",
+  },
+  {
     version: "v1.84.0",
     title: "Vega Top 100 Stok Çıkışı Read-only Önizleme",
     area: "Vega Stok Deneme / Dashboard / Sistem Durumu",
