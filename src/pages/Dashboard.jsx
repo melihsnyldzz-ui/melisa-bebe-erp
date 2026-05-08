@@ -181,6 +181,18 @@ const stockManagementRoadmapNoActionItems = [
   "Dosya/export yok.",
   "Stok dışı kapsam yok.",
 ];
+const topStockOutPreviewSummaryCards = [
+  { label: "Top 100 stok çıkışı görünümü", value: "Hazırlık / Manuel read-only" },
+  { label: "Veri yazma", value: "Yok" },
+  { label: "Stok dışı kapsam", value: "Kapalı" },
+  { label: "Dönem filtresi", value: "Tarih alanı doğrulanırsa son 30 gün" },
+];
+const topStockOutPreviewSummaryNotes = [
+  "Hareket tablosu ve çıkış miktarı alanı doğrulanmadan çalıştırılmaz.",
+  "Gerçek sorgu bu sürümde eklenmedi.",
+  "Sonuç ileride sadece geçici ekran state içinde gösterilecek.",
+  "Local DB kaydı veya dosya üretimi yapılmayacak.",
+];
 const companyReadonlyPretestCards = [
   { label: "Ortam", value: "Şirket bilgisayarı" },
   { label: "Local main", value: "GitHub ile güncel" },
@@ -1529,6 +1541,8 @@ export default function Dashboard() {
 
       <StockManagementRoadmapPanel />
 
+      <TopStockOutPreviewSummaryPanel />
+
       <StockPreviewUserValidationFlowPanel />
 
       <StockPreviewUserTestSessionPanel />
@@ -2209,6 +2223,40 @@ function StockSmokeTestResultSummaryPanel() {
       <CommercePanel title="Bu Panel Ne Yapmaz?" note="Bu kutu panelin pasif sınırlarını gösterir; işlem başlatan komut veya buton içermez.">
         <div className="commerce-performance-grid">
           {stockSmokeTestNoActionItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+    </section>
+  );
+}
+
+function TopStockOutPreviewSummaryPanel() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-top-100-stock-out-preview-summary")}`} id="dashboard-top-100-stock-out-preview-summary">
+      <DashboardNewReleaseBadge sectionId="dashboard-top-100-stock-out-preview-summary" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Manuel read-only stok çıkış hazırlığı</p>
+          <h2>Vega Top 100 Stok Çıkışı Read-only Önizleme</h2>
+          <span>En çok çıkış yapılan stok kodlarını ileride read-only görmek için güvenli hazırlık özetidir; hareket tablosu ve alanlar doğrulanmadan bağlantı veya sorgu başlatmaz.</span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {topStockOutPreviewSummaryCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+
+      <CommercePanel title="Çalıştırma Kilidi" note="Bu özet kartı sadece Dashboard görünürlüğü sağlar; test, bağlantı, veri okuma veya kayıt başlatmaz.">
+        <div className="commerce-performance-grid">
+          {topStockOutPreviewSummaryNotes.map((item) => (
             <article className="commerce-performance-card" key={item}>
               <strong>{item}</strong>
             </article>

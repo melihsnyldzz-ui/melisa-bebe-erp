@@ -1,17 +1,19 @@
 export const currentReleaseVersion = "v1.84.0";
 
-export const currentReleaseTitle = "Stok Önizleme Tablosu Görünüm Netleştirme";
+export const currentReleaseTitle = "Vega Top 100 Stok Çıkışı Read-only Önizleme";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "vega-stock-trial-panel"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "vega-top-100-stock-out-preview"];
 
 export const releaseHighlightItems = [
-  "Vega Stok Deneme ekranındaki stok önizleme tablosu, kullanıcıya görünen iş dili kolon başlıkları ve okuma rehberiyle netleştirildi.",
-  "Tabloya Stok Kodu, Ürün Adı, Barkod, Marka, Kategori, Beden, Renk, Alış Fiyatı, Satış Fiyatı, KDV ve Kontrol Notu görünümü eklendi; kesin olmayan alanlar pasif olarak Doğrulanacak etiketiyle kalır.",
-  "Bu sürüm yeni SQL sorgusu yazmaz, bağlantı açmaz, yeni veri okumaz, veri yazmaz, gerçek Vega alan eşlemesi yapmaz, form/input/localStorage eklemez ve dosya/export üretmez.",
+  "Vega Stok Deneme ekranına Top 100 stok çıkışı için read-only önizleme hazırlık paneli eklendi; hareket tablosu ve çıkış miktarı alanı doğrulanmadığı için gerçek sorgu çalıştırılmaz.",
+  "Dashboard tarafına Top 100 stok çıkışı görünümü için manuel read-only hazırlık özeti eklendi; stok dışı kapsam, veri yazma ve kalıcı kayıt kapalı tutulur.",
+  "Bu sürüm otomatik bağlantı başlatmaz, yeni stok verisi okumaz, gerçek tablo/kolon eşlemesi yapmaz, form/input/localStorage eklemez ve dosya üretmez.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
+  { id: "vega-top-100-stock-out-preview", label: "Vega Top 100 Stok Çıkışı'na git" },
+  { id: "dashboard-top-100-stock-out-preview-summary", label: "Top 100 Stok Çıkışı Dashboard Özetine git" },
   { id: "dashboard-stock-field-label-clarification-plan", label: "Stok Alan Etiketi Planı'na git" },
   { id: "dashboard-stock-preview-user-test-session", label: "Stok Önizleme Kullanıcı Test Oturumu'na git" },
   { id: "dashboard-stock-preview-user-validation-flow", label: "Stok Önizleme Kullanıcı Doğrulama Akışı'na git" },
@@ -50,6 +52,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-staff-usage-screen-map", label: "Personel Kullanım Ekranları Haritası'na git" },
       { id: "dashboard-erp-module-priority-order", label: "ERP Modül Öncelik Sıralaması'na git" },
       { id: "dashboard-stock-management-roadmap", label: "Stok Yönetimi Geliştirme Yol Haritası'na git" },
+      { id: "dashboard-top-100-stock-out-preview-summary", label: "Top 100 Stok Çıkışı Dashboard Özetine git" },
       { id: "dashboard-stock-preview-user-validation-flow", label: "Stok Önizleme Kullanıcı Doğrulama Akışı'na git" },
       { id: "dashboard-stock-preview-user-test-session", label: "Stok Önizleme Kullanıcı Test Oturumu'na git" },
       { id: "dashboard-company-readonly-pretest", label: "Şirket Ortamı Ön Test'e git" },
@@ -108,7 +111,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-stock-field-label-clarification-plan", "dashboard-stock-preview-user-test-session", "dashboard-data-field-dictionary"],
+    updatedSectionIds: ["dashboard-top-100-stock-out-preview-summary", "dashboard-stock-management-roadmap", "dashboard-data-field-dictionary"],
   },
   reports: {
     releaseHighlightItems,
@@ -135,9 +138,10 @@ export const releaseHighlightsByPage = {
     releaseHighlightItems,
     releaseJumpLinks: [
       { id: "vega-stock-trial-panel", label: "Vega Stok Deneme alanına git" },
+      { id: "vega-top-100-stock-out-preview", label: "Top 100 Stok Çıkışı alanına git" },
       { id: "vega-stock-user-validation-panel", label: "Kullanıcı Doğrulama Paneli'ne git" },
     ],
-    updatedSectionIds: ["vega-stock-trial-panel", "vega-stock-user-validation-panel"],
+    updatedSectionIds: ["vega-stock-trial-panel", "vega-top-100-stock-out-preview"],
   },
   vegaImportPreview: {
     releaseHighlightItems,

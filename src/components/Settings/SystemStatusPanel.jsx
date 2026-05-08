@@ -463,9 +463,9 @@ const desktopPreparationStatusRows = [
 const versionHistoryRows = [
   {
     version: "v1.84.0",
-    title: "Stok Önizleme Tablosu Görünüm Netleştirme",
-    area: "Vega Stok Deneme / Sistem Durumu",
-    description: "Vega Stok Deneme ekranındaki stok önizleme tablosu iş dili kolon başlıkları, okuma rehberi ve kullanıcı kontrol sırasıyla netleştirildi; kesin olmayan alanlar Doğrulanacak etiketiyle pasif bırakıldı; yeni SQL sorgusu, bağlantı denemesi, yeni stok verisi okuma, gerçek Vega alan eşlemesi, veri yazma, form/input/localStorage, import/senkron/export veya hassas bilgi eklenmedi.",
+    title: "Vega Top 100 Stok Çıkışı Read-only Önizleme",
+    area: "Vega Stok Deneme / Dashboard / Sistem Durumu",
+    description: "Vega Stok Deneme ekranına Top 100 stok çıkışı için güvenli read-only hazırlık paneli ve Dashboard'a kısa özet eklendi; hareket tablosu, stok kodu, çıkış miktarı, hareket yönü ve tarih alanları doğrulanamadığı için gerçek sorgu eklenmedi, buton kilitli bırakıldı; otomatik bağlantı, yeni veri okuma, local DB kaydı, dosya üretimi, veri yazma, form/input/localStorage, import/senkron/export veya hassas bilgi eklenmedi.",
   },
   {
     version: "v1.83.0",

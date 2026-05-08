@@ -99,6 +99,48 @@ const stockPreviewControlSequence = [
   "Şüpheli/boş alan varsa canlı kullanım kararı verme.",
 ];
 
+const topStockOutStatusCards = [
+  { label: "Veri kaynağı", value: "Vega SQL read-only" },
+  { label: "Kapsam", value: "Sadece stok çıkış hareketleri" },
+  { label: "Limit", value: "Top 100" },
+  { label: "Sıralama", value: "Toplam çıkış miktarı" },
+  { label: "Dönem", value: "Son 30 gün / doğrulanacak" },
+  { label: "Veri yazma", value: "Yok" },
+  { label: "Import/Senkron/Export", value: "Yok" },
+  { label: "Çalışma şekli", value: "Manuel tetikleme" },
+  { label: "SQL kullanıcısı", value: "sa / geçici riskli test" },
+  { label: "Risk seviyesi", value: "Orta-yüksek" },
+];
+
+const topStockOutValidationRows = [
+  { label: "Stok hareket tablosu", value: "Doğrulanamadı" },
+  { label: "Stok kodu alanı", value: "Doğrulanamadı" },
+  { label: "Çıkış miktarı alanı", value: "Doğrulanamadı" },
+  { label: "Hareket yönü ayrımı", value: "Doğrulanamadı" },
+  { label: "Tarih alanı", value: "Doğrulanamadı" },
+];
+
+const topStockOutSafetyNotes = [
+  "Bu ekran Vega'dan sadece read-only stok çıkış özeti okumak için hazırlanır.",
+  "Sonuç ileride sadece geçici olarak ekranda görünür.",
+  "Veri kaydedilmez.",
+  "Vega'ya veri yazılmaz.",
+  "Import/senkron/export yapılmaz.",
+  "Cari/sipariş/kasa/finans verisi okunmaz.",
+  "sa kullanımı geçici ve orta-yüksek risklidir.",
+];
+
+const topStockOutPreviewHeaders = [
+  "Sıra",
+  "Stok Kodu",
+  "Ürün Adı",
+  "Barkod",
+  "Toplam Çıkış Miktarı",
+  "Son Çıkış Tarihi",
+  "Hareket Sayısı",
+  "Kontrol Notu",
+];
+
 const pendingLabel = "Doğrulanacak";
 
 const pickFirstValue = (...values) => {
@@ -772,6 +814,90 @@ export default function VegaStockTrial() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+
+        <div className="vega-panel-group section-updated-highlight" id="vega-top-100-stock-out-preview">
+          <span className="new-release-badge">YENİ · {currentReleaseVersion}</span>
+          <div className="vega-panel-group-header">
+            <h2>Vega Top 100 Stok Çıkışı</h2>
+            <p>Stok çıkış hareketleri için read-only önizleme hazırlığıdır; hareket tablosu ve alanlar doğrulanmadan çalıştırılmaz.</p>
+          </div>
+
+          <div className="vega-stock-safety-box">
+            <ShieldCheck size={18} />
+            <div>
+              <strong>Güvenlik Kilidi</strong>
+              <span>Stok çıkış hareket tablosu ve çıkış miktarı alanı doğrulanmadan gerçek sorgu eklenmedi; bağlantı açılmaz, veri okunmaz ve kayıt oluşturulmaz.</span>
+            </div>
+          </div>
+
+          <div className="vega-connection-grid" aria-label="Top 100 stok çıkışı durum kartları">
+            {topStockOutStatusCards.map((card) => (
+              <div className="vega-connection-card" key={card.label}>
+                <span>{card.label}</span>
+                <strong>{card.value}</strong>
+              </div>
+            ))}
+          </div>
+
+          <div className="vega-readonly-preview-action">
+            <div>
+              <h3>Top 100 Stok Çıkışını Read-only Getir</h3>
+              <p>Bu buton alan doğrulaması tamamlanana kadar kilitlidir; sayfa açılışında otomatik bağlantı veya sorgu çalışmaz.</p>
+            </div>
+            <button type="button" disabled>
+              Top 100 Stok Çıkışını Read-only Getir
+            </button>
+          </div>
+
+          <div className="vega-readiness-panel">
+            <div>
+              <h2>Tablo ve Alan Doğrulama Durumu</h2>
+              <p>Canlı tablo/kolon adı raporlanmadan yalnızca doğrulama sonucu gösterilir.</p>
+            </div>
+            <div className="vega-readiness-grid">
+              {topStockOutValidationRows.map((row) => (
+                <div className="vega-readiness-row" key={row.label}>
+                  <span>{row.label}</span>
+                  <strong>{row.value}</strong>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="vega-security-checklist-panel">
+            <div>
+              <h2>Güvenlik Notu</h2>
+              <p>Bu kutu Top 100 stok çıkışı önizlemesinin kapalı sınırlarını gösterir; işlem başlatmaz.</p>
+            </div>
+            <div className="vega-security-checklist-grid" aria-label="Top 100 stok çıkışı güvenlik notları">
+              {topStockOutSafetyNotes.map((item) => (
+                <div className="vega-security-checklist-item" key={item}>
+                  <span aria-hidden="true">•</span>
+                  <strong>{item}</strong>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="vega-stock-table-wrap">
+            <table className="vega-stock-table">
+              <thead>
+                <tr>
+                  {topStockOutPreviewHeaders.map((header) => (
+                    <th key={header}>{header}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td colSpan={topStockOutPreviewHeaders.length}>
+                    Stok çıkış hareket tablosu ve çıkış miktarı alanı doğrulanmadan çalıştırılmaz; veri gösterilmez.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
 
