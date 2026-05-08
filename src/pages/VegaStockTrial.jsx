@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { AlertTriangle, Database, Search, ShieldCheck } from "lucide-react";
 import { currentReleaseVersion } from "../config/releaseHighlights.js";
 import { canUseVegaReadOnlyBridge, listVegaStockReadOnly } from "../utils/desktopBridge.js";
-import { formatCurrency, formatNumber } from "../utils/formatters.js";
+import { formatCurrency } from "../utils/formatters.js";
 
 const demoStockRows = [
   {
@@ -83,6 +83,51 @@ const columnMappings = [
   { vegaField: "Alış Fiyatı", erpField: "purchasePrice" },
   { vegaField: "Satış Fiyatı", erpField: "salePrice" },
 ];
+
+const stockPreviewReadGuide = [
+  "Bu tablo manuel read-only deneme sonrası gelen geçici önizlemedir.",
+  "Veri kaydedilmez.",
+  "Vega'ya veri yazılmaz.",
+  "En fazla 20 satır gösterilir.",
+  "Stok dışı veri gösterilmez.",
+];
+
+const stockPreviewControlSequence = [
+  "Önce stok kodu ve ürün adını kontrol et.",
+  "Sonra barkod/etiket alanını kontrol et.",
+  "Sonra fiyat/KDV alanlarını yönetici veya muhasebe ile yorumla.",
+  "Şüpheli/boş alan varsa canlı kullanım kararı verme.",
+];
+
+const pendingLabel = "Doğrulanacak";
+
+const pickFirstValue = (...values) => {
+  const value = values.find((item) => item !== undefined && item !== null && String(item).trim() !== "");
+  return value === undefined ? pendingLabel : value;
+};
+
+const formatOptionalCurrency = (value) => {
+  if (value === undefined || value === null || value === "") {
+    return pendingLabel;
+  }
+
+  const numericValue = Number(value);
+  return Number.isFinite(numericValue) ? formatCurrency(numericValue) : pendingLabel;
+};
+
+const buildPreviewRow = (row, hasVegaRows) => ({
+  stockCode: pickFirstValue(row.stockCode, row.STOKKODU),
+  productName: pickFirstValue(row.productName, row.MALINCINSI),
+  barcode: hasVegaRows ? pendingLabel : pickFirstValue(row.barcode),
+  brand: hasVegaRows ? pendingLabel : pickFirstValue(row.brand),
+  category: pendingLabel,
+  size: hasVegaRows ? pendingLabel : pickFirstValue(row.size),
+  color: hasVegaRows ? pendingLabel : pickFirstValue(row.color),
+  purchasePrice: formatOptionalCurrency(pickFirstValue(row.purchasePrice, row.ALISFIYATI)),
+  salePrice: formatOptionalCurrency(pickFirstValue(row.salePrice, row.ISKSATISFIYATI2, row.ISKSATISFIYATI3)),
+  vat: pickFirstValue(row.KDVGRUBU),
+  controlNote: hasVegaRows ? "Kullanıcı kontrolü" : "Demo satır",
+});
 
 export default function VegaStockTrial() {
   const [query, setQuery] = useState("");
@@ -325,13 +370,14 @@ export default function VegaStockTrial() {
     }
 
     return visibleRows.filter((row) =>
-      [row.stockCode, row.barcode, row.productName].some((value) =>
+      [row.stockCode, row.STOKKODU, row.barcode, row.productName, row.MALINCINSI].some((value) =>
         String(value || "")
           .toLocaleLowerCase("tr-TR")
           .includes(normalizedQuery),
       ),
     );
   }, [normalizedQuery, visibleRows]);
+  const previewRows = useMemo(() => filteredRows.map((row) => buildPreviewRow(row, hasVegaRows)), [filteredRows, hasVegaRows]);
 
   return (
     <>
@@ -731,8 +777,8 @@ export default function VegaStockTrial() {
 
         <div className="vega-panel-group">
           <div className="vega-panel-group-header">
-            <h2>Demo Stok Tablosu</h2>
-            <p>Gerçek Vega stoğu okunmadığında demo satırlar açık etiketle gösterilir.</p>
+            <h2>Stok Önizleme Tablosu</h2>
+            <p>Manuel read-only deneme sonrası gelen stok satırları iş diliyle okunur; kesin olmayan alanlar doğrulanacak etiketiyle kalır.</p>
           </div>
 
         <label className="vega-stock-search">
@@ -768,39 +814,73 @@ export default function VegaStockTrial() {
           </div>
         </div>
 
+        <div className="vega-security-checklist-panel">
+          <div>
+            <h2>Bu Tablo Nasıl Okunur?</h2>
+            <p>Bu kutu yalnızca okuma rehberidir; yeni bağlantı, kayıt veya export başlatmaz.</p>
+          </div>
+          <div className="vega-security-checklist-grid" aria-label="Stok önizleme tablosu okuma rehberi">
+            {stockPreviewReadGuide.map((item) => (
+              <div className="vega-security-checklist-item" key={item}>
+                <span aria-hidden="true">•</span>
+                <strong>{item}</strong>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="vega-security-checklist-panel">
+          <div>
+            <h2>Kullanıcı Kontrol Sırası</h2>
+            <p>Bu sıra kullanıcı değerlendirmesini kolaylaştırır; karar veya not kaydetmez.</p>
+          </div>
+          <div className="vega-security-checklist-grid" aria-label="Stok önizleme kullanıcı kontrol sırası">
+            {stockPreviewControlSequence.map((item) => (
+              <div className="vega-security-checklist-item" key={item}>
+                <span aria-hidden="true">•</span>
+                <strong>{item}</strong>
+              </div>
+            ))}
+          </div>
+        </div>
+
         <div className="vega-stock-table-wrap">
           <table className="vega-stock-table">
             <thead>
               <tr>
                 <th>Durum</th>
                 <th>Stok Kodu</th>
-                <th>Barkod</th>
                 <th>Ürün Adı</th>
+                <th>Barkod</th>
                 <th>Marka</th>
+                <th>Kategori</th>
                 <th>Beden</th>
                 <th>Renk</th>
-                <th>Mevcut Stok</th>
                 <th>Alış Fiyatı</th>
                 <th>Satış Fiyatı</th>
+                <th>KDV</th>
+                <th>Kontrol Notu</th>
               </tr>
             </thead>
             <tbody>
-              {filteredRows.map((row) => (
-                <tr key={`${row.stockCode}-${row.barcode}`}>
+              {previewRows.map((row, index) => (
+                <tr key={`${row.stockCode}-${row.productName}-${index}`}>
                   <td>
                     <span className={`vega-stock-row-source ${hasVegaRows ? "ready" : "demo"}`}>
                       {hasVegaRows ? "Vega read-only" : "Demo veri"}
                     </span>
                   </td>
                   <td>{row.stockCode}</td>
-                  <td>{row.barcode}</td>
                   <td>{row.productName}</td>
-                  <td>{row.brand || "-"}</td>
-                  <td>{row.size || "-"}</td>
-                  <td>{row.color || "-"}</td>
-                  <td>{formatNumber(row.quantity || 0)}</td>
-                  <td>{formatCurrency(row.purchasePrice || 0)}</td>
-                  <td>{formatCurrency(row.salePrice || 0)}</td>
+                  <td>{row.barcode}</td>
+                  <td>{row.brand}</td>
+                  <td>{row.category}</td>
+                  <td>{row.size}</td>
+                  <td>{row.color}</td>
+                  <td>{row.purchasePrice}</td>
+                  <td>{row.salePrice}</td>
+                  <td>{row.vat}</td>
+                  <td>{row.controlNote}</td>
                 </tr>
               ))}
             </tbody>

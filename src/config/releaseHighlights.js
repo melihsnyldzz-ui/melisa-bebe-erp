@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.83.0";
+export const currentReleaseVersion = "v1.84.0";
 
-export const currentReleaseTitle = "Stok Ekranı Alan Etiketi Netleştirme Planı";
+export const currentReleaseTitle = "Stok Önizleme Tablosu Görünüm Netleştirme";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "dashboard-stock-field-label-clarification-plan"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "vega-stock-trial-panel"];
 
 export const releaseHighlightItems = [
-  "Dashboard'a Stok Ekranı Alan Etiketi Netleştirme Planı paneli eklenerek stok ekranında kullanıcıların anlayacağı iş seviyesi alan adları pasif olarak görünür hale getirildi.",
-  "Panelde stok kodu, ürün adı, barkod, marka, kategori, beden, renk, alış/satış fiyatı, KDV ve şüpheli/boş alan için kontrol amacı, sorumlu rol, risk ve sonraki adım listelendi.",
-  "Bu sürüm gerçek Vega alan eşlemesi yapmaz, yeni veri okumaz, SQL sorgusu çalıştırmaz, veri yazmaz, form/input/localStorage eklemez ve dosya/export üretmez.",
+  "Vega Stok Deneme ekranındaki stok önizleme tablosu, kullanıcıya görünen iş dili kolon başlıkları ve okuma rehberiyle netleştirildi.",
+  "Tabloya Stok Kodu, Ürün Adı, Barkod, Marka, Kategori, Beden, Renk, Alış Fiyatı, Satış Fiyatı, KDV ve Kontrol Notu görünümü eklendi; kesin olmayan alanlar pasif olarak Doğrulanacak etiketiyle kalır.",
+  "Bu sürüm yeni SQL sorgusu yazmaz, bağlantı açmaz, yeni veri okumaz, veri yazmaz, gerçek Vega alan eşlemesi yapmaz, form/input/localStorage eklemez ve dosya/export üretmez.",
 ];
 
 export const releaseJumpLinks = [
