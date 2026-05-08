@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.80.4",
+    title: "Stok Smoke Test Sonuç Özeti Paneli",
+    area: "Dashboard / Sistem Durumu",
+    description: "Şirket ortamındaki kontrollü stok read-only smoke test sonucunu canlı stok verisi veya hassas bağlantı bilgisi göstermeden özetleyen pasif panel eklendi; önceki başarılı bağlantı, 20 satır sınırı, stok dışı veri okunmadığı, veri yazma/import/senkron/export ve dosya çıktısı olmadığı görünür hale getirildi; test çalıştırma, bağlantı açma, SQL sorgusu veya veri okuma/yazma eklenmedi.",
+  },
+  {
     version: "v1.80.3",
     title: "sa ile Kontrollü Stok Read-only Test Modu",
     area: "Dashboard / Sistem Durumu",

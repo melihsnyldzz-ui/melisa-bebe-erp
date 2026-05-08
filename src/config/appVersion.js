@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.80.3";
-export const APP_STAGE = "sa ile Kontrollü Stok Read-only Test Modu";
+export const APP_VERSION = "v1.80.4";
+export const APP_STAGE = "Stok Smoke Test Sonuç Özeti Paneli";

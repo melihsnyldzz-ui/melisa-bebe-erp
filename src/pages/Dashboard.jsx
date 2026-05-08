@@ -289,6 +289,42 @@ const saControlledStockReadonlySafetyNotes = [
   "SQL sorgusu çalıştırmaz.",
   "Sadece sa kullanım riskini ve sınırlarını görünür yapar.",
 ];
+const stockSmokeTestResultSummaryCards = [
+  { label: "Test türü", value: "Stok read-only smoke test" },
+  { label: "Test ortamı", value: "Şirket bilgisayarı" },
+  { label: "SQL kullanıcısı", value: "sa / geçici" },
+  { label: "Risk seviyesi", value: "Orta-yüksek" },
+  { label: "Bağlantı sonucu", value: "Önceki testte başarılı" },
+  { label: "Dönen satır", value: "20" },
+  { label: "Satır limiti", value: "Korundu" },
+  { label: "Stok dışı veri", value: "Okunmadı" },
+  { label: "Veri yazma", value: "Yok" },
+  { label: "Dosya çıktısı", value: "Yok" },
+  { label: "Hassas bilgi", value: "Raporlanmadı" },
+];
+const stockSmokeTestSuccessCriteria = [
+  "Bağlantı sadece manuel tetiklendi.",
+  "En fazla 20 satır döndü.",
+  "Stok dışında veri okunmadı.",
+  "Veri yazma yapılmadı.",
+  "Import/senkron/export yapılmadı.",
+  "Dosyaya çıktı alınmadı.",
+  "Hassas bağlantı bilgisi görünmedi.",
+];
+const stockSmokeTestNextDecisions = [
+  "sa ile tekrar gereksiz test yapılmayacak.",
+  "Stok ekranı kullanıcı doğrulaması yapılacak.",
+  "Read-only SQL kullanıcısı sonraki güvenlik iyileştirmesi olarak bekleyecek.",
+  "Cari/sipariş/kasa-finans hâlâ kapalı kalacak.",
+];
+const stockSmokeTestNoActionItems = [
+  "Test çalıştırmaz.",
+  "Bağlantı açmaz.",
+  "Veri okumaz.",
+  "Veri yazmaz.",
+  "SQL sorgusu çalıştırmaz.",
+  "Dosya/export üretmez.",
+];
 const barcodeHandheldRoadmapPhases = [
   { phase: "Faz 1: Barkod senaryosu tanımı", status: "Hazırlıkta", dataMode: "Pasif iş akışı", risk: "Orta", nextStep: "Depo senaryosu netleşecek" },
   { phase: "Faz 2: Barkodsuz ürün listesi hazırlığı", status: "Planlandı", dataMode: "Pasif liste taslağı", risk: "Orta", nextStep: "Barkodsuz ürün etiketi tanımı" },
@@ -1304,6 +1340,8 @@ export default function Dashboard() {
 
       <SaControlledStockReadonlyModePanel />
 
+      <StockSmokeTestResultSummaryPanel />
+
       <ReadonlySqlUserTransitionPlan />
 
       <BarcodeHandheldRoadmapPanel />
@@ -1788,6 +1826,60 @@ function SaControlledStockReadonlyModePanel() {
       </CommercePanel>
 
       <p className="commerce-profitability-safety-note">{saControlledStockReadonlySafetyNotes.join(" · ")}</p>
+    </section>
+  );
+}
+
+function StockSmokeTestResultSummaryPanel() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-stock-smoke-test-result-summary")}`} id="dashboard-stock-smoke-test-result-summary">
+      <DashboardNewReleaseBadge sectionId="dashboard-stock-smoke-test-result-summary" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Güvenli smoke test özeti</p>
+          <h2>Stok Smoke Test Sonuç Özeti Paneli</h2>
+          <span>Şirket ortamındaki stok read-only smoke test sonucunu canlı stok verisi veya bağlantı bilgisi göstermeden özetler; test çalıştırmaz, bağlantı açmaz ve dosya üretmez.</span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {stockSmokeTestResultSummaryCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+
+      <CommercePanel title="Test Başarı Kriterleri" note="Bu kriterler önceki kontrollü smoke testin güvenli özetidir; canlı satır veya bağlantı bilgisi göstermez.">
+        <div className="commerce-performance-grid">
+          {stockSmokeTestSuccessCriteria.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Devam Etmeden Önce Karar" note="Bu kararlar sonraki adımları sınırlar; cari, sipariş ve finans kapsamı kapalı kalır.">
+        <div className="commerce-performance-grid">
+          {stockSmokeTestNextDecisions.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Bu Panel Ne Yapmaz?" note="Bu kutu panelin pasif sınırlarını gösterir; işlem başlatan komut veya buton içermez.">
+        <div className="commerce-performance-grid">
+          {stockSmokeTestNoActionItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
     </section>
   );
 }
