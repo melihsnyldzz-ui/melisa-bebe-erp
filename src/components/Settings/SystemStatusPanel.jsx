@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.82.0",
+    title: "Stok Önizleme Kullanıcı Test Oturumu Paneli",
+    area: "Dashboard / Sistem Durumu",
+    description: "Stok önizleme kullanıcı doğrulama aşamasından sonra şirket içi manuel kullanıcı test oturumunun katılımcıları, süresi, 20 satır read-only kapsamı, sözlü/manuel not yöntemi, sistem kaydı olmadığı ve oturum akışı pasif panel olarak eklendi; test başlatma, bağlantı açma, veri okuma/yazma, form/input/localStorage, kullanıcı notu kaydı, import/senkron/export veya hassas bilgi eklenmedi.",
+  },
+  {
     version: "v1.81.1",
     title: "Stok Önizleme Kullanıcı Doğrulama Netleştirme",
     area: "Dashboard / Sistem Durumu",

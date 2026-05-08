@@ -416,6 +416,42 @@ const stockPreviewUserValidationResultInterpretations = [
   "Fiyat/KDV/barkod sorunu varsa: Canlı kullanım ertelenir.",
   "Stok dışı veri ihtiyacı çıkarsa: Bu sürümde açılmaz, ayrı faz planlanır.",
 ];
+const stockPreviewUserTestSessionCards = [
+  { label: "Test türü", value: "Manuel kullanıcı testi" },
+  { label: "Katılımcılar", value: "Depo + Yönetici + Teknik Admin" },
+  { label: "Süre", value: "10-15 dakika" },
+  { label: "Kapsam", value: "20 satır stok önizleme" },
+  { label: "Test modu", value: "Read-only" },
+  { label: "Kayıt yöntemi", value: "Sözlü / manuel not" },
+  { label: "Sistem kaydı", value: "Yok" },
+  { label: "Stok dışı kapsam", value: "Kapalı" },
+];
+const stockPreviewUserTestSessionFlow = [
+  "Uygulama açılır, otomatik bağlantı olmadığı doğrulanır.",
+  "Manuel stok önizleme ekranı açılır.",
+  "20 satır limiti kontrol edilir.",
+  "Stok kodu ve ürün adı birlikte kontrol edilir.",
+  "Barkod/etiket alanı gözle incelenir.",
+  "Fiyat/KDV alanları yönetici ve muhasebe bakışıyla yorumlanır.",
+  "Boş/şüpheli alanlar sözlü not edilir.",
+  "Canlıya geçiş kararı verilmez, sadece kullanıcı doğrulama sonucu konuşulur.",
+];
+const stockPreviewUserTestSessionExpectedDecisions = [
+  "Stok ekranı anlaşılır mı?",
+  "Alan adları kullanıcıya yeterince açık mı?",
+  "20 satır örnek kontrol için yeterli mi?",
+  "Fiyat/KDV/barkod alanları ayrı faz gerektiriyor mu?",
+  "Depo personeli bu ekranı kullanabilir mi?",
+];
+const stockPreviewUserTestSessionNoActionItems = [
+  "Test çalıştırmaz.",
+  "Bağlantı açmaz.",
+  "Veri okumaz.",
+  "Veri yazmaz.",
+  "Form/input/localStorage eklemez.",
+  "Kullanıcı notu kaydetmez.",
+  "Dosya/export üretmez.",
+];
 const barcodeHandheldRoadmapPhases = [
   { phase: "Faz 1: Barkod senaryosu tanımı", status: "Hazırlıkta", dataMode: "Pasif iş akışı", risk: "Orta", nextStep: "Depo senaryosu netleşecek" },
   { phase: "Faz 2: Barkodsuz ürün listesi hazırlığı", status: "Planlandı", dataMode: "Pasif liste taslağı", risk: "Orta", nextStep: "Barkodsuz ürün etiketi tanımı" },
@@ -1429,6 +1465,8 @@ export default function Dashboard() {
 
       <StockPreviewUserValidationFlowPanel />
 
+      <StockPreviewUserTestSessionPanel />
+
       <CompanyReadonlyPretestPanel />
 
       <SaControlledStockReadonlyModePanel />
@@ -1879,6 +1917,60 @@ function StockPreviewUserValidationFlowPanel() {
       <CommercePanel title="Doğrulama Sonucu Nasıl Yorumlanır?" note="Sonuçlar canlı veri veya kullanıcı notu olarak kaydedilmez; yalnızca sonraki güvenli faz kararını yönlendirir.">
         <div className="commerce-performance-grid">
           {stockPreviewUserValidationResultInterpretations.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+    </section>
+  );
+}
+
+function StockPreviewUserTestSessionPanel() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-stock-preview-user-test-session")}`} id="dashboard-stock-preview-user-test-session">
+      <DashboardNewReleaseBadge sectionId="dashboard-stock-preview-user-test-session" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Pasif manuel kullanıcı test oturumu</p>
+          <h2>Stok Önizleme Kullanıcı Test Oturumu Paneli</h2>
+          <span>Depo, yönetici ve teknik ekibin stok önizlemeyi nasıl birlikte değerlendireceğini gösterir; test başlatmaz, bağlantı açmaz ve kullanıcı notu kaydetmez.</span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {stockPreviewUserTestSessionCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+
+      <CommercePanel title="Test Oturumu Akışı" note="Bu akış yalnızca toplantı düzenini gösterir; uygulama içinden test, bağlantı veya kayıt başlatmaz.">
+        <div className="commerce-performance-grid">
+          {stockPreviewUserTestSessionFlow.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Oturum Sonunda Beklenen Kararlar" note="Kararlar sistemde saklanmaz; sözlü/manuel değerlendirme için görünür rehberdir.">
+        <div className="commerce-performance-grid">
+          {stockPreviewUserTestSessionExpectedDecisions.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Bu Panel Ne Yapmaz?" note="Bu kutu oturum panelinin pasif sınırlarını gösterir; form, kayıt veya işlem başlatmaz.">
+        <div className="commerce-performance-grid">
+          {stockPreviewUserTestSessionNoActionItems.map((item) => (
             <article className="commerce-performance-card" key={item}>
               <strong>{item}</strong>
             </article>

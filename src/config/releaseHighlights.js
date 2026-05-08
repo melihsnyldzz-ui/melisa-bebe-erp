@@ -1,17 +1,18 @@
-export const currentReleaseVersion = "v1.81.1";
+export const currentReleaseVersion = "v1.82.0";
 
-export const currentReleaseTitle = "Stok Önizleme Kullanıcı Doğrulama Netleştirme";
+export const currentReleaseTitle = "Stok Önizleme Kullanıcı Test Oturumu Paneli";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "dashboard-stock-preview-user-validation-flow"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "dashboard-stock-preview-user-test-session"];
 
 export const releaseHighlightItems = [
-  "Stok Önizleme Kullanıcı Doğrulama Akışı paneli, kontrolde sorun görülürse ne yapılacağını ve doğrulama sonucunun nasıl yorumlanacağını pasif karar rehberiyle netleştirecek şekilde genişletildi.",
-  "Satır sayısı, stok kodu, ürün adı, barkod/etiket, marka/kategori, fiyat, KDV ve şüpheli alan sorunlarında durdurma, doğrulama, erteleme ve ayrı faz kararları görünür hale getirildi.",
-  "Bu sürüm test çalıştırmaz, bağlantı açmaz, yeni veri okumaz, veri yazmaz, SQL sorgusu çalıştırmaz, form/input/localStorage eklemez, kullanıcı notu kaydetmez ve dosya/export üretmez.",
+  "Dashboard'a Stok Önizleme Kullanıcı Test Oturumu Paneli eklenerek depo, yönetici ve teknik ekibin 20 satırlık read-only stok önizlemeyi nasıl birlikte değerlendireceği pasif olarak görünür hale getirildi.",
+  "Panelde manuel kullanıcı testi, katılımcılar, 10-15 dakikalık süre, 20 satır stok kapsamı, read-only mod, sözlü/manuel not ve sistem kaydı olmadığı netleştirildi.",
+  "Bu sürüm test başlatmaz, bağlantı açmaz, veri okumaz/yazmaz, form/input/localStorage eklemez, kullanıcı notu kaydetmez ve dosya/export üretmez.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
+  { id: "dashboard-stock-preview-user-test-session", label: "Stok Önizleme Kullanıcı Test Oturumu'na git" },
   { id: "dashboard-stock-preview-user-validation-flow", label: "Stok Önizleme Kullanıcı Doğrulama Akışı'na git" },
   { id: "dashboard-stock-smoke-test-result-summary", label: "Stok Smoke Test Sonuç Özeti'ne git" },
   { id: "dashboard-sa-controlled-stock-readonly-mode", label: "sa Kontrollü Stok Read-only Modu'na git" },
@@ -49,6 +50,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-erp-module-priority-order", label: "ERP Modül Öncelik Sıralaması'na git" },
       { id: "dashboard-stock-management-roadmap", label: "Stok Yönetimi Geliştirme Yol Haritası'na git" },
       { id: "dashboard-stock-preview-user-validation-flow", label: "Stok Önizleme Kullanıcı Doğrulama Akışı'na git" },
+      { id: "dashboard-stock-preview-user-test-session", label: "Stok Önizleme Kullanıcı Test Oturumu'na git" },
       { id: "dashboard-company-readonly-pretest", label: "Şirket Ortamı Ön Test'e git" },
       { id: "dashboard-stock-smoke-test-result-summary", label: "Stok Smoke Test Sonuç Özeti'ne git" },
       { id: "dashboard-sa-controlled-stock-readonly-mode", label: "sa Kontrollü Stok Read-only Modu'na git" },
@@ -104,7 +106,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-stock-preview-user-validation-flow", "dashboard-stock-smoke-test-result-summary", "dashboard-stock-management-roadmap"],
+    updatedSectionIds: ["dashboard-stock-preview-user-test-session", "dashboard-stock-preview-user-validation-flow", "dashboard-stock-smoke-test-result-summary"],
   },
   reports: {
     releaseHighlightItems,
