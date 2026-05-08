@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.81.1",
+    title: "Stok Önizleme Kullanıcı Doğrulama Netleştirme",
+    area: "Dashboard / Sistem Durumu",
+    description: "Stok önizleme kullanıcı doğrulama akışı, kontrolde sorun görülürse izlenecek pasif karar rehberi ve doğrulama sonucunun nasıl yorumlanacağı listeleriyle genişletildi; test çalıştırma, bağlantı açma, yeni veri okuma, veri yazma, import/senkron/export, form/input/localStorage, kullanıcı notu kaydı veya hassas bilgi eklenmedi.",
+  },
+  {
     version: "v1.81.0",
     title: "Stok Önizleme Kullanıcı Doğrulama Akışı",
     area: "Dashboard / Sistem Durumu",

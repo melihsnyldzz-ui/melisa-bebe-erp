@@ -396,8 +396,25 @@ const stockPreviewUserValidationNoActionItems = [
   "Yeni veri okumaz.",
   "Veri yazmaz.",
   "SQL sorgusu çalıştırmaz.",
+  "Form/input/localStorage eklemez.",
   "Dosya/export üretmez.",
   "Kullanıcı notu kaydetmez.",
+];
+const stockPreviewUserValidationIssueActions = [
+  { issue: "Satır sayısı 20 değilse", action: "Test durdurulur, teknik kontrol yapılır." },
+  { issue: "Stok kodu anlamsız görünüyorsa", action: "Depo ve teknik ekip birlikte alan doğrulaması yapar." },
+  { issue: "Ürün adı okunamıyorsa", action: "Alan etiketi ve karakter görünümü kontrol edilir." },
+  { issue: "Barkod/etiket alanı net değilse", action: "Barkod senaryosu ayrı faza bırakılır." },
+  { issue: "Marka/kategori tahmini yapılamıyorsa", action: "Bu alanlar kesin eşleme yapılmadan kullanılmaz." },
+  { issue: "Fiyat mantıklı değilse", action: "Yönetici onayı olmadan fiyat yorumu yapılmaz." },
+  { issue: "KDV alanı belirsizse", action: "Muhasebe doğrulaması beklenir." },
+  { issue: "Boş/şüpheli alan varsa", action: "Canlıya geçiş kararı ertelenir." },
+];
+const stockPreviewUserValidationResultInterpretations = [
+  "Tüm kontroller temizse: Stok read-only ekranı kullanıcı doğrulamasına hazır kabul edilir.",
+  "Küçük etiket sorunu varsa: Alan etiketi düzeltme fazına alınır.",
+  "Fiyat/KDV/barkod sorunu varsa: Canlı kullanım ertelenir.",
+  "Stok dışı veri ihtiyacı çıkarsa: Bu sürümde açılmaz, ayrı faz planlanır.",
 ];
 const barcodeHandheldRoadmapPhases = [
   { phase: "Faz 1: Barkod senaryosu tanımı", status: "Hazırlıkta", dataMode: "Pasif iş akışı", risk: "Orta", nextStep: "Depo senaryosu netleşecek" },
@@ -1841,6 +1858,27 @@ function StockPreviewUserValidationFlowPanel() {
       <CommercePanel title="Bu Doğrulama Akışı Ne Yapmaz?" note="Bu kutu pasif doğrulama akışının güvenlik sınırlarını gösterir; form, kayıt veya işlem başlatmaz.">
         <div className="commerce-performance-grid">
           {stockPreviewUserValidationNoActionItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Kontrolde Sorun Görülürse Ne Yapılır?" note="Bu karar rehberi yalnızca yorumlama içindir; test, kayıt veya görev oluşturmaz.">
+        <div className="commerce-performance-grid">
+          {stockPreviewUserValidationIssueActions.map((item) => (
+            <article className="commerce-performance-card" key={item.issue}>
+              <h4>{item.issue}</h4>
+              <strong>{item.action}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Doğrulama Sonucu Nasıl Yorumlanır?" note="Sonuçlar canlı veri veya kullanıcı notu olarak kaydedilmez; yalnızca sonraki güvenli faz kararını yönlendirir.">
+        <div className="commerce-performance-grid">
+          {stockPreviewUserValidationResultInterpretations.map((item) => (
             <article className="commerce-performance-card" key={item}>
               <strong>{item}</strong>
             </article>

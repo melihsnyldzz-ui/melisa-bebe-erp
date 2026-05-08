@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.81.0";
+export const currentReleaseVersion = "v1.81.1";
 
-export const currentReleaseTitle = "Stok Önizleme Kullanıcı Doğrulama Akışı";
+export const currentReleaseTitle = "Stok Önizleme Kullanıcı Doğrulama Netleştirme";
 
 export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "dashboard-stock-preview-user-validation-flow"];
 
 export const releaseHighlightItems = [
-  "Dashboard'a Stok Önizleme Kullanıcı Doğrulama Akışı paneli eklenerek 20 satırlık stok read-only önizlemenin patron, depo, yönetici, muhasebe ve teknik ekip tarafından hangi sırayla kontrol edileceği pasif olarak görünür hale getirildi.",
-  "Panelde satır sayısı, stok kodu, ürün adı, barkod/etiket, marka/kategori, fiyat mantığı, KDV, boş alan ve son karar notu için kontrol amacı, sorumlu rol, risk seviyesi ve sonraki adım listelendi.",
-  "Bu sürüm test çalıştırmaz, bağlantı açmaz, yeni veri okumaz, veri yazmaz, SQL sorgusu çalıştırmaz, dosya/export üretmez ve kullanıcı notu kaydetmez.",
+  "Stok Önizleme Kullanıcı Doğrulama Akışı paneli, kontrolde sorun görülürse ne yapılacağını ve doğrulama sonucunun nasıl yorumlanacağını pasif karar rehberiyle netleştirecek şekilde genişletildi.",
+  "Satır sayısı, stok kodu, ürün adı, barkod/etiket, marka/kategori, fiyat, KDV ve şüpheli alan sorunlarında durdurma, doğrulama, erteleme ve ayrı faz kararları görünür hale getirildi.",
+  "Bu sürüm test çalıştırmaz, bağlantı açmaz, yeni veri okumaz, veri yazmaz, SQL sorgusu çalıştırmaz, form/input/localStorage eklemez, kullanıcı notu kaydetmez ve dosya/export üretmez.",
 ];
 
 export const releaseJumpLinks = [
