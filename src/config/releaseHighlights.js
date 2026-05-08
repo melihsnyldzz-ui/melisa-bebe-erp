@@ -1,13 +1,13 @@
-export const currentReleaseVersion = "v1.82.0";
+export const currentReleaseVersion = "v1.82.1";
 
-export const currentReleaseTitle = "Stok Önizleme Kullanıcı Test Oturumu Paneli";
+export const currentReleaseTitle = "Stok Kullanıcı Test Oturumu Karar Netleştirme";
 
 export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "dashboard-stock-preview-user-test-session"];
 
 export const releaseHighlightItems = [
-  "Dashboard'a Stok Önizleme Kullanıcı Test Oturumu Paneli eklenerek depo, yönetici ve teknik ekibin 20 satırlık read-only stok önizlemeyi nasıl birlikte değerlendireceği pasif olarak görünür hale getirildi.",
-  "Panelde manuel kullanıcı testi, katılımcılar, 10-15 dakikalık süre, 20 satır stok kapsamı, read-only mod, sözlü/manuel not ve sistem kaydı olmadığı netleştirildi.",
-  "Bu sürüm test başlatmaz, bağlantı açmaz, veri okumaz/yazmaz, form/input/localStorage eklemez, kullanıcı notu kaydetmez ve dosya/export üretmez.",
+  "Stok Önizleme Kullanıcı Test Oturumu Paneli, oturum sonunda verilecek manuel kararları Geçti, Küçük düzeltme, Ertelendi ve Durduruldu sınıflarıyla pasif olarak netleştirecek şekilde genişletildi.",
+  "Karar kartlarında kararın anlamı, kim tarafından verileceği, sonraki adım ve risk seviyesi görünür hale getirildi; canlıya geçiş kararının bu oturumda verilmediği tekrar vurgulandı.",
+  "Bu sürüm karar kaydetmez, onay almaz, test çalıştırmaz, bağlantı açmaz, veri okumaz/yazmaz, form/input/localStorage eklemez ve dosya/export üretmez.",
 ];
 
 export const releaseJumpLinks = [

@@ -444,13 +444,50 @@ const stockPreviewUserTestSessionExpectedDecisions = [
   "Depo personeli bu ekranı kullanabilir mi?",
 ];
 const stockPreviewUserTestSessionNoActionItems = [
+  "Karar kaydetmez.",
+  "Onay almaz.",
   "Test çalıştırmaz.",
   "Bağlantı açmaz.",
-  "Veri okumaz.",
-  "Veri yazmaz.",
+  "Veri okumaz/yazmaz.",
   "Form/input/localStorage eklemez.",
-  "Kullanıcı notu kaydetmez.",
   "Dosya/export üretmez.",
+];
+const stockPreviewUserTestSessionDecisionClasses = [
+  {
+    title: "Geçti",
+    meaning: "Stok ekranı anlaşılır ve 20 satır kontrol için yeterli.",
+    owner: "Depo + Yönetici + Teknik Admin",
+    nextStep: "Stok ekranı kullanıcı doğrulaması hazır kabul edilir.",
+    risk: "Düşük",
+  },
+  {
+    title: "Küçük düzeltme",
+    meaning: "Etiket veya alan adı netleştirilecek.",
+    owner: "Yönetici + Teknik Admin",
+    nextStep: "Alan etiketi düzeltme fazına alınır.",
+    risk: "Orta",
+  },
+  {
+    title: "Ertelendi",
+    meaning: "Fiyat/KDV/barkod yorumu net değil.",
+    owner: "Yönetici + Muhasebe + Depo",
+    nextStep: "Fiyat, KDV veya barkod ayrı fazda netleştirilir.",
+    risk: "Yüksek",
+  },
+  {
+    title: "Durduruldu",
+    meaning: "Stok dışı veri ihtiyacı veya güvenlik şüphesi var.",
+    owner: "Patron + Teknik Admin",
+    nextStep: "Canlı kullanım ve kapsam genişletme durdurulur.",
+    risk: "Çok yüksek",
+  },
+];
+const stockPreviewUserTestSessionDecisionNotes = [
+  "Canlıya geçiş kararı bu oturumda verilmez.",
+  "Sadece stok ekranı anlaşılabilirliği değerlendirilir.",
+  "Fiyat/KDV/barkod sorunları ayrı faza alınır.",
+  "Cari/sipariş/finans talepleri bu oturumda açılmaz.",
+  "sa kullanımı nedeniyle teknik güvenlik notu korunur.",
 ];
 const barcodeHandheldRoadmapPhases = [
   { phase: "Faz 1: Barkod senaryosu tanımı", status: "Hazırlıkta", dataMode: "Pasif iş akışı", risk: "Orta", nextStep: "Depo senaryosu netleşecek" },
@@ -1968,7 +2005,31 @@ function StockPreviewUserTestSessionPanel() {
         </div>
       </CommercePanel>
 
-      <CommercePanel title="Bu Panel Ne Yapmaz?" note="Bu kutu oturum panelinin pasif sınırlarını gösterir; form, kayıt veya işlem başlatmaz.">
+      <CommercePanel title="Oturum Sonu Karar Sınıfları" note="Bu sınıflar manuel değerlendirme dilini netleştirir; karar veya onay kaydetmez.">
+        <div className="profitability-priority-grid">
+          {stockPreviewUserTestSessionDecisionClasses.map((item) => (
+            <article className="profitability-priority-card" key={item.title}>
+              <span>{item.title}</span>
+              <strong>Anlamı: {item.meaning}</strong>
+              <p>Kim karar verir: {item.owner}</p>
+              <p>Risk seviyesi: {item.risk}</p>
+              <small>Sonraki adım: {item.nextStep}</small>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Karar Verilirken Dikkat Edilecekler" note="Bu uyarılar kapsam büyümesini ve erken canlı kararını engellemek için görünür tutulur.">
+        <div className="commerce-performance-grid">
+          {stockPreviewUserTestSessionDecisionNotes.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Bu Netleştirme Ne Yapmaz?" note="Bu kutu karar netleştirmenin pasif sınırlarını gösterir; form, kayıt veya işlem başlatmaz.">
         <div className="commerce-performance-grid">
           {stockPreviewUserTestSessionNoActionItems.map((item) => (
             <article className="commerce-performance-card" key={item}>

@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.82.1",
+    title: "Stok Kullanıcı Test Oturumu Karar Netleştirme",
+    area: "Dashboard / Sistem Durumu",
+    description: "Stok önizleme kullanıcı test oturumu paneli, oturum sonunda verilecek manuel kararları Geçti, Küçük düzeltme, Ertelendi ve Durduruldu sınıflarıyla pasif olarak netleştirecek şekilde genişletildi; karar kaydı, onay alma, test çalıştırma, bağlantı açma, veri okuma/yazma, form/input/localStorage, import/senkron/export veya hassas bilgi eklenmedi.",
+  },
+  {
     version: "v1.82.0",
     title: "Stok Önizleme Kullanıcı Test Oturumu Paneli",
     area: "Dashboard / Sistem Durumu",

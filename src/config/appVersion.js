@@ -1,2 +1,2 @@
-export const APP_VERSION = "v1.82.0";
-export const APP_STAGE = "Stok Önizleme Kullanıcı Test Oturumu Paneli";
+export const APP_VERSION = "v1.82.1";
+export const APP_STAGE = "Stok Kullanıcı Test Oturumu Karar Netleştirme";
