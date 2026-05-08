@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.81.0",
+    title: "Stok Önizleme Kullanıcı Doğrulama Akışı",
+    area: "Dashboard / Sistem Durumu",
+    description: "Başarılı kabul edilen 20 satırlık stok read-only smoke testten sonra kullanıcı doğrulama sırası pasif panel olarak eklendi; satır sayısı, stok kodu, ürün adı, barkod/etiket, marka/kategori, fiyat mantığı, KDV, boş alan ve son karar notu için rol, risk ve sonraki adımlar görünür hale getirildi; bağlantı denemesi, test çalıştırma, yeni veri okuma, veri yazma, import/senkron/export, form girişi, localStorage veya hassas bilgi eklenmedi.",
+  },
+  {
     version: "v1.80.4",
     title: "Stok Smoke Test Sonuç Özeti Paneli",
     area: "Dashboard / Sistem Durumu",

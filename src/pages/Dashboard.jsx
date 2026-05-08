@@ -325,6 +325,80 @@ const stockSmokeTestNoActionItems = [
   "SQL sorgusu çalıştırmaz.",
   "Dosya/export üretmez.",
 ];
+const stockPreviewUserValidationSteps = [
+  {
+    step: "1. Satır sayısı kontrolü",
+    purpose: "20 satır limiti korundu mu",
+    role: "Teknik Admin",
+    risk: "Orta",
+    nextStep: "Test raporuna işlenecek",
+  },
+  {
+    step: "2. Stok kodu kontrolü",
+    purpose: "Ürünle uyumlu mu",
+    role: "Depo",
+    risk: "Orta",
+    nextStep: "Kullanıcı doğrulaması",
+  },
+  {
+    step: "3. Ürün adı okunabilirlik kontrolü",
+    purpose: "Okunabilir mi",
+    role: "Depo + Yönetici",
+    risk: "Orta",
+    nextStep: "Alan etiketi doğrulama",
+  },
+  {
+    step: "4. Barkod/etiket kontrolü",
+    purpose: "Barkod alanı net mi",
+    role: "Depo",
+    risk: "Yüksek",
+    nextStep: "Barkod senaryosu",
+  },
+  {
+    step: "5. Marka/kategori tahmini kontrolü",
+    purpose: "Ürün grubu anlaşılabilir mi",
+    role: "Depo + Yönetici",
+    risk: "Orta",
+    nextStep: "Kategori etiketi kararı",
+  },
+  {
+    step: "6. Alış/satış fiyat mantık kontrolü",
+    purpose: "Alış/satış mantıklı mı",
+    role: "Yönetici",
+    risk: "Yüksek",
+    nextStep: "Fiyat kontrol kuralı",
+  },
+  {
+    step: "7. KDV alanı kontrolü",
+    purpose: "Alan doğru yorumlanıyor mu",
+    role: "Muhasebe",
+    risk: "Orta",
+    nextStep: "KDV doğrulama",
+  },
+  {
+    step: "8. Şüpheli/boş alan kontrolü",
+    purpose: "Boş veya şüpheli alan var mı",
+    role: "Depo + Teknik Admin",
+    risk: "Yüksek",
+    nextStep: "Alan eşleştirme notu",
+  },
+  {
+    step: "9. Son karar notu",
+    purpose: "Stok önizleme kullanıcıya anlaşılır mı",
+    role: "Patron + Yönetici",
+    risk: "Orta",
+    nextStep: "Sonraki güvenli faz kararı",
+  },
+];
+const stockPreviewUserValidationNoActionItems = [
+  "Test çalıştırmaz.",
+  "Bağlantı açmaz.",
+  "Yeni veri okumaz.",
+  "Veri yazmaz.",
+  "SQL sorgusu çalıştırmaz.",
+  "Dosya/export üretmez.",
+  "Kullanıcı notu kaydetmez.",
+];
 const barcodeHandheldRoadmapPhases = [
   { phase: "Faz 1: Barkod senaryosu tanımı", status: "Hazırlıkta", dataMode: "Pasif iş akışı", risk: "Orta", nextStep: "Depo senaryosu netleşecek" },
   { phase: "Faz 2: Barkodsuz ürün listesi hazırlığı", status: "Planlandı", dataMode: "Pasif liste taslağı", risk: "Orta", nextStep: "Barkodsuz ürün etiketi tanımı" },
@@ -1336,6 +1410,8 @@ export default function Dashboard() {
 
       <StockManagementRoadmapPanel />
 
+      <StockPreviewUserValidationFlowPanel />
+
       <CompanyReadonlyPretestPanel />
 
       <SaControlledStockReadonlyModePanel />
@@ -1728,6 +1804,43 @@ function StockManagementRoadmapPanel() {
       <CommercePanel title="Bu Sürümde Olmayanlar" note="Bu kutu stok yol haritasının pasif sınırını gösterir; sorgu, veri, import, senkron veya export işlemi başlatmaz.">
         <div className="commerce-performance-grid">
           {stockManagementRoadmapNoActionItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+    </section>
+  );
+}
+
+function StockPreviewUserValidationFlowPanel() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-stock-preview-user-validation-flow")}`} id="dashboard-stock-preview-user-validation-flow">
+      <DashboardNewReleaseBadge sectionId="dashboard-stock-preview-user-validation-flow" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Pasif kullanıcı doğrulama sırası</p>
+          <h2>Stok Önizleme Kullanıcı Doğrulama Akışı</h2>
+          <span>20 satırlık stok read-only önizlemenin kullanıcı tarafından hangi sırayla kontrol edileceğini gösterir; yeni veri okumaz, bağlantı açmaz ve kullanıcı notu kaydetmez.</span>
+        </div>
+      </div>
+
+      <div className="profitability-priority-grid">
+        {stockPreviewUserValidationSteps.map((item) => (
+          <article className="profitability-priority-card" key={item.step}>
+            <span>{item.step}</span>
+            <strong>Kontrol amacı: {item.purpose}</strong>
+            <p>Sorumlu rol: {item.role}</p>
+            <p>Risk seviyesi: {item.risk}</p>
+            <small>Sonraki adım: {item.nextStep}</small>
+          </article>
+        ))}
+      </div>
+
+      <CommercePanel title="Bu Doğrulama Akışı Ne Yapmaz?" note="Bu kutu pasif doğrulama akışının güvenlik sınırlarını gösterir; form, kayıt veya işlem başlatmaz.">
+        <div className="commerce-performance-grid">
+          {stockPreviewUserValidationNoActionItems.map((item) => (
             <article className="commerce-performance-card" key={item}>
               <strong>{item}</strong>
             </article>
