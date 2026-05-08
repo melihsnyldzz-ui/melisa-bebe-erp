@@ -220,6 +220,7 @@ const readonlySqlUserTransitionCards = [
   { label: "Kullanılan kullanıcı", value: "sa / geçici" },
   { label: "Risk seviyesi", value: "Orta-yüksek" },
   { label: "Hedef kullanıcı", value: "Read-only SQL kullanıcısı" },
+  { label: "Plan durumu", value: "Ertelendi / sonraki güvenlik iyileştirmesi" },
   { label: "Hedef yetki", value: "Sadece SELECT" },
   { label: "İlk kapsam", value: "Sadece stok" },
   { label: "İlk limit", value: "20 satır" },
@@ -248,6 +249,45 @@ const readonlySqlUserTransitionSafetyNotes = [
   "Bağlantı denemesi yapmaz.",
   "Veri okumaz/yazmaz.",
   "Sadece geçiş planıdır.",
+];
+const saControlledStockReadonlyCards = [
+  { label: "SQL kullanıcısı", value: "sa" },
+  { label: "Kullanım tipi", value: "Geçici test" },
+  { label: "Risk seviyesi", value: "Orta-yüksek" },
+  { label: "Test kapsamı", value: "Sadece stok" },
+  { label: "Satır limiti", value: "20" },
+  { label: "Veri yazma", value: "Kesin kapalı" },
+  { label: "Import/Senkron/Export", value: "Kesin kapalı" },
+  { label: "Stok dışı modüller", value: "Kapalı" },
+];
+const saControlledStockReadonlyRules = [
+  "Manuel yedek alınmış olmalı.",
+  "Uygulama açılışta otomatik bağlanmamalı.",
+  "Test sadece manuel buton veya terminal ile yapılmalı.",
+  "Sadece stok okunmalı.",
+  "Maksimum 20 satır okunmalı.",
+  "Test tekrarı gereksiz yapılmamalı.",
+  "Hata halinde otomatik tekrar denenmemeli.",
+  "Hassas bağlantı bilgisi loglanmamalı.",
+];
+const saControlledStockReadonlyForbiddenItems = [
+  "INSERT yok.",
+  "UPDATE yok.",
+  "DELETE yok.",
+  "ALTER/DROP yok.",
+  "Import yok.",
+  "Senkron yok.",
+  "Export yok.",
+  "Cari okunmaz.",
+  "Sipariş okunmaz.",
+  "Kasa/finans okunmaz.",
+  "Connection string repoya yazılmaz.",
+];
+const saControlledStockReadonlySafetyNotes = [
+  "Bu sürüm bağlantı denemesi yapmaz.",
+  "Veri okumaz/yazmaz.",
+  "SQL sorgusu çalıştırmaz.",
+  "Sadece sa kullanım riskini ve sınırlarını görünür yapar.",
 ];
 const barcodeHandheldRoadmapPhases = [
   { phase: "Faz 1: Barkod senaryosu tanımı", status: "Hazırlıkta", dataMode: "Pasif iş akışı", risk: "Orta", nextStep: "Depo senaryosu netleşecek" },
@@ -1262,6 +1302,8 @@ export default function Dashboard() {
 
       <CompanyReadonlyPretestPanel />
 
+      <SaControlledStockReadonlyModePanel />
+
       <ReadonlySqlUserTransitionPlan />
 
       <BarcodeHandheldRoadmapPanel />
@@ -1700,6 +1742,52 @@ function CompanyReadonlyPretestPanel() {
       </CommercePanel>
 
       <p className="commerce-profitability-safety-note">{companyReadonlySafetyNotes.join(" · ")}</p>
+    </section>
+  );
+}
+
+function SaControlledStockReadonlyModePanel() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-sa-controlled-stock-readonly-mode")}`} id="dashboard-sa-controlled-stock-readonly-mode">
+      <DashboardNewReleaseBadge sectionId="dashboard-sa-controlled-stock-readonly-mode" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Geçici sa kontrollü test modu</p>
+          <h2>sa ile Kontrollü Stok Read-only Test Modu</h2>
+          <span>Read-only SQL kullanıcısı ertelenirken şirket ortamındaki geçici sa kararının riskini ve sınırlarını pasif olarak gösterir; bağlantı denemesi, SQL sorgusu veya veri işlemi başlatmaz.</span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {saControlledStockReadonlyCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+
+      <CommercePanel title="sa ile Devam Edilecekse Zorunlu Güvenlik Kuralları" note="Bu liste manuel kontrol içindir; test, bağlantı, sorgu veya kayıt başlatmaz.">
+        <div className="commerce-performance-grid">
+          {saControlledStockReadonlyRules.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Kesin Yasaklar" note="Bu sınırlar stok read-only test modunun dışına çıkılmasını engellemek için görünür tutulur.">
+        <div className="commerce-performance-grid">
+          {saControlledStockReadonlyForbiddenItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <p className="commerce-profitability-safety-note">{saControlledStockReadonlySafetyNotes.join(" · ")}</p>
     </section>
   );
 }

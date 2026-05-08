@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.80.3",
+    title: "sa ile Kontrollü Stok Read-only Test Modu",
+    area: "Dashboard / Sistem Durumu",
+    description: "Read-only SQL kullanıcısı ertelenirken şirket ortamında geçici sa kullanım kararını, orta-yüksek risk seviyesini, sadece stok ve 20 satır sınırını, veri yazma/import/senkron/export ile cari/sipariş/kasa-finans kapsamının kapalı olduğunu pasif panel olarak görünür hale getirdi; bağlantı denemesi, SQL sorgusu, veri okuma/yazma veya hassas bağlantı bilgisi eklenmedi.",
+  },
+  {
     version: "v1.80.2",
     title: "Read-only SQL Kullanıcısına Geçiş Planı",
     area: "Dashboard / Sistem Durumu",
