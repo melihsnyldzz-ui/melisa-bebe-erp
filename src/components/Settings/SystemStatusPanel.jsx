@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.80.2",
+    title: "Read-only SQL Kullanıcısına Geçiş Planı",
+    area: "Dashboard / Sistem Durumu",
+    description: "Şirket ortamındaki tek seferlik sa smoke testinden sonra read-only SQL kullanıcısına geçiş için pasif plan paneli eklendi; hedef sadece SELECT yetkisi, sadece stok kapsamı, 20 satır limiti ve tekrar sa testi yapılmayacağı görünür hale getirildi; kullanıcı oluşturma, bağlantı denemesi, SQL sorgusu, veri okuma/yazma, import/senkron/export veya hassas bağlantı bilgisi eklenmedi.",
+  },
+  {
     version: "v1.80.0",
     title: "Vega Stok Read-only Şirket Ortamı Ön Test",
     area: "Dashboard / Sistem Durumu",

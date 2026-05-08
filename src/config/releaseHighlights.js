@@ -1,17 +1,18 @@
-export const currentReleaseVersion = "v1.80.0";
+export const currentReleaseVersion = "v1.80.2";
 
-export const currentReleaseTitle = "Vega Stok Read-only Şirket Ortamı Ön Test";
+export const currentReleaseTitle = "Read-only SQL Kullanıcısına Geçiş Planı";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "dashboard-company-readonly-pretest"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "dashboard-readonly-sql-user-transition-plan"];
 
 export const releaseHighlightItems = [
-  "Dashboard'a Vega Stok Read-only Şirket Ortamı Ön Test paneli eklenerek gerçek şirket ortamı smoke testinden önceki durum, kapsam ve güvenlik şartları pasif olarak görünür hale getirildi.",
-  "Ön test panelinde şirket bilgisayarı, GitHub ile güncel local main, başarılı build, stash durumu, sadece stok kapsamı, 20 satır limiti, veri yazma kilidi ve henüz denenmemiş bağlantı durumu listelendi.",
-  "Bu sürüm bağlantı denemesi yapmaz, veri okumaz/yazmaz, SQL sorgusu çalıştırmaz, import/senkron/export başlatmaz ve yalnızca şirket ortamı ön test hazırlığı sağlar.",
+  "Dashboard'a Read-only SQL Kullanıcısına Geçiş Planı paneli eklenerek tek seferlik sa smoke testinden sonra güvenli kullanıcıya geçiş adımları pasif olarak görünür hale getirildi.",
+  "Panelde son smoke test özeti, sa kullanım riski, hedef read-only kullanıcı, sadece SELECT yetkisi, stok kapsamı, 20 satır limiti ve tekrar sa testi yapılmayacağı netleştirildi.",
+  "Bu sürüm SQL kullanıcısı oluşturmaz, bağlantı denemesi yapmaz, SQL sorgusu çalıştırmaz, veri okumaz/yazmaz ve yalnızca güvenli geçiş planı sağlar.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
+  { id: "dashboard-readonly-sql-user-transition-plan", label: "Read-only SQL Kullanıcısı Geçiş Planı'na git" },
   { id: "dashboard-company-readonly-pretest", label: "Şirket Ortamı Ön Test'e git" },
   { id: "dashboard-vega-stock-readonly-precheck", label: "Vega Stok Read-only Ön Kontrol'e git" },
   { id: "dashboard-stock-management-roadmap", label: "Stok Yönetimi Geliştirme Yol Haritası'na git" },
@@ -45,6 +46,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-erp-module-priority-order", label: "ERP Modül Öncelik Sıralaması'na git" },
       { id: "dashboard-stock-management-roadmap", label: "Stok Yönetimi Geliştirme Yol Haritası'na git" },
       { id: "dashboard-company-readonly-pretest", label: "Şirket Ortamı Ön Test'e git" },
+      { id: "dashboard-readonly-sql-user-transition-plan", label: "Read-only SQL Kullanıcısı Geçiş Planı'na git" },
       { id: "dashboard-barcode-handheld-roadmap", label: "Barkod / El Terminali Geliştirme Yol Haritası'na git" },
       { id: "dashboard-risk-warning-center", label: "Risk ve Uyarı Merkezi'ne git" },
       { id: "dashboard-data-field-dictionary", label: "Veri Alan Sözlüğü'ne git" },
@@ -96,7 +98,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-company-readonly-pretest", "dashboard-vega-stock-readonly-precheck", "dashboard-stock-management-roadmap"],
+    updatedSectionIds: ["dashboard-readonly-sql-user-transition-plan", "dashboard-company-readonly-pretest", "dashboard-stock-management-roadmap"],
   },
   reports: {
     releaseHighlightItems,

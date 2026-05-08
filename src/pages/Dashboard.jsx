@@ -215,6 +215,40 @@ const companyReadonlySafetyNotes = [
   "Import/senkron/export yapmaz.",
   "Sadece şirket ortamı ön test hazırlığıdır.",
 ];
+const readonlySqlUserTransitionCards = [
+  { label: "Son smoke test", value: "Başarılı" },
+  { label: "Kullanılan kullanıcı", value: "sa / geçici" },
+  { label: "Risk seviyesi", value: "Orta-yüksek" },
+  { label: "Hedef kullanıcı", value: "Read-only SQL kullanıcısı" },
+  { label: "Hedef yetki", value: "Sadece SELECT" },
+  { label: "İlk kapsam", value: "Sadece stok" },
+  { label: "İlk limit", value: "20 satır" },
+  { label: "Tekrar sa testi", value: "Yapılmayacak" },
+];
+const readonlySqlUserTransitionSteps = [
+  "SQL Server üzerinde ayrı read-only kullanıcı oluşturulacak.",
+  "Kullanıcıya sadece stok okuma için SELECT yetkisi verilecek.",
+  ".env.local yeni read-only kullanıcıyla güncellenecek.",
+  "Uygulama açılışında otomatik bağlantı olmadığı tekrar doğrulanacak.",
+  "Aynı 20 satır stok smoke test read-only kullanıcıyla tekrar yapılacak.",
+  "Test sonrası sa kullanımı kapatılacak veya sadece admin/yedek durumuna bırakılacak.",
+];
+const readonlySqlUserTransitionForbiddenItems = [
+  "sa ile tekrar smoke test yapılmaz.",
+  "Veri yazma yapılmaz.",
+  "Import yapılmaz.",
+  "Senkron yapılmaz.",
+  "Export yapılmaz.",
+  "Cari/sipariş/kasa-finans okunmaz.",
+  "Connection bilgisi repoya yazılmaz.",
+];
+const readonlySqlUserTransitionSafetyNotes = [
+  "Bu sürüm kullanıcı oluşturmaz.",
+  "SQL sorgusu çalıştırmaz.",
+  "Bağlantı denemesi yapmaz.",
+  "Veri okumaz/yazmaz.",
+  "Sadece geçiş planıdır.",
+];
 const barcodeHandheldRoadmapPhases = [
   { phase: "Faz 1: Barkod senaryosu tanımı", status: "Hazırlıkta", dataMode: "Pasif iş akışı", risk: "Orta", nextStep: "Depo senaryosu netleşecek" },
   { phase: "Faz 2: Barkodsuz ürün listesi hazırlığı", status: "Planlandı", dataMode: "Pasif liste taslağı", risk: "Orta", nextStep: "Barkodsuz ürün etiketi tanımı" },
@@ -1228,6 +1262,8 @@ export default function Dashboard() {
 
       <CompanyReadonlyPretestPanel />
 
+      <ReadonlySqlUserTransitionPlan />
+
       <BarcodeHandheldRoadmapPanel />
 
       <RiskWarningCenter />
@@ -1664,6 +1700,52 @@ function CompanyReadonlyPretestPanel() {
       </CommercePanel>
 
       <p className="commerce-profitability-safety-note">{companyReadonlySafetyNotes.join(" · ")}</p>
+    </section>
+  );
+}
+
+function ReadonlySqlUserTransitionPlan() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-readonly-sql-user-transition-plan")}`} id="dashboard-readonly-sql-user-transition-plan">
+      <DashboardNewReleaseBadge sectionId="dashboard-readonly-sql-user-transition-plan" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Güvenli kullanıcıya geçiş planı</p>
+          <h2>Read-only SQL Kullanıcısına Geçiş Planı</h2>
+          <span>Tek seferlik sa smoke testinden sonra aynı stok kapsamını read-only SQL kullanıcısıyla sürdürülebilir hale getirmek için pasif geçiş adımlarını gösterir; bağlantı denemesi veya SQL işlemi başlatmaz.</span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {readonlySqlUserTransitionCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+
+      <CommercePanel title="Geçiş Adımları" note="Bu liste yalnızca teknik hazırlık planıdır; kullanıcı oluşturmaz, .env.local değiştirmez ve bağlantı açmaz.">
+        <div className="commerce-performance-grid">
+          {readonlySqlUserTransitionSteps.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Kesin Yasaklar" note="Bu panel sa tekrarını ve kapsam genişlemesini kapalı tutan güvenlik sınırını gösterir.">
+        <div className="commerce-performance-grid">
+          {readonlySqlUserTransitionForbiddenItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <p className="commerce-profitability-safety-note">{readonlySqlUserTransitionSafetyNotes.join(" · ")}</p>
     </section>
   );
 }
