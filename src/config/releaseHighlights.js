@@ -1,17 +1,18 @@
-export const currentReleaseVersion = "v2.1.0";
+export const currentReleaseVersion = "v2.2.0";
 
-export const currentReleaseTitle = "Read-only Stok Pilot Öncesi Manuel Test Protokolü";
+export const currentReleaseTitle = "Stok Read-only Pilot Ekranı Görsel Sadeleştirme ve Kullanıcı Odaklama";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "vega-stock-v21-manual-test-protocol"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "vega-stock-pilot-usage-center"];
 
 export const releaseHighlightItems = [
-  "Stok/read-only ekranına read-only kullanıcı hazırlandıktan sonra izlenecek v2.1 Manuel Test Protokolü eklendi.",
-  "Test öncesi hazırlık, manuel test sırası, stop/dur kuralları, test sonrası rapor başlıkları ve kesin yapılmayacaklar pasif rehber olarak netleştirildi.",
-  "Bu sürüm gerçek test yapmaz; SQL/Vega bağlantısı, sorgu, metadata otomasyonu, Top 100 aktivasyonu, veri yazma/import/senkron/export veya localStorage eklemez.",
+  "Stok/read-only ekranında Pilot Kullanım Merkezi eklendi; kullanım, güvenlik ve test odağı ilk bakışta üç kısa kartla gösterildi.",
+  "v1.90 stok kullanım paketi, v2.0 güvenlik kapısı ve v2.1 manuel test protokolü silinmeden ikincil kapalı detay görünümüne alındı.",
+  "Bu sürüm gerçek test yapmaz; SQL/Vega bağlantısı, sorgu, metadata otomasyonu, Top 100 aktivasyonu, veri yazma/import/senkron/export, form/kayıt veya localStorage eklemez.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
+  { id: "vega-stock-pilot-usage-center", label: "Pilot Kullanım Merkezi'ne git" },
   { id: "vega-stock-v21-manual-test-protocol", label: "v2.1 Manuel Test Protokolü'ne git" },
   { id: "vega-stock-v2-security-gate", label: "v2.0 Pilot Güvenlik Kapısı'na git" },
   { id: "vega-stock-closed-pilot-package", label: "Stok Kapalı Pilot Kullanım Paketi'ne git" },
@@ -145,6 +146,7 @@ export const releaseHighlightsByPage = {
   vegaStockTrial: {
     releaseHighlightItems,
     releaseJumpLinks: [
+      { id: "vega-stock-pilot-usage-center", label: "Pilot Kullanım Merkezi'ne git" },
       { id: "vega-stock-v21-manual-test-protocol", label: "v2.1 Manuel Test Protokolü'ne git" },
       { id: "vega-stock-v2-security-gate", label: "v2.0 Pilot Güvenlik Kapısı'na git" },
       { id: "vega-stock-closed-pilot-package", label: "Stok Kapalı Pilot Kullanım Paketi'ne git" },
@@ -153,7 +155,7 @@ export const releaseHighlightsByPage = {
       { id: "vega-top-100-stock-out-preview", label: "Top 100 Stok Çıkışı alanına git" },
       { id: "vega-stock-user-validation-panel", label: "Kullanıcı Doğrulama Paneli'ne git" },
     ],
-    updatedSectionIds: ["vega-stock-v21-manual-test-protocol", "vega-stock-v2-security-gate"],
+    updatedSectionIds: ["vega-stock-pilot-usage-center", "vega-stock-v21-manual-test-protocol"],
   },
   vegaImportPreview: {
     releaseHighlightItems,

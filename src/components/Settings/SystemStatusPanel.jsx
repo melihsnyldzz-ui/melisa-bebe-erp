@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v2.2.0",
+    title: "Stok Read-only Pilot Ekranı Görsel Sadeleştirme ve Kullanıcı Odaklama",
+    area: "Vega Stok Deneme / Sistem Durumu",
+    description: "Stok/read-only ekranında Pilot Kullanım Merkezi eklendi; kullanım, güvenlik ve test odağı üç kısa kartla ilk bakışta görünür hale getirildi, Pilot Kullanım Akışı eklendi ve v1.90 stok kullanım paketi, v2.0 güvenlik kapısı ile v2.1 manuel test protokolü silinmeden HTML details/summary altında ikincil kapalı detaya taşındı; mevcut manuel stok butonu, 20 satır sınırı, Top 100 kilidi ve metadata manuel sınırı korunurken SQL/Vega bağlantısı, SQL sorgusu, yeni veri okuma, veri yazma/import/export/sync, form/kayıt, localStorage, credential veya hassas bilgi eklenmedi.",
+  },
+  {
     version: "v2.1.0",
     title: "Read-only Stok Pilot Öncesi Manuel Test Protokolü",
     area: "Vega Stok Deneme / Sistem Durumu",

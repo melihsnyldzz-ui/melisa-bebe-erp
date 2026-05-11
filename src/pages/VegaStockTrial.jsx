@@ -251,6 +251,20 @@ const v21NeverDoItems = [
   ".env.local paylaşma",
 ];
 
+const pilotUsageFocusCards = [
+  { title: "1. Kullanım", value: "Manuel stok önizleme", note: "Kullanıcı yalnızca manuel read-only butona odaklanır." },
+  { title: "2. Güvenlik", value: "Read-only kullanıcı şartı", note: "Gerçek pilot için sa değil, read-only kullanıcı beklenir." },
+  { title: "3. Test", value: "Dur / kontrol et / raporla", note: "20 satırı kontrol et, hata varsa dur, eksikleri sistem dışı not al." },
+];
+
+const pilotUsageFlow = [
+  "Güvenlik şartlarını kontrol et.",
+  "Manuel stok önizleme butonuna bas.",
+  "20 satırlık örneği kontrol et.",
+  "Hata varsa dur.",
+  "Eksikleri sistem dışı not al.",
+];
+
 const topStockOutStatusCards = [
   { label: "Veri kaynağı", value: "Vega SQL read-only" },
   { label: "Kapsam", value: "Sadece stok çıkış hareketleri" },
@@ -1253,6 +1267,44 @@ export default function VegaStockTrial() {
           />
         </label>
 
+        <div className="vega-security-checklist-panel section-updated-highlight" id="vega-stock-pilot-usage-center">
+          <span className="new-release-badge">YENİ · {currentReleaseVersion}</span>
+          <div>
+            <h2>Pilot Kullanım Merkezi</h2>
+            <p>Stok pilot ekranında ilk bakışta yalnızca kullanım, güvenlik ve test odağı görünür; ayrıntılı rehberler aşağıda kapalı detay olarak durur.</p>
+          </div>
+          <div className="vega-connection-grid" aria-label="Pilot kullanım merkezi kısa kartları">
+            {pilotUsageFocusCards.map((card) => (
+              <div className="vega-connection-card" key={card.title}>
+                <span>{card.title}</span>
+                <strong>{card.value}</strong>
+                <small>{card.note}</small>
+              </div>
+            ))}
+          </div>
+          <div className="vega-security-checklist-grid" aria-label="Pilot kullanım akışı">
+            <div className="vega-security-checklist-item">
+              <span aria-hidden="true">→</span>
+              <strong>Pilot Kullanım Akışı</strong>
+            </div>
+            {pilotUsageFlow.map((item) => (
+              <div className="vega-security-checklist-item" key={item}>
+                <span aria-hidden="true">•</span>
+                <strong>{item}</strong>
+              </div>
+            ))}
+          </div>
+          <div className="vega-stock-safety-box">
+            <ShieldCheck size={18} />
+            <div>
+              <strong>Manuel Buton Notu</strong>
+              <span>Bu buton sadece manuel ve sınırlı read-only stok önizleme içindir.</span>
+            </div>
+          </div>
+        </div>
+
+        <details className="vega-pilot-detail-panel">
+          <summary>v1.90 Kapalı Pilot Stok Kullanım Paketi detayları</summary>
         <div className="vega-security-checklist-panel section-updated-highlight" id="vega-stock-closed-pilot-package">
           <span className="new-release-badge">YENİ · {currentReleaseVersion}</span>
           <div>
@@ -1321,7 +1373,10 @@ export default function VegaStockTrial() {
             ))}
           </div>
         </div>
+        </details>
 
+        <details className="vega-pilot-detail-panel">
+          <summary>v2.0 Pilot Güvenlik Kapısı detayları</summary>
         <div className="vega-security-checklist-panel section-updated-highlight" id="vega-stock-v2-security-gate">
           <span className="new-release-badge">YENİ · {currentReleaseVersion}</span>
           <div>
@@ -1394,7 +1449,10 @@ export default function VegaStockTrial() {
             ))}
           </div>
         </div>
+        </details>
 
+        <details className="vega-pilot-detail-panel">
+          <summary>v2.1 Manuel Test Protokolü detayları</summary>
         <div className="vega-security-checklist-panel section-updated-highlight" id="vega-stock-v21-manual-test-protocol">
           <span className="new-release-badge">YENİ · {currentReleaseVersion}</span>
           <div>
@@ -1467,6 +1525,7 @@ export default function VegaStockTrial() {
             ))}
           </div>
         </div>
+        </details>
 
         <div className="vega-security-checklist-panel section-updated-highlight" id="vega-stock-user-validation-panel">
           <span className="new-release-badge">YENİ · {currentReleaseVersion}</span>

@@ -4729,6 +4729,24 @@ button {
   background: #f0fdf4;
 }
 
+.vega-pilot-detail-panel {
+  border: 1px solid rgba(22, 101, 52, 0.16);
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+.vega-pilot-detail-panel summary {
+  cursor: pointer;
+  padding: 10px;
+  color: #166534;
+  font-size: 0.86rem;
+  font-weight: 900;
+}
+
+.vega-pilot-detail-panel[open] summary {
+  border-bottom: 1px solid rgba(22, 101, 52, 0.14);
+}
+
 .vega-driver-guide-panel h2,
 .vega-driver-guide-panel p,
 .vega-db-guide-panel h2,
