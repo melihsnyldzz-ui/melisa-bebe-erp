@@ -1,17 +1,18 @@
-export const currentReleaseVersion = "v1.88.0";
+export const currentReleaseVersion = "v1.90.0";
 
-export const currentReleaseTitle = "Kapalı Pilot Geri Bildirim ve Sonraki Faz Karar Özeti";
+export const currentReleaseTitle = "Stok Kapalı Pilot Kullanım Paketi";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "dashboard-erp-v1-pilot-summary"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "vega-stock-closed-pilot-package"];
 
 export const releaseHighlightItems = [
-  "Kapalı pilot ilk gününden sonra yönetici, depo ve patron değerlendirmesi için pasif geri bildirim soruları eklendi.",
-  "Sonraki faz kararları kapalı pilot devamı, aktif stok read-only ekranı, read-only SQL kullanıcısı ve barkod/el terminali başlıklarıyla sade özetlendi.",
+  "Stok/read-only ekranına patron, depo ve yönetici için Kapalı Pilot Stok Kullanım Paketi eklendi.",
+  "Depo kontrol listesi, yönetici kontrol listesi, pilot başlat/beklet kararı ve kapalı kalan alanlar stok önizleme deneyimine taşındı.",
   "Bu sürüm yeni modül, SQL/Vega bağlantısı, sorgu, metadata otomasyonu, Top 100 aktivasyonu, veri yazma/import/senkron/export veya localStorage eklemez.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
+  { id: "vega-stock-closed-pilot-package", label: "Stok Kapalı Pilot Kullanım Paketi'ne git" },
   { id: "dashboard-erp-v1-pilot-summary", label: "ERP v1 Kapalı Pilot Özetine git" },
   { id: "dashboard-readonly-closed-pilot-prep", label: "Read-only Kapalı Pilot Hazırlığı'na git" },
   { id: "vega-stock-movement-field-discovery", label: "Stok Hareket Metadata Keşif Aracı'na git" },
@@ -142,12 +143,13 @@ export const releaseHighlightsByPage = {
   vegaStockTrial: {
     releaseHighlightItems,
     releaseJumpLinks: [
+      { id: "vega-stock-closed-pilot-package", label: "Stok Kapalı Pilot Kullanım Paketi'ne git" },
       { id: "vega-stock-trial-panel", label: "Vega Stok Deneme alanına git" },
       { id: "vega-stock-movement-field-discovery", label: "Stok Hareket Metadata Keşif Aracı'na git" },
       { id: "vega-top-100-stock-out-preview", label: "Top 100 Stok Çıkışı alanına git" },
       { id: "vega-stock-user-validation-panel", label: "Kullanıcı Doğrulama Paneli'ne git" },
     ],
-    updatedSectionIds: ["vega-stock-movement-field-discovery", "vega-top-100-stock-out-preview"],
+    updatedSectionIds: ["vega-stock-closed-pilot-package", "vega-stock-user-validation-panel"],
   },
   vegaImportPreview: {
     releaseHighlightItems,

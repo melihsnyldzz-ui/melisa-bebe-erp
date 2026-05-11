@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.90.0",
+    title: "Stok Kapalı Pilot Kullanım Paketi",
+    area: "Vega Stok Deneme / Sistem Durumu",
+    description: "Stok/read-only ekranına patron, depo ve yönetici için Kapalı Pilot Stok Kullanım Paketi eklendi; depo kontrol listesi, yönetici kontrol listesi, pilot başlat/beklet kararı ve kapalı kalan alanlar stok önizleme deneyiminde görünür hale getirildi; mevcut manuel stok butonu, 20 satır read-only sınırı, Top 100 kilidi ve metadata manuel sınırı korunurken SQL/Vega bağlantısı, yeni sorgu, yeni veri okuma, veri yazma/import/senkron/export, localStorage veya hassas bilgi eklenmedi.",
+  },
+  {
     version: "v1.88.0",
     title: "Kapalı Pilot Geri Bildirim ve Sonraki Faz Karar Özeti",
     area: "Dashboard / Sistem Durumu",

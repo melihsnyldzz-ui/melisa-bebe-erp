@@ -104,6 +104,49 @@ const stockPreviewControlSequence = [
   "Şüpheli/boş alan varsa canlı kullanım kararı verme.",
 ];
 
+const closedPilotUsageNotes = [
+  "Bu ekran sadece stok gözlem içindir.",
+  "Vega ana sistemdir.",
+  "Burada veri yazılmaz.",
+  "Manuel stok önizleme ile sınırlı örnek kontrol edilir.",
+  "Hatalı/eksik alanlar sistem dışı not alınır.",
+];
+
+const warehouseClosedPilotChecklist = [
+  "Stok kodu okunuyor mu?",
+  "Ürün adı anlaşılır mı?",
+  "Barkod alanı varsa doğru görünüyor mu?",
+  "Beden/renk/marka alanları anlaşılır mı?",
+  "Stok miktarı alanı net mi?",
+  "Gereksiz teknik kolon var mı?",
+];
+
+const managerClosedPilotChecklist = [
+  "Ekran ilk bakışta anlaşılır mı?",
+  "Stok kontrolü için yeterli mi?",
+  "Kullanıcı hangi butona basacağını anlıyor mu?",
+  "Aktif stok geniş listeye geçmek için hazır mı?",
+  "Read-only SQL kullanıcısı öncelik olmalı mı?",
+];
+
+const closedPilotDecisionOptions = [
+  "Pilot başlatılabilir",
+  "Önce ekran sadeleşsin",
+  "Önce kolon adları netleşsin",
+  "Önce read-only SQL kullanıcısı hazırlansın",
+  "Önce barkod alanı doğrulansın",
+];
+
+const closedPilotLockedAreas = [
+  "Top 100 stok çıkışı",
+  "Metadata keşfi",
+  "Cari",
+  "Sipariş",
+  "Kasa/finans",
+  "Export/import/sync",
+  "Veri yazma",
+];
+
 const topStockOutStatusCards = [
   { label: "Veri kaynağı", value: "Vega SQL read-only" },
   { label: "Kapsam", value: "Sadece stok çıkış hareketleri" },
@@ -1105,6 +1148,75 @@ export default function VegaStockTrial() {
             placeholder="Stok kodu, barkod veya ürün adı ara"
           />
         </label>
+
+        <div className="vega-security-checklist-panel section-updated-highlight" id="vega-stock-closed-pilot-package">
+          <span className="new-release-badge">YENİ · {currentReleaseVersion}</span>
+          <div>
+            <h2>Kapalı Pilot Stok Kullanım Paketi</h2>
+            <p>Stok read-only ekranını patron, depo ve yönetici için anlaşılır hale getiren pasif kullanım rehberidir; işlem başlatmaz ve kayıt tutmaz.</p>
+          </div>
+
+          <div className="vega-security-checklist-grid" aria-label="Kapalı pilot stok kullanım amacı">
+            {closedPilotUsageNotes.map((item) => (
+              <div className="vega-security-checklist-item" key={item}>
+                <span aria-hidden="true">•</span>
+                <strong>{item}</strong>
+              </div>
+            ))}
+          </div>
+
+          <div className="vega-security-checklist-grid" aria-label="Depo için stok kontrol listesi">
+            <div className="vega-security-checklist-item">
+              <span aria-hidden="true">A</span>
+              <strong>Depo İçin Kontrol Listesi</strong>
+            </div>
+            {warehouseClosedPilotChecklist.map((item) => (
+              <div className="vega-security-checklist-item" key={item}>
+                <span aria-hidden="true">•</span>
+                <strong>{item}</strong>
+              </div>
+            ))}
+          </div>
+
+          <div className="vega-security-checklist-grid" aria-label="Patron ve yönetici için stok kontrol listesi">
+            <div className="vega-security-checklist-item">
+              <span aria-hidden="true">B</span>
+              <strong>Patron/Yönetici İçin Kontrol Listesi</strong>
+            </div>
+            {managerClosedPilotChecklist.map((item) => (
+              <div className="vega-security-checklist-item" key={item}>
+                <span aria-hidden="true">•</span>
+                <strong>{item}</strong>
+              </div>
+            ))}
+          </div>
+
+          <div className="vega-security-checklist-grid" aria-label="Kapalı pilot başlat veya beklet kararları">
+            <div className="vega-security-checklist-item">
+              <span aria-hidden="true">C</span>
+              <strong>Pilot Başlat / Beklet Kararı</strong>
+            </div>
+            {closedPilotDecisionOptions.map((item) => (
+              <div className="vega-security-checklist-item" key={item}>
+                <span aria-hidden="true">•</span>
+                <strong>{item}</strong>
+              </div>
+            ))}
+          </div>
+
+          <div className="vega-security-checklist-grid" aria-label="Kapalı pilotta kapalı kalan alanlar">
+            <div className="vega-security-checklist-item">
+              <span aria-hidden="true">D</span>
+              <strong>Kapalı Kalan Alanlar</strong>
+            </div>
+            {closedPilotLockedAreas.map((item) => (
+              <div className="vega-security-checklist-item" key={item}>
+                <span aria-hidden="true">•</span>
+                <strong>{item}</strong>
+              </div>
+            ))}
+          </div>
+        </div>
 
         <div className="vega-security-checklist-panel section-updated-highlight" id="vega-stock-user-validation-panel">
           <span className="new-release-badge">YENİ · {currentReleaseVersion}</span>
