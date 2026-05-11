@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.87.0",
+    title: "Kapalı Pilot Kullanım Rehberi ve İlk Gün Kontrol Akışı",
+    area: "Dashboard / Sistem Durumu",
+    description: "Kapalı pilotun ilk gününde kullanıcıların Dashboard, Genel Durum, Güvenlik Durumu ve stok read-only ekranını hangi sırayla kontrol edeceğini gösteren pasif kullanım rehberi eklendi; pilot dışı bırakılan cari, sipariş, kasa/finans, veri yazma, import/export/sync, otomatik bağlantı, Top 100 ve metadata keşfi alanları açık uyarı olarak görünür hale getirildi; SQL/Vega bağlantısı, yeni sorgu, yeni veri okuma, veri yazma/import/senkron/export, localStorage veya hassas bilgi eklenmedi.",
+  },
+  {
     version: "v1.86.0",
     title: "ERP v1 Kapalı Pilot Tamamlama ve Sadeleştirme",
     area: "Dashboard / Sistem Durumu",

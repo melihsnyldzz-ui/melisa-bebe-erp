@@ -1572,6 +1572,27 @@ const erpV1PilotNextDecisions = [
   "Aktif stoklar read-only ekranı sonraki fazda açılsın mı?",
   "Read-only SQL kullanıcısı daha sonra hazırlanacak mı?",
 ];
+const erpV1PilotFirstDayGuide = [
+  "Dashboard'u aç.",
+  "Genel Durum bölümünü kontrol et.",
+  "Güvenlik Durumu bölümünde veri yazmanın kapalı olduğunu teyit et.",
+  "Stok read-only ekranına git.",
+  "Manuel stok önizleme butonunu kullan.",
+  "20 satırlık örneği gözle kontrol et.",
+  "Eksik/hatalı görünen alanları sistem dışı manuel not al.",
+  "Top 100, metadata keşfi, cari, sipariş, kasa/finans alanlarını kullanma.",
+  "Gün sonunda sözlü değerlendirme yap.",
+];
+const erpV1PilotOutOfScopeItems = [
+  "Cari işlemler",
+  "Sipariş işlemleri",
+  "Kasa/finans işlemleri",
+  "Veri yazma",
+  "Import/export/sync",
+  "Otomatik bağlantı",
+  "Top 100 stok çıkışı",
+  "Metadata keşfi",
+];
 
 export default function Dashboard() {
   const erpData = useErpData();
@@ -1837,6 +1858,27 @@ function ErpV1PilotSummaryPanel() {
       <CommercePanel title="Sıradaki Karar" note="Bu kararlar sistemde kaydedilmez; pilot toplantısı için görünür rehberdir.">
         <div className="commerce-performance-grid">
           {erpV1PilotNextDecisions.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="İlk Gün Kullanım Rehberi" note="Kısa pilot akışı; kayıt tutmaz, bağlantı başlatmaz.">
+        <div className="commerce-performance-grid">
+          {erpV1PilotFirstDayGuide.map((item, index) => (
+            <article className="commerce-performance-card" key={item}>
+              <span>{index + 1}. adım</span>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Pilot Dışı Bırakılanlar" note="İlk gün kapalı kalacak alanlar.">
+        <div className="commerce-performance-grid">
+          {erpV1PilotOutOfScopeItems.map((item) => (
             <article className="commerce-performance-card" key={item}>
               <strong>{item}</strong>
             </article>
