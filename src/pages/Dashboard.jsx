@@ -193,6 +193,66 @@ const topStockOutPreviewSummaryNotes = [
   "Sonuç ileride sadece geçici ekran state içinde gösterilecek.",
   "Local DB kaydı veya dosya üretimi yapılmayacak.",
 ];
+const readonlyClosedPilotStatusCards = [
+  { label: "Pilot tipi", value: "Kapalı pilot" },
+  { label: "Canlı seviyesi", value: "Read-only" },
+  { label: "İlk kapsam", value: "Sadece stok" },
+  { label: "Vega durumu", value: "Ana sistem olarak devam" },
+  { label: "Veri yazma", value: "Kapalı" },
+  { label: "Import/Senkron/Export", value: "Kapalı" },
+  { label: "Cari/Sipariş/Finans", value: "Kapalı" },
+  { label: "SQL kullanıcısı", value: "sa / geçici orta-yüksek risk" },
+  { label: "Otomatik bağlantı", value: "Kapalı" },
+  { label: "Manuel kullanım", value: "Açık" },
+];
+const readonlyClosedPilotAllowedItems = [
+  "Dashboard'u görüntülemek.",
+  "Stok read-only ekranını açmak.",
+  "Manuel stok önizleme butonuyla sınırlı veri görmek.",
+  "Stok alanlarını kullanıcıyla doğrulamak.",
+  "Eksikleri sözlü veya manuel not almak.",
+  "Vega ana sistemde çalışmaya devam etmek.",
+];
+const readonlyClosedPilotForbiddenItems = [
+  "Vega'ya veri yazmak.",
+  "Import yapmak.",
+  "Senkron yapmak.",
+  "Export almak.",
+  "Cari verisi okumak.",
+  "Sipariş verisi okumak.",
+  "Kasa/finans verisi okumak.",
+  "Otomatik bağlantı açmak.",
+  "sa ile gereksiz tekrar test yapmak.",
+  "Connection bilgisini paylaşmak veya repoya yazmak.",
+];
+const readonlyClosedPilotPrecheckItems = [
+  "Git main temiz.",
+  "Build başarılı.",
+  ".env.local Git dışında.",
+  "Yedek alındı.",
+  "Otomatik bağlantı yok.",
+  "Manuel stok butonu çalışıyor.",
+  "Veri yazma yok.",
+  "Stok dışı modüller kapalı.",
+  "Kullanıcılar bunun tam canlı ERP olmadığını biliyor.",
+];
+const readonlyClosedPilotSuccessItems = [
+  "Uygulama açılıyor.",
+  "Dashboard anlaşılır.",
+  "Stok ekranı bulunabiliyor.",
+  "Manuel stok önizleme kontrollü çalışıyor.",
+  "Kullanıcı stok kodu ve ürün adını anlayabiliyor.",
+  "Sistem Vega'yı yavaşlatmıyor.",
+  "Hata olduğunda hassas bilgi görünmüyor.",
+  "Veri yazma yapılmıyor.",
+];
+const readonlyClosedPilotDecisionItems = [
+  "Stok ekranı sadeleştirilecek mi?",
+  "Aktif stoklar ekranına geçilecek mi?",
+  "Top 100 stok çıkışı ertelenecek mi?",
+  "Read-only SQL kullanıcısına geçilecek mi?",
+  "Barkod/el terminali fazına başlanacak mı?",
+];
 const companyReadonlyPretestCards = [
   { label: "Ortam", value: "Şirket bilgisayarı" },
   { label: "Local main", value: "GitHub ile güncel" },
@@ -1541,6 +1601,8 @@ export default function Dashboard() {
 
       <StockManagementRoadmapPanel />
 
+      <ReadonlyClosedPilotPrepPanel />
+
       <TopStockOutPreviewSummaryPanel />
 
       <StockPreviewUserValidationFlowPanel />
@@ -2263,6 +2325,82 @@ function TopStockOutPreviewSummaryPanel() {
           ))}
         </div>
       </CommercePanel>
+    </section>
+  );
+}
+
+function ReadonlyClosedPilotPrepPanel() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-readonly-closed-pilot-prep")}`} id="dashboard-readonly-closed-pilot-prep">
+      <DashboardNewReleaseBadge sectionId="dashboard-readonly-closed-pilot-prep" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>Sınırlı read-only kapalı pilot</p>
+          <h2>Read-only Kapalı Pilot Canlıya Geçiş Hazırlığı</h2>
+          <span>Melisa Bebe ERP'yi tam canlı ERP olarak değil, Vega ana sistem çalışmaya devam ederken sadece stok tarafında manuel tetiklemeli read-only gözlem paneli olarak pilot kullanıma hazırlar.</span>
+        </div>
+      </div>
+
+      <div className="reporting-decision-status-grid">
+        {readonlyClosedPilotStatusCards.map((card) => (
+          <article className="commerce-profitability-status-card" key={card.label}>
+            <span>{card.label}</span>
+            <strong>{card.value}</strong>
+          </article>
+        ))}
+      </div>
+
+      <CommercePanel title="Pilot Kullanımda İzin Verilenler" note="Bu liste kapalı pilotta yapılabilecek sınırlı read-only gözlem adımlarını gösterir; yeni işlem başlatmaz.">
+        <div className="commerce-performance-grid">
+          {readonlyClosedPilotAllowedItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Pilot Kullanımda Kesin Yasaklar" note="Bu sınırlar tam canlı ERP algısını ve kapsam büyümesini engellemek için görünür tutulur.">
+        <div className="commerce-performance-grid">
+          {readonlyClosedPilotForbiddenItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Pilot Başlamadan Önce Kontrol" note="Bu kontrol listesi manuel hazırlık disiplinidir; onay kaydı, dosya veya bağlantı oluşturmaz.">
+        <div className="commerce-performance-grid">
+          {readonlyClosedPilotPrecheckItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Pilot Başarı Kriterleri" note="Kapalı pilotun başarılı sayılması için beklenen kullanıcı ve güvenlik sinyalleridir.">
+        <div className="commerce-performance-grid">
+          {readonlyClosedPilotSuccessItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Pilot Sonrası Karar" note="Bu sorular sonraki fazı belirlemek içindir; bu panel karar kaydetmez ve görev oluşturmaz.">
+        <div className="commerce-performance-grid">
+          {readonlyClosedPilotDecisionItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <p className="commerce-profitability-safety-note">Bu hazırlık SQL/Vega bağlantısı denemez, veri okumaz/yazmaz, Top 100 butonunu aktif etmez, metadata keşfini otomatik çalıştırmaz ve dosya/export üretmez.</p>
     </section>
   );
 }

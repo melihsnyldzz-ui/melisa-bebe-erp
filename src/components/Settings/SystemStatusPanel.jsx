@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.85.0",
+    title: "Read-only Kapalı Pilot Canlıya Geçiş Hazırlığı",
+    area: "Dashboard / Sistem Durumu",
+    description: "ERP'ye yeni özellik eklemeyi durdurup Melisa Bebe içinde sınırlı kapalı pilot kullanım hazırlığını gösteren pasif Dashboard paneli eklendi; Vega ana sistem olarak kalır, ilk kapsam sadece stok read-only gözlemdir, cari/sipariş/kasa/finans kapalıdır, otomatik bağlantı yoktur, Top 100 butonu aktif edilmedi, metadata keşfi otomatik çalışmaz, veri yazma/import/senkron/export, localStorage, dosya üretimi veya hassas bağlantı bilgisi eklenmedi.",
+  },
+  {
     version: "v1.84.2",
     title: "Vega Stok Hareket Metadata Keşif Aracı",
     area: "Vega Stok Deneme / Sistem Durumu",

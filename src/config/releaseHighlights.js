@@ -1,17 +1,18 @@
-export const currentReleaseVersion = "v1.84.2";
+export const currentReleaseVersion = "v1.85.0";
 
-export const currentReleaseTitle = "Vega Stok Hareket Metadata Keşif Aracı";
+export const currentReleaseTitle = "Read-only Kapalı Pilot Canlıya Geçiş Hazırlığı";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "vega-top-100-stock-out-preview"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "dashboard-readonly-closed-pilot-prep"];
 
 export const releaseHighlightItems = [
-  "Vega Stok Deneme ekranındaki stok hareket keşif hazırlığı, manuel tetiklenen metadata keşif aracına dönüştürüldü.",
-  "Araç yalnızca F0102 kapsamındaki tablo/kolon adları gibi şema bilgisini hedefler; canlı stok hareket satırı, Top 100 sonucu veya stok dışı veri okumaz.",
-  "Sonuç geçici frontend state içinde kalır; dosya/export, local DB kaydı, veri yazma/import/senkron ve hassas bağlantı bilgisi gösterimi eklenmedi.",
+  "Dashboard'a Melisa Bebe içinde sınırlı read-only kapalı pilot kullanımına geçiş hazırlığını gösteren pasif panel eklendi.",
+  "Kapalı pilot kapsamı sadece stok gözlemi, manuel stok önizleme ve kullanıcı doğrulaması olarak sınırlandı; Vega ana sistem olarak devam eder.",
+  "Bu sürüm yeni özellik açmaz, SQL/Vega bağlantısı denemez, veri okumaz/yazmaz, Top 100 butonunu aktif etmez, metadata keşfini otomatik çalıştırmaz ve dosya/export üretmez.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
+  { id: "dashboard-readonly-closed-pilot-prep", label: "Read-only Kapalı Pilot Hazırlığı'na git" },
   { id: "vega-stock-movement-field-discovery", label: "Stok Hareket Metadata Keşif Aracı'na git" },
   { id: "vega-top-100-stock-out-preview", label: "Vega Top 100 Stok Çıkışı'na git" },
   { id: "dashboard-top-100-stock-out-preview-summary", label: "Top 100 Stok Çıkışı Dashboard Özetine git" },
@@ -53,6 +54,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-staff-usage-screen-map", label: "Personel Kullanım Ekranları Haritası'na git" },
       { id: "dashboard-erp-module-priority-order", label: "ERP Modül Öncelik Sıralaması'na git" },
       { id: "dashboard-stock-management-roadmap", label: "Stok Yönetimi Geliştirme Yol Haritası'na git" },
+      { id: "dashboard-readonly-closed-pilot-prep", label: "Read-only Kapalı Pilot Hazırlığı'na git" },
       { id: "dashboard-top-100-stock-out-preview-summary", label: "Top 100 Stok Çıkışı Dashboard Özetine git" },
       { id: "dashboard-stock-preview-user-validation-flow", label: "Stok Önizleme Kullanıcı Doğrulama Akışı'na git" },
       { id: "dashboard-stock-preview-user-test-session", label: "Stok Önizleme Kullanıcı Test Oturumu'na git" },
@@ -112,7 +114,7 @@ export const releaseHighlightsByPage = {
       { id: "dashboard-currency-summary", label: "Dövizli Ticaret Özeti'ne git" },
       { id: "dashboard-commerce-insights", label: "Ticari Grafik Özeti'ne git" },
     ],
-    updatedSectionIds: ["dashboard-top-100-stock-out-preview-summary", "dashboard-stock-management-roadmap", "dashboard-data-field-dictionary"],
+    updatedSectionIds: ["dashboard-readonly-closed-pilot-prep", "dashboard-stock-management-roadmap", "dashboard-top-100-stock-out-preview-summary"],
   },
   reports: {
     releaseHighlightItems,
