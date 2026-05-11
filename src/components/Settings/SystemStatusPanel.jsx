@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.88.0",
+    title: "Kapalı Pilot Geri Bildirim ve Sonraki Faz Karar Özeti",
+    area: "Dashboard / Sistem Durumu",
+    description: "Kapalı pilot ilk gün kullanımından sonra yönetici, depo ve patron değerlendirmesi için pasif geri bildirim soruları ve sonraki faz karar özeti eklendi; aktif stok read-only ekranı, read-only SQL kullanıcısı, barkod/el terminali ve Top 100/metadata erteleme kararları görünür hale getirildi; SQL/Vega bağlantısı, yeni sorgu, yeni veri okuma, veri yazma/import/senkron/export, localStorage veya hassas bilgi eklenmedi.",
+  },
+  {
     version: "v1.87.0",
     title: "Kapalı Pilot Kullanım Rehberi ve İlk Gün Kontrol Akışı",
     area: "Dashboard / Sistem Durumu",

@@ -1593,6 +1593,24 @@ const erpV1PilotOutOfScopeItems = [
   "Top 100 stok çıkışı",
   "Metadata keşfi",
 ];
+const erpV1PilotFeedbackQuestions = [
+  "Kullanıcı stok ekranını rahat buldu mu?",
+  "20 satırlık örnek anlaşılır mı?",
+  "Alan adları yeterince açık mı?",
+  "Eksik görülen kolon var mı?",
+  "Manuel stok önizleme yeterli mi?",
+  "Aktif stok geniş listeye geçilsin mi?",
+  "Read-only SQL kullanıcısı önceliklendirilsin mi?",
+  "Barkod/el terminali fazına geçilsin mi?",
+];
+const erpV1PilotNextPhaseDecisions = [
+  "Kapalı pilot devam",
+  "Dashboard daha da sadeleşsin",
+  "Aktif stok read-only ekranı açılsın",
+  "Read-only SQL kullanıcısı hazırlansın",
+  "Barkod/el terminali fazı başlasın",
+  "Top 100 ve metadata keşfi ertelensin",
+];
 
 export default function Dashboard() {
   const erpData = useErpData();
@@ -1879,6 +1897,26 @@ function ErpV1PilotSummaryPanel() {
       <CommercePanel title="Pilot Dışı Bırakılanlar" note="İlk gün kapalı kalacak alanlar.">
         <div className="commerce-performance-grid">
           {erpV1PilotOutOfScopeItems.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Pilot Sonrası Geri Bildirim" note="Yönetici, depo ve patron değerlendirmesi için pasif soru özeti.">
+        <div className="commerce-performance-grid">
+          {erpV1PilotFeedbackQuestions.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Sonraki Faz Kararı" note="Bu kararlar sistemde kaydedilmez; toplantı gündemi olarak görünür.">
+        <div className="commerce-performance-grid">
+          {erpV1PilotNextPhaseDecisions.map((item) => (
             <article className="commerce-performance-card" key={item}>
               <strong>{item}</strong>
             </article>

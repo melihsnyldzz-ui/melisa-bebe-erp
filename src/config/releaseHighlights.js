@@ -1,12 +1,12 @@
-export const currentReleaseVersion = "v1.87.0";
+export const currentReleaseVersion = "v1.88.0";
 
-export const currentReleaseTitle = "Kapalı Pilot Kullanım Rehberi ve İlk Gün Kontrol Akışı";
+export const currentReleaseTitle = "Kapalı Pilot Geri Bildirim ve Sonraki Faz Karar Özeti";
 
 export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "dashboard-erp-v1-pilot-summary"];
 
 export const releaseHighlightItems = [
-  "Kapalı pilotun ilk günü için Dashboard içinde sade İlk Gün Kullanım Rehberi eklendi.",
-  "Pilot dışı bırakılan cari, sipariş, kasa/finans, import/export/sync, Top 100 ve metadata keşfi alanları açık uyarı olarak görünür hale getirildi.",
+  "Kapalı pilot ilk gününden sonra yönetici, depo ve patron değerlendirmesi için pasif geri bildirim soruları eklendi.",
+  "Sonraki faz kararları kapalı pilot devamı, aktif stok read-only ekranı, read-only SQL kullanıcısı ve barkod/el terminali başlıklarıyla sade özetlendi.",
   "Bu sürüm yeni modül, SQL/Vega bağlantısı, sorgu, metadata otomasyonu, Top 100 aktivasyonu, veri yazma/import/senkron/export veya localStorage eklemez.",
 ];
 
