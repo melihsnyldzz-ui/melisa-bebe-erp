@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v2.0.0",
+    title: "Read-only SQL Kullanıcısı ve Gerçek Stok Pilot Güvenlik Paketi",
+    area: "Vega Stok Deneme / Sistem Durumu",
+    description: "Stok/read-only ekranına v2.0 Pilot Güvenlik Kapısı eklendi; gerçek kapalı pilotun read-only SQL kullanıcısı hazır olmadan başlamayacağı, sa kullanımının kapalı pilot için önerilmediği, SELECT ile sınırlı stok kapsamı, 20 satır manuel önizleme sınırı, otomatik bağlantı kapalı durumu ve veri yazma/import/export/sync yasakları görünür hale getirildi; gerçek SQL komutu, kullanıcı oluşturma scripti, credential, connection string, SQL/Vega bağlantısı, yeni veri okuma, localStorage veya hassas bilgi eklenmedi.",
+  },
+  {
     version: "v1.90.0",
     title: "Stok Kapalı Pilot Kullanım Paketi",
     area: "Vega Stok Deneme / Sistem Durumu",

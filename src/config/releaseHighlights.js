@@ -1,17 +1,18 @@
-export const currentReleaseVersion = "v1.90.0";
+export const currentReleaseVersion = "v2.0.0";
 
-export const currentReleaseTitle = "Stok Kapalı Pilot Kullanım Paketi";
+export const currentReleaseTitle = "Read-only SQL Kullanıcısı ve Gerçek Stok Pilot Güvenlik Paketi";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "vega-stock-closed-pilot-package"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "vega-stock-v2-security-gate"];
 
 export const releaseHighlightItems = [
-  "Stok/read-only ekranına patron, depo ve yönetici için Kapalı Pilot Stok Kullanım Paketi eklendi.",
-  "Depo kontrol listesi, yönetici kontrol listesi, pilot başlat/beklet kararı ve kapalı kalan alanlar stok önizleme deneyimine taşındı.",
-  "Bu sürüm yeni modül, SQL/Vega bağlantısı, sorgu, metadata otomasyonu, Top 100 aktivasyonu, veri yazma/import/senkron/export veya localStorage eklemez.",
+  "Stok/read-only ekranına read-only SQL kullanıcısı hazır olmadan gerçek kapalı pilotun başlamayacağını gösteren v2.0 Pilot Güvenlik Kapısı eklendi.",
+  "sa kullanımının kapalı pilot için önerilmediği, read-only kullanıcı geçişinin güvenlik önceliği olduğu ve pilot başlat/beklet kararları netleştirildi.",
+  "Bu sürüm SQL kullanıcısı oluşturmaz; SQL/Vega bağlantısı, sorgu, metadata otomasyonu, Top 100 aktivasyonu, veri yazma/import/senkron/export veya localStorage eklemez.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
+  { id: "vega-stock-v2-security-gate", label: "v2.0 Pilot Güvenlik Kapısı'na git" },
   { id: "vega-stock-closed-pilot-package", label: "Stok Kapalı Pilot Kullanım Paketi'ne git" },
   { id: "dashboard-erp-v1-pilot-summary", label: "ERP v1 Kapalı Pilot Özetine git" },
   { id: "dashboard-readonly-closed-pilot-prep", label: "Read-only Kapalı Pilot Hazırlığı'na git" },
@@ -143,13 +144,14 @@ export const releaseHighlightsByPage = {
   vegaStockTrial: {
     releaseHighlightItems,
     releaseJumpLinks: [
+      { id: "vega-stock-v2-security-gate", label: "v2.0 Pilot Güvenlik Kapısı'na git" },
       { id: "vega-stock-closed-pilot-package", label: "Stok Kapalı Pilot Kullanım Paketi'ne git" },
       { id: "vega-stock-trial-panel", label: "Vega Stok Deneme alanına git" },
       { id: "vega-stock-movement-field-discovery", label: "Stok Hareket Metadata Keşif Aracı'na git" },
       { id: "vega-top-100-stock-out-preview", label: "Top 100 Stok Çıkışı alanına git" },
       { id: "vega-stock-user-validation-panel", label: "Kullanıcı Doğrulama Paneli'ne git" },
     ],
-    updatedSectionIds: ["vega-stock-closed-pilot-package", "vega-stock-user-validation-panel"],
+    updatedSectionIds: ["vega-stock-v2-security-gate", "vega-stock-closed-pilot-package"],
   },
   vegaImportPreview: {
     releaseHighlightItems,

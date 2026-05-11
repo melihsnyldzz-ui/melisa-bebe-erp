@@ -147,6 +147,55 @@ const closedPilotLockedAreas = [
   "Veri yazma",
 ];
 
+const v2PilotRequiredConditions = [
+  "Read-only SQL kullanıcısı hazır olmalı.",
+  "sa ile kapalı pilot başlatılmamalı.",
+  "Kullanıcı sadece SELECT yetkisine sahip olmalı.",
+  "İlk kapsam sadece stok olmalı.",
+  "20 satır önizleme limiti korunmalı.",
+  "Otomatik bağlantı kapalı kalmalı.",
+  "Veri yazma/import/export/sync kapalı kalmalı.",
+  ".env.local Git dışında kalmalı.",
+  "Connection bilgisi repoda olmamalı.",
+];
+
+const v2SaUsageDecision = [
+  "sa sadece geçmiş smoke test için geçici kullanıldı.",
+  "Kapalı pilot için sa önerilmez.",
+  "sa ile tekrar gereksiz test yapılmamalı.",
+  "Read-only kullanıcıya geçiş güvenlik önceliğidir.",
+];
+
+const v2ReadOnlyUserGuide = [
+  "Bu rehber gerçek komut içermez.",
+  "SQL yöneticisi ayrı read-only kullanıcı oluşturacak.",
+  "Kullanıcıya sadece stok okuma için SELECT yetkisi verilecek.",
+  "Connection bilgisi sadece .env.local içinde kalacak.",
+  "Uygulama açılışta otomatik bağlanmayacak.",
+  "İlk test yine manuel ve 20 satır sınırıyla yapılacak.",
+];
+
+const v2PilotStartDecisions = [
+  "Read-only kullanıcı hazırsa: sınırlı stok pilotu başlatılabilir.",
+  "Read-only kullanıcı yoksa: pilot bekletilmeli.",
+  "sa kullanılıyorsa: pilot bekletilmeli.",
+  "Stok dışı modül gerekiyorsa: pilot bekletilmeli.",
+  "Export/import/sync isteniyorsa: pilot bekletilmeli.",
+];
+
+const v2StrictlyClosedAreas = [
+  "Veri yazma",
+  "Import",
+  "Export",
+  "Sync",
+  "Cari",
+  "Sipariş",
+  "Kasa/finans",
+  "Top 100 stok çıkışı",
+  "Metadata otomasyonu",
+  "Otomatik bağlantı",
+];
+
 const topStockOutStatusCards = [
   { label: "Veri kaynağı", value: "Vega SQL read-only" },
   { label: "Kapsam", value: "Sadece stok çıkış hareketleri" },
@@ -1210,6 +1259,79 @@ export default function VegaStockTrial() {
               <strong>Kapalı Kalan Alanlar</strong>
             </div>
             {closedPilotLockedAreas.map((item) => (
+              <div className="vega-security-checklist-item" key={item}>
+                <span aria-hidden="true">•</span>
+                <strong>{item}</strong>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="vega-security-checklist-panel section-updated-highlight" id="vega-stock-v2-security-gate">
+          <span className="new-release-badge">YENİ · {currentReleaseVersion}</span>
+          <div>
+            <h2>v2.0 Pilot Güvenlik Kapısı</h2>
+            <p>Gerçek stok kapalı pilotu ancak read-only SQL kullanıcısı hazır olduğunda başlatmak için pasif güvenlik eşiğidir; bağlantı açmaz, komut çalıştırmaz ve veri okumaz.</p>
+          </div>
+
+          <div className="vega-security-checklist-grid" aria-label="Pilot başlamadan önce zorunlu şartlar">
+            <div className="vega-security-checklist-item">
+              <span aria-hidden="true">A</span>
+              <strong>Pilot Başlamadan Önce Zorunlu Şartlar</strong>
+            </div>
+            {v2PilotRequiredConditions.map((item) => (
+              <div className="vega-security-checklist-item" key={item}>
+                <span aria-hidden="true">•</span>
+                <strong>{item}</strong>
+              </div>
+            ))}
+          </div>
+
+          <div className="vega-security-checklist-grid" aria-label="sa kullanımı kararı">
+            <div className="vega-security-checklist-item">
+              <span aria-hidden="true">B</span>
+              <strong>sa Kullanımı Kararı</strong>
+            </div>
+            {v2SaUsageDecision.map((item) => (
+              <div className="vega-security-checklist-item" key={item}>
+                <span aria-hidden="true">•</span>
+                <strong>{item}</strong>
+              </div>
+            ))}
+          </div>
+
+          <div className="vega-security-checklist-grid" aria-label="Read-only kullanıcı hazırlık rehberi">
+            <div className="vega-security-checklist-item">
+              <span aria-hidden="true">C</span>
+              <strong>Read-only Kullanıcı Hazırlık Rehberi</strong>
+            </div>
+            {v2ReadOnlyUserGuide.map((item) => (
+              <div className="vega-security-checklist-item" key={item}>
+                <span aria-hidden="true">•</span>
+                <strong>{item}</strong>
+              </div>
+            ))}
+          </div>
+
+          <div className="vega-security-checklist-grid" aria-label="Pilot başlatma kararı">
+            <div className="vega-security-checklist-item">
+              <span aria-hidden="true">D</span>
+              <strong>Pilot Başlatma Kararı</strong>
+            </div>
+            {v2PilotStartDecisions.map((item) => (
+              <div className="vega-security-checklist-item" key={item}>
+                <span aria-hidden="true">•</span>
+                <strong>{item}</strong>
+              </div>
+            ))}
+          </div>
+
+          <div className="vega-security-checklist-grid" aria-label="Kesin kapalı kalanlar">
+            <div className="vega-security-checklist-item">
+              <span aria-hidden="true">E</span>
+              <strong>Kesin Kapalı Kalanlar</strong>
+            </div>
+            {v2StrictlyClosedAreas.map((item) => (
               <div className="vega-security-checklist-item" key={item}>
                 <span aria-hidden="true">•</span>
                 <strong>{item}</strong>
