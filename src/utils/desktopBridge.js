@@ -26,6 +26,14 @@ export function canUseVegaReadOnlyBridge() {
   return typeof window !== "undefined" && Boolean(window.electronAPI?.vegaReadOnly?.listStock);
 }
 
+export function canUseVegaMetadataBridge() {
+  return typeof window !== "undefined" && Boolean(window.electronAPI?.vegaReadOnly?.discoverStockMovementMetadata);
+}
+
+export function discoverVegaStockMovementMetadata() {
+  return window.electronAPI.vegaReadOnly.discoverStockMovementMetadata();
+}
+
 export function listVegaStockReadOnly() {
   return window.electronAPI.vegaReadOnly.listStock();
 }

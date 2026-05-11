@@ -21,6 +21,8 @@ const STOCK_COLUMNS = [
   "ISKSATISFIYATI3",
   "KDVGRUBU",
 ];
+const METADATA_HINTS = ["STOK", "HAREKET", "HRK", "CIKIS", "ÇIKIŞ", "MIKTAR", "MİKTAR", "TARIH", "TARİH", "KOD"];
+const METADATA_MAX_ROWS = 200;
 
 const safeFailure = (errorClass, message) => ({
   status: "error",
@@ -28,6 +30,15 @@ const safeFailure = (errorClass, message) => ({
   message,
   items: [],
   columns: STOCK_COLUMNS,
+  rowCount: 0,
+  metadata: buildMetadata(),
+});
+
+const safeMetadataFailure = (errorClass, message) => ({
+  status: "error",
+  errorClass,
+  message,
+  items: [],
   rowCount: 0,
   metadata: buildMetadata(),
 });
@@ -138,6 +149,46 @@ function assertSafeQuery(queryText, limit) {
   }
 }
 
+function assertSafeMetadataQuery(queryText) {
+  for (const word of FORBIDDEN_SQL_WORDS) {
+    const pattern = new RegExp(`\\b${word}\\b`, "i");
+    if (pattern.test(queryText)) {
+      throw new Error("FORBIDDEN_SQL_WORD");
+    }
+  }
+
+  if (!/\bINFORMATION_SCHEMA\.COLUMNS\b/i.test(queryText)) {
+    throw new Error("UNEXPECTED_METADATA_SCOPE");
+  }
+}
+
+function getMetadataHint(tableName, columnName) {
+  const target = `${tableName} ${columnName}`.toLocaleUpperCase("tr-TR");
+  return METADATA_HINTS.find((hint) => target.includes(hint)) || "KOD";
+}
+
+function getPossibleUsage(hint, columnName) {
+  const target = `${hint} ${columnName}`.toLocaleUpperCase("tr-TR");
+
+  if (target.includes("TARIH") || target.includes("TARİH")) return "Tarih alanı adayı";
+  if (target.includes("MIKTAR") || target.includes("MİKTAR")) return "Miktar alanı adayı";
+  if (target.includes("CIKIS") || target.includes("ÇIKIŞ")) return "Çıkış yönü alanı adayı";
+  if (target.includes("HAREKET") || target.includes("HRK")) return "Hareket tablosu/kolonu adayı";
+  if (target.includes("STOK")) return "Stok bağlantı alanı adayı";
+  return "Kod veya eşleme alanı adayı";
+}
+
+function mapMetadataRow(row) {
+  const hint = getMetadataHint(row.TABLE_NAME, row.COLUMN_NAME);
+  return {
+    candidateTable: row.TABLE_NAME,
+    candidateColumn: row.COLUMN_NAME,
+    matchedHint: hint,
+    possibleUsage: getPossibleUsage(hint, row.COLUMN_NAME),
+    controlNote: "Metadata adayıdır; canlı hareket satırı okunmadı.",
+  };
+}
+
 function mapStockRow(row) {
   return {
     IND: row.IND,
@@ -238,6 +289,94 @@ FROM F0102TBLSTOKLAR
   }
 }
 
+async function discoverVegaStockMovementMetadata() {
+  const envPath = path.resolve(process.cwd(), ENV_FILE);
+
+  if (!fs.existsSync(envPath)) {
+    return safeMetadataFailure("ENV_MISSING", ".env.local yok. Fail-closed: metadata keşfi denenmedi.");
+  }
+
+  const env = parseEnvFile(envPath);
+  const missingKeys = REQUIRED_ENV_KEYS.filter((key) => !env[key]);
+  if (missingKeys.length) {
+    return safeMetadataFailure("ENV_MISSING", "Eksik env değişkeni var. Fail-closed: metadata keşfi denenmedi.");
+  }
+
+  const timeoutMs = parsePositiveInteger(env.VEGA_SQL_TIMEOUT_MS, DEFAULT_TIMEOUT_MS);
+  if (timeoutMs > DEFAULT_TIMEOUT_MS) {
+    return safeMetadataFailure("SQL_TIMEOUT", "Metadata keşfi için timeout güvenlik sınırı aşıldı. Fail-closed: metadata keşfi denenmedi.");
+  }
+
+  const queryText = `
+SELECT TOP (${METADATA_MAX_ROWS})
+  TABLE_NAME,
+  COLUMN_NAME
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME LIKE 'F0102%'
+  AND (
+    TABLE_NAME LIKE '%STOK%' OR COLUMN_NAME LIKE '%STOK%' OR
+    TABLE_NAME LIKE '%HAREKET%' OR COLUMN_NAME LIKE '%HAREKET%' OR
+    TABLE_NAME LIKE '%HRK%' OR COLUMN_NAME LIKE '%HRK%' OR
+    TABLE_NAME LIKE '%CIKIS%' OR COLUMN_NAME LIKE '%CIKIS%' OR
+    TABLE_NAME LIKE '%MIKTAR%' OR COLUMN_NAME LIKE '%MIKTAR%' OR
+    TABLE_NAME LIKE '%TARIH%' OR COLUMN_NAME LIKE '%TARIH%' OR
+    COLUMN_NAME LIKE '%KOD%'
+  )
+ORDER BY TABLE_NAME, COLUMN_NAME
+`;
+
+  try {
+    assertSafeMetadataQuery(queryText);
+  } catch {
+    return safeMetadataFailure("SQL_UNKNOWN_SAFE", "Metadata güvenlik kontrolü başarısız. Fail-closed: metadata keşfi denenmedi.");
+  }
+
+  const pool = new sql.ConnectionPool({
+    server: env.VEGA_SQL_SERVER,
+    database: env.VEGA_SQL_DATABASE,
+    user: env.VEGA_SQL_USER,
+    password: env.VEGA_SQL_PASSWORD,
+    options: {
+      encrypt: parseBoolean(env.VEGA_SQL_ENCRYPT, false),
+      trustServerCertificate: parseBoolean(env.VEGA_SQL_TRUST_SERVER_CERTIFICATE, true),
+      enableArithAbort: true,
+    },
+    requestTimeout: timeoutMs,
+    connectionTimeout: timeoutMs,
+    pool: {
+      max: 1,
+      min: 0,
+      idleTimeoutMillis: timeoutMs,
+    },
+  });
+
+  try {
+    await pool.connect();
+    const result = await pool.request().query(queryText);
+    const items = result.recordset.slice(0, METADATA_MAX_ROWS).map(mapMetadataRow);
+
+    return {
+      status: "success",
+      message: "Stok hareket metadata adayları güvenli şekilde geçici olarak listelendi. Canlı hareket satırı okunmadı.",
+      items,
+      rowCount: items.length,
+      metadata: {
+        ...buildMetadata(),
+        mode: "manual-metadata-discovery",
+        tableScope: "F0102 metadata",
+        maxRowsLimit: METADATA_MAX_ROWS,
+        liveMovementRowsRead: false,
+        top100QueryEnabled: false,
+      },
+    };
+  } catch (error) {
+    return safeMetadataFailure(classifySqlError(error), "Metadata keşfi başarısız oldu. Ham hata gizlendi.");
+  } finally {
+    await pool.close().catch(() => undefined);
+  }
+}
+
 module.exports = {
+  discoverVegaStockMovementMetadata,
   listVegaStockReadOnly,
 };

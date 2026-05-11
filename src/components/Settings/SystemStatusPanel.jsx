@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.84.2",
+    title: "Vega Stok Hareket Metadata Keşif Aracı",
+    area: "Vega Stok Deneme / Sistem Durumu",
+    description: "Top 100 stok çıkışı sorgusuna geçmeden önce F0102 kapsamındaki stok hareketiyle ilgili olabilecek tablo ve kolon adlarını manuel tetiklemeli metadata keşfiyle geçici olarak gösterecek güvenli araç eklendi; canlı stok hareket satırı okunmaz, Top 100 sorgusu çalışmaz, otomatik bağlantı başlatılmaz, dosya/export, local DB kaydı, veri yazma/import/senkron veya hassas bağlantı bilgisi gösterimi eklenmedi.",
+  },
+  {
     version: "v1.84.1",
     title: "Vega Stok Hareket Alanları Keşif Hazırlığı",
     area: "Vega Stok Deneme / Sistem Durumu",

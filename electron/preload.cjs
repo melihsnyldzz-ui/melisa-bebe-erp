@@ -4,6 +4,7 @@ contextBridge.exposeInMainWorld("electronAPI", {
   openPurchaseSlipWindow: () => ipcRenderer.invoke("purchase-slip-window:open"),
   openSalesSlipWindow: () => ipcRenderer.invoke("sales-slip-window:open"),
   vegaReadOnly: {
+    discoverStockMovementMetadata: () => ipcRenderer.invoke("vega-read-only:discover-stock-movement-metadata"),
     listStock: () => ipcRenderer.invoke("vega-read-only:list-stock"),
   },
   erp: {

@@ -1,7 +1,12 @@
 import { useMemo, useState } from "react";
 import { AlertTriangle, Database, Search, ShieldCheck } from "lucide-react";
 import { currentReleaseVersion } from "../config/releaseHighlights.js";
-import { canUseVegaReadOnlyBridge, listVegaStockReadOnly } from "../utils/desktopBridge.js";
+import {
+  canUseVegaMetadataBridge,
+  canUseVegaReadOnlyBridge,
+  discoverVegaStockMovementMetadata,
+  listVegaStockReadOnly,
+} from "../utils/desktopBridge.js";
 import { formatCurrency } from "../utils/formatters.js";
 
 const demoStockRows = [
@@ -121,12 +126,12 @@ const topStockOutValidationRows = [
 ];
 
 const stockMovementDiscoveryStatusCards = [
-  { label: "Amaç", value: "Top 100 stok çıkışı için alan doğrulama" },
-  { label: "Veri türü", value: "Şema/metadata keşfi" },
-  { label: "Canlı hareket verisi", value: "Okunmayacak" },
-  { label: "Top 100 sorgusu", value: "Çalıştırılmayacak" },
-  { label: "Veri yazma", value: "Yok" },
-  { label: "Çalışma şekli", value: "Manuel doğrulama" },
+  { label: "Keşif türü", value: "Metadata / şema" },
+  { label: "Canlı hareket satırı", value: "Okunmaz" },
+  { label: "Top 100 sorgusu", value: "Çalışmaz" },
+  { label: "Çalışma şekli", value: "Manuel tetikleme" },
+  { label: "Sonuç", value: "Geçici frontend state" },
+  { label: "Dosya/export", value: "Yok" },
   { label: "SQL kullanıcısı", value: "sa / geçici riskli test" },
   { label: "Risk seviyesi", value: "Orta-yüksek" },
 ];
@@ -151,13 +156,22 @@ const stockMovementDiscoveryLocks = [
 const stockMovementDiscoverySafetyNotes = [
   "Bu ekran canlı stok hareket verisi okumaz.",
   "Bu ekran Top 100 sorgusu çalıştırmaz.",
-  "Bu ekran sadece alan doğrulama hazırlığıdır.",
+  "Yalnızca tablo/kolon adı gibi metadata hedefler.",
   "Veri kaydetmez.",
   "Vega'ya veri yazmaz.",
   "Import/senkron/export yapılmaz.",
   "Cari/sipariş/kasa/finans verisi okunmaz.",
   "sa kullanımı geçici ve orta-yüksek risklidir.",
-  "Metadata keşif fonksiyonu sonraki sürümde manuel ve maskeli şekilde eklenecek.",
+];
+
+const stockMovementMetadataFallbackRows = [
+  {
+    candidateTable: "Metadata keşif bekliyor",
+    candidateColumn: "Metadata keşif bekliyor",
+    matchedHint: "Manuel tetikleme",
+    possibleUsage: "Butona basılmadan çalışmaz",
+    controlNote: "Sonuç dosyaya veya local DB'ye kaydedilmez.",
+  },
 ];
 
 const topStockOutSafetyNotes = [
@@ -219,6 +233,11 @@ export default function VegaStockTrial() {
     items: [],
     metadata: defaultConnectionMetadata,
   });
+  const [metadataDiscoveryState, setMetadataDiscoveryState] = useState({
+    status: "idle",
+    message: "Metadata keşfi otomatik başlamaz. Sadece kullanıcı butona bastığında tablo/kolon adları geçici olarak listelenir.",
+    items: [],
+  });
 
   const handleManualStockTrial = async () => {
     if (!canUseVegaReadOnlyBridge()) {
@@ -256,10 +275,45 @@ export default function VegaStockTrial() {
     }
   };
 
+  const handleMetadataDiscovery = async () => {
+    if (!canUseVegaMetadataBridge()) {
+      setMetadataDiscoveryState({
+        status: "error",
+        message: "Electron güvenli metadata köprüsü bulunamadı. Metadata keşfi yalnızca desktop uygulamada manuel çalışır.",
+        items: [],
+      });
+      return;
+    }
+
+    setMetadataDiscoveryState({
+      status: "loading",
+      message: "Stok hareket metadata keşfi manuel olarak çalışıyor...",
+      items: [],
+    });
+
+    try {
+      const result = await discoverVegaStockMovementMetadata();
+      setMetadataDiscoveryState(result || {
+        status: "error",
+        message: "Metadata keşfi güvenli şekilde tamamlanamadı.",
+        items: [],
+      });
+    } catch {
+      setMetadataDiscoveryState({
+        status: "error",
+        message: "Metadata keşfi sırasında hata oluştu. Ham hata gizlendi.",
+        items: [],
+      });
+    }
+  };
+
   const hasVegaRows = stockState.items?.length > 0;
+  const hasMetadataRows = metadataDiscoveryState.items?.length > 0;
+  const metadataRows = hasMetadataRows ? metadataDiscoveryState.items : stockMovementMetadataFallbackRows;
   const visibleRows = hasVegaRows ? stockState.items : demoStockRows;
   const visibleStatus = stockState.status;
   const isStockTrialLoading = stockState.status === "loading";
+  const isMetadataDiscoveryLoading = metadataDiscoveryState.status === "loading";
   const connectionMetadata = { ...defaultConnectionMetadata, ...(stockState.metadata || {}) };
   const connectionCards = [
     { label: "Read-only mod", value: connectionMetadata.readOnlyEnabled ? "Açık" : "Kapalı" },
@@ -884,8 +938,8 @@ export default function VegaStockTrial() {
           <div className="vega-security-checklist-panel section-updated-highlight" id="vega-stock-movement-field-discovery">
             <span className="new-release-badge">YENİ · {currentReleaseVersion}</span>
             <div>
-              <h2>Stok Hareket Alanları Keşif Hazırlığı</h2>
-              <p>Top 100 stok çıkışı sorgusuna geçmeden önce yalnızca tablo/kolon doğrulama hazırlığı yapılır; canlı hareket verisi okunmaz.</p>
+              <h2>Stok Hareket Metadata Keşif Aracı</h2>
+              <p>Top 100 stok çıkışı sorgusuna geçmeden önce yalnızca tablo/kolon adı gibi metadata adayları manuel ve geçici olarak listelenir.</p>
             </div>
 
             <div className="vega-connection-grid" aria-label="Stok hareket alanları keşif durum kartları">
@@ -895,6 +949,21 @@ export default function VegaStockTrial() {
                   <strong>{card.value}</strong>
                 </div>
               ))}
+            </div>
+
+            <div className="vega-readonly-preview-action">
+              <div>
+                <h3>Stok Hareket Alanlarını Güvenli Keşfet</h3>
+                <p>Sayfa açılışında çalışmaz; yalnızca kullanıcı basınca F0102 kapsamındaki şema bilgisi geçici olarak listelenir.</p>
+              </div>
+              <button type="button" onClick={handleMetadataDiscovery} disabled={isMetadataDiscoveryLoading}>
+                {isMetadataDiscoveryLoading ? "Metadata keşfi çalışıyor..." : "Stok Hareket Alanlarını Güvenli Keşfet"}
+              </button>
+            </div>
+
+            <div className="vega-stock-warning">
+              <AlertTriangle size={18} />
+              <span>{metadataDiscoveryState.message}</span>
             </div>
 
             <div className="vega-readiness-panel">
@@ -933,6 +1002,31 @@ export default function VegaStockTrial() {
                 <strong>Keşif Güvenlik Notu</strong>
                 <span>{stockMovementDiscoverySafetyNotes.join(" ")}</span>
               </div>
+            </div>
+
+            <div className="vega-stock-table-wrap">
+              <table className="vega-stock-table">
+                <thead>
+                  <tr>
+                    <th>Aday Tablo</th>
+                    <th>Aday Kolon</th>
+                    <th>Eşleşen İpucu</th>
+                    <th>Olası Kullanım</th>
+                    <th>Kontrol Notu</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {metadataRows.map((row, index) => (
+                    <tr key={`${row.candidateTable}-${row.candidateColumn}-${index}`}>
+                      <td>{row.candidateTable}</td>
+                      <td>{row.candidateColumn}</td>
+                      <td>{row.matchedHint}</td>
+                      <td>{row.possibleUsage}</td>
+                      <td>{row.controlNote}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
 

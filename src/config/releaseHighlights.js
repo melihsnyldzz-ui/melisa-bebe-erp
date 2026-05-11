@@ -1,18 +1,18 @@
-export const currentReleaseVersion = "v1.84.1";
+export const currentReleaseVersion = "v1.84.2";
 
-export const currentReleaseTitle = "Vega Stok Hareket Alanları Keşif Hazırlığı";
+export const currentReleaseTitle = "Vega Stok Hareket Metadata Keşif Aracı";
 
 export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "vega-top-100-stock-out-preview"];
 
 export const releaseHighlightItems = [
-  "Vega Stok Deneme ekranına Top 100 stok çıkışı öncesi stok hareket alanları keşif hazırlık paneli eklendi.",
-  "Stok hareket tablosu, stok kodu, çıkış miktarı, hareket yönü, tarih ve stok kartı bağlantı alanlarının manuel doğrulanması gereken güvenli hazırlık sınırı görünür hale getirildi.",
-  "Bu sürüm canlı stok hareket verisi okumaz, Top 100 sorgusu çalıştırmaz, gerçek sorgu eklemez, veri yazma/import/senkron/export yapmaz ve hassas bilgi içermez.",
+  "Vega Stok Deneme ekranındaki stok hareket keşif hazırlığı, manuel tetiklenen metadata keşif aracına dönüştürüldü.",
+  "Araç yalnızca F0102 kapsamındaki tablo/kolon adları gibi şema bilgisini hedefler; canlı stok hareket satırı, Top 100 sonucu veya stok dışı veri okumaz.",
+  "Sonuç geçici frontend state içinde kalır; dosya/export, local DB kaydı, veri yazma/import/senkron ve hassas bağlantı bilgisi gösterimi eklenmedi.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
-  { id: "vega-stock-movement-field-discovery", label: "Stok Hareket Alanları Keşif Hazırlığı'na git" },
+  { id: "vega-stock-movement-field-discovery", label: "Stok Hareket Metadata Keşif Aracı'na git" },
   { id: "vega-top-100-stock-out-preview", label: "Vega Top 100 Stok Çıkışı'na git" },
   { id: "dashboard-top-100-stock-out-preview-summary", label: "Top 100 Stok Çıkışı Dashboard Özetine git" },
   { id: "dashboard-stock-field-label-clarification-plan", label: "Stok Alan Etiketi Planı'na git" },
@@ -139,7 +139,7 @@ export const releaseHighlightsByPage = {
     releaseHighlightItems,
     releaseJumpLinks: [
       { id: "vega-stock-trial-panel", label: "Vega Stok Deneme alanına git" },
-      { id: "vega-stock-movement-field-discovery", label: "Stok Hareket Alanları Keşif Hazırlığı'na git" },
+      { id: "vega-stock-movement-field-discovery", label: "Stok Hareket Metadata Keşif Aracı'na git" },
       { id: "vega-top-100-stock-out-preview", label: "Top 100 Stok Çıkışı alanına git" },
       { id: "vega-stock-user-validation-panel", label: "Kullanıcı Doğrulama Paneli'ne git" },
     ],
