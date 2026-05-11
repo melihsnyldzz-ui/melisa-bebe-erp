@@ -196,6 +196,61 @@ const v2StrictlyClosedAreas = [
   "Otomatik bağlantı",
 ];
 
+const v21PreTestPreparation = [
+  "Read-only SQL kullanıcısı hazır mı?",
+  ".env.local Git dışında mı?",
+  "Connection bilgisi repoda yok mu?",
+  "Otomatik bağlantı kapalı mı?",
+  "Yedek alındı mı?",
+  "Test sadece stokla sınırlı mı?",
+  "Testi yapacak kişi belli mi?",
+];
+
+const v21ManualTestSequence = [
+  "Uygulamayı aç.",
+  "Dashboard'da v2.0 güvenlik kapısını kontrol et.",
+  "Vega stok read-only ekranına git.",
+  "Manuel stok önizleme butonunu kullan.",
+  "Maksimum 20 satırlık sonucu kontrol et.",
+  "Stok kodu, ürün adı, barkod, beden, renk, marka ve miktar alanlarını gözle değerlendir.",
+  "Eksikleri sistem dışı manuel not al.",
+  "Hata varsa testi durdur.",
+];
+
+const v21StopRules = [
+  "Yazma işlemi görürsen dur.",
+  "Stok dışı veri görünürse dur.",
+  "20 satırdan fazla veri gelirse dur.",
+  "Connection bilgisi ekranda/logda görünürse dur.",
+  "Hata mesajında hassas bilgi görünürse dur.",
+  "Sistem otomatik bağlanmaya çalışırsa dur.",
+  "Top 100 veya metadata otomatik çalışırsa dur.",
+];
+
+const v21PostTestReportItems = [
+  "Test tarihi",
+  "Testi yapan kişi",
+  "Kullanılan SQL kullanıcı tipi: read-only / bilinmiyor",
+  "Görülen satır sayısı",
+  "Anlaşılamayan kolonlar",
+  "Eksik görülen alanlar",
+  "Hata var mı?",
+  "Stok pilotu devam edebilir mi?",
+];
+
+const v21NeverDoItems = [
+  "Veri yazma",
+  "Import",
+  "Export",
+  "Sync",
+  "Cari okuma",
+  "Sipariş okuma",
+  "Kasa/finans okuma",
+  "Top 100 çalıştırma",
+  "Metadata otomasyonu",
+  ".env.local paylaşma",
+];
+
 const topStockOutStatusCards = [
   { label: "Veri kaynağı", value: "Vega SQL read-only" },
   { label: "Kapsam", value: "Sadece stok çıkış hareketleri" },
@@ -1332,6 +1387,79 @@ export default function VegaStockTrial() {
               <strong>Kesin Kapalı Kalanlar</strong>
             </div>
             {v2StrictlyClosedAreas.map((item) => (
+              <div className="vega-security-checklist-item" key={item}>
+                <span aria-hidden="true">•</span>
+                <strong>{item}</strong>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="vega-security-checklist-panel section-updated-highlight" id="vega-stock-v21-manual-test-protocol">
+          <span className="new-release-badge">YENİ · {currentReleaseVersion}</span>
+          <div>
+            <h2>v2.1 Manuel Test Protokolü</h2>
+            <p>Read-only kullanıcı hazırlandıktan sonra gerçek bağlantı denemeden önce izlenecek pasif dur/kontrol et/raporla akışıdır; form, kayıt, dosya veya otomasyon başlatmaz.</p>
+          </div>
+
+          <div className="vega-security-checklist-grid" aria-label="Test öncesi hazırlık">
+            <div className="vega-security-checklist-item">
+              <span aria-hidden="true">A</span>
+              <strong>Test Öncesi Hazırlık</strong>
+            </div>
+            {v21PreTestPreparation.map((item) => (
+              <div className="vega-security-checklist-item" key={item}>
+                <span aria-hidden="true">•</span>
+                <strong>{item}</strong>
+              </div>
+            ))}
+          </div>
+
+          <div className="vega-security-checklist-grid" aria-label="Manuel test sırası">
+            <div className="vega-security-checklist-item">
+              <span aria-hidden="true">B</span>
+              <strong>Manuel Test Sırası</strong>
+            </div>
+            {v21ManualTestSequence.map((item) => (
+              <div className="vega-security-checklist-item" key={item}>
+                <span aria-hidden="true">•</span>
+                <strong>{item}</strong>
+              </div>
+            ))}
+          </div>
+
+          <div className="vega-security-checklist-grid" aria-label="Stop ve dur kuralları">
+            <div className="vega-security-checklist-item">
+              <span aria-hidden="true">C</span>
+              <strong>Stop / Dur Kuralları</strong>
+            </div>
+            {v21StopRules.map((item) => (
+              <div className="vega-security-checklist-item" key={item}>
+                <span aria-hidden="true">•</span>
+                <strong>{item}</strong>
+              </div>
+            ))}
+          </div>
+
+          <div className="vega-security-checklist-grid" aria-label="Test sonrası rapor başlıkları">
+            <div className="vega-security-checklist-item">
+              <span aria-hidden="true">D</span>
+              <strong>Test Sonrası Rapor</strong>
+            </div>
+            {v21PostTestReportItems.map((item) => (
+              <div className="vega-security-checklist-item" key={item}>
+                <span aria-hidden="true">•</span>
+                <strong>{item}</strong>
+              </div>
+            ))}
+          </div>
+
+          <div className="vega-security-checklist-grid" aria-label="Kesin yapılmayacaklar">
+            <div className="vega-security-checklist-item">
+              <span aria-hidden="true">E</span>
+              <strong>Kesin Yapılmayacaklar</strong>
+            </div>
+            {v21NeverDoItems.map((item) => (
               <div className="vega-security-checklist-item" key={item}>
                 <span aria-hidden="true">•</span>
                 <strong>{item}</strong>

@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v2.1.0",
+    title: "Read-only Stok Pilot Öncesi Manuel Test Protokolü",
+    area: "Vega Stok Deneme / Sistem Durumu",
+    description: "Stok/read-only ekranına read-only kullanıcı hazırlandıktan sonra izlenecek pasif v2.1 Manuel Test Protokolü eklendi; test öncesi hazırlık, manuel test sırası, stop/dur kuralları, test sonrası rapor başlıkları ve kesin yapılmayacaklar görünür hale getirildi; form/input/localStorage, dosya üretimi, gerçek test, SQL/Vega bağlantısı, SQL sorgusu, yeni veri okuma, veri yazma/import/export/sync, credential veya connection bilgisi eklenmedi.",
+  },
+  {
     version: "v2.0.0",
     title: "Read-only SQL Kullanıcısı ve Gerçek Stok Pilot Güvenlik Paketi",
     area: "Vega Stok Deneme / Sistem Durumu",

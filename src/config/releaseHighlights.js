@@ -1,17 +1,18 @@
-export const currentReleaseVersion = "v2.0.0";
+export const currentReleaseVersion = "v2.1.0";
 
-export const currentReleaseTitle = "Read-only SQL Kullanıcısı ve Gerçek Stok Pilot Güvenlik Paketi";
+export const currentReleaseTitle = "Read-only Stok Pilot Öncesi Manuel Test Protokolü";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "vega-stock-v2-security-gate"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "vega-stock-v21-manual-test-protocol"];
 
 export const releaseHighlightItems = [
-  "Stok/read-only ekranına read-only SQL kullanıcısı hazır olmadan gerçek kapalı pilotun başlamayacağını gösteren v2.0 Pilot Güvenlik Kapısı eklendi.",
-  "sa kullanımının kapalı pilot için önerilmediği, read-only kullanıcı geçişinin güvenlik önceliği olduğu ve pilot başlat/beklet kararları netleştirildi.",
-  "Bu sürüm SQL kullanıcısı oluşturmaz; SQL/Vega bağlantısı, sorgu, metadata otomasyonu, Top 100 aktivasyonu, veri yazma/import/senkron/export veya localStorage eklemez.",
+  "Stok/read-only ekranına read-only kullanıcı hazırlandıktan sonra izlenecek v2.1 Manuel Test Protokolü eklendi.",
+  "Test öncesi hazırlık, manuel test sırası, stop/dur kuralları, test sonrası rapor başlıkları ve kesin yapılmayacaklar pasif rehber olarak netleştirildi.",
+  "Bu sürüm gerçek test yapmaz; SQL/Vega bağlantısı, sorgu, metadata otomasyonu, Top 100 aktivasyonu, veri yazma/import/senkron/export veya localStorage eklemez.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
+  { id: "vega-stock-v21-manual-test-protocol", label: "v2.1 Manuel Test Protokolü'ne git" },
   { id: "vega-stock-v2-security-gate", label: "v2.0 Pilot Güvenlik Kapısı'na git" },
   { id: "vega-stock-closed-pilot-package", label: "Stok Kapalı Pilot Kullanım Paketi'ne git" },
   { id: "dashboard-erp-v1-pilot-summary", label: "ERP v1 Kapalı Pilot Özetine git" },
@@ -144,6 +145,7 @@ export const releaseHighlightsByPage = {
   vegaStockTrial: {
     releaseHighlightItems,
     releaseJumpLinks: [
+      { id: "vega-stock-v21-manual-test-protocol", label: "v2.1 Manuel Test Protokolü'ne git" },
       { id: "vega-stock-v2-security-gate", label: "v2.0 Pilot Güvenlik Kapısı'na git" },
       { id: "vega-stock-closed-pilot-package", label: "Stok Kapalı Pilot Kullanım Paketi'ne git" },
       { id: "vega-stock-trial-panel", label: "Vega Stok Deneme alanına git" },
@@ -151,7 +153,7 @@ export const releaseHighlightsByPage = {
       { id: "vega-top-100-stock-out-preview", label: "Top 100 Stok Çıkışı alanına git" },
       { id: "vega-stock-user-validation-panel", label: "Kullanıcı Doğrulama Paneli'ne git" },
     ],
-    updatedSectionIds: ["vega-stock-v2-security-gate", "vega-stock-closed-pilot-package"],
+    updatedSectionIds: ["vega-stock-v21-manual-test-protocol", "vega-stock-v2-security-gate"],
   },
   vegaImportPreview: {
     releaseHighlightItems,
