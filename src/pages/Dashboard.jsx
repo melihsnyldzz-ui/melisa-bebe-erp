@@ -1535,6 +1535,43 @@ const priceMarginGuideItems = [
   "Gerçek fiyat/marj işlemleri ayrı fazda planlanır.",
 ];
 
+const erpV1PilotGeneralStatus = [
+  { label: "Sistem", value: "Kapalı pilot hazırlığı" },
+  { label: "Canlı seviyesi", value: "Read-only" },
+  { label: "Vega", value: "Ana sistem olarak devam ediyor" },
+  { label: "İlk kapsam", value: "Sadece stok" },
+  { label: "Veri yazma", value: "Kapalı" },
+  { label: "Stok dışı modüller", value: "Kapalı" },
+];
+const erpV1PilotTodayUsage = [
+  "Dashboard'u aç",
+  "Stok read-only ekranına git",
+  "Manuel stok önizleme butonunu kullan",
+  "20 satırlık örneği kontrol et",
+  "Eksikleri sözlü/manual not al",
+];
+const erpV1PilotStockStatus = [
+  { label: "İlk smoke test", value: "Başarılı" },
+  { label: "Satır limiti", value: "20" },
+  { label: "Kullanıcı doğrulama akışı", value: "Hazır" },
+  { label: "Alan etiketi planı", value: "Hazır" },
+  { label: "Aktif stok geniş liste", value: "Sonraki faz" },
+  { label: "Top 100 stok çıkışı", value: "Ertelendi" },
+];
+const erpV1PilotSecurityStatus = [
+  { label: "sa kullanımı", value: "Geçici / orta-yüksek risk" },
+  { label: "Otomatik bağlantı", value: "Kapalı" },
+  { label: "Veri yazma/import/senkron/export", value: "Kapalı" },
+  { label: "Cari/sipariş/finans", value: "Kapalı" },
+  { label: ".env.local", value: "Git dışında" },
+  { label: "Connection bilgisi", value: "Repoda yok" },
+];
+const erpV1PilotNextDecisions = [
+  "Bu haliyle kapalı pilot başlatılsın mı?",
+  "Dashboard daha da sadeleşsin mi?",
+  "Aktif stoklar read-only ekranı sonraki fazda açılsın mı?",
+  "Read-only SQL kullanıcısı daha sonra hazırlanacak mı?",
+];
 
 export default function Dashboard() {
   const erpData = useErpData();
@@ -1551,15 +1588,19 @@ export default function Dashboard() {
           <span className="version-badge">
             {APP_VERSION} · {APP_STAGE}
           </span>
-          <p>Canlı özet</p>
+          <p>Kapalı pilot özeti</p>
           <h1>Melisa Bebe Yönetim Paneli</h1>
-          <span>Satış, tahsilat, stok ve müşteri performansını tek ekrandan takip edin.</span>
+          <span>ERP v1 kapalı pilot için yalnızca stok odaklı read-only gözlem ve güvenlik durumunu gösterir.</span>
         </div>
-        <button className="primary-action" onClick={() => setIsEndOfDayReportOpen((isOpen) => !isOpen)} type="button">
-          <ClipboardList size={18} />
-          {isEndOfDayReportOpen ? "Raporu Gizle" : "Gün Sonu Raporu"}
-        </button>
       </section>
+
+      <ErpV1PilotSummaryPanel />
+
+      <details className="commerce-profitability-center reporting-decision-center">
+        <summary>
+          <strong>Gelişmiş Hazırlık ve Teknik Detaylar</strong>
+          <span> Eski Dashboard panelleri silinmedi; kapalı pilotta ikincil kontrol alanı olarak burada tutulur.</span>
+        </summary>
 
       <div className="dashboard-period-selector" aria-label="Ana Panel dönem seçimi">
         {dashboardPeriodOptions.map((option) => (
@@ -1585,6 +1626,14 @@ export default function Dashboard() {
       <section className={`dashboard-decision-note ${dashboardData.patronNoteTone}`} aria-label="Patron Notu">
         <strong>Patron Notu</strong>
         <span>{dashboardData.patronNote}</span>
+      </section>
+
+      <section className="dashboard-decision-note" aria-label="Gelişmiş rapor kontrolü">
+        <strong>Gün Sonu Raporu</strong>
+        <button className="primary-action" onClick={() => setIsEndOfDayReportOpen((isOpen) => !isOpen)} type="button">
+          <ClipboardList size={18} />
+          {isEndOfDayReportOpen ? "Raporu Gizle" : "Gün Sonu Raporu"}
+        </button>
       </section>
 
       <OwnerView />
@@ -1725,7 +1774,76 @@ export default function Dashboard() {
       <CommerceInsights data={dashboardData.commerceInsights} sectionClass={dashboardSectionClass("dashboard-commerce-insights")}>
         <DashboardNewReleaseBadge sectionId="dashboard-commerce-insights" />
       </CommerceInsights>
+      </details>
     </>
+  );
+}
+
+function ErpV1PilotSummaryPanel() {
+  return (
+    <section className={`commerce-profitability-center reporting-decision-center ${dashboardSectionClass("dashboard-erp-v1-pilot-summary")}`} id="dashboard-erp-v1-pilot-summary">
+      <DashboardNewReleaseBadge sectionId="dashboard-erp-v1-pilot-summary" />
+      <div className="commerce-profitability-hero">
+        <div>
+          <p>ERP v1 kapalı pilot</p>
+          <h2>Stok Odaklı Read-only Pilot Özeti</h2>
+          <span>İlk ekranda yalnızca kapalı pilotun durumu, günlük kullanım sırası, stok read-only güvenliği ve sıradaki kararlar görünür.</span>
+        </div>
+      </div>
+
+      <CommercePanel title="Genel Durum" note="Kapalı pilotun çalışma sınırı; bu bölüm işlem başlatmaz.">
+        <div className="reporting-decision-status-grid">
+          {erpV1PilotGeneralStatus.map((item) => (
+            <article className="commerce-profitability-status-card" key={item.label}>
+              <span>{item.label}</span>
+              <strong>{item.value}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Bugünkü Kullanım" note="Pilot kullanıcı için kısa, manuel kullanım sırası.">
+        <div className="commerce-performance-grid">
+          {erpV1PilotTodayUsage.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Stok Read-only Durumu" note="Stok tarafının pilot başlangıç olgunluğu.">
+        <div className="reporting-decision-status-grid">
+          {erpV1PilotStockStatus.map((item) => (
+            <article className="commerce-profitability-status-card" key={item.label}>
+              <span>{item.label}</span>
+              <strong>{item.value}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Güvenlik Durumu" note="Kapalı pilotta açık kalması gereken güvenlik kilitleri.">
+        <div className="reporting-decision-status-grid">
+          {erpV1PilotSecurityStatus.map((item) => (
+            <article className="commerce-profitability-status-card" key={item.label}>
+              <span>{item.label}</span>
+              <strong>{item.value}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+
+      <CommercePanel title="Sıradaki Karar" note="Bu kararlar sistemde kaydedilmez; pilot toplantısı için görünür rehberdir.">
+        <div className="commerce-performance-grid">
+          {erpV1PilotNextDecisions.map((item) => (
+            <article className="commerce-performance-card" key={item}>
+              <strong>{item}</strong>
+            </article>
+          ))}
+        </div>
+      </CommercePanel>
+    </section>
   );
 }
 

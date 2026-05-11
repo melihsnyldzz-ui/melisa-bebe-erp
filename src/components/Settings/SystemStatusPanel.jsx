@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v1.86.0",
+    title: "ERP v1 Kapalı Pilot Tamamlama ve Sadeleştirme",
+    area: "Dashboard / Sistem Durumu",
+    description: "Dashboard ilk bakışta Genel Durum, Bugünkü Kullanım, Stok Read-only Durumu, Güvenlik Durumu ve Sıradaki Karar bölümlerine sadeleştirildi; detaylı teknik ve hazırlık panelleri silinmeden Gelişmiş Hazırlık ve Teknik Detaylar altında ikincil kapalı görünüme taşındı; SQL/Vega bağlantısı, yeni sorgu, yeni veri okuma, Top 100 aktivasyonu, metadata otomasyonu, veri yazma/import/senkron/export, localStorage veya hassas bilgi eklenmedi.",
+  },
+  {
     version: "v1.85.0",
     title: "Read-only Kapalı Pilot Canlıya Geçiş Hazırlığı",
     area: "Dashboard / Sistem Durumu",
