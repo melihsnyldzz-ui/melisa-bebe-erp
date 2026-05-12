@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import TerminalBarcodeQualityPanel from "../components/WarehouseTerminal/TerminalBarcodeQualityPanel.jsx";
 import TerminalPilotTestPanels from "../components/WarehouseTerminal/TerminalPilotTestPanels.jsx";
+import TerminalTrainingPanels from "../components/WarehouseTerminal/TerminalTrainingPanels.jsx";
 import WarehouseTerminalPanel from "../components/WarehouseTerminal/WarehouseTerminalPanel.jsx";
 import { useErpData } from "../context/ErpDataContext.jsx";
 
@@ -259,6 +260,7 @@ export default function WarehouseTerminal() {
         </div>
       </section>
 
+      <TerminalTrainingPanels />
       <TerminalPilotTestPanels />
 
       <section className="warehouse-operation-guide-grid">
