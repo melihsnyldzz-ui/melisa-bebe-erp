@@ -1,4 +1,6 @@
 import { useMemo, useState } from "react";
+import TerminalBarcodeQualityPanel from "../components/WarehouseTerminal/TerminalBarcodeQualityPanel.jsx";
+import TerminalPilotTestPanels from "../components/WarehouseTerminal/TerminalPilotTestPanels.jsx";
 import WarehouseTerminalPanel from "../components/WarehouseTerminal/WarehouseTerminalPanel.jsx";
 import { useErpData } from "../context/ErpDataContext.jsx";
 
@@ -222,30 +224,12 @@ export default function WarehouseTerminal() {
           <article className="warehouse-mock-barcode-card">
             <h3>Son Okunan Barkod</h3>
             <dl className="warehouse-mock-barcode-detail-grid">
-              <div>
-                <dt>Ham barkod</dt>
-                <dd>{lastMockBarcode?.rawBarcode || "-"}</dd>
-              </div>
-              <div>
-                <dt>Normalize edilmiş barkod</dt>
-                <dd>{lastMockBarcode?.normalizedBarcode || "-"}</dd>
-              </div>
-              <div>
-                <dt>Uzunluk</dt>
-                <dd>{lastMockBarcode ? lastMockBarcode.length : "-"}</dd>
-              </div>
-              <div>
-                <dt>Leading zero var mı?</dt>
-                <dd>{lastMockBarcode ? (lastMockBarcode.hasLeadingZero ? "Evet" : "Hayır") : "-"}</dd>
-              </div>
-              <div>
-                <dt>Sonda boşluk temizlendi mi?</dt>
-                <dd>{lastMockBarcode ? (lastMockBarcode.trailingSuffixCleaned ? "Evet" : "Hayır") : "-"}</dd>
-              </div>
-              <div>
-                <dt>Duplicate mı?</dt>
-                <dd>{lastMockBarcode ? (lastMockBarcode.isDuplicate ? "Evet" : "Hayır") : "-"}</dd>
-              </div>
+              <div><dt>Ham barkod</dt><dd>{lastMockBarcode?.rawBarcode || "-"}</dd></div>
+              <div><dt>Normalize edilmiş barkod</dt><dd>{lastMockBarcode?.normalizedBarcode || "-"}</dd></div>
+              <div><dt>Uzunluk</dt><dd>{lastMockBarcode ? lastMockBarcode.length : "-"}</dd></div>
+              <div><dt>Leading zero var mı?</dt><dd>{lastMockBarcode ? (lastMockBarcode.hasLeadingZero ? "Evet" : "Hayır") : "-"}</dd></div>
+              <div><dt>Sonda boşluk temizlendi mi?</dt><dd>{lastMockBarcode ? (lastMockBarcode.trailingSuffixCleaned ? "Evet" : "Hayır") : "-"}</dd></div>
+              <div><dt>Duplicate mı?</dt><dd>{lastMockBarcode ? (lastMockBarcode.isDuplicate ? "Evet" : "Hayır") : "-"}</dd></div>
             </dl>
           </article>
 
@@ -254,10 +238,7 @@ export default function WarehouseTerminal() {
             {mockProductRows.length > 0 ? (
               <dl className="warehouse-mock-barcode-detail-grid">
                 {mockProductRows.map((row) => (
-                  <div key={row.label}>
-                    <dt>{row.label}</dt>
-                    <dd>{row.value}</dd>
-                  </div>
+                  <div key={row.label}><dt>{row.label}</dt><dd>{row.value}</dd></div>
                 ))}
               </dl>
             ) : (
@@ -265,6 +246,8 @@ export default function WarehouseTerminal() {
             )}
           </article>
         </div>
+
+        <TerminalBarcodeQualityPanel lastMockBarcode={lastMockBarcode} />
 
         <div className="warehouse-mock-barcode-safety">
           <strong>Güvenlik Notu</strong>
@@ -276,39 +259,30 @@ export default function WarehouseTerminal() {
         </div>
       </section>
 
+      <TerminalPilotTestPanels />
+
       <section className="warehouse-operation-guide-grid">
         <article className="table-panel warehouse-operation-guide-card" id="warehouse-barcode-flow-summary">
-          <div className="section-heading">
-            <h2>Barkod Akış Özeti</h2>
-          </div>
+          <div className="section-heading"><h2>Barkod Akış Özeti</h2></div>
           <ol className="warehouse-operation-step-list">
-            {barcodeFlowSteps.map((step) => (
-              <li key={step}>{step}</li>
-            ))}
+            {barcodeFlowSteps.map((step) => <li key={step}>{step}</li>)}
           </ol>
         </article>
 
         <article className="table-panel warehouse-operation-guide-card">
-          <div className="section-heading">
-            <h2>Personel Saha Rehberi</h2>
-          </div>
+          <div className="section-heading"><h2>Personel Saha Rehberi</h2></div>
           <ul className="warehouse-operation-check-list">
-            {staffGuideItems.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
+            {staffGuideItems.map((item) => <li key={item}>{item}</li>)}
           </ul>
         </article>
       </section>
 
       <section className="table-panel warehouse-barcode-risk-panel" id="warehouse-barcode-risk-panel">
-        <div className="section-heading">
-          <h2>Barkod Riskleri</h2>
-        </div>
+        <div className="section-heading"><h2>Barkod Riskleri</h2></div>
         <div className="warehouse-barcode-risk-grid">
           {barcodeRiskCards.map((risk) => (
             <article className="warehouse-barcode-risk-card" key={risk.label}>
-              <strong>{risk.label}</strong>
-              <span>{risk.description}</span>
+              <strong>{risk.label}</strong><span>{risk.description}</span>
             </article>
           ))}
         </div>
@@ -316,54 +290,33 @@ export default function WarehouseTerminal() {
 
       <section className="table-panel warehouse-quality-center-panel section-updated-highlight" id="warehouse-stock-barcode-quality-center">
         <div className="section-heading warehouse-quality-heading">
-          <div>
-            <h2>Stok ve Barkod Kalite Kontrol Merkezi</h2>
-            <p>Sayım ve barkod operasyonu öncesinde riskli stok ve barkod kayıtlarını pasif/mock düzeyde görünür hale getiren kontrol alanı.</p>
-          </div>
+          <div><h2>Stok ve Barkod Kalite Kontrol Merkezi</h2><p>Sayım ve barkod operasyonu öncesinde riskli stok ve barkod kayıtlarını pasif/mock düzeyde görünür hale getiren kontrol alanı.</p></div>
         </div>
         <div className="warehouse-quality-card-grid">
           {qualityControlGroups.map((group) => (
             <article className="warehouse-quality-card" key={group.title}>
-              <h3>{group.title}</h3>
-              <ul>
-                {group.items.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
+              <h3>{group.title}</h3><ul>{group.items.map((item) => <li key={item}>{item}</li>)}</ul>
             </article>
           ))}
         </div>
       </section>
 
       <section className="table-panel warehouse-risk-priority-panel section-updated-highlight" id="warehouse-risk-priority-matrix">
-        <div className="section-heading warehouse-quality-heading">
-          <div>
-            <h2>Risk Öncelik Matrisi</h2>
-            <p>Personelin sahada neyi ayıracağını ve yöneticinin hangi risklerde devreye gireceğini statik olarak özetler.</p>
-          </div>
-        </div>
+        <div className="section-heading warehouse-quality-heading"><div><h2>Risk Öncelik Matrisi</h2><p>Personelin sahada neyi ayıracağını ve yöneticinin hangi risklerde devreye gireceğini statik olarak özetler.</p></div></div>
         <div className="warehouse-risk-priority-grid">
           {riskPriorityRows.map((row) => (
             <article className={`warehouse-risk-priority-card ${row.tone}`} key={`${row.level}-${row.risk}`}>
-              <span>{row.level}</span>
-              <strong>{row.risk}</strong>
-              <p>{row.staffAction}</p>
-              <small>Yönetici kontrolü: {row.managerCheck}</small>
+              <span>{row.level}</span><strong>{row.risk}</strong><p>{row.staffAction}</p><small>Yönetici kontrolü: {row.managerCheck}</small>
             </article>
           ))}
         </div>
       </section>
 
       <section className="table-panel warehouse-operation-summary-panel">
-        <div className="section-heading">
-          <h2>Sayım Operasyon Özeti</h2>
-        </div>
+        <div className="section-heading"><h2>Sayım Operasyon Özeti</h2></div>
         <div className="warehouse-operation-summary-grid">
           {operationSummaryItems.map((item) => (
-            <article className="warehouse-operation-summary-card" key={item.label}>
-              <span>{item.label}</span>
-              <strong>{item.value}</strong>
-            </article>
+            <article className="warehouse-operation-summary-card" key={item.label}><span>{item.label}</span><strong>{item.value}</strong></article>
           ))}
         </div>
       </section>
