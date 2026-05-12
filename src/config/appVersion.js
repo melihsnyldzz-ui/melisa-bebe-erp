@@ -1,14 +1,34 @@
-export const APP_VERSION = "v3.9.0";
-export const APP_STAGE = "Şirket Test Günü Son Kontrol Özeti";
+export const APP_VERSION = "v4.3.0";
+export const APP_STAGE = "Şirket Test Günü Rolleri ve Sorumlulukları";
 
 export const releaseHighlights = [
-  "Terminal Test Sonucu ve Karar Merkezi eklendi.",
-  "Test sonucu okuma rehberi, depo hata notları formatı, yönetici karar paneli ve son kontrol özeti görünür hale getirildi.",
-  "Terminal Eğitim ve Prova Merkezi, pilot yol haritası, şirket checklisti ve barkod kalite kontrolü korunur.",
-  "Bu sürüm yalnızca pasif eğitim, not alma formatı ve karar görünümü ekler.",
+  "Terminal Pilot Final Sadeleştirme Merkezi eklendi.",
+  "Barkod senaryo kartları, yönetici tek sayfa özeti ve rol/sorumluluk akışı görünür hale getirildi.",
+  "Terminal eğitim merkezi, karar merkezi, pilot yol haritası ve şirket checklisti korunur.",
+  "Bu sürüm yalnızca pasif eğitim, prova, rol ve karar görünümü ekler.",
 ];
 
 export const versionHistory = [
+  {
+    version: "v4.3.0",
+    title: "Şirket Test Günü Rolleri ve Sorumlulukları",
+    note: "Depo personeli, yönetici, teknik kişi, test sorumlusu ve patron rollerini tek akışta gösterir.",
+  },
+  {
+    version: "v4.2.0",
+    title: "Yönetici İçin Tek Sayfa Pilot Özeti",
+    note: "Bugünkü amaç, başarı ölçüsü, kritik karar ve sonraki faz koşullarını yönetici için sadeleştirir.",
+  },
+  {
+    version: "v4.1.0",
+    title: "Barkod Senaryo Kartları Görsel İyileştirme",
+    note: "Normal, leading zero, kısa, uzun, duplicate ve suffix senaryolarını kart mantığında görünür kılar.",
+  },
+  {
+    version: "v4.0.0",
+    title: "Terminal Pilot Öncesi Final Sadeleştirme",
+    note: "Test günü ekranda kimin neye bakacağını sadeleştirir.",
+  },
   {
     version: "v3.9.0",
     title: "Şirket Test Günü Son Kontrol Özeti",
@@ -28,25 +48,5 @@ export const versionHistory = [
     version: "v3.6.0",
     title: "Terminal Test Sonucu Okuma Rehberi",
     note: "Geçti, Uyarı ve Dur sonuçlarının sahada nasıl okunacağını sadeleştirir.",
-  },
-  {
-    version: "v3.5.0",
-    title: "Şirket Test Günü Komuta Merkezi",
-    note: "Depo, yönetici ve teknik kontrol için test günü görev sırasını pasif eğitim/prova paneli olarak gösterir.",
-  },
-  {
-    version: "v3.4.0",
-    title: "Depo Kullanıcı Eğitim Paneli",
-    note: "Depo kullanıcısının barkod kalite sonucunu nasıl okuyacağını ve hangi notları alacağını sadeleştirir.",
-  },
-  {
-    version: "v3.3.0",
-    title: "Barkod Test Senaryoları Hazır Liste",
-    note: "Normal, leading zero, kısa, uzun, duplicate ve suffix örnekleriyle test prova listesini görünür kılar.",
-  },
-  {
-    version: "v3.2.0",
-    title: "Terminal Test Ekranı Görsel Sadeleştirme",
-    note: "Mock barkod ekranında operatörün önce kalite sonucuna odaklanmasını sağlar.",
   },
 ];
