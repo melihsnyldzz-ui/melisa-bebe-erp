@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v5.0.0",
+    title: "Şirket Pilot Öncesi Hazır / Beklet Karar Merkezi",
+    area: "Depo Terminali / Sistem Durumu",
+    description: "Şirket pilotu öncesinde local build sonrası ekran kontrolü, test edilecek ekran listesi ve hazır/beklet kararını tek panelde toplar; yalnızca pasif eğitim, prova, rol ve karar görünümü ekler.",
+  },
+  {
     version: "v2.4.0",
     title: "El Terminali Mock Barkod Test Ekranı",
     area: "El Terminali / Sistem Durumu",

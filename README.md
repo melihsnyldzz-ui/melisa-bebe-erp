@@ -6,8 +6,8 @@ Melisa Bebe ERP, Melisa Bebe Tekstil San. ve Tic. Ltd. Şti. için Vega’dan ka
 
 ## Mevcut Durum
 
-- Güncel sürüm: v1.62.0
-- Aşama: Stok Önizleme Test Sonrası Temizlik ve Paket Hazırlığı
+- Güncel sürüm: v5.0.0
+- Aşama: Şirket Pilot Öncesi Hazır / Beklet Karar Merkezi
 - Build kontrolü: GitHub Actions
 - El terminali: okuma, son okutulanlar, sayım sepeti, rapor/CSV/JSON önizleme hazırlığı
 - Stok ve barkod kalite kontrolü: pasif/mock risk görünürlüğü
