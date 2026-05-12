@@ -1,18 +1,19 @@
-export const currentReleaseVersion = "v4.3.0";
+export const currentReleaseVersion = "v4.7.0";
 
-export const currentReleaseTitle = "Şirket Test Günü Rolleri ve Sorumlulukları";
+export const currentReleaseTitle = "Test Günü Tek Sayfa Özet Paneli";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "warehouse-terminal-final-simplification-center"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "warehouse-one-page-test-summary"];
 
 export const releaseHighlightItems = [
-  "Terminal Pilot Final Sadeleştirme Merkezi eklendi.",
-  "Barkod senaryo kartları, yönetici tek sayfa özeti ve rol/sorumluluk akışı görünür hale getirildi.",
-  "Terminal eğitim merkezi, karar merkezi, pilot yol haritası ve şirket checklisti korunur.",
+  "Test Günü Tek Sayfa Özet Paneli eklendi.",
+  "Ekran bölüm sıralaması, depo hızlı kullanım kartı, yönetici hızlı karar kartı ve test günü özet akışı görünür hale getirildi.",
+  "Terminal final sadeleştirme, eğitim merkezi, karar merkezi, pilot yol haritası ve şirket checklisti korunur.",
   "Bu sürüm yalnızca pasif eğitim, prova, rol ve karar görünümü ekler.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
+  { id: "warehouse-one-page-test-summary", label: "Test Günü Tek Sayfa Özet Paneli'ne git" },
   { id: "warehouse-terminal-final-simplification-center", label: "Terminal Pilot Final Sadeleştirme Merkezi'ne git" },
   { id: "warehouse-terminal-final-control-center", label: "Terminal Test Sonucu ve Karar Merkezi'ne git" },
   { id: "warehouse-terminal-training-center", label: "Terminal Eğitim ve Prova Merkezi'ne git" },
@@ -46,6 +47,7 @@ export const releaseHighlightsByPage = {
   warehouseTerminal: {
     releaseHighlightItems,
     releaseJumpLinks: [
+      { id: "warehouse-one-page-test-summary", label: "Test Günü Tek Sayfa Özet Paneli'ne git" },
       { id: "warehouse-terminal-final-simplification-center", label: "Terminal Pilot Final Sadeleştirme Merkezi'ne git" },
       { id: "warehouse-terminal-final-control-center", label: "Terminal Test Sonucu ve Karar Merkezi'ne git" },
       { id: "warehouse-terminal-training-center", label: "Terminal Eğitim ve Prova Merkezi'ne git" },
@@ -59,7 +61,7 @@ export const releaseHighlightsByPage = {
       { id: "warehouse-risk-priority-matrix", label: "Risk Öncelik Matrisi'ne git" },
       { id: "warehouse-barcode-risk-panel", label: "Barkod Riskleri'ne git" },
     ],
-    updatedSectionIds: ["warehouse-terminal-final-simplification-center", "warehouse-terminal-final-control-center", "warehouse-terminal-training-center", "warehouse-terminal-next-roadmap", "warehouse-company-first-real-test-checklist", "warehouse-terminal-barcode-quality", "warehouse-erp-terminal-test-plan"],
+    updatedSectionIds: ["warehouse-one-page-test-summary", "warehouse-terminal-final-simplification-center", "warehouse-terminal-final-control-center", "warehouse-terminal-training-center", "warehouse-terminal-next-roadmap", "warehouse-company-first-real-test-checklist", "warehouse-terminal-barcode-quality", "warehouse-erp-terminal-test-plan"],
   },
   settings: {
     releaseHighlightItems,
