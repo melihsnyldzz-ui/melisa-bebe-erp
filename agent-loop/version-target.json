@@ -1,0 +1,16 @@
+{
+  "targetVersion": "1.82.0",
+  "currentVersionSource": "package.json",
+  "mode": "version-target-loop",
+  "maxIterations": 3,
+  "autoFixBuildErrors": true,
+  "autoFixLintErrors": true,
+  "autoFixTestErrors": true,
+  "allowPackageVersionUpdate": true,
+  "allowChangelogUpdate": true,
+  "requireHumanApprovalOnlyForStopRules": true,
+  "stopOnHighRisk": true,
+  "stopOnSecretAccess": true,
+  "stopOnDeploy": true,
+  "stopOnDatabaseWrite": true
+}

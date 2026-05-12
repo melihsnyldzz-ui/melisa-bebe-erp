@@ -1,5 +1,6 @@
 import { HeartPulse } from "lucide-react";
 import { useMemo } from "react";
+import { APP_STAGE, APP_VERSION, releaseHighlights, versionHistory } from "../../config/appVersion.js";
 import { useErpData } from "../../context/ErpDataContext.jsx";
 import { formatDateTR, getTodayISO } from "../../utils/dateUtils.js";
 import { formatCurrency, formatNumber } from "../../utils/formatters.js";
@@ -53,6 +54,26 @@ export default function SystemHealthSettings() {
             <strong>{row.value}</strong>
           </div>
         ))}
+      </div>
+      <div className="version-history-panel">
+        <div>
+          <span className="data-mode-badge persistent">{APP_VERSION}</span>
+          <h3>{APP_STAGE}</h3>
+        </div>
+        <ul className="compact-check-list">
+          {releaseHighlights.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+        <div className="version-history-list">
+          {versionHistory.map((item) => (
+            <article className="version-history-item" key={item.version}>
+              <strong>{item.version}</strong>
+              <span>{item.title}</span>
+              <p>{item.note}</p>
+            </article>
+          ))}
+        </div>
       </div>
     </section>
   );

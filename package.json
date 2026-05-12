@@ -1,7 +1,7 @@
 {
   "name": "melisa-bebe-erp-dashboard",
   "private": true,
-  "version": "1.0.0",
+  "version": "2.3.0",
   "type": "module",
   "main": "electron/main.cjs",
   "scripts": {
@@ -15,7 +15,19 @@
     "electron:build": "npm run build -- --base ./ && electron-builder",
     "preview": "vite preview --host 127.0.0.1",
     "vega:readonly-stock-smoke": "node scripts/vega-readonly-stock-smoke-test.mjs",
-    "vega:readonly-connection-ping": "node scripts/vega-readonly-connection-ping.mjs"
+    "vega:readonly-connection-ping": "node scripts/vega-readonly-connection-ping.mjs",
+    "agent:task": "node scripts/agent-loop-task-reader.mjs",
+    "agent:review": "node scripts/agent-loop-review.mjs",
+    "agent:prompt": "node scripts/agent-loop-generate-prompt.mjs",
+    "agent:loop": "node scripts/agent-loop-runner.mjs",
+    "agent:risk": "node scripts/agent-loop-risk-guard.mjs",
+    "agent:version": "node scripts/agent-loop-version-runner.mjs",
+    "agent:auto": "node scripts/agent-loop-autonomous-runner.mjs",
+    "agent:loop:dry": "node scripts/agent-loop-orchestrator.mjs --dry-run",
+    "agent:loop:once": "node scripts/agent-loop-orchestrator.mjs --once",
+    "agent:loop:run": "node scripts/agent-loop-orchestrator.mjs --loop --max-turns=3",
+    "agent:loop:auto": "node scripts/agent-loop-orchestrator.mjs --loop --max-turns=3 --auto-review",
+    "agent:loop:cleanup": "node scripts/agent-loop-orchestrator.mjs --cleanup-temp"
   },
   "build": {
     "appId": "com.melisabebe.erp",

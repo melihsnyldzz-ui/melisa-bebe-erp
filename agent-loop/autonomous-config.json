@@ -1,0 +1,19 @@
+{
+  "mode": "autonomous-erp-development-loop",
+  "enabled": true,
+  "maxVersionsPerRun": 1,
+  "maxIterationsPerVersion": 3,
+  "autoSelectNextVersion": true,
+  "autoUpdateTaskFile": true,
+  "autoUpdateVersionTarget": true,
+  "autoUpdateChangelog": true,
+  "autoGenerateNextPrompt": true,
+  "allowCodeChanges": true,
+  "allowPackageVersionUpdate": true,
+  "requireHumanApprovalOnlyForStopRules": true,
+  "stopBeforeGitCommit": true,
+  "stopBeforeGitPush": true,
+  "stopBeforeDeploy": true,
+  "stopBeforeDatabaseWrite": true,
+  "stopBeforeSecretAccess": true
+}

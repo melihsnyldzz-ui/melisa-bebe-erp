@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { AlertTriangle, ArrowDownLeft, ArrowUpRight, Boxes, Repeat2 } from "lucide-react";
+import { AlertTriangle, ArrowDownLeft, ArrowUpRight, Repeat2 } from "lucide-react";
 import KpiCard from "../components/Dashboard/KpiCard.jsx";
 import StockMovementFilters from "../components/StockMovements/StockMovementFilters.jsx";
 import StockMovementTable from "../components/StockMovements/StockMovementTable.jsx";

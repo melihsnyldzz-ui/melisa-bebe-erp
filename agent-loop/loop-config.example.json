@@ -1,0 +1,39 @@
+{
+  "projectName": "melisa-bebe-erp",
+  "mode": "version-target-loop",
+  "maxIterations": 5,
+  "requireHumanApprovalFor": [
+    "git push",
+    "git commit",
+    "deploy",
+    "database write",
+    "vega live database write",
+    "migration",
+    "file delete",
+    "secret access",
+    "production config change",
+    "hosting panel operation",
+    "cpanel operation"
+  ],
+  "safeCommands": [
+    "git status --short",
+    "git diff --stat",
+    "git diff --name-only",
+    "npm run build",
+    "npm run lint",
+    "npm test",
+    "node scripts/agent-loop-risk-guard.mjs",
+    "node scripts/agent-loop-version-runner.mjs"
+  ],
+  "blockedCommands": [
+    "git push",
+    "git commit",
+    "rm -rf",
+    "del /s",
+    "rmdir /s",
+    "npm publish",
+    "vercel --prod",
+    "netlify deploy --prod",
+    "firebase deploy"
+  ]
+}

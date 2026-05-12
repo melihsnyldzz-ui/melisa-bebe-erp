@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v2.3.0",
+    title: "Read-only Stok Pilot Öncesi Yerel Hazırlık Kontrolü",
+    area: "Vega Stok Deneme / Sistem Durumu",
+    description: "Ev ortamında gerçek SQL/Vega bağlantısı kurmadan ve .env.local okumadan local proje, build, güvenlik dosyaları ve pilot öncesi hazır/eksik durumunu pasif kartlarla görünür hale getirir; mevcut Pilot Kullanım Merkezi, manuel stok read-only butonu, 20 satır sınırı, Top 100 kilidi ve metadata manuel sınırı korunur.",
+  },
+  {
     version: "v2.2.0",
     title: "Stok Read-only Pilot Ekranı Görsel Sadeleştirme ve Kullanıcı Odaklama",
     area: "Vega Stok Deneme / Sistem Durumu",

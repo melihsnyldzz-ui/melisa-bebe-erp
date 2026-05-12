@@ -137,6 +137,65 @@ const closedPilotDecisionOptions = [
   "Önce barkod alanı doğrulansın",
 ];
 
+const localReadinessSections = [
+  {
+    title: "Local Proje Durumu",
+    items: [
+      "main branch kullanılmalı.",
+      "origin/main ile aynı olmalı.",
+      "çalışma alanı temiz olmalı.",
+      "npm run build başarılı olmalı.",
+      "sadece mevcut Vite büyük chunk uyarısı kabul edilebilir.",
+      "stash’e dokunulmamalı.",
+    ],
+  },
+  {
+    title: "Güvenlik Dosyaları",
+    items: [
+      ".env.local Git dışında kalmalı.",
+      ".env.local içeriği ekranda gösterilmemeli.",
+      "connection bilgisi repoda olmamalı.",
+      "credential loglanmamalı.",
+      "hata mesajında hassas bilgi görünmemeli.",
+    ],
+  },
+  {
+    title: "Pilot Öncesi Yapılmayacaklar",
+    items: [
+      "SQL/Vega bağlantısı deneme.",
+      "SQL sorgusu çalıştırma.",
+      "gerçek stok verisi okuma.",
+      "Top 100 çalıştırma.",
+      "Metadata keşfi çalıştırma.",
+      "Cari/sipariş/kasa/finans açma.",
+      "Export/import/sync yapma.",
+    ],
+  },
+  {
+    title: "Evde Yapılabilecek Güvenli Kontroller",
+    items: [
+      "Uygulama açılıyor mu?",
+      "Stok pilot ekranı anlaşılır mı?",
+      "Pilot Kullanım Merkezi ilk bakışta net mi?",
+      "Manuel stok butonu açıklaması görünüyor mu?",
+      "Güvenlik kapısı ve test protokolü kapalı detay olarak duruyor mu?",
+      "Build başarılı mı?",
+      "Git temiz mi?",
+    ],
+  },
+  {
+    title: "Şirket Ortamında Yapılacaklar",
+    items: [
+      "Read-only SQL kullanıcısı hazırlanacak.",
+      "Bağlantı bilgisi sadece .env.local içine yazılacak.",
+      "İlk test manuel başlatılacak.",
+      "Maksimum 20 satır kontrol edilecek.",
+      "Hata varsa durulacak.",
+      "Stok dışı alanlar kapalı kalacak.",
+    ],
+  },
+];
+
 const closedPilotLockedAreas = [
   "Top 100 stok çıkışı",
   "Metadata keşfi",
@@ -1300,6 +1359,29 @@ export default function VegaStockTrial() {
               <strong>Manuel Buton Notu</strong>
               <span>Bu buton sadece manuel ve sınırlı read-only stok önizleme içindir.</span>
             </div>
+          </div>
+        </div>
+
+        <div className="vega-security-checklist-panel section-updated-highlight" id="vega-stock-local-readiness-check">
+          <span className="new-release-badge">YENİ · {currentReleaseVersion}</span>
+          <div>
+            <h2>v2.3 Yerel Hazırlık Kontrolü</h2>
+            <p>
+              Ev ortamında pilot öncesi hazırlığı görünür kılan pasif rehberdir; SQL/Vega bağlantısı kurmaz,
+              sorgu çalıştırmaz, gerçek stok verisi okumaz ve .env.local içeriğini göstermez.
+            </p>
+          </div>
+          <div className="vega-connection-grid" aria-label="v2.3 yerel hazırlık kontrol kartları">
+            {localReadinessSections.map((section) => (
+              <div className="vega-connection-card" key={section.title}>
+                <span>{section.title}</span>
+                <ul className="compact-check-list">
+                  {section.items.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
 

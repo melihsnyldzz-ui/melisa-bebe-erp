@@ -5280,7 +5280,9 @@ button {
   gap: 10px;
 }
 
-.version-history-card {
+.version-history-card,
+.version-history-item,
+.local-readiness-card {
   display: grid;
   gap: 8px;
   padding: 12px;
@@ -5294,21 +5296,50 @@ button {
   gap: 4px;
 }
 
-.version-history-card strong {
+.version-history-card strong,
+.version-history-item strong {
   color: var(--text);
   font-size: 0.95rem;
   line-height: 1.35;
 }
 
-.version-history-card span {
+.version-history-card span,
+.version-history-item span,
+.local-readiness-card h3 {
   color: #1864ab;
   font-size: 0.8rem;
   font-weight: 850;
 }
 
-.version-history-card p {
+.version-history-card p,
+.version-history-item p {
   color: var(--muted);
   font-size: 0.88rem;
+}
+
+.local-readiness-panel {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.local-readiness-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.compact-check-list {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding-left: 18px;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.compact-check-list li::marker {
+  color: var(--red);
 }
 
 .live-test-center-panel {
@@ -6726,7 +6757,8 @@ tr:last-child td {
   .import-confirm-summary,
   .column-mapping-grid,
   .import-summary-grid,
-  .settings-grid {
+  .settings-grid,
+  .local-readiness-grid {
     grid-template-columns: 1fr;
   }
 

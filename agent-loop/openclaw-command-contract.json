@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "project": "Melisa Bebe ERP",
+  "scope": "local-only",
+  "commands": [
+    {
+      "name": "dry-run",
+      "localCommand": "npm run agent:loop:dry",
+      "writesData": false,
+      "usesSecrets": false
+    },
+    {
+      "name": "syntax-check",
+      "localCommand": "node --check scripts/agent-loop-orchestrator.mjs",
+      "writesData": false,
+      "usesSecrets": false
+    },
+    {
+      "name": "build",
+      "localCommand": "npm run build",
+      "writesData": false,
+      "usesSecrets": false
+    }
+  ],
+  "blockedActions": [
+    "git add",
+    "git commit",
+    "git push",
+    "git pull",
+    "package install",
+    "database write",
+    "secret read",
+    "webhook integration",
+    "remote approval",
+    "gateway integration",
+    "external service integration"
+  ],
+  "outOfScope": [
+    "Telegram",
+    "OpenClaw",
+    "webhook",
+    "remote approval",
+    "gateway",
+    "external service integration"
+  ]
+}
