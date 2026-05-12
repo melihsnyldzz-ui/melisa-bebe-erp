@@ -1,14 +1,34 @@
-export const APP_VERSION = "v2.7.0";
-export const APP_STAGE = "Şirket Ortamı İlk Gerçek Test Checklisti";
+export const APP_VERSION = "v3.1.0";
+export const APP_STAGE = "Pilot Sonrası Hata ve Geri Bildirim Planı";
 
 export const releaseHighlights = [
-  "ERP + el terminali entegrasyon test planı görünür hale getirildi.",
-  "Mock barkod ekranına kalite kontrol göstergeleri, uyarılar ve operatör notları eklendi.",
-  "Şirket ortamında yapılacak ilk gerçek read-only stok testi için pasif checklist hazırlandı.",
-  "Bu sürüm gerçek Vega/SQL bağlantısı, gerçek stok araması, veri yazma, import/export/sync, localStorage veya credential eklemez.",
+  "Terminal ve ERP pilot yol haritası dört güvenli adımda görünür hale getirildi.",
+  "Mock kullanım iyileştirme, barkoddan stok köprüsü tasarımı, pilot başlatma kapısı ve pilot sonrası geri bildirim planı eklendi.",
+  "Şirket ortamı test checklisti, barkod kalite kontrolü ve ERP + el terminali test planı korunur.",
+  "Bu sürüm gerçek Vega/SQL bağlantısı, gerçek stok araması, API endpoint, veri yazma, import/export/sync, localStorage veya credential eklemez.",
 ];
 
 export const versionHistory = [
+  {
+    version: "v3.1.0",
+    title: "Pilot Sonrası Hata ve Geri Bildirim Planı",
+    note: "Mock testten şirket pilotuna geçişi ve pilot sonrası hata/geri bildirim gündemini pasif yol haritası olarak gösterir.",
+  },
+  {
+    version: "v3.0.0",
+    title: "Şirket Pilot Başlatma Kapısı",
+    note: "Pilotun yalnızca tüm read-only ve terminal kalite şartları sağlanırsa başlaması gerektiğini netleştirir.",
+  },
+  {
+    version: "v2.9.0",
+    title: "Barkoddan Stok Arama Köprüsü Pasif Tasarım",
+    note: "Barkod normalize sonucunun ileride read-only stok arama anahtarı olacağı pasif tasarımı gösterir.",
+  },
+  {
+    version: "v2.8.0",
+    title: "Terminal Mock Test Kullanım İyileştirme",
+    note: "Operatörün mock test sonucuna göre Geçti/Uyarı/Dur kararını nasıl okuyacağını sadeleştirir.",
+  },
   {
     version: "v2.7.0",
     title: "Şirket Ortamı İlk Gerçek Test Checklisti",
@@ -28,15 +48,5 @@ export const versionHistory = [
     version: "v2.4.0",
     title: "El Terminali Mock Barkod Test Ekranı",
     note: "Gerçek Vega/SQL bağlantısı olmadan barkod yakalama, normalize etme, leading zero ve duplicate guard davranışını mock ekranda gösterir.",
-  },
-  {
-    version: "v2.3.0",
-    title: "Read-only Stok Pilot Öncesi Yerel Hazırlık Kontrolü",
-    note: "SQL/Vega bağlantısı denemeden, ev ortamında güvenli hazırlık kontrolünü görünür kılar.",
-  },
-  {
-    version: "v2.2.0",
-    title: "Stok Read-only Pilot Ekranı Görsel Sadeleştirme ve Kullanıcı Odaklama",
-    note: "Pilot ekranının ilk bakışta daha anlaşılır olması için sadeleştirme hattı.",
   },
 ];
