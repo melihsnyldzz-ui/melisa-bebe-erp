@@ -42,6 +42,40 @@ const feedbackItems = [
   "Bir sonraki faz için en kritik eksik ne?",
 ];
 
+const resultReadingGuide = [
+  "Geçti: Mock barkod davranışı beklenen düzeyde.",
+  "Uyarı: Barkod tekrar okutulmalı ve not alınmalı.",
+  "Dur: Test akışı bekletilmeli ve sebep yazılmalı.",
+  "Boş barkod veya rakam dışı karakter varsa ürün eşleştirme düşünülmemeli.",
+  "Duplicate uyarısı varsa aynı ürün tekrar okutulmadan önce kontrol edilmeli.",
+];
+
+const depotIssueNoteFormat = [
+  "Barkod:",
+  "Ürün / raf bilgisi:",
+  "Görülen durum: Geçti / Uyarı / Dur",
+  "Personel notu:",
+  "Yönetici kontrolü gerekiyor mu?",
+  "Bir sonraki deneme sonucu:",
+];
+
+const managerDecisionPanel = [
+  "Mock test başarılıysa şirket test günü planına geçilebilir.",
+  "Depo notları yoğun ise önce eğitim tekrarlanır.",
+  "Barkod kalite sorunu varsa terminal ayarları tekrar gözden geçirilir.",
+  "ERP stok ekranı anlaşılmıyorsa kolon açıklamaları sadeleştirilir.",
+  "Tüm notlar temizse sınırlı görüntüleme pilotu planlanır.",
+];
+
+const finalDaySummary = [
+  "Test sorumlusu belli mi?",
+  "Depo personeli hangi ekrana bakacağını biliyor mu?",
+  "Hazır barkod senaryoları denendi mi?",
+  "Kalite sonucu nasıl okunacak anlatıldı mı?",
+  "Notlar sistem dışında tek listede toplanacak mı?",
+  "Gün sonu karar toplantısı yapılacak mı?",
+];
+
 function TrainingCard({ title, items }) {
   return (
     <article className="warehouse-mock-barcode-card">
@@ -57,27 +91,44 @@ function TrainingCard({ title, items }) {
 
 export default function TerminalTrainingPanels() {
   return (
-    <section className="table-panel warehouse-mock-barcode-panel section-updated-highlight" id="warehouse-terminal-training-center">
-      <div className="section-heading warehouse-quality-heading">
-        <div>
-          <h2>Terminal Eğitim ve Prova Merkezi</h2>
-          <p>Mock barkod ekranını depo personeli ve yönetici için daha anlaşılır hale getiren pasif eğitim alanı.</p>
+    <>
+      <section className="table-panel warehouse-mock-barcode-panel section-updated-highlight" id="warehouse-terminal-training-center">
+        <div className="section-heading warehouse-quality-heading">
+          <div>
+            <h2>Terminal Eğitim ve Prova Merkezi</h2>
+            <p>Mock barkod ekranını depo personeli ve yönetici için daha anlaşılır hale getiren pasif eğitim alanı.</p>
+          </div>
         </div>
-      </div>
-      <div className="warehouse-mock-barcode-layout">
-        <TrainingCard title="v3.2 Ekran Odaklama" items={screenFocusItems} />
-        <TrainingCard title="v3.3 Hazır Barkod Senaryoları" items={readyBarcodeScenarios} />
-        <TrainingCard title="v3.4 Depo Kullanıcı Eğitimi" items={warehouseTrainingItems} />
-        <TrainingCard title="v3.5 Test Günü Komuta Akışı" items={commandCenterItems} />
-      </div>
-      <div className="warehouse-mock-barcode-safety">
-        <strong>Pilot Sonrası Geri Bildirim</strong>
-        <ul>
-          {feedbackItems.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-      </div>
-    </section>
+        <div className="warehouse-mock-barcode-layout">
+          <TrainingCard title="v3.2 Ekran Odaklama" items={screenFocusItems} />
+          <TrainingCard title="v3.3 Hazır Barkod Senaryoları" items={readyBarcodeScenarios} />
+          <TrainingCard title="v3.4 Depo Kullanıcı Eğitimi" items={warehouseTrainingItems} />
+          <TrainingCard title="v3.5 Test Günü Komuta Akışı" items={commandCenterItems} />
+        </div>
+        <div className="warehouse-mock-barcode-safety">
+          <strong>Pilot Sonrası Geri Bildirim</strong>
+          <ul>
+            {feedbackItems.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="table-panel warehouse-mock-barcode-panel section-updated-highlight" id="warehouse-terminal-final-control-center">
+        <div className="section-heading warehouse-quality-heading">
+          <div>
+            <h2>Terminal Test Sonucu ve Karar Merkezi</h2>
+            <p>Test sonucunun nasıl okunacağını, depo hata notlarının nasıl yazılacağını ve yöneticinin nasıl karar vereceğini özetler.</p>
+          </div>
+        </div>
+        <div className="warehouse-mock-barcode-layout">
+          <TrainingCard title="v3.6 Test Sonucu Okuma Rehberi" items={resultReadingGuide} />
+          <TrainingCard title="v3.7 Depo Hata Notları Formatı" items={depotIssueNoteFormat} />
+          <TrainingCard title="v3.8 Yönetici Pilot Karar Paneli" items={managerDecisionPanel} />
+          <TrainingCard title="v3.9 Şirket Test Günü Son Kontrol" items={finalDaySummary} />
+        </div>
+      </section>
+    </>
   );
 }
