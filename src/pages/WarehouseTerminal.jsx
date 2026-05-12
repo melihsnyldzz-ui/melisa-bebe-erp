@@ -1,3 +1,4 @@
+import { useMemo, useState } from "react";
 import WarehouseTerminalPanel from "../components/WarehouseTerminal/WarehouseTerminalPanel.jsx";
 import { useErpData } from "../context/ErpDataContext.jsx";
 
@@ -95,8 +96,65 @@ const operationSummaryItems = [
   { label: "Yönetici kontrolü", value: "Manuel" },
 ];
 
+const mockBarcodePurposeItems = [
+  "Barkod okutma davranışını evde güvenli şekilde test etmek.",
+  "Leading zero korunuyor mu görmek.",
+  "Sonda gelen boşluk/enter/suffix problemi var mı görmek.",
+  "Aynı barkod hızlı tekrar okutulursa duplicate guard mantığını göstermek.",
+  "Gerçek Vega bağlantısı yapmamak.",
+];
+
+const mockBarcodeSafetyItems = [
+  "Bu ekran gerçek stok sonucu değildir.",
+  "SQL/Vega bağlantısı yoktur.",
+  "Veri yazmaz.",
+  "Sadece barkod yakalama ve ekran davranışı testidir.",
+];
+
+function normalizeMockBarcode(rawBarcode) {
+  return rawBarcode.replace(/[\s\r\n\t]+$/g, "");
+}
+
 export default function WarehouseTerminal() {
   const { products, stockMovements } = useErpData();
+  const [mockBarcodeInput, setMockBarcodeInput] = useState("");
+  const [lastMockBarcode, setLastMockBarcode] = useState(null);
+  const [previousMockBarcode, setPreviousMockBarcode] = useState("");
+
+  const mockProductRows = useMemo(() => {
+    if (!lastMockBarcode?.normalizedBarcode) return [];
+
+    return [
+      { label: "Stok kodu", value: "MOCK-STOK-001" },
+      { label: "Ürün adı", value: "Mock Bebek Ürünü" },
+      { label: "Barkod", value: lastMockBarcode.normalizedBarcode },
+      { label: "Marka", value: "Mock Marka" },
+      { label: "Beden", value: "Mock Beden" },
+      { label: "Renk", value: "Mock Renk" },
+      { label: "Stok miktarı", value: "Mock / gerçek değil" },
+    ];
+  }, [lastMockBarcode]);
+
+  function handleMockBarcodeSubmit(event) {
+    event.preventDefault();
+
+    const rawBarcode = mockBarcodeInput;
+    const normalizedBarcode = normalizeMockBarcode(rawBarcode);
+    const trailingSuffixCleaned = rawBarcode !== normalizedBarcode;
+    const hasLeadingZero = normalizedBarcode.startsWith("0");
+    const isDuplicate = Boolean(normalizedBarcode) && normalizedBarcode === previousMockBarcode;
+
+    setLastMockBarcode({
+      rawBarcode,
+      normalizedBarcode,
+      length: normalizedBarcode.length,
+      hasLeadingZero,
+      trailingSuffixCleaned,
+      isDuplicate,
+    });
+    setPreviousMockBarcode(normalizedBarcode);
+    setMockBarcodeInput("");
+  }
 
   return (
     <>
@@ -117,6 +175,105 @@ export default function WarehouseTerminal() {
             <strong>{card.value}</strong>
           </article>
         ))}
+      </section>
+
+      <section className="table-panel warehouse-mock-barcode-panel section-updated-highlight" id="warehouse-mock-barcode-test">
+        <div className="section-heading warehouse-quality-heading">
+          <div>
+            <h2>Mock Barkod Test Alanı</h2>
+            <p>Honeywell/el terminali okutma davranışını gerçek Vega veya SQL bağlantısı olmadan, sadece geçici ekran state'iyle kontrol eder.</p>
+          </div>
+        </div>
+
+        <div className="warehouse-mock-barcode-layout">
+          <article className="warehouse-mock-barcode-card">
+            <h3>Test Amacı</h3>
+            <ul>
+              {mockBarcodePurposeItems.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </article>
+
+          <article className="warehouse-mock-barcode-card">
+            <h3>Barkod Giriş Alanı</h3>
+            <form className="warehouse-mock-barcode-form" onSubmit={handleMockBarcodeSubmit}>
+              <label className="filter-field warehouse-mock-barcode-field">
+                <span>Mock barkod</span>
+                <input
+                  value={mockBarcodeInput}
+                  onChange={(event) => setMockBarcodeInput(event.target.value)}
+                  placeholder="Örn. 0001234567890"
+                  autoComplete="off"
+                  inputMode="text"
+                />
+                <small>
+                  Giriş string olarak tutulur. Başındaki sıfırlar korunur; sonda gelen boşluk, enter veya suffix karakterleri sadece ekran testi için temizlenir.
+                </small>
+              </label>
+              <button className="primary-action warehouse-mock-barcode-submit" type="submit">
+                Mock barkodu test et
+              </button>
+            </form>
+          </article>
+        </div>
+
+        <div className="warehouse-mock-barcode-result-grid">
+          <article className="warehouse-mock-barcode-card">
+            <h3>Son Okunan Barkod</h3>
+            <dl className="warehouse-mock-barcode-detail-grid">
+              <div>
+                <dt>Ham barkod</dt>
+                <dd>{lastMockBarcode?.rawBarcode || "-"}</dd>
+              </div>
+              <div>
+                <dt>Normalize edilmiş barkod</dt>
+                <dd>{lastMockBarcode?.normalizedBarcode || "-"}</dd>
+              </div>
+              <div>
+                <dt>Uzunluk</dt>
+                <dd>{lastMockBarcode ? lastMockBarcode.length : "-"}</dd>
+              </div>
+              <div>
+                <dt>Leading zero var mı?</dt>
+                <dd>{lastMockBarcode ? (lastMockBarcode.hasLeadingZero ? "Evet" : "Hayır") : "-"}</dd>
+              </div>
+              <div>
+                <dt>Sonda boşluk temizlendi mi?</dt>
+                <dd>{lastMockBarcode ? (lastMockBarcode.trailingSuffixCleaned ? "Evet" : "Hayır") : "-"}</dd>
+              </div>
+              <div>
+                <dt>Duplicate mı?</dt>
+                <dd>{lastMockBarcode ? (lastMockBarcode.isDuplicate ? "Evet" : "Hayır") : "-"}</dd>
+              </div>
+            </dl>
+          </article>
+
+          <article className="warehouse-mock-barcode-card">
+            <h3>Mock Ürün Sonucu</h3>
+            {mockProductRows.length > 0 ? (
+              <dl className="warehouse-mock-barcode-detail-grid">
+                {mockProductRows.map((row) => (
+                  <div key={row.label}>
+                    <dt>{row.label}</dt>
+                    <dd>{row.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            ) : (
+              <p className="warehouse-mock-barcode-empty">Henüz mock barkod okutulmadı.</p>
+            )}
+          </article>
+        </div>
+
+        <div className="warehouse-mock-barcode-safety">
+          <strong>Güvenlik Notu</strong>
+          <ul>
+            {mockBarcodeSafetyItems.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
       </section>
 
       <section className="warehouse-operation-guide-grid">

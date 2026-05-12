@@ -1,14 +1,19 @@
-export const APP_VERSION = "v2.3.0";
-export const APP_STAGE = "Read-only Stok Pilot Öncesi Yerel Hazırlık Kontrolü";
+export const APP_VERSION = "v2.4.0";
+export const APP_STAGE = "El Terminali Mock Barkod Test Ekranı";
 
 export const releaseHighlights = [
-  "Ev ortamında SQL/Vega bağlantısı kurmadan pilot öncesi yerel hazırlık kontrolü eklendi.",
-  ".env.local, credential ve connection string bilgilerinin ekranda veya repoda gösterilmemesi vurgulandı.",
-  "Build, git temizliği ve güvenli pilot sınırları pasif kontrol kartlarıyla görünür hale getirildi.",
-  "Şirket ortamında yalnızca read-only SQL kullanıcısı ve manuel, en fazla 20 satırlık ilk kontrol yaklaşımı not edildi.",
+  "El terminali ve Honeywell benzeri barkod okutma davranışı için mock test alanı eklendi.",
+  "Barkod string olarak tutulur; leading zero korunur, sonda gelen boşluk/enter/suffix temizliği görünür hale gelir.",
+  "Aynı barkodun hızlı tekrar okutulması için duplicate guard sonucu geçici ekranda gösterilir.",
+  "Bu sürüm gerçek Vega/SQL bağlantısı, stok verisi okuma, dosya üretimi, localStorage veya veri yazma eklemez.",
 ];
 
 export const versionHistory = [
+  {
+    version: "v2.4.0",
+    title: "El Terminali Mock Barkod Test Ekranı",
+    note: "Gerçek Vega/SQL bağlantısı olmadan barkod yakalama, normalize etme, leading zero ve duplicate guard davranışını mock ekranda gösterir.",
+  },
   {
     version: "v2.3.0",
     title: "Read-only Stok Pilot Öncesi Yerel Hazırlık Kontrolü",

@@ -462,6 +462,12 @@ const desktopPreparationStatusRows = [
 
 const versionHistoryRows = [
   {
+    version: "v2.4.0",
+    title: "El Terminali Mock Barkod Test Ekranı",
+    area: "El Terminali / Sistem Durumu",
+    description: "El terminali ve Honeywell benzeri barkod okutma davranışını gerçek Vega/SQL bağlantısı kurmadan mock ekranla test edecek alan eklendi; barkod string olarak tutulur, leading zero korunur, sonda gelen boşluk/enter/suffix temizliği ve duplicate guard sonucu geçici React state ile gösterilir; gerçek stok verisi, SQL sorgusu, veri yazma/import/export/sync, localStorage, dosya üretimi, credential veya connection bilgisi eklenmedi.",
+  },
+  {
     version: "v2.3.0",
     title: "Read-only Stok Pilot Öncesi Yerel Hazırlık Kontrolü",
     area: "Vega Stok Deneme / Sistem Durumu",

@@ -1,17 +1,18 @@
-export const currentReleaseVersion = "v2.3.0";
+export const currentReleaseVersion = "v2.4.0";
 
-export const currentReleaseTitle = "Read-only Stok Pilot Öncesi Yerel Hazırlık Kontrolü";
+export const currentReleaseTitle = "El Terminali Mock Barkod Test Ekranı";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "vega-stock-local-readiness-check"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "warehouse-mock-barcode-test"];
 
 export const releaseHighlightItems = [
-  "Read-only stok pilotu öncesinde ev ortamında yapılabilecek local hazırlık kontrolleri görünür hale getirildi.",
-  ".env.local, credential ve connection bilgisinin ekranda veya repoda gösterilmemesi özellikle vurgulandı.",
-  "Bu sürüm gerçek test yapmaz; SQL/Vega bağlantısı, sorgu, metadata otomasyonu, Top 100 aktivasyonu, veri yazma/import/senkron/export, form/kayıt veya localStorage eklemez.",
+  "El terminali ve Honeywell benzeri okutma davranışını ev ortamında mock barkodla test edecek güvenli alan eklendi.",
+  "Barkod string olarak tutulur; leading zero korunur, sonda gelen boşluk/enter/suffix temizliği ve duplicate guard sonucu görünür.",
+  "Bu sürüm gerçek Vega/SQL bağlantısı, SQL sorgusu, gerçek stok verisi okuma, veri yazma/import/export/sync, localStorage, dosya üretimi veya credential bilgisi eklemez.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
+  { id: "warehouse-mock-barcode-test", label: "Mock Barkod Test Alanı'na git" },
   { id: "vega-stock-local-readiness-check", label: "v2.3 Yerel Hazırlık Kontrolü'ne git" },
   { id: "vega-stock-pilot-usage-center", label: "Pilot Kullanım Merkezi'ne git" },
   { id: "vega-stock-v21-manual-test-protocol", label: "v2.1 Manuel Test Protokolü'ne git" },
@@ -216,12 +217,13 @@ export const releaseHighlightsByPage = {
   warehouseTerminal: {
     releaseHighlightItems,
     releaseJumpLinks: [
+      { id: "warehouse-mock-barcode-test", label: "Mock Barkod Test Alanı'na git" },
       { id: "warehouse-barcode-operation-center", label: "Operasyon Merkezi'ne git" },
       { id: "warehouse-stock-barcode-quality-center", label: "Kalite Kontrol Merkezi'ne git" },
       { id: "warehouse-risk-priority-matrix", label: "Risk Öncelik Matrisi'ne git" },
       { id: "warehouse-barcode-risk-panel", label: "Barkod Riskleri'ne git" },
     ],
-    updatedSectionIds: ["warehouse-barcode-operation-center", "warehouse-stock-barcode-quality-center", "warehouse-risk-priority-matrix", "warehouse-barcode-risk-panel"],
+    updatedSectionIds: ["warehouse-mock-barcode-test"],
   },
   settings: {
     releaseHighlightItems,

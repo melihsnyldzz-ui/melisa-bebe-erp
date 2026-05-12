@@ -2473,6 +2473,129 @@ button {
   font-weight: 850;
 }
 
+.warehouse-mock-barcode-panel {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.warehouse-mock-barcode-layout,
+.warehouse-mock-barcode-result-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.warehouse-mock-barcode-card {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid #dbeafe;
+  border-radius: 14px;
+  background: #f8fbff;
+  box-shadow: 0 10px 22px rgb(15 23 42 / 5%);
+}
+
+.warehouse-mock-barcode-card h3,
+.warehouse-mock-barcode-card p {
+  margin: 0;
+}
+
+.warehouse-mock-barcode-card h3 {
+  color: #1864ab;
+  font-size: 1rem;
+}
+
+.warehouse-mock-barcode-card ul,
+.warehouse-mock-barcode-safety ul {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 18px;
+  color: var(--text);
+  font-size: 0.88rem;
+  font-weight: 760;
+  line-height: 1.45;
+}
+
+.warehouse-mock-barcode-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: end;
+}
+
+.warehouse-mock-barcode-field input {
+  min-height: 52px;
+  font-size: 1.1rem;
+  font-weight: 850;
+  letter-spacing: 0;
+}
+
+.warehouse-mock-barcode-field small {
+  display: block;
+  margin-top: 7px;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 750;
+  line-height: 1.4;
+}
+
+.warehouse-mock-barcode-submit {
+  min-height: 52px;
+}
+
+.warehouse-mock-barcode-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+}
+
+.warehouse-mock-barcode-detail-grid div {
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid #e5edf8;
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+.warehouse-mock-barcode-detail-grid dt {
+  margin: 0 0 5px;
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 850;
+}
+
+.warehouse-mock-barcode-detail-grid dd {
+  margin: 0;
+  color: var(--text);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.92rem;
+  font-weight: 850;
+  overflow-wrap: anywhere;
+}
+
+.warehouse-mock-barcode-empty {
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.warehouse-mock-barcode-safety {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid #c3fae8;
+  border-radius: 12px;
+  background: #f4fcf8;
+}
+
+.warehouse-mock-barcode-safety strong {
+  color: #0f766e;
+  font-size: 0.96rem;
+}
+
 .warehouse-terminal-title h1 {
   font-size: clamp(1.65rem, 2vw, 2.35rem);
 }
@@ -6739,6 +6862,10 @@ tr:last-child td {
   .warehouse-operation-summary-grid,
   .warehouse-quality-card-grid,
   .warehouse-risk-priority-grid,
+  .warehouse-mock-barcode-layout,
+  .warehouse-mock-barcode-result-grid,
+  .warehouse-mock-barcode-form,
+  .warehouse-mock-barcode-detail-grid,
   .warehouse-terminal-grid,
   .warehouse-terminal-metrics,
   .warehouse-terminal-detail-grid,
