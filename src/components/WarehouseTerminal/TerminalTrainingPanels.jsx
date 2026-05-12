@@ -143,6 +143,33 @@ const onePageTestSummaryItems = [
   "Gün sonu çıktı: devam / eğitim tekrar / ekran sadeleştirme / teknik kontrol kararı.",
 ];
 
+const localBuildPrecheckItems = [
+  "Git pull sonrası uygulama açılmadan önce npm run build çalıştırılır.",
+  "Build hatası varsa yeni ekran testi yapılmaz.",
+  "Sadece mevcut büyük chunk uyarısı kabul edilebilir.",
+  "El Terminali ve Barkod Operasyon Merkezi sayfası ilk kontrol ekranıdır.",
+  "Package sürümü farklı görünürse appVersion ekranı esas alınır.",
+];
+
+const orderedScreenTestItems = [
+  "1. Sol menüden El Terminali ekranını aç.",
+  "2. Mock Barkod Test Alanı'nı kontrol et.",
+  "3. Barkod Kalite Durumu panelini kontrol et.",
+  "4. Test Günü Tek Sayfa Özet Paneli'ni oku.",
+  "5. Terminal Pilot Final Sadeleştirme Merkezi'ni oku.",
+  "6. ERP + El Terminali Test Planı'nı kontrol et.",
+  "7. Şirket Ortamı İlk Gerçek Test Checklisti'ni son kontrol olarak oku.",
+];
+
+const readyHoldDecisionItems = [
+  "Build başarılıysa ve ekranlar görünüyorsa: Hazır.",
+  "Barkod kalite paneli görünmüyorsa: Beklet.",
+  "Mock barkod sonucu başındaki sıfırı korumuyorsa: Beklet.",
+  "Duplicate uyarısı çalışmıyorsa: Beklet.",
+  "Depo personeli akışı anlamıyorsa: Eğitim tekrar.",
+  "Yönetici karar veremiyorsa: Tek sayfa özet sadeleştirilsin.",
+];
+
 function TrainingCard({ title, items }) {
   return (
     <article className="warehouse-mock-barcode-card">
@@ -159,6 +186,21 @@ function TrainingCard({ title, items }) {
 export default function TerminalTrainingPanels() {
   return (
     <>
+      <section className="table-panel warehouse-mock-barcode-panel section-updated-highlight" id="warehouse-ready-hold-decision-center">
+        <div className="section-heading warehouse-quality-heading">
+          <div>
+            <h2>Şirket Pilot Hazır / Beklet Karar Merkezi</h2>
+            <p>Local build sonrası ekran kontrolünde hazır mı beklet mi kararını tek yerde toplar.</p>
+          </div>
+        </div>
+        <div className="warehouse-mock-barcode-layout">
+          <TrainingCard title="v4.8 Local Build Öncesi Son Kontrol" items={localBuildPrecheckItems} />
+          <TrainingCard title="v4.9 Test Edilecek Ekranlar Sırası" items={orderedScreenTestItems} />
+          <TrainingCard title="v5.0 Hazır / Beklet Kararı" items={readyHoldDecisionItems} />
+          <TrainingCard title="Test Günü Tek Sayfa Özeti" items={onePageTestSummaryItems} />
+        </div>
+      </section>
+
       <section className="table-panel warehouse-mock-barcode-panel section-updated-highlight" id="warehouse-one-page-test-summary">
         <div className="section-heading warehouse-quality-heading">
           <div>
