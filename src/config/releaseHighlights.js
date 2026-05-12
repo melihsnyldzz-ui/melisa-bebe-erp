@@ -1,18 +1,19 @@
-export const currentReleaseVersion = "v3.9.0";
+export const currentReleaseVersion = "v4.3.0";
 
-export const currentReleaseTitle = "Şirket Test Günü Son Kontrol Özeti";
+export const currentReleaseTitle = "Şirket Test Günü Rolleri ve Sorumlulukları";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "warehouse-terminal-final-control-center"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "warehouse-terminal-final-simplification-center"];
 
 export const releaseHighlightItems = [
-  "Terminal Test Sonucu ve Karar Merkezi eklendi.",
-  "Test sonucu okuma rehberi, depo hata notları formatı, yönetici karar paneli ve son kontrol özeti görünür hale getirildi.",
-  "Terminal Eğitim ve Prova Merkezi, pilot yol haritası, şirket checklisti ve barkod kalite kontrolü korunur.",
-  "Bu sürüm yalnızca pasif eğitim, not alma formatı ve karar görünümü ekler.",
+  "Terminal Pilot Final Sadeleştirme Merkezi eklendi.",
+  "Barkod senaryo kartları, yönetici tek sayfa özeti ve rol/sorumluluk akışı görünür hale getirildi.",
+  "Terminal eğitim merkezi, karar merkezi, pilot yol haritası ve şirket checklisti korunur.",
+  "Bu sürüm yalnızca pasif eğitim, prova, rol ve karar görünümü ekler.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
+  { id: "warehouse-terminal-final-simplification-center", label: "Terminal Pilot Final Sadeleştirme Merkezi'ne git" },
   { id: "warehouse-terminal-final-control-center", label: "Terminal Test Sonucu ve Karar Merkezi'ne git" },
   { id: "warehouse-terminal-training-center", label: "Terminal Eğitim ve Prova Merkezi'ne git" },
   { id: "warehouse-terminal-next-roadmap", label: "Terminal ve ERP Pilot Yol Haritası'na git" },
@@ -45,6 +46,7 @@ export const releaseHighlightsByPage = {
   warehouseTerminal: {
     releaseHighlightItems,
     releaseJumpLinks: [
+      { id: "warehouse-terminal-final-simplification-center", label: "Terminal Pilot Final Sadeleştirme Merkezi'ne git" },
       { id: "warehouse-terminal-final-control-center", label: "Terminal Test Sonucu ve Karar Merkezi'ne git" },
       { id: "warehouse-terminal-training-center", label: "Terminal Eğitim ve Prova Merkezi'ne git" },
       { id: "warehouse-terminal-next-roadmap", label: "Terminal ve ERP Pilot Yol Haritası'na git" },
@@ -57,7 +59,7 @@ export const releaseHighlightsByPage = {
       { id: "warehouse-risk-priority-matrix", label: "Risk Öncelik Matrisi'ne git" },
       { id: "warehouse-barcode-risk-panel", label: "Barkod Riskleri'ne git" },
     ],
-    updatedSectionIds: ["warehouse-terminal-final-control-center", "warehouse-terminal-training-center", "warehouse-terminal-next-roadmap", "warehouse-company-first-real-test-checklist", "warehouse-terminal-barcode-quality", "warehouse-erp-terminal-test-plan"],
+    updatedSectionIds: ["warehouse-terminal-final-simplification-center", "warehouse-terminal-final-control-center", "warehouse-terminal-training-center", "warehouse-terminal-next-roadmap", "warehouse-company-first-real-test-checklist", "warehouse-terminal-barcode-quality", "warehouse-erp-terminal-test-plan"],
   },
   settings: {
     releaseHighlightItems,
