@@ -1,14 +1,34 @@
-export const APP_VERSION = "v3.1.0";
-export const APP_STAGE = "Pilot Sonrası Hata ve Geri Bildirim Planı";
+export const APP_VERSION = "v3.5.0";
+export const APP_STAGE = "Şirket Test Günü Komuta Merkezi";
 
 export const releaseHighlights = [
-  "Terminal ve ERP pilot yol haritası dört güvenli adımda görünür hale getirildi.",
-  "Mock kullanım iyileştirme, barkoddan stok köprüsü tasarımı, pilot başlatma kapısı ve pilot sonrası geri bildirim planı eklendi.",
-  "Şirket ortamı test checklisti, barkod kalite kontrolü ve ERP + el terminali test planı korunur.",
+  "Terminal Eğitim ve Prova Merkezi eklendi.",
+  "Hazır barkod senaryoları, depo eğitim akışı ve test günü komuta akışı görünür hale getirildi.",
+  "Terminal ve ERP pilot yol haritası, şirket checklisti, barkod kalite kontrolü ve test planı korunur.",
   "Bu sürüm gerçek Vega/SQL bağlantısı, gerçek stok araması, API endpoint, veri yazma, import/export/sync, localStorage veya credential eklemez.",
 ];
 
 export const versionHistory = [
+  {
+    version: "v3.5.0",
+    title: "Şirket Test Günü Komuta Merkezi",
+    note: "Depo, yönetici ve teknik kontrol için test günü görev sırasını pasif eğitim/prova paneli olarak gösterir.",
+  },
+  {
+    version: "v3.4.0",
+    title: "Depo Kullanıcı Eğitim Paneli",
+    note: "Depo kullanıcısının barkod kalite sonucunu nasıl okuyacağını ve hangi notları alacağını sadeleştirir.",
+  },
+  {
+    version: "v3.3.0",
+    title: "Barkod Test Senaryoları Hazır Liste",
+    note: "Normal, leading zero, kısa, uzun, duplicate ve suffix örnekleriyle test prova listesini görünür kılar.",
+  },
+  {
+    version: "v3.2.0",
+    title: "Terminal Test Ekranı Görsel Sadeleştirme",
+    note: "Mock barkod ekranında operatörün önce kalite sonucuna odaklanmasını sağlar.",
+  },
   {
     version: "v3.1.0",
     title: "Pilot Sonrası Hata ve Geri Bildirim Planı",
@@ -28,25 +48,5 @@ export const versionHistory = [
     version: "v2.8.0",
     title: "Terminal Mock Test Kullanım İyileştirme",
     note: "Operatörün mock test sonucuna göre Geçti/Uyarı/Dur kararını nasıl okuyacağını sadeleştirir.",
-  },
-  {
-    version: "v2.7.0",
-    title: "Şirket Ortamı İlk Gerçek Test Checklisti",
-    note: "Şirkette yapılacak ilk gerçek read-only stok testi, terminal ayrı testi ve birlikte teste geçme şartlarını pasif checklist olarak gösterir.",
-  },
-  {
-    version: "v2.6.0",
-    title: "Terminal Barkod Kalite Kontrol Paketi",
-    note: "Mock barkod ekranında kalite durumu, uyarı mesajları ve operatör notunu gösterir.",
-  },
-  {
-    version: "v2.5.0",
-    title: "ERP + El Terminali Entegrasyon Test Planı",
-    note: "ERP stok read-only ekranı ile el terminali mock barkod testinin birlikte nasıl test edileceğini planlar.",
-  },
-  {
-    version: "v2.4.0",
-    title: "El Terminali Mock Barkod Test Ekranı",
-    note: "Gerçek Vega/SQL bağlantısı olmadan barkod yakalama, normalize etme, leading zero ve duplicate guard davranışını mock ekranda gösterir.",
   },
 ];
