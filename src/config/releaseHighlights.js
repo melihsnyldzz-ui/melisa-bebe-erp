@@ -1,28 +1,24 @@
-export const currentReleaseVersion = "v3.1.0";
+export const currentReleaseVersion = "v3.5.0";
 
-export const currentReleaseTitle = "Pilot Sonrası Hata ve Geri Bildirim Planı";
+export const currentReleaseTitle = "Şirket Test Günü Komuta Merkezi";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "warehouse-terminal-next-roadmap"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "warehouse-terminal-training-center"];
 
 export const releaseHighlightItems = [
-  "Terminal ve ERP pilot yol haritası dört güvenli adımda görünür hale getirildi.",
-  "Mock kullanım iyileştirme, barkoddan stok köprüsü tasarımı, pilot başlatma kapısı ve pilot sonrası geri bildirim planı eklendi.",
-  "Şirket ortamı test checklisti, barkod kalite kontrolü ve ERP + el terminali test planı korunur.",
-  "Bu sürüm gerçek entegrasyon, API endpoint, gerçek stok arama, veri yazma/import/export/sync, localStorage veya credential bilgisi eklemez.",
+  "Terminal Eğitim ve Prova Merkezi eklendi.",
+  "Hazır barkod senaryoları, depo eğitim akışı ve test günü komuta akışı görünür hale getirildi.",
+  "Terminal ve ERP pilot yol haritası, şirket checklisti, barkod kalite kontrolü ve test planı korunur.",
+  "Bu sürüm yalnızca pasif eğitim ve prova görünümü ekler.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
+  { id: "warehouse-terminal-training-center", label: "Terminal Eğitim ve Prova Merkezi'ne git" },
   { id: "warehouse-terminal-next-roadmap", label: "Terminal ve ERP Pilot Yol Haritası'na git" },
   { id: "warehouse-company-first-real-test-checklist", label: "Şirket Ortamı İlk Gerçek Test Checklisti'ne git" },
   { id: "warehouse-terminal-barcode-quality", label: "Barkod Kalite Durumu'na git" },
   { id: "warehouse-erp-terminal-test-plan", label: "ERP + El Terminali Test Planı'na git" },
   { id: "warehouse-mock-barcode-test", label: "Mock Barkod Test Alanı'na git" },
-  { id: "vega-stock-local-readiness-check", label: "v2.3 Yerel Hazırlık Kontrolü'ne git" },
-  { id: "vega-stock-pilot-usage-center", label: "Pilot Kullanım Merkezi'ne git" },
-  { id: "vega-stock-v21-manual-test-protocol", label: "v2.1 Manuel Test Protokolü'ne git" },
-  { id: "vega-stock-v2-security-gate", label: "v2.0 Pilot Güvenlik Kapısı'na git" },
-  { id: "vega-stock-closed-pilot-package", label: "Stok Kapalı Pilot Kullanım Paketi'ne git" },
   { id: "system-workflow-model", label: "Çalışma Modeli'ne git" },
 ];
 
@@ -43,21 +39,12 @@ export const releaseHighlightsByPage = {
   dashboard: defaultReleasePage,
   reports: defaultReleasePage,
   customers: defaultReleasePage,
-  vegaStockTrial: {
-    releaseHighlightItems,
-    releaseJumpLinks: [
-      { id: "vega-stock-local-readiness-check", label: "v2.3 Yerel Hazırlık Kontrolü'ne git" },
-      { id: "vega-stock-pilot-usage-center", label: "Pilot Kullanım Merkezi'ne git" },
-      { id: "vega-stock-v21-manual-test-protocol", label: "v2.1 Manuel Test Protokolü'ne git" },
-      { id: "vega-stock-v2-security-gate", label: "v2.0 Pilot Güvenlik Kapısı'na git" },
-      { id: "vega-stock-closed-pilot-package", label: "Stok Kapalı Pilot Kullanım Paketi'ne git" },
-    ],
-    updatedSectionIds: ["vega-stock-local-readiness-check", "vega-stock-pilot-usage-center"],
-  },
+  vegaStockTrial: defaultReleasePage,
   vegaImportPreview: defaultReleasePage,
   warehouseTerminal: {
     releaseHighlightItems,
     releaseJumpLinks: [
+      { id: "warehouse-terminal-training-center", label: "Terminal Eğitim ve Prova Merkezi'ne git" },
       { id: "warehouse-terminal-next-roadmap", label: "Terminal ve ERP Pilot Yol Haritası'na git" },
       { id: "warehouse-company-first-real-test-checklist", label: "Şirket Ortamı İlk Gerçek Test Checklisti'ne git" },
       { id: "warehouse-terminal-barcode-quality", label: "Barkod Kalite Durumu'na git" },
@@ -68,7 +55,7 @@ export const releaseHighlightsByPage = {
       { id: "warehouse-risk-priority-matrix", label: "Risk Öncelik Matrisi'ne git" },
       { id: "warehouse-barcode-risk-panel", label: "Barkod Riskleri'ne git" },
     ],
-    updatedSectionIds: ["warehouse-terminal-next-roadmap", "warehouse-company-first-real-test-checklist", "warehouse-terminal-barcode-quality", "warehouse-erp-terminal-test-plan"],
+    updatedSectionIds: ["warehouse-terminal-training-center", "warehouse-terminal-next-roadmap", "warehouse-company-first-real-test-checklist", "warehouse-terminal-barcode-quality", "warehouse-erp-terminal-test-plan"],
   },
   settings: {
     releaseHighlightItems,
