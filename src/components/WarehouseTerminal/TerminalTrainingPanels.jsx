@@ -76,6 +76,38 @@ const finalDaySummary = [
   "Gün sonu karar toplantısı yapılacak mı?",
 ];
 
+const finalSimplificationItems = [
+  "İlk bakışta sadece mock barkod alanı, kalite sonucu ve eğitim merkezi takip edilir.",
+  "Detaylı yol haritası ve karar merkezi ikinci sırada okunur.",
+  "Operatöre tek hedef verilir: barkodu okut, kalite sonucunu oku, not al.",
+  "Yöneticiye tek hedef verilir: Geçti/Uyarı/Dur sonuçlarına göre karar ver.",
+  "Teknik ekip sadece izler ve sistem dışı not toplar.",
+];
+
+const scenarioCardItems = [
+  "Senaryo 1: Normal barkod okut ve Geçti sonucunu kontrol et.",
+  "Senaryo 2: Başında sıfır olan barkod okut ve sıfırın korunduğunu kontrol et.",
+  "Senaryo 3: Kısa barkod okut ve Uyarı/Dur sonucunu kontrol et.",
+  "Senaryo 4: Uzun barkod okut ve uyarıyı not al.",
+  "Senaryo 5: Aynı barkodu tekrar okut ve duplicate uyarısını kontrol et.",
+];
+
+const managerOnePageSummary = [
+  "Bugünkü amaç: terminal barkod davranışını ve ERP stok ekranı anlaşılabilirliğini görmek.",
+  "Başarı ölçüsü: depo personeli kalite sonucunu doğru okuyabiliyor.",
+  "Kritik karar: pilot devam mı, eğitim tekrar mı, ekran sadeleştirme mi?",
+  "Saha notları tek listede toplanır.",
+  "Bir sonraki faz yalnızca notlar temizse açılır.",
+];
+
+const roleResponsibilityItems = [
+  "Depo personeli: barkodu okutur ve gördüğü sonucu söyler.",
+  "Yönetici: karar paneline göre devam/tekrar/sadeleştirme kararını verir.",
+  "Teknik kişi: ekran davranışını izler ve not alır.",
+  "Test sorumlusu: akışı başlatır ve gerekirse durdurur.",
+  "Patron: gün sonu tek karar listesini görür.",
+];
+
 function TrainingCard({ title, items }) {
   return (
     <article className="warehouse-mock-barcode-card">
@@ -92,6 +124,21 @@ function TrainingCard({ title, items }) {
 export default function TerminalTrainingPanels() {
   return (
     <>
+      <section className="table-panel warehouse-mock-barcode-panel section-updated-highlight" id="warehouse-terminal-final-simplification-center">
+        <div className="section-heading warehouse-quality-heading">
+          <div>
+            <h2>Terminal Pilot Final Sadeleştirme Merkezi</h2>
+            <p>Test günü ekranda kimin neye bakacağını sadeleştirir ve rol bazlı takip akışını görünür yapar.</p>
+          </div>
+        </div>
+        <div className="warehouse-mock-barcode-layout">
+          <TrainingCard title="v4.0 Final Sadeleştirme" items={finalSimplificationItems} />
+          <TrainingCard title="v4.1 Barkod Senaryo Kartları" items={scenarioCardItems} />
+          <TrainingCard title="v4.2 Yönetici Tek Sayfa Özeti" items={managerOnePageSummary} />
+          <TrainingCard title="v4.3 Roller ve Sorumluluklar" items={roleResponsibilityItems} />
+        </div>
+      </section>
+
       <section className="table-panel warehouse-mock-barcode-panel section-updated-highlight" id="warehouse-terminal-training-center">
         <div className="section-heading warehouse-quality-heading">
           <div>
