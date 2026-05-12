@@ -1,14 +1,29 @@
-export const APP_VERSION = "v4.7.0";
-export const APP_STAGE = "Test Günü Tek Sayfa Özet Paneli";
+export const APP_VERSION = "v5.0.0";
+export const APP_STAGE = "Şirket Pilot Öncesi Hazır / Beklet Karar Merkezi";
 
 export const releaseHighlights = [
-  "Test Günü Tek Sayfa Özet Paneli eklendi.",
-  "Ekran bölüm sıralaması, depo hızlı kullanım kartı, yönetici hızlı karar kartı ve test günü özet akışı görünür hale getirildi.",
-  "Terminal final sadeleştirme, eğitim merkezi, karar merkezi, pilot yol haritası ve şirket checklisti korunur.",
+  "Şirket Pilot Hazır / Beklet Karar Merkezi eklendi.",
+  "Local build öncesi son kontrol, test edilecek ekranlar sıralı liste ve hazır/beklet kararı görünür hale getirildi.",
+  "Test günü tek sayfa özet paneli, terminal final sadeleştirme, eğitim merkezi ve karar merkezi korunur.",
   "Bu sürüm yalnızca pasif eğitim, prova, rol ve karar görünümü ekler.",
 ];
 
 export const versionHistory = [
+  {
+    version: "v5.0.0",
+    title: "Şirket Pilot Öncesi Hazır / Beklet Karar Merkezi",
+    note: "Local build sonrası ekran kontrolünde hazır mı beklet mi kararını tek panelde toplar.",
+  },
+  {
+    version: "v4.9.0",
+    title: "Test Edilecek Ekranlar Sıralı Kontrol Listesi",
+    note: "El terminali ekranında hangi bölümün hangi sırayla test edileceğini netleştirir.",
+  },
+  {
+    version: "v4.8.0",
+    title: "Local Build Öncesi Son Kontrol Paneli",
+    note: "Pull sonrası build ve ekran kontrolü öncesinde yapılacak son güvenli hazırlığı görünür kılar.",
+  },
   {
     version: "v4.7.0",
     title: "Test Günü Tek Sayfa Özet Paneli",
@@ -33,20 +48,5 @@ export const versionHistory = [
     version: "v4.3.0",
     title: "Şirket Test Günü Rolleri ve Sorumlulukları",
     note: "Depo personeli, yönetici, teknik kişi, test sorumlusu ve patron rollerini tek akışta gösterir.",
-  },
-  {
-    version: "v4.2.0",
-    title: "Yönetici İçin Tek Sayfa Pilot Özeti",
-    note: "Bugünkü amaç, başarı ölçüsü, kritik karar ve sonraki faz koşullarını yönetici için sadeleştirir.",
-  },
-  {
-    version: "v4.1.0",
-    title: "Barkod Senaryo Kartları Görsel İyileştirme",
-    note: "Normal, leading zero, kısa, uzun, duplicate ve suffix senaryolarını kart mantığında görünür kılar.",
-  },
-  {
-    version: "v4.0.0",
-    title: "Terminal Pilot Öncesi Final Sadeleştirme",
-    note: "Test günü ekranda kimin neye bakacağını sadeleştirir.",
   },
 ];
