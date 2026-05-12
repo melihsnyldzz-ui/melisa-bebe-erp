@@ -108,6 +108,41 @@ const roleResponsibilityItems = [
   "Patron: gün sonu tek karar listesini görür.",
 ];
 
+const sectionOrderItems = [
+  "1. Mock Barkod Test Alanı",
+  "2. Barkod Kalite Durumu",
+  "3. Terminal Eğitim ve Prova Merkezi",
+  "4. Test Sonucu ve Karar Merkezi",
+  "5. ERP + El Terminali Test Planı",
+  "6. Şirket Ortamı İlk Gerçek Test Checklisti",
+];
+
+const staffQuickCardItems = [
+  "Barkodu okut.",
+  "Kalite sonucunu oku.",
+  "Geçti ise devam et.",
+  "Uyarı ise tekrar okut.",
+  "Dur ise test sorumlusuna haber ver.",
+  "Anlaşılmayan ürünü sistem dışı not al.",
+];
+
+const managerQuickDecisionItems = [
+  "Depo personeli kalite sonucunu okuyabiliyor mu?",
+  "Başındaki sıfır korunuyor mu?",
+  "Duplicate uyarısı doğru çalışıyor mu?",
+  "ERP stok ekranı anlaşılır mı?",
+  "Notlar az ve netse pilot devam eder.",
+  "Notlar yoğun ise önce eğitim veya ekran sadeleştirme yapılır.",
+];
+
+const onePageTestSummaryItems = [
+  "Amaç: terminal barkod davranışını ve ERP stok ekranını birlikte gözlemlemek.",
+  "Kapsam: mock barkod, kalite sonucu, 20 satır stok kontrolü ve manuel notlar.",
+  "Başarı ölçüsü: depo kullanıcısı ekrandaki sonucu doğru yorumlar.",
+  "Durdurma sebebi: belirsiz barkod, yanlış yorum, yoğun hata notu veya anlaşılmayan stok alanı.",
+  "Gün sonu çıktı: devam / eğitim tekrar / ekran sadeleştirme / teknik kontrol kararı.",
+];
+
 function TrainingCard({ title, items }) {
   return (
     <article className="warehouse-mock-barcode-card">
@@ -124,6 +159,21 @@ function TrainingCard({ title, items }) {
 export default function TerminalTrainingPanels() {
   return (
     <>
+      <section className="table-panel warehouse-mock-barcode-panel section-updated-highlight" id="warehouse-one-page-test-summary">
+        <div className="section-heading warehouse-quality-heading">
+          <div>
+            <h2>Test Günü Tek Sayfa Özet Paneli</h2>
+            <p>Depo, yönetici ve teknik ekip için test gününde okunacak en kısa akışı tek yerde toplar.</p>
+          </div>
+        </div>
+        <div className="warehouse-mock-barcode-layout">
+          <TrainingCard title="v4.4 Ekran Bölüm Sıralaması" items={sectionOrderItems} />
+          <TrainingCard title="v4.5 Depo Hızlı Kullanım Kartı" items={staffQuickCardItems} />
+          <TrainingCard title="v4.6 Yönetici Hızlı Karar Kartı" items={managerQuickDecisionItems} />
+          <TrainingCard title="v4.7 Test Günü Tek Sayfa Özeti" items={onePageTestSummaryItems} />
+        </div>
+      </section>
+
       <section className="table-panel warehouse-mock-barcode-panel section-updated-highlight" id="warehouse-terminal-final-simplification-center">
         <div className="section-heading warehouse-quality-heading">
           <div>
