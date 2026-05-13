@@ -1,14 +1,34 @@
-export const APP_VERSION = "v8.2.0";
-export const APP_STAGE = "Test Sonrası Terminal Entegrasyon Kararı";
+export const APP_VERSION = "v8.6.0";
+export const APP_STAGE = "Sonraki Terminal Pilot Planı";
 
 export const releaseHighlights = [
-  "Read-only Stok Test Hazırlığı paneli ilk gerçek test kapılarıyla genişletildi.",
-  "Şirket SQL hazırlığı son kontrolü, ilk read-only test başlatma kapısı, stok testi hata senaryoları ve terminal entegrasyon kararı görünür hale getirildi.",
-  "v7.8 terminal entegrasyonu ön şartları korunur.",
-  "Bu sürüm gerçek bağlantı kurmaz; yalnızca ilk read-only test ve terminal kararı için pasif hazırlık gösterir.",
+  "Read-only Stok Test Hazırlığı paneli saha test yürütme planıyla genişletildi.",
+  "Read-only saha testi yürütme akışı, test gözlem notları, durma/geri alma prosedürü ve sonraki terminal pilot planı görünür hale getirildi.",
+  "v8.2 ilk test ve terminal karar kapıları korunur.",
+  "Bu sürüm gerçek bağlantı kurmaz; yalnızca saha test yürütme ve sonraki terminal pilot hazırlığını pasif olarak gösterir.",
 ];
 
 export const versionHistory = [
+  {
+    version: "v8.6.0",
+    title: "Sonraki Terminal Pilot Planı",
+    note: "Read-only stok testi temizse ilk terminal pilotunun yalnızca barkoddan stok görüntüleme hedefiyle planlanacağını gösterir.",
+  },
+  {
+    version: "v8.5.0",
+    title: "Durma ve Geri Alma Prosedürü",
+    note: "Test durursa yeni deneme yapılmaması, hata özetlenmesi ve hassas bilginin paylaşılmaması gerektiğini görünür kılar.",
+  },
+  {
+    version: "v8.4.0",
+    title: "Test Gözlem Notları",
+    note: "Satır sayısı, stok dışı alan, stok kodu, ürün adı, barkod ve hata notlarını sahada kontrol ettirir.",
+  },
+  {
+    version: "v8.3.0",
+    title: "Read-only Saha Testi Yürütme Akışı",
+    note: "Saha testinde kimin neyi kontrol edeceğini ve testin nasıl durdurulacağını netleştirir.",
+  },
   {
     version: "v8.2.0",
     title: "Test Sonrası Terminal Entegrasyon Kararı",
@@ -28,25 +48,5 @@ export const versionHistory = [
     version: "v7.9.0",
     title: "Şirket SQL Hazırlığı Son Kontrol Paneli",
     note: "Read-only kullanıcı, .env.local, bağlantı gizliliği ve test sorumlusu şartlarını son kez kontrol ettirir.",
-  },
-  {
-    version: "v7.8.0",
-    title: "Terminal Entegrasyonuna Geçiş Ön Şartları",
-    note: "Read-only stok testi başarılı olmadan terminal entegrasyonuna geçilmemesi gerektiğini netleştirir.",
-  },
-  {
-    version: "v7.7.0",
-    title: "İlk Gerçek Stok Testi Hazır / Beklet Kararı",
-    note: "İlk gerçek stok testinden sonra hazır, beklet veya dur kararını görünür hale getirir.",
-  },
-  {
-    version: "v7.6.0",
-    title: "Read-only Test Operatör Rapor Formatı",
-    note: "Test yapan kişinin tarih, satır sayısı, alan doğruluğu ve genel sonucu aynı formatta not almasını sağlar.",
-  },
-  {
-    version: "v7.5.0",
-    title: "Şirket Bilgisayarı Test Günü Kontrol Kartı",
-    note: "Şirket bilgisayarında yapılacak ilk read-only testin kim, nerede ve hangi kapsamla yapılacağını netleştirir.",
   },
 ];
