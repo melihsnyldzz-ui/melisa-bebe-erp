@@ -5,6 +5,7 @@ import DatabaseBackupSettings from "../components/Settings/DatabaseBackupSetting
 import DataStatusSettings from "../components/Settings/DataStatusSettings.jsx";
 import DemoDataResetSettings from "../components/Settings/DemoDataResetSettings.jsx";
 import LiveModeSettings from "../components/Settings/LiveModeSettings.jsx";
+import ReadOnlyStockPrepSettings from "../components/Settings/ReadOnlyStockPrepSettings.jsx";
 import SystemHealthSettings from "../components/Settings/SystemHealthSettings.jsx";
 import SystemSettings from "../components/Settings/SystemSettings.jsx";
 import SystemStatusPanel from "../components/Settings/SystemStatusPanel.jsx";
@@ -66,6 +67,7 @@ export default function Settings() {
       <section className="settings-grid">
         <SystemStatusPanel />
         <WebPreviewControlSettings />
+        <ReadOnlyStockPrepSettings />
         <CompanySettings settings={companySettings} onChange={setCompanySettings} />
         <SystemSettings settings={systemSettings} onChange={setSystemSettings} />
         <DataStatusSettings />
