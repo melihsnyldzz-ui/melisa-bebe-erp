@@ -1,14 +1,14 @@
-export const currentReleaseVersion = "v7.8.0";
+export const currentReleaseVersion = "v8.2.0";
 
-export const currentReleaseTitle = "Terminal Entegrasyonuna Geçiş Ön Şartları";
+export const currentReleaseTitle = "Test Sonrası Terminal Entegrasyon Kararı";
 
 export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "settings-readonly-stock-prep"];
 
 export const releaseHighlightItems = [
-  "Read-only Stok Test Hazırlığı paneli şirket test günü ve terminal entegrasyon ön şartlarıyla genişletildi.",
-  "Şirket bilgisayarı test günü kontrol kartı, operatör rapor formatı, ilk gerçek stok testi hazır/beklet kararı ve terminal entegrasyon ön şartları görünür hale getirildi.",
-  "v7.4 stok testi sonuç değerlendirme akışı korunur.",
-  "Bu sürüm gerçek bağlantı kurmaz; yalnızca şirket ortamı read-only test ve terminal geçiş hazırlığını pasif olarak gösterir.",
+  "Read-only Stok Test Hazırlığı paneli ilk gerçek test kapılarıyla genişletildi.",
+  "Şirket SQL hazırlığı son kontrolü, ilk read-only test başlatma kapısı, stok testi hata senaryoları ve terminal entegrasyon kararı görünür hale getirildi.",
+  "v7.8 terminal entegrasyonu ön şartları korunur.",
+  "Bu sürüm gerçek bağlantı kurmaz; yalnızca ilk read-only test ve terminal kararı için pasif hazırlık gösterir.",
 ];
 
 export const releaseJumpLinks = [
