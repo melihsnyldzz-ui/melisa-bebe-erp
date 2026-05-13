@@ -1,14 +1,34 @@
-export const APP_VERSION = "v7.0.0";
-export const APP_STAGE = "Read-only Stok Testine Geçiş Kapısı";
+export const APP_VERSION = "v7.4.0";
+export const APP_STAGE = "Stok Testi Sonuç Değerlendirme Paneli";
 
 export const releaseHighlights = [
-  "El Terminali ekranına Read-only Stok Testine Geçiş Kapısı eklendi.",
-  "Görsel sıkıştırma, depo için gerekli alanlar, yönetici pilot özeti ve read-only geçiş şartları görünür hale getirildi.",
-  "Pilot Öncesi Minimal Ekran Modu korunur.",
-  "Bu sürüm gerçek stok bağlantısı eklemez; yalnızca geçiş şartlarını pasif olarak gösterir.",
+  "Ayarlar sayfasına Read-only Stok Test Hazırlığı paneli eklendi.",
+  "Read-only SQL kullanıcısı hazırlığı, .env.local güvenli yerleşim, ilk 20 satır stok testi planı ve sonuç değerlendirme akışı görünür hale getirildi.",
+  "v7.0 Read-only Stok Testine Geçiş Kapısı korunur.",
+  "Bu sürüm gerçek bağlantı kurmaz; yalnızca şirket ortamı read-only test hazırlığını pasif olarak gösterir.",
 ];
 
 export const versionHistory = [
+  {
+    version: "v7.4.0",
+    title: "Stok Testi Sonuç Değerlendirme Paneli",
+    note: "İlk 20 satır stok testinde hangi sonuçların olumlu, beklet veya dur sebebi olacağını görünür hale getirir.",
+  },
+  {
+    version: "v7.3.0",
+    title: "İlk 20 Satır Stok Testi Planı",
+    note: "Şirket ortamındaki ilk gerçek stok okuma testinin yalnızca manuel, read-only ve 20 satırla sınırlı yapılmasını planlar.",
+  },
+  {
+    version: "v7.2.0",
+    title: ".env.local Güvenli Bağlantı Yerleşimi",
+    note: "Bağlantı bilgisinin yalnızca şirket bilgisayarındaki .env.local içinde kalması gerektiğini görünür kılar.",
+  },
+  {
+    version: "v7.1.0",
+    title: "Read-only SQL Kullanıcısı Hazırlık Rehberi",
+    note: "sa veya tam yetkili kullanıcı yerine ayrı read-only kullanıcı şartını netleştirir.",
+  },
   {
     version: "v7.0.0",
     title: "Read-only Stok Testine Geçiş Kapısı",
@@ -28,25 +48,5 @@ export const versionHistory = [
     version: "v6.7.0",
     title: "El Terminali Ekranı Görsel Sıkıştırma",
     note: "Minimal modun birinci referans kabul edilmesini ve detay panellerin ikinci sıraya alınmasını netleştirir.",
-  },
-  {
-    version: "v6.6.0",
-    title: "Pilot Öncesi Minimal Ekran Modu",
-    note: "Depo ve yönetici için en kısa terminal kullanım akışını üstte toplar.",
-  },
-  {
-    version: "v6.5.0",
-    title: "Yönetici İçin Tek Karar Paneli",
-    note: "Geçti, Uyarı ve Dur yoğunluğuna göre devam, eğitim tekrar, teknik kontrol veya sadeleştirme kararını netleştirir.",
-  },
-  {
-    version: "v6.4.0",
-    title: "Depo Personeli İçin Tek Akış Paneli",
-    note: "Depo kullanıcısının barkodu okut, sonucu söyle, gerekirse not al akışını sadeleştirir.",
-  },
-  {
-    version: "v6.3.0",
-    title: "El Terminali Ekranı Üst Sıra Sadeleştirme",
-    note: "Mock Barkod Test Alanı ve Barkod Kalite Durumu sonrası okunacak üst akışı görünür hale getirir.",
   },
 ];
