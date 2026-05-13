@@ -1,14 +1,34 @@
-export const APP_VERSION = "v6.6.0";
-export const APP_STAGE = "Pilot Öncesi Minimal Ekran Modu";
+export const APP_VERSION = "v7.0.0";
+export const APP_STAGE = "Read-only Stok Testine Geçiş Kapısı";
 
 export const releaseHighlights = [
-  "El Terminali ekranına Pilot Öncesi Minimal Ekran Modu eklendi.",
-  "Üst sıra akış, depo tek akış, yönetici tek karar ve minimal pilot modu görünür hale getirildi.",
-  "Web önizleme kontrol paneli ve v6.2 web sonrası pilot karar akışı korunur.",
-  "Bu sürüm yalnızca pasif ekran sadeleştirme ve pilot kullanım rehberi ekler.",
+  "El Terminali ekranına Read-only Stok Testine Geçiş Kapısı eklendi.",
+  "Görsel sıkıştırma, depo için gerekli alanlar, yönetici pilot özeti ve read-only geçiş şartları görünür hale getirildi.",
+  "Pilot Öncesi Minimal Ekran Modu korunur.",
+  "Bu sürüm gerçek stok bağlantısı eklemez; yalnızca geçiş şartlarını pasif olarak gösterir.",
 ];
 
 export const versionHistory = [
+  {
+    version: "v7.0.0",
+    title: "Read-only Stok Testine Geçiş Kapısı",
+    note: "Gerçek stok okuma testine geçmeden önce build, web/local sürüm, mock barkod ve depo akışı şartlarını görünür hale getirir.",
+  },
+  {
+    version: "v6.9.0",
+    title: "Yönetici İçin Pilot Durum Özeti",
+    note: "Yönetici için ekran okunabilirliği, depo akışı ve read-only stok testi öncesi eksikleri özetler.",
+  },
+  {
+    version: "v6.8.0",
+    title: "Depo Kullanıcı İçin Sadece Gerekli Alanlar",
+    note: "Depo personelinin sadece barkod, kalite sonucu ve not kararına odaklanmasını sağlar.",
+  },
+  {
+    version: "v6.7.0",
+    title: "El Terminali Ekranı Görsel Sıkıştırma",
+    note: "Minimal modun birinci referans kabul edilmesini ve detay panellerin ikinci sıraya alınmasını netleştirir.",
+  },
   {
     version: "v6.6.0",
     title: "Pilot Öncesi Minimal Ekran Modu",
@@ -28,25 +48,5 @@ export const versionHistory = [
     version: "v6.3.0",
     title: "El Terminali Ekranı Üst Sıra Sadeleştirme",
     note: "Mock Barkod Test Alanı ve Barkod Kalite Durumu sonrası okunacak üst akışı görünür hale getirir.",
-  },
-  {
-    version: "v6.2.0",
-    title: "Web Önizleme Sonrası Pilot Karar Paneli",
-    note: "Web önizleme başarılıysa eğitim, sadeleştirme veya pilot hazırlığı kararını görünür hale getirir.",
-  },
-  {
-    version: "v6.1.0",
-    title: "Yönetici Web Kontrol Özeti",
-    note: "Webden kontrol edilen ERP önizlemesi için yöneticiye kısa durum özeti sunar.",
-  },
-  {
-    version: "v6.0.0",
-    title: "Pilot Test Geri Bildirim Paneli",
-    note: "Ayarlar, El Terminali, mock barkod ve hazır/beklet karar akışı için geri bildirim sorularını listeler.",
-  },
-  {
-    version: "v5.9.0",
-    title: "Web Üzerinden Test Notu Toplama Tasarımı",
-    note: "Webden kontrol eden kişinin ekran, sürüm, panel ve barkod sonucu notlarını sistem dışında toplamasını tarif eder.",
   },
 ];
