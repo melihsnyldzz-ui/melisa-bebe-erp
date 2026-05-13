@@ -152,6 +152,39 @@ const nextTerminalPilotItems = [
   "Yanlış eşleşme varsa terminal pilotu durur ve eşleşme alanı tekrar incelenir.",
 ];
 
+const fieldApprovalItems = [
+  "Patron veya sorumlu kişi test gününü onaylar.",
+  "Read-only kullanıcı hazır bilgisi alınır.",
+  "Test bilgisayarı ve kullanıcı belli olur.",
+  "Kimse connection bilgisini ekranda paylaşmaz.",
+  "Testin amacı sadece 20 satır stok gözlemidir.",
+];
+
+const responsibilitySplitItems = [
+  "Test sorumlusu: başlatır ve durdurur.",
+  "Operatör: butona basar ve sonucu söyler.",
+  "Gözlemci: satır sayısı ve alanları kontrol eder.",
+  "Yönetici: hazır/beklet/dur kararını verir.",
+  "Teknik kişi: hata kategorisini not alır.",
+];
+
+const timeBoxItems = [
+  "Hazırlık: 5 dakika.",
+  "İlk deneme: 2 dakika.",
+  "20 satır gözlem: 5 dakika.",
+  "Hata/eksik notu: 5 dakika.",
+  "Karar: 3 dakika.",
+  "Toplam hedef süre: 20 dakika.",
+];
+
+const postFieldDecisionItems = [
+  "Hazır: 20 satır stok doğru, barkod alanı okunur, hata yok.",
+  "Beklet: stok okunur ama barkod/kolon eksikleri var.",
+  "Dur: stok dışı veri, hassas hata veya limit aşımı var.",
+  "Hazır ise terminal pilotu planlanır.",
+  "Beklet veya Dur ise yeni geliştirme paketi açılır.",
+];
+
 function PrepCard({ title, items }) {
   return (
     <article className="system-health-card">
@@ -211,6 +244,10 @@ export default function ReadOnlyStockPrepSettings() {
         <PrepCard title="v8.4 Test Gözlem Notları" items={observationNoteItems} />
         <PrepCard title="v8.5 Durma ve Geri Alma Prosedürü" items={stopRollbackItems} />
         <PrepCard title="v8.6 Sonraki Terminal Pilot Planı" items={nextTerminalPilotItems} />
+        <PrepCard title="v8.7 Saha Testi Onay Listesi" items={fieldApprovalItems} />
+        <PrepCard title="v8.8 Görev Dağılımı" items={responsibilitySplitItems} />
+        <PrepCard title="v8.9 Test Günü Zaman Kutusu" items={timeBoxItems} />
+        <PrepCard title="v9.0 İlk Gerçek Test Sonrası Karar" items={postFieldDecisionItems} />
         <PrepCard title="Kesin Dur Kuralları" items={strictStopItems} />
       </div>
     </section>
