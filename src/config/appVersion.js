@@ -1,14 +1,34 @@
-export const APP_VERSION = "v5.0.0";
-export const APP_STAGE = "Şirket Pilot Öncesi Hazır / Beklet Karar Merkezi";
+export const APP_VERSION = "v5.4.0";
+export const APP_STAGE = "Web Önizleme Kontrol Paneli";
 
 export const releaseHighlights = [
-  "Şirket Pilot Hazır / Beklet Karar Merkezi eklendi.",
-  "Local build öncesi son kontrol, test edilecek ekranlar sıralı liste ve hazır/beklet kararı görünür hale getirildi.",
-  "Test günü tek sayfa özet paneli, terminal final sadeleştirme, eğitim merkezi ve karar merkezi korunur.",
-  "Bu sürüm yalnızca pasif eğitim, prova, rol ve karar görünümü ekler.",
+  "Web Önizleme Kontrol Paneli Ayarlar sayfasına eklendi.",
+  "GitHub Pages yayın kontrolü, web test linkleri, web/local sürüm uyumu ve yayın karar akışı görünür hale getirildi.",
+  "ERP terminal pilot hazırlığı ve v5.0 hazır/beklet karar merkezi korunur.",
+  "Bu sürüm yalnızca pasif web önizleme kontrol rehberi ekler.",
 ];
 
 export const versionHistory = [
+  {
+    version: "v5.4.0",
+    title: "Web Önizleme Kontrol Paneli",
+    note: "GitHub Pages üzerinden açılan ERP önizlemesinin güncel sürümü gösterip göstermediğini Ayarlar sayfasında kontrol eder.",
+  },
+  {
+    version: "v5.3.0",
+    title: "Web / Local Sürüm Uyumu",
+    note: "Webde görünen sürüm ile main kaynak sürümünün aynı olup olmadığını kontrol etmek için pasif liste ekler.",
+  },
+  {
+    version: "v5.2.0",
+    title: "Web Test Linkleri",
+    note: "GitHub Pages ana linki ve cache kırma parametreli linkleri görünür hale getirir.",
+  },
+  {
+    version: "v5.1.0",
+    title: "GitHub Pages Statik Web Yayını",
+    note: "ERP mock/statik önizlemesini GitHub Pages üzerinden açmak için yayın workflow hazırlığını gösterir.",
+  },
   {
     version: "v5.0.0",
     title: "Şirket Pilot Öncesi Hazır / Beklet Karar Merkezi",
@@ -28,25 +48,5 @@ export const versionHistory = [
     version: "v4.7.0",
     title: "Test Günü Tek Sayfa Özet Paneli",
     note: "Test gününde depo, yönetici ve teknik ekip için okunacak en kısa akışı tek panelde toplar.",
-  },
-  {
-    version: "v4.6.0",
-    title: "Yönetici Hızlı Karar Kartı",
-    note: "Yöneticinin devam, eğitim tekrarı, ekran sadeleştirme veya teknik kontrol kararını hızlı vermesini destekler.",
-  },
-  {
-    version: "v4.5.0",
-    title: "Depo Personeli Hızlı Kullanım Kartı",
-    note: "Depo personeli için barkodu okut, kalite sonucunu oku, not al akışını sadeleştirir.",
-  },
-  {
-    version: "v4.4.0",
-    title: "Terminal Ekranı Bölüm Sıralaması",
-    note: "Test gününde hangi bölümün hangi sırayla okunacağını görünür hale getirir.",
-  },
-  {
-    version: "v4.3.0",
-    title: "Şirket Test Günü Rolleri ve Sorumlulukları",
-    note: "Depo personeli, yönetici, teknik kişi, test sorumlusu ve patron rollerini tek akışta gösterir.",
   },
 ];
