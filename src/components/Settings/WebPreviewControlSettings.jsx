@@ -1,6 +1,6 @@
 const webPreviewStatusRows = [
   { label: "Web önizleme linki", value: "GitHub Pages" },
-  { label: "Beklenen sürüm", value: "v5.0.0+" },
+  { label: "Beklenen sürüm", value: "v5.8.0" },
   { label: "Yayın tipi", value: "Statik önizleme" },
   { label: "Canlı veri", value: "Kapalı" },
   { label: "Yerel build", value: "Ayrı kontrol edilmeli" },
@@ -13,12 +13,12 @@ const pagesChecklist = [
   "Workflow build adımı başarılı olmalı.",
   "Deploy adımı başarılı olmalı.",
   "Açılan web linkinde sol menüde güncel sürüm rozeti görünmeli.",
-  "Eski sürüm görünürse cache kırmak için ?v=5.0 veya gizli sekme denenmeli.",
+  "Eski sürüm görünürse cache kırmak için ?v=5.8 veya gizli sekme denenmeli.",
 ];
 
 const webTestLinks = [
   "https://melihsnyldzz-ui.github.io/melisa-bebe-erp/",
-  "https://melihsnyldzz-ui.github.io/melisa-bebe-erp/?v=5.0",
+  "https://melihsnyldzz-ui.github.io/melisa-bebe-erp/?v=5.8",
   "https://melihsnyldzz-ui.github.io/melisa-bebe-erp/?cache=clear",
 ];
 
@@ -37,6 +37,39 @@ const publishDecisionItems = [
   "Build hatası varsa: kod değil önce workflow logu incelenir.",
   "Web sürümü güncelse: test linki ekibe gönderilebilir.",
   "Gerçek şirket testi başlamadan önce local build ayrıca doğrulanır.",
+];
+
+const homeQuickCheckItems = [
+  "Web linki açılınca sol menüde sürüm rozeti görünmeli.",
+  "Ayarlar sayfasına girilip Web Önizleme Kontrol Paneli kontrol edilmeli.",
+  "El Terminali ekranına geçilip Mock Barkod Test Alanı açılmalı.",
+  "0001234567890 örneğiyle leading zero kontrol edilmeli.",
+  "Aynı barkod tekrar girilerek duplicate uyarısı kontrol edilmeli.",
+  "Hazır / Beklet Karar Merkezi görünüyorsa web önizleme kabul edilebilir.",
+];
+
+const oldVersionFixItems = [
+  "Önce gizli sekmede web linki açılır.",
+  "Sonra ?v=5.8 parametreli link denenir.",
+  "Hâlâ eski görünüyorsa Actions > Pages workflow tekrar çalıştırılır.",
+  "Workflow başarılı ama eski görünüyorsa tarayıcı cache temizlenir.",
+  "Ayarlar sayfasındaki sürüm rozeti son kontrol olarak okunur.",
+];
+
+const sourceCompareItems = [
+  "GitHub main: appVersion.js sürümü kontrol edilir.",
+  "GitHub Pages: webde görünen sürüm kontrol edilir.",
+  "Local: npm run build sonrası açılan sürüm kontrol edilir.",
+  "Üçü aynıysa pilot öncesi web kontrol tamamdır.",
+  "Fark varsa önce web/cache/deploy sırası incelenir.",
+];
+
+const technicalReadinessItems = [
+  "Web linki güncel sürümü gösteriyor.",
+  "Local build ayrı doğrulanacak.",
+  "Ayarlar ve El Terminali ekranları açılıyor.",
+  "Web önizleme sadece mock/statik kontrol için kullanılıyor.",
+  "Gerçek şirket testinden önce read-only stok testi ayrıca planlanacak.",
 ];
 
 function InfoCard({ title, items }) {
@@ -76,6 +109,10 @@ export default function WebPreviewControlSettings() {
         <InfoCard title="v5.2 Web Test Linkleri" items={webTestLinks} />
         <InfoCard title="v5.3 Web / Local Sürüm Uyumu" items={versionConsistencyChecks} />
         <InfoCard title="v5.4 Yayın Karar Akışı" items={publishDecisionItems} />
+        <InfoCard title="v5.5 Web Ana Sayfa Hızlı Kontrol" items={homeQuickCheckItems} />
+        <InfoCard title="v5.6 Eski Sürüm Görünürse" items={oldVersionFixItems} />
+        <InfoCard title="v5.7 Yayın / Local / GitHub Karşılaştırması" items={sourceCompareItems} />
+        <InfoCard title="v5.8 Pilot Öncesi Teknik Hazırlık" items={technicalReadinessItems} />
       </div>
     </section>
   );
