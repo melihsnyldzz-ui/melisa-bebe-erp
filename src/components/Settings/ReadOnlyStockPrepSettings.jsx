@@ -44,6 +44,44 @@ const strictStopItems = [
   "Connection bilgisinin ekranda/logda görünmesi",
 ];
 
+const companyComputerTestDayItems = [
+  "Test şirket bilgisayarında yapılır.",
+  "Local build veya web sürümü önceden doğrulanmış olmalı.",
+  "Read-only kullanıcı hazır olmadan test başlatılmaz.",
+  "Test sırasında yalnızca stok ekranı kullanılır.",
+  "Testi başlatacak ve durduracak kişi belli olur.",
+  "Sonuçlar sistem dışı tek rapor listesinde toplanır.",
+];
+
+const operatorReportFormatItems = [
+  "Test tarihi:",
+  "Testi yapan kişi:",
+  "Görülen satır sayısı:",
+  "Stok kodu okunuyor mu?",
+  "Ürün adı okunuyor mu?",
+  "Barkod alanı anlaşılır mı?",
+  "Eksik/anlaşılmayan kolonlar:",
+  "Genel sonuç: Hazır / Beklet / Dur",
+];
+
+const realStockReadyHoldItems = [
+  "20 satır ve yalnızca stok geldiyse: Hazır adayı.",
+  "Stok kodu/ürün adı boşsa: Beklet.",
+  "Barkod alanı yoksa: Terminal entegrasyonu beklet.",
+  "Stok dışı veri görünürse: Dur.",
+  "Hata mesajında bağlantı bilgisi görünürse: Dur.",
+  "Eksikler yönetilebilir düzeydeyse: sınırlı read-only pilot devam edebilir.",
+];
+
+const terminalIntegrationPrereqItems = [
+  "Read-only stok testi başarılı olmalı.",
+  "Barkod alanı doğru ve anlaşılır görünmeli.",
+  "Terminal mock testinde leading zero korunmuş olmalı.",
+  "Duplicate uyarısı beklenen şekilde çalışmalı.",
+  "Depo tek akış anlaşılmış olmalı.",
+  "İlk terminal entegrasyonu yalnızca görüntüleme amaçlı planlanmalı.",
+];
+
 function PrepCard({ title, items }) {
   return (
     <article className="system-health-card">
@@ -91,6 +129,10 @@ export default function ReadOnlyStockPrepSettings() {
         <PrepCard title="v7.2 .env.local Güvenli Yerleşim" items={envLocalPlacementItems} />
         <PrepCard title="v7.3 İlk 20 Satır Stok Testi Planı" items={firstTwentyRowsItems} />
         <PrepCard title="v7.4 Stok Testi Sonuç Değerlendirme" items={resultEvaluationItems} />
+        <PrepCard title="v7.5 Şirket Bilgisayarı Test Günü Kontrol Kartı" items={companyComputerTestDayItems} />
+        <PrepCard title="v7.6 Read-only Test Operatör Rapor Formatı" items={operatorReportFormatItems} />
+        <PrepCard title="v7.7 İlk Gerçek Stok Testi Hazır / Beklet Kararı" items={realStockReadyHoldItems} />
+        <PrepCard title="v7.8 Terminal Entegrasyonuna Geçiş Ön Şartları" items={terminalIntegrationPrereqItems} />
         <PrepCard title="Kesin Dur Kuralları" items={strictStopItems} />
       </div>
     </section>
