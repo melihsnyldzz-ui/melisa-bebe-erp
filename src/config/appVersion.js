@@ -1,14 +1,19 @@
-export const APP_VERSION = "v9.3.0";
-export const APP_STAGE = "Şirket Pilot Öncesi Güvenli Kontrol Paketi";
+export const APP_VERSION = "v9.4.0";
+export const APP_STAGE = "SA Kullanıcısı Fail-closed Beklet Kararı";
 
 export const releaseHighlights = [
-  "Web önizleme ve local build aynı sürümü gösteriyor mu sorusunu test öncesi karar kapısına ekler.",
-  "Read-only SQL kullanıcı hazırlığını sa kullanmadan, şirket bilgisayarı ve .env.local sınırıyla netleştirir.",
-  "İlk gerçek 20 satır stok testi için Codex'e verilecek güvenli prompt çerçevesini görünür hale getirir.",
-  "Bu sürüm gerçek bağlantı kurmaz; veri yazma, import/export/sync, cari, sipariş, kasa ve finans kapsam dışıdır.",
+  "Local build ve web önizlemenin v9.3.0 olarak eşleştiği ilk güvenli kontrol sonucu işlendi.",
+  "Güvenlik kontrolü sa kullanıcısını gördüğünde SQL/Vega bağlantısının başlatılmaması doğru davranış olarak kaydedildi.",
+  "Stok verisi okunmadığı, satır sayısının 0 kaldığı ve barkod alanının kontrol edilmediği BEKLET kararı görünür hale getirildi.",
+  "Bir sonraki gerçek test için yalnızca şirket ortamında hazırlanmış read-only SQL kullanıcısı ile ilerlenmesi gerektiği vurgulandı.",
 ];
 
 export const versionHistory = [
+  {
+    version: "v9.4.0",
+    title: "SA Kullanıcısı Fail-closed Beklet Kararı",
+    note: "İlk bağlantı denemesinde sa tespit edilirse bağlantı açılmadan testin BEKLET kararıyla durdurulmasını kayıt altına alır.",
+  },
   {
     version: "v9.3.0",
     title: "İlk 20 Satır Stok Testi Codex Promptu",
