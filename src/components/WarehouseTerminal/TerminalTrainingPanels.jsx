@@ -201,6 +201,38 @@ const minimalPilotModeItems = [
   "Pilot günü amaç hızlı, güvenli ve anlaşılır gözlemdir.",
 ];
 
+const visualCompressionItems = [
+  "Üstteki minimal mod birinci referans kabul edilir.",
+  "Geçmiş eğitim panelleri yalnızca ihtiyaç olduğunda okunur.",
+  "Depo personeli için karar metni kısa tutulur.",
+  "Yönetici için tek cümle karar yeterlidir.",
+  "Test günü ekranda fazla gezinme yapılmaz.",
+];
+
+const onlyRequiredFieldsItems = [
+  "Depocu sadece barkod alanı, kalite sonucu ve not kararına bakar.",
+  "Ürün adı ve barkod eşleşmesi gözle kontrol edilir.",
+  "Stok miktarı gerçek test fazına kadar sadece açıklama düzeyinde kalır.",
+  "Teknik açıklamalar depo akışında ikinci sıradadır.",
+  "Her deneme sonunda tek sonuç söylenir: Geçti, Uyarı veya Dur.",
+];
+
+const pilotSummaryItems = [
+  "Ekran okunabiliyor mu?",
+  "Depo kullanıcısı tek akışı uygulayabiliyor mu?",
+  "Yönetici tek karar verebiliyor mu?",
+  "Mock barkod sonucu güven veriyor mu?",
+  "Read-only stok testi için bekleyen eksik var mı?",
+];
+
+const readonlyTransitionGateItems = [
+  "Build başarılı olmadan gerçek stok testine geçilmez.",
+  "Web ve local sürüm aynı olmadan geçilmez.",
+  "Mock barkod testi Geçti ağırlıklı olmadan geçilmez.",
+  "Depo tek akış anlaşılmadan geçilmez.",
+  "Şirket ortamında ilk gerçek test sadece read-only ve 20 satır olur.",
+];
+
 function TrainingCard({ title, items }) {
   return (
     <article className="warehouse-mock-barcode-card">
@@ -217,6 +249,21 @@ function TrainingCard({ title, items }) {
 export default function TerminalTrainingPanels() {
   return (
     <>
+      <section className="table-panel warehouse-mock-barcode-panel section-updated-highlight" id="warehouse-readonly-transition-gate">
+        <div className="section-heading warehouse-quality-heading">
+          <div>
+            <h2>Read-only Stok Testine Geçiş Kapısı</h2>
+            <p>El Terminali ekranı sadeleştiğinde gerçek stok okuma testine geçmeden önce bakılacak son pasif kapı.</p>
+          </div>
+        </div>
+        <div className="warehouse-mock-barcode-layout">
+          <TrainingCard title="v6.7 Görsel Sıkıştırma" items={visualCompressionItems} />
+          <TrainingCard title="v6.8 Depo İçin Gerekli Alanlar" items={onlyRequiredFieldsItems} />
+          <TrainingCard title="v6.9 Yönetici Pilot Özeti" items={pilotSummaryItems} />
+          <TrainingCard title="v7.0 Read-only Geçiş Kapısı" items={readonlyTransitionGateItems} />
+        </div>
+      </section>
+
       <section className="table-panel warehouse-mock-barcode-panel section-updated-highlight" id="warehouse-minimal-pilot-mode">
         <div className="section-heading warehouse-quality-heading">
           <div>
