@@ -9,6 +9,7 @@ import SystemHealthSettings from "../components/Settings/SystemHealthSettings.js
 import SystemSettings from "../components/Settings/SystemSettings.jsx";
 import SystemStatusPanel from "../components/Settings/SystemStatusPanel.jsx";
 import UserRoleSettings from "../components/Settings/UserRoleSettings.jsx";
+import WebPreviewControlSettings from "../components/Settings/WebPreviewControlSettings.jsx";
 
 const initialCompanySettings = {
   companyName: "Melisa Bebe Tekstil San. ve Tic. Ltd. Şti.",
@@ -64,6 +65,7 @@ export default function Settings() {
 
       <section className="settings-grid">
         <SystemStatusPanel />
+        <WebPreviewControlSettings />
         <CompanySettings settings={companySettings} onChange={setCompanySettings} />
         <SystemSettings settings={systemSettings} onChange={setSystemSettings} />
         <DataStatusSettings />
