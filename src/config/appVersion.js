@@ -1,14 +1,34 @@
-export const APP_VERSION = "v6.2.0";
-export const APP_STAGE = "Web Önizleme Sonrası Pilot Karar Paneli";
+export const APP_VERSION = "v6.6.0";
+export const APP_STAGE = "Pilot Öncesi Minimal Ekran Modu";
 
 export const releaseHighlights = [
-  "Web Önizleme Kontrol Paneli geri bildirim ve karar katmanıyla genişletildi.",
-  "Web üzerinden test notu toplama tasarımı, pilot geri bildirim paneli, yönetici web kontrol özeti ve web sonrası pilot karar paneli görünür hale getirildi.",
-  "v5.8 teknik hazırlık paneli ve GitHub Pages kontrol akışı korunur.",
-  "Bu sürüm yalnızca pasif web önizleme, geri bildirim ve karar rehberi ekler.",
+  "El Terminali ekranına Pilot Öncesi Minimal Ekran Modu eklendi.",
+  "Üst sıra akış, depo tek akış, yönetici tek karar ve minimal pilot modu görünür hale getirildi.",
+  "Web önizleme kontrol paneli ve v6.2 web sonrası pilot karar akışı korunur.",
+  "Bu sürüm yalnızca pasif ekran sadeleştirme ve pilot kullanım rehberi ekler.",
 ];
 
 export const versionHistory = [
+  {
+    version: "v6.6.0",
+    title: "Pilot Öncesi Minimal Ekran Modu",
+    note: "Depo ve yönetici için en kısa terminal kullanım akışını üstte toplar.",
+  },
+  {
+    version: "v6.5.0",
+    title: "Yönetici İçin Tek Karar Paneli",
+    note: "Geçti, Uyarı ve Dur yoğunluğuna göre devam, eğitim tekrar, teknik kontrol veya sadeleştirme kararını netleştirir.",
+  },
+  {
+    version: "v6.4.0",
+    title: "Depo Personeli İçin Tek Akış Paneli",
+    note: "Depo kullanıcısının barkodu okut, sonucu söyle, gerekirse not al akışını sadeleştirir.",
+  },
+  {
+    version: "v6.3.0",
+    title: "El Terminali Ekranı Üst Sıra Sadeleştirme",
+    note: "Mock Barkod Test Alanı ve Barkod Kalite Durumu sonrası okunacak üst akışı görünür hale getirir.",
+  },
   {
     version: "v6.2.0",
     title: "Web Önizleme Sonrası Pilot Karar Paneli",
@@ -28,25 +48,5 @@ export const versionHistory = [
     version: "v5.9.0",
     title: "Web Üzerinden Test Notu Toplama Tasarımı",
     note: "Webden kontrol eden kişinin ekran, sürüm, panel ve barkod sonucu notlarını sistem dışında toplamasını tarif eder.",
-  },
-  {
-    version: "v5.8.0",
-    title: "Pilot Öncesi Son Teknik Hazırlık Paneli",
-    note: "Web linki, local build, Ayarlar ve El Terminali ekranlarının son teknik kontrolünü görünür hale getirir.",
-  },
-  {
-    version: "v5.7.0",
-    title: "Yayın / Local / GitHub Durum Karşılaştırma Merkezi",
-    note: "GitHub main, GitHub Pages ve local build sürümlerinin aynı olup olmadığını kontrol ettirir.",
-  },
-  {
-    version: "v5.6.0",
-    title: "Webde Eski Sürüm Görünürse Çözüm Paneli",
-    note: "Cache kırma, gizli sekme ve Pages workflow tekrar çalıştırma adımlarını sadeleştirir.",
-  },
-  {
-    version: "v5.5.0",
-    title: "Web Önizleme Ana Sayfa Hızlı Kontrol Kartı",
-    note: "Web linkinden açılan ERP önizlemesinde ilk bakılacak alanları listeler.",
   },
 ];
