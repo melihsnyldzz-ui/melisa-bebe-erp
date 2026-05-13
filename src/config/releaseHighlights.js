@@ -1,14 +1,14 @@
-export const currentReleaseVersion = "v5.4.0";
+export const currentReleaseVersion = "v5.8.0";
 
-export const currentReleaseTitle = "Web Önizleme Kontrol Paneli";
+export const currentReleaseTitle = "Pilot Öncesi Son Teknik Hazırlık Paneli";
 
 export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "settings-web-preview-control"];
 
 export const releaseHighlightItems = [
-  "Web Önizleme Kontrol Paneli Ayarlar sayfasına eklendi.",
-  "GitHub Pages yayın kontrolü, web test linkleri, web/local sürüm uyumu ve yayın karar akışı görünür hale getirildi.",
-  "ERP terminal pilot hazırlığı ve v5.0 hazır/beklet karar merkezi korunur.",
-  "Bu sürüm yalnızca pasif web önizleme kontrol rehberi ekler.",
+  "Web Önizleme Kontrol Paneli genişletildi.",
+  "Web ana sayfa hızlı kontrol, eski sürüm çözüm paneli, yayın/local/GitHub karşılaştırması ve pilot öncesi teknik hazırlık görünür hale getirildi.",
+  "ERP terminal pilot hazırlığı, v5.0 hazır/beklet karar merkezi ve GitHub Pages kontrol akışı korunur.",
+  "Bu sürüm yalnızca pasif web önizleme ve teknik hazırlık rehberi ekler.",
 ];
 
 export const releaseJumpLinks = [
