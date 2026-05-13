@@ -1,14 +1,14 @@
-export const currentReleaseVersion = "v5.8.0";
+export const currentReleaseVersion = "v6.2.0";
 
-export const currentReleaseTitle = "Pilot Öncesi Son Teknik Hazırlık Paneli";
+export const currentReleaseTitle = "Web Önizleme Sonrası Pilot Karar Paneli";
 
 export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "settings-web-preview-control"];
 
 export const releaseHighlightItems = [
-  "Web Önizleme Kontrol Paneli genişletildi.",
-  "Web ana sayfa hızlı kontrol, eski sürüm çözüm paneli, yayın/local/GitHub karşılaştırması ve pilot öncesi teknik hazırlık görünür hale getirildi.",
-  "ERP terminal pilot hazırlığı, v5.0 hazır/beklet karar merkezi ve GitHub Pages kontrol akışı korunur.",
-  "Bu sürüm yalnızca pasif web önizleme ve teknik hazırlık rehberi ekler.",
+  "Web Önizleme Kontrol Paneli geri bildirim ve karar katmanıyla genişletildi.",
+  "Web üzerinden test notu toplama tasarımı, pilot geri bildirim paneli, yönetici web kontrol özeti ve web sonrası pilot karar paneli görünür hale getirildi.",
+  "v5.8 teknik hazırlık paneli ve GitHub Pages kontrol akışı korunur.",
+  "Bu sürüm yalnızca pasif web önizleme, geri bildirim ve karar rehberi ekler.",
 ];
 
 export const releaseJumpLinks = [
@@ -62,7 +62,7 @@ export const releaseHighlightsByPage = {
       { id: "warehouse-barcode-operation-center", label: "Operasyon Merkezi'ne git" },
       { id: "warehouse-stock-barcode-quality-center", label: "Kalite Kontrol Merkezi'ne git" },
       { id: "warehouse-risk-priority-matrix", label: "Risk Öncelik Matrisi'ne git" },
-      { id: "warehouse-barcode-risk-panel", label: "Barkod Riskleri'ne git" },
+      { id: "warehouse-barcode-risk-panel", label: "Barkod Riskleri" },
     ],
     updatedSectionIds: ["warehouse-ready-hold-decision-center", "warehouse-one-page-test-summary", "warehouse-terminal-final-simplification-center", "warehouse-terminal-final-control-center", "warehouse-terminal-training-center", "warehouse-terminal-next-roadmap", "warehouse-company-first-real-test-checklist", "warehouse-terminal-barcode-quality", "warehouse-erp-terminal-test-plan"],
   },
