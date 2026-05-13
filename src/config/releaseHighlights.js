@@ -1,14 +1,14 @@
-export const currentReleaseVersion = "v8.6.0";
+export const currentReleaseVersion = "v9.0.0";
 
-export const currentReleaseTitle = "Sonraki Terminal Pilot Planı";
+export const currentReleaseTitle = "İlk Gerçek Test Sonrası Karar";
 
 export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "settings-readonly-stock-prep"];
 
 export const releaseHighlightItems = [
-  "Read-only Stok Test Hazırlığı paneli saha test yürütme planıyla genişletildi.",
-  "Read-only saha testi yürütme akışı, test gözlem notları, durma/geri alma prosedürü ve sonraki terminal pilot planı görünür hale getirildi.",
-  "v8.2 ilk test ve terminal karar kapıları korunur.",
-  "Bu sürüm gerçek bağlantı kurmaz; yalnızca saha test yürütme ve sonraki terminal pilot hazırlığını pasif olarak gösterir.",
+  "Read-only Stok Test Hazırlığı paneli saha onayı ve ilk gerçek test sonrası karar kapısıyla genişletildi.",
+  "Saha testi onay listesi, görev dağılımı, test günü zaman kutusu ve ilk gerçek test sonrası karar akışı görünür hale getirildi.",
+  "v8.6 saha test yürütme planı korunur.",
+  "Bu sürüm gerçek bağlantı kurmaz; yalnızca ilk gerçek read-only testin saha yürütme kararını pasif olarak gösterir.",
 ];
 
 export const releaseJumpLinks = [
