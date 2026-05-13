@@ -1,18 +1,19 @@
-export const currentReleaseVersion = "v5.0.0";
+export const currentReleaseVersion = "v5.4.0";
 
-export const currentReleaseTitle = "Şirket Pilot Öncesi Hazır / Beklet Karar Merkezi";
+export const currentReleaseTitle = "Web Önizleme Kontrol Paneli";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "warehouse-ready-hold-decision-center"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "settings-web-preview-control"];
 
 export const releaseHighlightItems = [
-  "Şirket Pilot Hazır / Beklet Karar Merkezi eklendi.",
-  "Local build öncesi son kontrol, test edilecek ekranlar sıralı liste ve hazır/beklet kararı görünür hale getirildi.",
-  "Test günü tek sayfa özet paneli, terminal final sadeleştirme, eğitim merkezi ve karar merkezi korunur.",
-  "Bu sürüm yalnızca pasif eğitim, prova, rol ve karar görünümü ekler.",
+  "Web Önizleme Kontrol Paneli Ayarlar sayfasına eklendi.",
+  "GitHub Pages yayın kontrolü, web test linkleri, web/local sürüm uyumu ve yayın karar akışı görünür hale getirildi.",
+  "ERP terminal pilot hazırlığı ve v5.0 hazır/beklet karar merkezi korunur.",
+  "Bu sürüm yalnızca pasif web önizleme kontrol rehberi ekler.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
+  { id: "settings-web-preview-control", label: "Web Önizleme Kontrol Paneli'ne git" },
   { id: "warehouse-ready-hold-decision-center", label: "Hazır / Beklet Karar Merkezi'ne git" },
   { id: "warehouse-one-page-test-summary", label: "Test Günü Tek Sayfa Özet Paneli'ne git" },
   { id: "warehouse-terminal-final-simplification-center", label: "Terminal Pilot Final Sadeleştirme Merkezi'ne git" },
@@ -67,8 +68,11 @@ export const releaseHighlightsByPage = {
   },
   settings: {
     releaseHighlightItems,
-    releaseJumpLinks,
+    releaseJumpLinks: [
+      { id: "settings-web-preview-control", label: "Web Önizleme Kontrol Paneli'ne git" },
+      ...releaseJumpLinks,
+    ],
     testChecklist: releaseVisibilityChecklist,
-    updatedSectionIds,
+    updatedSectionIds: ["settings-web-preview-control", ...updatedSectionIds],
   },
 };
