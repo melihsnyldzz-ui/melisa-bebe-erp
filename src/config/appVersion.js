@@ -1,14 +1,34 @@
-export const APP_VERSION = "v5.4.0";
-export const APP_STAGE = "Web Önizleme Kontrol Paneli";
+export const APP_VERSION = "v5.8.0";
+export const APP_STAGE = "Pilot Öncesi Son Teknik Hazırlık Paneli";
 
 export const releaseHighlights = [
-  "Web Önizleme Kontrol Paneli Ayarlar sayfasına eklendi.",
-  "GitHub Pages yayın kontrolü, web test linkleri, web/local sürüm uyumu ve yayın karar akışı görünür hale getirildi.",
-  "ERP terminal pilot hazırlığı ve v5.0 hazır/beklet karar merkezi korunur.",
-  "Bu sürüm yalnızca pasif web önizleme kontrol rehberi ekler.",
+  "Web Önizleme Kontrol Paneli genişletildi.",
+  "Web ana sayfa hızlı kontrol, eski sürüm çözüm paneli, yayın/local/GitHub karşılaştırması ve pilot öncesi teknik hazırlık görünür hale getirildi.",
+  "ERP terminal pilot hazırlığı, v5.0 hazır/beklet karar merkezi ve GitHub Pages kontrol akışı korunur.",
+  "Bu sürüm yalnızca pasif web önizleme ve teknik hazırlık rehberi ekler.",
 ];
 
 export const versionHistory = [
+  {
+    version: "v5.8.0",
+    title: "Pilot Öncesi Son Teknik Hazırlık Paneli",
+    note: "Web linki, local build, Ayarlar ve El Terminali ekranlarının son teknik kontrolünü görünür hale getirir.",
+  },
+  {
+    version: "v5.7.0",
+    title: "Yayın / Local / GitHub Durum Karşılaştırma Merkezi",
+    note: "GitHub main, GitHub Pages ve local build sürümlerinin aynı olup olmadığını kontrol ettirir.",
+  },
+  {
+    version: "v5.6.0",
+    title: "Webde Eski Sürüm Görünürse Çözüm Paneli",
+    note: "Cache kırma, gizli sekme ve Pages workflow tekrar çalıştırma adımlarını sadeleştirir.",
+  },
+  {
+    version: "v5.5.0",
+    title: "Web Önizleme Ana Sayfa Hızlı Kontrol Kartı",
+    note: "Web linkinden açılan ERP önizlemesinde ilk bakılacak alanları listeler.",
+  },
   {
     version: "v5.4.0",
     title: "Web Önizleme Kontrol Paneli",
@@ -28,25 +48,5 @@ export const versionHistory = [
     version: "v5.1.0",
     title: "GitHub Pages Statik Web Yayını",
     note: "ERP mock/statik önizlemesini GitHub Pages üzerinden açmak için yayın workflow hazırlığını gösterir.",
-  },
-  {
-    version: "v5.0.0",
-    title: "Şirket Pilot Öncesi Hazır / Beklet Karar Merkezi",
-    note: "Local build sonrası ekran kontrolünde hazır mı beklet mi kararını tek panelde toplar.",
-  },
-  {
-    version: "v4.9.0",
-    title: "Test Edilecek Ekranlar Sıralı Kontrol Listesi",
-    note: "El terminali ekranında hangi bölümün hangi sırayla test edileceğini netleştirir.",
-  },
-  {
-    version: "v4.8.0",
-    title: "Local Build Öncesi Son Kontrol Paneli",
-    note: "Pull sonrası build ve ekran kontrolü öncesinde yapılacak son güvenli hazırlığı görünür kılar.",
-  },
-  {
-    version: "v4.7.0",
-    title: "Test Günü Tek Sayfa Özet Paneli",
-    note: "Test gününde depo, yönetici ve teknik ekip için okunacak en kısa akışı tek panelde toplar.",
   },
 ];
