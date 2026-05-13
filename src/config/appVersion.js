@@ -1,14 +1,29 @@
-export const APP_VERSION = "v9.0.0";
-export const APP_STAGE = "İlk Gerçek Test Sonrası Karar";
+export const APP_VERSION = "v9.3.0";
+export const APP_STAGE = "Şirket Pilot Öncesi Güvenli Kontrol Paketi";
 
 export const releaseHighlights = [
-  "Read-only Stok Test Hazırlığı paneli saha onayı ve ilk gerçek test sonrası karar kapısıyla genişletildi.",
-  "Saha testi onay listesi, görev dağılımı, test günü zaman kutusu ve ilk gerçek test sonrası karar akışı görünür hale getirildi.",
-  "v8.6 saha test yürütme planı korunur.",
-  "Bu sürüm gerçek bağlantı kurmaz; yalnızca ilk gerçek read-only testin saha yürütme kararını pasif olarak gösterir.",
+  "Web önizleme ve local build aynı sürümü gösteriyor mu sorusunu test öncesi karar kapısına ekler.",
+  "Read-only SQL kullanıcı hazırlığını sa kullanmadan, şirket bilgisayarı ve .env.local sınırıyla netleştirir.",
+  "İlk gerçek 20 satır stok testi için Codex'e verilecek güvenli prompt çerçevesini görünür hale getirir.",
+  "Bu sürüm gerçek bağlantı kurmaz; veri yazma, import/export/sync, cari, sipariş, kasa ve finans kapsam dışıdır.",
 ];
 
 export const versionHistory = [
+  {
+    version: "v9.3.0",
+    title: "İlk 20 Satır Stok Testi Codex Promptu",
+    note: "Codex'in local build, read-only bağlantı ve 20 satır stok testi dışında işlem yapmaması için güvenli görev metnini tanımlar.",
+  },
+  {
+    version: "v9.2.0",
+    title: "Read-only SQL Kullanıcı Hazırlık Kapısı",
+    note: "Şirket ortamında sa kullanılmadan, sadece stok okuma yetkili kullanıcıyla ilerlenmesini görünür hale getirir.",
+  },
+  {
+    version: "v9.1.0",
+    title: "Web ve Local Sürüm Doğrulama",
+    note: "Gerçek teste geçmeden önce web önizleme, main sürümü ve local build sonucunun aynı hatta olduğunu kontrol ettirir.",
+  },
   {
     version: "v9.0.0",
     title: "İlk Gerçek Test Sonrası Karar",
