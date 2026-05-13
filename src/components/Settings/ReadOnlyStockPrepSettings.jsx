@@ -82,6 +82,41 @@ const terminalIntegrationPrereqItems = [
   "İlk terminal entegrasyonu yalnızca görüntüleme amaçlı planlanmalı.",
 ];
 
+const finalSqlPrepCheckItems = [
+  "Read-only kullanıcı şirket bilgisayarında hazır mı?",
+  "Kullanıcı tam yetkili değil mi?",
+  ".env.local sadece şirket bilgisayarında mı?",
+  "Bağlantı bilgisi repo, ekran veya log içinde görünmüyor mu?",
+  "Testi başlatacak kişi belli mi?",
+  "Dur kararını verecek kişi belli mi?",
+];
+
+const firstRealTestGateItems = [
+  "Web ve local sürüm aynı olmalı.",
+  "Build başarılı olmalı.",
+  "Read-only kullanıcı doğrulanmış olmalı.",
+  "İlk deneme sadece manuel başlatılmalı.",
+  "İlk deneme sadece stok ve 20 satır olmalı.",
+  "Bu şartlar sağlanmadan test başlatılmaz.",
+];
+
+const firstStockErrorScenarios = [
+  "Bağlantı kurulamazsa: beklet ve ayarları kontrol et.",
+  "Yetki hatası varsa: kullanıcı yetkisini kontrol et.",
+  "20 satırdan fazla veri gelirse: dur.",
+  "Stok dışı kolon görünürse: dur.",
+  "Barkod alanı boşsa: terminal entegrasyonu beklet.",
+  "Hata mesajı hassas bilgi içeriyorsa: dur ve mesajı sadeleştir.",
+];
+
+const postTestTerminalDecisionItems = [
+  "Stok kodu, ürün adı ve barkod alanı okunuyorsa terminal entegrasyonu planlanabilir.",
+  "Barkod alanı yoksa terminal entegrasyonu bekletilir.",
+  "Depo tek akış anlaşılmadıysa eğitim tekrarlanır.",
+  "Read-only testte hata çoksa entegrasyon başlamaz.",
+  "İlk entegrasyon yalnızca barkoddan stok görüntüleme hedefiyle yapılır.",
+];
+
 function PrepCard({ title, items }) {
   return (
     <article className="system-health-card">
@@ -133,6 +168,10 @@ export default function ReadOnlyStockPrepSettings() {
         <PrepCard title="v7.6 Read-only Test Operatör Rapor Formatı" items={operatorReportFormatItems} />
         <PrepCard title="v7.7 İlk Gerçek Stok Testi Hazır / Beklet Kararı" items={realStockReadyHoldItems} />
         <PrepCard title="v7.8 Terminal Entegrasyonuna Geçiş Ön Şartları" items={terminalIntegrationPrereqItems} />
+        <PrepCard title="v7.9 Şirket SQL Hazırlığı Son Kontrol" items={finalSqlPrepCheckItems} />
+        <PrepCard title="v8.0 İlk Gerçek Read-only Test Başlatma Kapısı" items={firstRealTestGateItems} />
+        <PrepCard title="v8.1 İlk Stok Testi Hata Senaryoları" items={firstStockErrorScenarios} />
+        <PrepCard title="v8.2 Test Sonrası Terminal Entegrasyon Kararı" items={postTestTerminalDecisionItems} />
         <PrepCard title="Kesin Dur Kuralları" items={strictStopItems} />
       </div>
     </section>
