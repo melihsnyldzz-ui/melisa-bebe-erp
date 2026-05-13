@@ -117,6 +117,41 @@ const postTestTerminalDecisionItems = [
   "İlk entegrasyon yalnızca barkoddan stok görüntüleme hedefiyle yapılır.",
 ];
 
+const fieldExecutionFlowItems = [
+  "Test başlamadan önce herkes görevi tekrar eder.",
+  "Tek kişi uygulamada manuel stok önizlemeyi başlatır.",
+  "Bir kişi sadece satır sayısını kontrol eder.",
+  "Bir kişi stok kodu, ürün adı ve barkod alanlarını okur.",
+  "Bir kişi eksikleri sistem dışı rapor formatına yazar.",
+  "Dur kuralı oluşursa test aynı anda durdurulur.",
+];
+
+const observationNoteItems = [
+  "Kaç satır geldi?",
+  "Stok dışı alan var mı?",
+  "Stok kodu dolu mu?",
+  "Ürün adı anlaşılır mı?",
+  "Barkod alanı dolu ve okunur mu?",
+  "Ekran depo personeli için anlaşılır mı?",
+  "Hata varsa hassas bilgi içeriyor mu?",
+];
+
+const stopRollbackItems = [
+  "Test durursa yeni deneme yapılmaz.",
+  "Sayfa yenilenir ama veri yazma işlemi aranmaz.",
+  "Hata metni ekran görüntüsü yerine manuel özetlenir.",
+  "Connection bilgisi görünürse paylaşılmaz ve test kapatılır.",
+  "Bir sonraki adım için sadece eksik kategori yazılır.",
+];
+
+const nextTerminalPilotItems = [
+  "Read-only stok testi temizse barkod alanı terminalle eşleştirilebilir.",
+  "İlk terminal pilotu sadece okutulan barkoddan stok görüntüleme olur.",
+  "Ürün bilgisi gösterilir ama kayıt yapılmaz.",
+  "Depo personeli sadece doğru ürün görünüyor mu diye bakar.",
+  "Yanlış eşleşme varsa terminal pilotu durur ve eşleşme alanı tekrar incelenir.",
+];
+
 function PrepCard({ title, items }) {
   return (
     <article className="system-health-card">
@@ -172,6 +207,10 @@ export default function ReadOnlyStockPrepSettings() {
         <PrepCard title="v8.0 İlk Gerçek Read-only Test Başlatma Kapısı" items={firstRealTestGateItems} />
         <PrepCard title="v8.1 İlk Stok Testi Hata Senaryoları" items={firstStockErrorScenarios} />
         <PrepCard title="v8.2 Test Sonrası Terminal Entegrasyon Kararı" items={postTestTerminalDecisionItems} />
+        <PrepCard title="v8.3 Read-only Saha Testi Yürütme Akışı" items={fieldExecutionFlowItems} />
+        <PrepCard title="v8.4 Test Gözlem Notları" items={observationNoteItems} />
+        <PrepCard title="v8.5 Durma ve Geri Alma Prosedürü" items={stopRollbackItems} />
+        <PrepCard title="v8.6 Sonraki Terminal Pilot Planı" items={nextTerminalPilotItems} />
         <PrepCard title="Kesin Dur Kuralları" items={strictStopItems} />
       </div>
     </section>
