@@ -1,14 +1,34 @@
-export const APP_VERSION = "v7.8.0";
-export const APP_STAGE = "Terminal Entegrasyonuna Geçiş Ön Şartları";
+export const APP_VERSION = "v8.2.0";
+export const APP_STAGE = "Test Sonrası Terminal Entegrasyon Kararı";
 
 export const releaseHighlights = [
-  "Read-only Stok Test Hazırlığı paneli şirket test günü ve terminal entegrasyon ön şartlarıyla genişletildi.",
-  "Şirket bilgisayarı test günü kontrol kartı, operatör rapor formatı, ilk gerçek stok testi hazır/beklet kararı ve terminal entegrasyon ön şartları görünür hale getirildi.",
-  "v7.4 stok testi sonuç değerlendirme akışı korunur.",
-  "Bu sürüm gerçek bağlantı kurmaz; yalnızca şirket ortamı read-only test ve terminal geçiş hazırlığını pasif olarak gösterir.",
+  "Read-only Stok Test Hazırlığı paneli ilk gerçek test kapılarıyla genişletildi.",
+  "Şirket SQL hazırlığı son kontrolü, ilk read-only test başlatma kapısı, stok testi hata senaryoları ve terminal entegrasyon kararı görünür hale getirildi.",
+  "v7.8 terminal entegrasyonu ön şartları korunur.",
+  "Bu sürüm gerçek bağlantı kurmaz; yalnızca ilk read-only test ve terminal kararı için pasif hazırlık gösterir.",
 ];
 
 export const versionHistory = [
+  {
+    version: "v8.2.0",
+    title: "Test Sonrası Terminal Entegrasyon Kararı",
+    note: "İlk read-only stok testinden sonra terminal entegrasyonuna geçilip geçilmeyeceğini belirleyen şartları görünür hale getirir.",
+  },
+  {
+    version: "v8.1.0",
+    title: "İlk Stok Testi Hata Senaryoları",
+    note: "Bağlantı, yetki, satır limiti, stok dışı veri, barkod alanı ve hassas hata mesajı senaryolarını listeler.",
+  },
+  {
+    version: "v8.0.0",
+    title: "İlk Gerçek Read-only Test Başlatma Kapısı",
+    note: "Web/local sürüm, build, read-only kullanıcı ve manuel 20 satır şartları sağlanmadan test başlatılmamasını gösterir.",
+  },
+  {
+    version: "v7.9.0",
+    title: "Şirket SQL Hazırlığı Son Kontrol Paneli",
+    note: "Read-only kullanıcı, .env.local, bağlantı gizliliği ve test sorumlusu şartlarını son kez kontrol ettirir.",
+  },
   {
     version: "v7.8.0",
     title: "Terminal Entegrasyonuna Geçiş Ön Şartları",
@@ -28,25 +48,5 @@ export const versionHistory = [
     version: "v7.5.0",
     title: "Şirket Bilgisayarı Test Günü Kontrol Kartı",
     note: "Şirket bilgisayarında yapılacak ilk read-only testin kim, nerede ve hangi kapsamla yapılacağını netleştirir.",
-  },
-  {
-    version: "v7.4.0",
-    title: "Stok Testi Sonuç Değerlendirme Paneli",
-    note: "İlk 20 satır stok testinde hangi sonuçların olumlu, beklet veya dur sebebi olacağını görünür hale getirir.",
-  },
-  {
-    version: "v7.3.0",
-    title: "İlk 20 Satır Stok Testi Planı",
-    note: "Şirket ortamındaki ilk gerçek stok okuma testinin yalnızca manuel, read-only ve 20 satırla sınırlı yapılmasını planlar.",
-  },
-  {
-    version: "v7.2.0",
-    title: ".env.local Güvenli Bağlantı Yerleşimi",
-    note: "Bağlantı bilgisinin yalnızca şirket bilgisayarındaki .env.local içinde kalması gerektiğini görünür kılar.",
-  },
-  {
-    version: "v7.1.0",
-    title: "Read-only SQL Kullanıcısı Hazırlık Rehberi",
-    note: "sa veya tam yetkili kullanıcı yerine ayrı read-only kullanıcı şartını netleştirir.",
   },
 ];
