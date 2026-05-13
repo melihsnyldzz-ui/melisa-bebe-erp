@@ -1,18 +1,19 @@
-export const currentReleaseVersion = "v7.0.0";
+export const currentReleaseVersion = "v7.4.0";
 
-export const currentReleaseTitle = "Read-only Stok Testine Geçiş Kapısı";
+export const currentReleaseTitle = "Stok Testi Sonuç Değerlendirme Paneli";
 
-export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "warehouse-readonly-transition-gate"];
+export const updatedSectionIds = ["latest-version-history", "system-workflow-model", "settings-readonly-stock-prep"];
 
 export const releaseHighlightItems = [
-  "El Terminali ekranına Read-only Stok Testine Geçiş Kapısı eklendi.",
-  "Görsel sıkıştırma, depo için gerekli alanlar, yönetici pilot özeti ve read-only geçiş şartları görünür hale getirildi.",
-  "Pilot Öncesi Minimal Ekran Modu korunur.",
-  "Bu sürüm gerçek stok bağlantısı eklemez; yalnızca geçiş şartlarını pasif olarak gösterir.",
+  "Ayarlar sayfasına Read-only Stok Test Hazırlığı paneli eklendi.",
+  "Read-only SQL kullanıcısı hazırlığı, .env.local güvenli yerleşim, ilk 20 satır stok testi planı ve sonuç değerlendirme akışı görünür hale getirildi.",
+  "v7.0 Read-only Stok Testine Geçiş Kapısı korunur.",
+  "Bu sürüm gerçek bağlantı kurmaz; yalnızca şirket ortamı read-only test hazırlığını pasif olarak gösterir.",
 ];
 
 export const releaseJumpLinks = [
   { id: "latest-version-history", label: "Son Sürüm Geçmişi'ne git" },
+  { id: "settings-readonly-stock-prep", label: "Read-only Stok Test Hazırlığı'na git" },
   { id: "warehouse-readonly-transition-gate", label: "Read-only Stok Testine Geçiş Kapısı'na git" },
   { id: "warehouse-minimal-pilot-mode", label: "Pilot Öncesi Minimal Ekran Modu'na git" },
   { id: "settings-web-preview-control", label: "Web Önizleme Kontrol Paneli'ne git" },
@@ -73,10 +74,11 @@ export const releaseHighlightsByPage = {
   settings: {
     releaseHighlightItems,
     releaseJumpLinks: [
+      { id: "settings-readonly-stock-prep", label: "Read-only Stok Test Hazırlığı'na git" },
       { id: "settings-web-preview-control", label: "Web Önizleme Kontrol Paneli'ne git" },
       ...releaseJumpLinks,
     ],
     testChecklist: releaseVisibilityChecklist,
-    updatedSectionIds: ["settings-web-preview-control", ...updatedSectionIds],
+    updatedSectionIds: ["settings-readonly-stock-prep", "settings-web-preview-control", ...updatedSectionIds],
   },
 };
