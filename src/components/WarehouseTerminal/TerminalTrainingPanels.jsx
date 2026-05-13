@@ -170,6 +170,37 @@ const readyHoldDecisionItems = [
   "Yönetici karar veremiyorsa: Tek sayfa özet sadeleştirilsin.",
 ];
 
+const topFlowItems = [
+  "1. Mock Barkod Test Alanı: barkodu okut veya yaz.",
+  "2. Barkod Kalite Durumu: Geçti / Uyarı / Dur sonucunu oku.",
+  "3. Depo Tek Akış: sonucu söyle ve gerekirse not al.",
+  "4. Yönetici Tek Karar: devam, eğitim tekrar veya sadeleştirme seç.",
+];
+
+const depotSingleFlowItems = [
+  "Barkodu okut.",
+  "Sonucu yüksek sesle söyle: Geçti / Uyarı / Dur.",
+  "Uyarı ise tekrar okut.",
+  "Dur ise test sorumlusuna haber ver.",
+  "Ürün veya ekran anlaşılmıyorsa sistem dışı not al.",
+];
+
+const managerSingleDecisionItems = [
+  "Geçti çok, not az ise devam.",
+  "Uyarı çok ise eğitim tekrar.",
+  "Dur çok ise teknik kontrol.",
+  "Ekran karışık görünüyorsa sadeleştirme.",
+  "Karar tek cümleyle gün sonu listesine yazılır.",
+];
+
+const minimalPilotModeItems = [
+  "Üstte sadece Mock Barkod Test Alanı ve Barkod Kalite Durumu takip edilir.",
+  "Depo personeli detay panellere girmez.",
+  "Yönetici sadece tek karar kartını okur.",
+  "Detaylı eğitim ve geçmiş paneller ikinci kontrol olarak kalır.",
+  "Pilot günü amaç hızlı, güvenli ve anlaşılır gözlemdir.",
+];
+
 function TrainingCard({ title, items }) {
   return (
     <article className="warehouse-mock-barcode-card">
@@ -186,6 +217,21 @@ function TrainingCard({ title, items }) {
 export default function TerminalTrainingPanels() {
   return (
     <>
+      <section className="table-panel warehouse-mock-barcode-panel section-updated-highlight" id="warehouse-minimal-pilot-mode">
+        <div className="section-heading warehouse-quality-heading">
+          <div>
+            <h2>Pilot Öncesi Minimal Ekran Modu</h2>
+            <p>Depo ve yönetici için en kısa terminal kullanım akışını üstte toplar.</p>
+          </div>
+        </div>
+        <div className="warehouse-mock-barcode-layout">
+          <TrainingCard title="v6.3 Üst Sıra Akış" items={topFlowItems} />
+          <TrainingCard title="v6.4 Depo Tek Akış" items={depotSingleFlowItems} />
+          <TrainingCard title="v6.5 Yönetici Tek Karar" items={managerSingleDecisionItems} />
+          <TrainingCard title="v6.6 Minimal Pilot Modu" items={minimalPilotModeItems} />
+        </div>
+      </section>
+
       <section className="table-panel warehouse-mock-barcode-panel section-updated-highlight" id="warehouse-ready-hold-decision-center">
         <div className="section-heading warehouse-quality-heading">
           <div>
