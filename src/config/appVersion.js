@@ -1,14 +1,34 @@
-export const APP_VERSION = "v5.8.0";
-export const APP_STAGE = "Pilot Öncesi Son Teknik Hazırlık Paneli";
+export const APP_VERSION = "v6.2.0";
+export const APP_STAGE = "Web Önizleme Sonrası Pilot Karar Paneli";
 
 export const releaseHighlights = [
-  "Web Önizleme Kontrol Paneli genişletildi.",
-  "Web ana sayfa hızlı kontrol, eski sürüm çözüm paneli, yayın/local/GitHub karşılaştırması ve pilot öncesi teknik hazırlık görünür hale getirildi.",
-  "ERP terminal pilot hazırlığı, v5.0 hazır/beklet karar merkezi ve GitHub Pages kontrol akışı korunur.",
-  "Bu sürüm yalnızca pasif web önizleme ve teknik hazırlık rehberi ekler.",
+  "Web Önizleme Kontrol Paneli geri bildirim ve karar katmanıyla genişletildi.",
+  "Web üzerinden test notu toplama tasarımı, pilot geri bildirim paneli, yönetici web kontrol özeti ve web sonrası pilot karar paneli görünür hale getirildi.",
+  "v5.8 teknik hazırlık paneli ve GitHub Pages kontrol akışı korunur.",
+  "Bu sürüm yalnızca pasif web önizleme, geri bildirim ve karar rehberi ekler.",
 ];
 
 export const versionHistory = [
+  {
+    version: "v6.2.0",
+    title: "Web Önizleme Sonrası Pilot Karar Paneli",
+    note: "Web önizleme başarılıysa eğitim, sadeleştirme veya pilot hazırlığı kararını görünür hale getirir.",
+  },
+  {
+    version: "v6.1.0",
+    title: "Yönetici Web Kontrol Özeti",
+    note: "Webden kontrol edilen ERP önizlemesi için yöneticiye kısa durum özeti sunar.",
+  },
+  {
+    version: "v6.0.0",
+    title: "Pilot Test Geri Bildirim Paneli",
+    note: "Ayarlar, El Terminali, mock barkod ve hazır/beklet karar akışı için geri bildirim sorularını listeler.",
+  },
+  {
+    version: "v5.9.0",
+    title: "Web Üzerinden Test Notu Toplama Tasarımı",
+    note: "Webden kontrol eden kişinin ekran, sürüm, panel ve barkod sonucu notlarını sistem dışında toplamasını tarif eder.",
+  },
   {
     version: "v5.8.0",
     title: "Pilot Öncesi Son Teknik Hazırlık Paneli",
@@ -28,25 +48,5 @@ export const versionHistory = [
     version: "v5.5.0",
     title: "Web Önizleme Ana Sayfa Hızlı Kontrol Kartı",
     note: "Web linkinden açılan ERP önizlemesinde ilk bakılacak alanları listeler.",
-  },
-  {
-    version: "v5.4.0",
-    title: "Web Önizleme Kontrol Paneli",
-    note: "GitHub Pages üzerinden açılan ERP önizlemesinin güncel sürümü gösterip göstermediğini Ayarlar sayfasında kontrol eder.",
-  },
-  {
-    version: "v5.3.0",
-    title: "Web / Local Sürüm Uyumu",
-    note: "Webde görünen sürüm ile main kaynak sürümünün aynı olup olmadığını kontrol etmek için pasif liste ekler.",
-  },
-  {
-    version: "v5.2.0",
-    title: "Web Test Linkleri",
-    note: "GitHub Pages ana linki ve cache kırma parametreli linkleri görünür hale getirir.",
-  },
-  {
-    version: "v5.1.0",
-    title: "GitHub Pages Statik Web Yayını",
-    note: "ERP mock/statik önizlemesini GitHub Pages üzerinden açmak için yayın workflow hazırlığını gösterir.",
   },
 ];
