@@ -7,19 +7,15 @@ const REQUIRED_ENV_KEYS = ["VEGA_SQL_SERVER", "VEGA_SQL_DATABASE", "VEGA_SQL_USE
 const FORBIDDEN_SQL_WORDS = ["INSERT", "UPDATE", "DELETE", "MERGE", "DROP", "ALTER", "CREATE", "TRUNCATE", "EXEC"];
 const MAX_LIMIT = 20;
 const DEFAULT_TIMEOUT_MS = 3000;
-const STOCK_TABLE = "F0102TBLSTOKLAR";
+const STOCK_TABLE = "dbo.F0102D0001TBLSTOKHAREKETLERI";
 const STOCK_COLUMNS = [
-  "IND",
-  "STOKKODU",
-  "MALINCINSI",
-  "KOD1",
-  "KOD2",
-  "KOD4",
-  "KOD6",
-  "ALISFIYATI",
-  "ISKSATISFIYATI2",
-  "ISKSATISFIYATI3",
-  "KDVGRUBU",
+  "STOKNO",
+  "ACIKLAMA",
+  "DEPO",
+  "GIREN",
+  "CIKAN",
+  "KALAN",
+  "TARIH",
 ];
 const METADATA_HINTS = ["STOK", "HAREKET", "HRK", "CIKIS", "ÇIKIŞ", "MIKTAR", "MİKTAR", "TARIH", "TARİH", "KOD"];
 const METADATA_MAX_ROWS = 200;
@@ -144,8 +140,12 @@ function assertSafeQuery(queryText, limit) {
     }
   }
 
-  if (!/\bFROM\s+F0102TBLSTOKLAR\b/i.test(queryText)) {
+  if (!/\bFROM\s+dbo\.F0102D0001TBLSTOKHAREKETLERI\b/i.test(queryText)) {
     throw new Error("UNEXPECTED_TABLE_SCOPE");
+  }
+
+  if (!/\bORDER\s+BY\s+TARIH\s+DESC\b/i.test(queryText)) {
+    throw new Error("ORDER_BY_REQUIRED");
   }
 }
 
@@ -191,17 +191,13 @@ function mapMetadataRow(row) {
 
 function mapStockRow(row) {
   return {
-    IND: row.IND,
-    STOKKODU: row.STOKKODU,
-    MALINCINSI: row.MALINCINSI,
-    KOD1: row.KOD1,
-    KOD2: row.KOD2,
-    KOD4: row.KOD4,
-    KOD6: row.KOD6,
-    ALISFIYATI: row.ALISFIYATI,
-    ISKSATISFIYATI2: row.ISKSATISFIYATI2,
-    ISKSATISFIYATI3: row.ISKSATISFIYATI3,
-    KDVGRUBU: row.KDVGRUBU,
+    STOKNO: row.STOKNO,
+    ACIKLAMA: row.ACIKLAMA,
+    DEPO: row.DEPO,
+    GIREN: row.GIREN,
+    CIKAN: row.CIKAN,
+    KALAN: row.KALAN,
+    TARIH: row.TARIH,
   };
 }
 
@@ -218,6 +214,10 @@ async function listVegaStockReadOnly() {
     return safeFailure("ENV_MISSING", `Eksik env degiskenleri: ${missingKeys.join(", ")}. Fail-closed: Vega stok onizleme denenmedi.`);
   }
 
+  if (String(env.VEGA_SQL_USER).toLowerCase() === "sa") {
+    return safeFailure("SQL_AUTH_FAILED", "sa kullanicisi yasaktir. Fail-closed: Vega stok onizleme denenmedi.");
+  }
+
   const limit = parsePositiveInteger(env.VEGA_READONLY_LIMIT, MAX_LIMIT);
   if (limit !== MAX_LIMIT || limit > MAX_LIMIT) {
     return safeFailure("ENV_MISSING", "VEGA_READONLY_LIMIT tam olarak 20 olmalidir. Fail-closed: Vega stok onizleme denenmedi.");
@@ -230,18 +230,15 @@ async function listVegaStockReadOnly() {
 
   const queryText = `
 SELECT TOP (${limit})
-  IND,
-  STOKKODU,
-  MALINCINSI,
-  KOD1,
-  KOD2,
-  KOD4,
-  KOD6,
-  ALISFIYATI,
-  ISKSATISFIYATI2,
-  ISKSATISFIYATI3,
-  KDVGRUBU
-FROM F0102TBLSTOKLAR
+  STOKNO,
+  ACIKLAMA,
+  DEPO,
+  GIREN,
+  CIKAN,
+  KALAN,
+  TARIH
+FROM ${STOCK_TABLE}
+ORDER BY TARIH DESC
 `;
 
   try {
@@ -276,7 +273,9 @@ FROM F0102TBLSTOKLAR
 
     return {
       status: "success",
-      message: "Vega stok kartlari read-only olarak gecici onizlendi. Veri yazilmadi.",
+      message: items.length
+        ? "Vega stok hareketleri read-only olarak gecici onizlendi. Veri yazilmadi."
+        : "Kayit bulunamadi veya secilen donem/prefix bos.",
       items,
       columns: STOCK_COLUMNS,
       rowCount: items.length,

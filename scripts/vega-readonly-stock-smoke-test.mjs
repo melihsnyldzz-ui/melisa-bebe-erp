@@ -8,6 +8,7 @@ const REQUIRED_ENV_KEYS = ["VEGA_SQL_SERVER", "VEGA_SQL_DATABASE", "VEGA_SQL_USE
 const FORBIDDEN_SQL_WORDS = ["INSERT", "UPDATE", "DELETE", "MERGE", "DROP", "ALTER", "CREATE", "TRUNCATE", "EXEC"];
 const MAX_LIMIT = 20;
 const DEFAULT_TIMEOUT_MS = 3000;
+const STOCK_TABLE = "dbo.F0102D0001TBLSTOKHAREKETLERI";
 const ERROR_DESCRIPTIONS = {
   ENV_MISSING: ".env.local yok veya gerekli alanlar eksik. Bağlantı bilgileri gizlendi ve bağlantı denenmedi.",
   SQL_AUTH_FAILED: "SQL kullanıcı adı veya şifre hatalı olabilir. Bağlantı bilgileri gizlendi.",
@@ -119,8 +120,12 @@ const assertSafeQuery = (queryText, limit) => {
     }
   }
 
-  if (!/\bFROM\s+F0102TBLSTOKLAR\b/i.test(queryText)) {
+  if (!/\bFROM\s+dbo\.F0102D0001TBLSTOKHAREKETLERI\b/i.test(queryText)) {
     throw new Error("UNEXPECTED_TABLE_SCOPE");
+  }
+
+  if (!/\bORDER\s+BY\s+TARIH\s+DESC\b/i.test(queryText)) {
+    throw new Error("ORDER_BY_REQUIRED");
   }
 };
 
@@ -131,17 +136,13 @@ const renderRows = (rows) => {
   }
 
   const previewRows = rows.map((row) => ({
-    IND: row.IND,
-    STOKKODU: row.STOKKODU,
-    MALINCINSI: row.MALINCINSI,
-    KOD1: row.KOD1,
-    KOD2: row.KOD2,
-    KOD4: row.KOD4,
-    KOD6: row.KOD6,
-    ALISFIYATI: row.ALISFIYATI,
-    ISKSATISFIYATI2: row.ISKSATISFIYATI2,
-    ISKSATISFIYATI3: row.ISKSATISFIYATI3,
-    KDVGRUBU: row.KDVGRUBU,
+    STOKNO: row.STOKNO,
+    ACIKLAMA: row.ACIKLAMA,
+    DEPO: row.DEPO,
+    GIREN: row.GIREN,
+    CIKAN: row.CIKAN,
+    KALAN: row.KALAN,
+    TARIH: row.TARIH,
   }));
 
   console.table(previewRows);
@@ -164,6 +165,12 @@ const main = async () => {
     return;
   }
 
+  if (String(env.VEGA_SQL_USER).toLowerCase() === "sa") {
+    safeError("sa kullanicisi yasaktir. Fail-closed: baglanti denenmedi.");
+    process.exitCode = 1;
+    return;
+  }
+
   const limit = parsePositiveInteger(env.VEGA_READONLY_LIMIT, MAX_LIMIT);
   if (limit !== MAX_LIMIT || limit > MAX_LIMIT) {
     safeError("VEGA_READONLY_LIMIT tam olarak 20 olmalıdır. Fail-closed: bağlantı denenmedi.");
@@ -180,18 +187,15 @@ const main = async () => {
 
   const queryText = `
 SELECT TOP (${limit})
-  IND,
-  STOKKODU,
-  MALINCINSI,
-  KOD1,
-  KOD2,
-  KOD4,
-  KOD6,
-  ALISFIYATI,
-  ISKSATISFIYATI2,
-  ISKSATISFIYATI3,
-  KDVGRUBU
-FROM F0102TBLSTOKLAR
+  STOKNO,
+  ACIKLAMA,
+  DEPO,
+  GIREN,
+  CIKAN,
+  KALAN,
+  TARIH
+FROM ${STOCK_TABLE}
+ORDER BY TARIH DESC
 `;
 
   try {
@@ -222,7 +226,7 @@ FROM F0102TBLSTOKLAR
   });
 
   try {
-    safeLog("Read-only stok kartı smoke test başlıyor. Kapsam: F0102TBLSTOKLAR, limit: 20.");
+    safeLog(`Read-only stok kartı smoke test başlıyor. Kapsam: ${STOCK_TABLE}, limit: 20.`);
     await pool.connect();
     const result = await pool.request().query(queryText);
     safeLog(`Okunan satır sayısı: ${result.recordset.length}`);

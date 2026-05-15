@@ -148,87 +148,70 @@ const stockSmokeTestStatusCards = [
 const readOnlyStockPreviewStatusCards = [
   { label: "Çalışma modu", value: "Manuel read-only" },
   { label: "Varsayılan bağlantı", value: "Başlamaz" },
-  { label: "Tablo kapsamı", value: "F0102TBLSTOKLAR" },
-  { label: "Limit", value: "20 stok kartı" },
+  { label: "Tablo kapsamı", value: "F0102D0001TBLSTOKHAREKETLERI" },
+  { label: "Limit", value: "20 stok hareketi" },
   { label: "Veri yazma", value: "Yok" },
   { label: "Import/senkron", value: "Yok" },
 ];
 
 const readOnlyStockPreviewColumns = [
-  { key: "IND", label: "Teknik ID", note: "Karar alanı değildir" },
-  { key: "STOKKODU", label: "Stok Kodu" },
-  { key: "MALINCINSI", label: "Ürün Adı" },
-  { key: "KOD1", label: "KOD1", note: "Anlamı doğrulanacak Vega kod alanı" },
-  { key: "KOD2", label: "KOD2", note: "Anlamı doğrulanacak Vega kod alanı" },
-  { key: "KOD4", label: "KOD4", note: "Anlamı doğrulanacak Vega kod alanı" },
-  { key: "KOD6", label: "KOD6", note: "Anlamı doğrulanacak Vega kod alanı" },
-  { key: "ALISFIYATI", label: "Alış Fiyatı Adayı", note: "Aday fiyat alanı", type: "currencyCandidate" },
-  { key: "ISKSATISFIYATI2", label: "Satış Fiyatı Adayı 2", note: "Aday fiyat alanı", type: "currencyCandidate" },
-  { key: "ISKSATISFIYATI3", label: "Satış Fiyatı Adayı 3", note: "Aday fiyat alanı", type: "currencyCandidate" },
-  { key: "KDVGRUBU", label: "KDV Grubu Adayı", note: "Muhasebe kontrolü gerekir" },
+  { key: "STOKNO", label: "STOKNO", note: "Stok kimliği adayı" },
+  { key: "ACIKLAMA", label: "ACIKLAMA", note: "Hareket açıklaması; ürün adı/barkod eşleşmesi değildir" },
+  { key: "DEPO", label: "DEPO" },
+  { key: "GIREN", label: "GIREN" },
+  { key: "CIKAN", label: "CIKAN" },
+  { key: "KALAN", label: "KALAN" },
+  { key: "TARIH", label: "TARIH" },
 ];
 
 const defaultVisibleReadonlyStockColumns = [
-  "STOKKODU",
-  "MALINCINSI",
-  "KOD1",
-  "KOD2",
-  "ALISFIYATI",
-  "ISKSATISFIYATI2",
-  "KDVGRUBU",
+  "STOKNO",
+  "ACIKLAMA",
+  "DEPO",
+  "GIREN",
+  "CIKAN",
+  "KALAN",
+  "TARIH",
 ];
 
 const stockFieldValidationNotes = [
-  { field: "STOKKODU", meaning: "Stok kodu olarak yüksek güven", status: "Yüksek güven" },
-  { field: "MALINCINSI", meaning: "Ürün adı / malın cinsi olarak yüksek güven", status: "Yüksek güven" },
-  { field: "IND", meaning: "Teknik ID, kullanıcı karar alanı değildir", status: "Teknik alan" },
-  { field: "KOD1", meaning: "Vega kod alanı, anlamı örnek satırlarla doğrulanmalı", status: "Doğrulanacak" },
-  { field: "KOD2", meaning: "Vega kod alanı, anlamı örnek satırlarla doğrulanmalı", status: "Doğrulanacak" },
-  { field: "KOD4", meaning: "Vega kod alanı, anlamı örnek satırlarla doğrulanmalı", status: "Doğrulanacak" },
-  { field: "KOD6", meaning: "Vega kod alanı, anlamı örnek satırlarla doğrulanmalı", status: "Doğrulanacak" },
-  { field: "ALISFIYATI", meaning: "Alış fiyatı adayı, kesin maliyet kararı değildir", status: "Doğrulanacak" },
-  { field: "ISKSATISFIYATI2", meaning: "Satış fiyatı adayı 2, doğrulanmalı", status: "Doğrulanacak" },
-  { field: "ISKSATISFIYATI3", meaning: "Satış fiyatı adayı 3, doğrulanmalı", status: "Doğrulanacak" },
-  { field: "KDVGRUBU", meaning: "KDV grubu adayı, muhasebe kontrolü gerekir", status: "Muhasebe kontrolü" },
+  { field: "STOKNO", meaning: "Stok hareketindeki stok kimliği adayı", status: "Doğrulanacak" },
+  { field: "ACIKLAMA", meaning: "Hareket açıklaması; ürün adı/barkod eşleştirmesi değildir", status: "Sınırlı güven" },
+  { field: "DEPO", meaning: "Depo alanı adayı", status: "Yüksek güven" },
+  { field: "GIREN", meaning: "Giriş miktarı adayı", status: "Yüksek güven" },
+  { field: "CIKAN", meaning: "Çıkış miktarı adayı", status: "Yüksek güven" },
+  { field: "KALAN", meaning: "Hareket sonrası kalan alanı adayı", status: "Doğrulanacak" },
+  { field: "TARIH", meaning: "Hareket tarihi", status: "Yüksek güven" },
 ];
 
 const stockSuggestedFieldLabels = [
-  { field: "IND", label: "Teknik ID", confidence: "Yüksek güven", note: "Kullanıcı karar alanı değildir." },
-  { field: "STOKKODU", label: "Stok Kodu", confidence: "Yüksek güven", note: "Vega stok kartı kodu ile karşılaştırılacak ana alan." },
-  { field: "MALINCINSI", label: "Ürün Adı / Malın Cinsi", confidence: "Yüksek güven", note: "Ürün adı karşılığı olarak doğrulama sonrası netleşmeye en yakın alan." },
-  { field: "KOD1", label: "Doğrulanacak Kod Alanı 1", confidence: "Düşük / doğrulanacak", note: "Vega ekranındaki karşılığı manuel karşılaştırma ile netleşmelidir." },
-  { field: "KOD2", label: "Doğrulanacak Kod Alanı 2", confidence: "Düşük / doğrulanacak", note: "Vega ekranındaki karşılığı manuel karşılaştırma ile netleşmelidir." },
-  { field: "KOD4", label: "Doğrulanacak Kod Alanı 4", confidence: "Düşük / doğrulanacak", note: "Vega ekranındaki karşılığı manuel karşılaştırma ile netleşmelidir." },
-  { field: "KOD6", label: "Doğrulanacak Kod Alanı 6", confidence: "Düşük / doğrulanacak", note: "Vega ekranındaki karşılığı manuel karşılaştırma ile netleşmelidir." },
-  { field: "ALISFIYATI", label: "Alış Fiyatı Adayı", confidence: "Orta güven", note: "Kesin maliyet kararı değildir; Vega ekranı ve muhasebe kontrolü gerekir." },
-  { field: "ISKSATISFIYATI2", label: "Satış Fiyatı Adayı 2", confidence: "Orta güven", note: "Fiyat seviyesi manuel olarak doğrulanmalıdır." },
-  { field: "ISKSATISFIYATI3", label: "Satış Fiyatı Adayı 3", confidence: "Orta güven", note: "Fiyat seviyesi manuel olarak doğrulanmalıdır." },
-  { field: "KDVGRUBU", label: "KDV Grubu Adayı", confidence: "Orta güven", note: "Muhasebe kontrolü tamamlanmadan kesin kabul edilmez." },
+  { field: "STOKNO", label: "Stok No", confidence: "Doğrulanacak", note: "Ürün kartı ve barkod eşleşmesi için aday anahtar." },
+  { field: "ACIKLAMA", label: "Hareket Açıklaması", confidence: "Sınırlı güven", note: "Ürün adı olarak kesin kabul edilmez." },
+  { field: "DEPO", label: "Depo", confidence: "Yüksek güven", note: "Depo alanı olarak görünüyor." },
+  { field: "GIREN", label: "Giren", confidence: "Yüksek güven", note: "Giriş miktarı adayı." },
+  { field: "CIKAN", label: "Çıkan", confidence: "Yüksek güven", note: "Çıkış miktarı adayı." },
+  { field: "KALAN", label: "Kalan", confidence: "Doğrulanacak", note: "İlk önizlemede boş gelebilir; Vega ekranıyla kontrol edilmeli." },
+  { field: "TARIH", label: "Tarih", confidence: "Yüksek güven", note: "Sıralama alanı olarak kullanılır." },
 ];
 
 const manualValidationStatuses = ["Bekliyor", "Uyumlu", "Fark var", "Emin değilim"];
 
 const stockManualValidationChecklist = [
-  "STOKKODU Vega stok kartı ekranındaki stok kodu ile aynı mı?",
-  "MALINCINSI Vega’daki ürün adı / malın cinsi ile aynı mı?",
-  "IND sadece teknik ID olarak mı kalıyor?",
-  "KOD1 hangi Vega alanına karşılık geliyor olabilir?",
-  "KOD2 hangi Vega alanına karşılık geliyor olabilir?",
-  "KOD4 hangi Vega alanına karşılık geliyor olabilir?",
-  "KOD6 hangi Vega alanına karşılık geliyor olabilir?",
-  "ALISFIYATI Vega’daki alış fiyatı/maliyet alanıyla uyumlu mu?",
-  "ISKSATISFIYATI2 hangi satış fiyatı seviyesine denk geliyor?",
-  "ISKSATISFIYATI3 hangi satış fiyatı seviyesine denk geliyor?",
-  "KDVGRUBU Vega’daki KDV grubu ile uyumlu mu?",
-  "Boş gelen kod/fiyat alanları gerçekten Vega’da da boş mu?",
+  "STOKNO Vega stok hareket ekranındaki stok kimliğiyle uyumlu mu?",
+  "ACIKLAMA hareket açıklaması olarak mı görülmeli, ürün adı olarak kullanılmamalı mı?",
+  "DEPO Vega ekranındaki depo alanıyla uyumlu mu?",
+  "GIREN ve CIKAN miktar yönleri doğru mu?",
+  "KALAN alanı Vega ekranında beklenen şekilde dolu/boş mu?",
+  "TARIH sıralaması en güncel hareketleri üstte gösteriyor mu?",
+  "Ürün adı/barkod eşleştirmesi yapılmadığı kullanıcıya net mi?",
 ];
 
 const stockPreviewUserTestItems = [
   "Ekran anlaşılır mı?",
   "Arama çalışıyor mu?",
   "Kolon göster/gizle işe yarıyor mu?",
-  "Fiyat alanları anlaşılır mı?",
-  "Kod alanları hâlâ doğrulama istiyor mu?",
+  "STOKNO ve depo alanları anlaşılır mı?",
+  "Giren/çıkan/kalan alanları doğrulama istiyor mu?",
   "Vega ekranı ile yan yana kontrol edildi mi?",
 ];
 
@@ -808,7 +791,7 @@ export default function VegaImportPreview() {
   const normalizedPreviewSearch = readonlyPreviewSearch.trim().toLocaleLowerCase("tr-TR");
   const filteredReadonlyPreviewItems = normalizedPreviewSearch
     ? readonlyPreviewState.items.filter((row) =>
-        [row.STOKKODU, row.MALINCINSI]
+        [row.STOKNO, row.ACIKLAMA, row.DEPO]
           .filter((value) => value !== null && value !== undefined)
           .some((value) => String(value).toLocaleLowerCase("tr-TR").includes(normalizedPreviewSearch))
       )
@@ -929,7 +912,7 @@ export default function VegaImportPreview() {
           <p>Manuel read-only önizleme</p>
           <h2>Vega Read-only Stok Önizleme</h2>
           <span>
-            Bu ekran Vega’dan yalnızca 20 stok kartını read-only olarak önizler. Veri yazmaz, import yapmaz, senkron başlatmaz ve sonucu dosyaya kaydetmez.
+            Bu ekran Vega’dan yalnızca 20 F0102 stok hareketini read-only olarak önizler. Veri yazmaz, import yapmaz, senkron başlatmaz ve sonucu dosyaya kaydetmez.
           </span>
         </div>
 
@@ -943,7 +926,7 @@ export default function VegaImportPreview() {
         </div>
 
         <p className="vega-readonly-preview-security-box">
-          Read-only · 20 satır · Yazma yok · Import yok · Dosyaya çıktı yok. Önizleme otomatik başlamaz; sadece butonla çalışır.
+          Read-only · 20 satır · Yazma yok · Import yok · Dosyaya çıktı yok. Bu ekran gerçek Vega stok hareketlerini read-only gösterir. Ürün adı/barkod eşleştirmesi henüz doğrulanmadı.
         </p>
 
         <p className="vega-import-warning-panel" id="vega-stock-preview-beta-note">
@@ -953,11 +936,11 @@ export default function VegaImportPreview() {
         <section className="vega-technical-gate-panel">
           <div className="vega-readonly-preview-action">
             <div>
-              <h3>Geçici Stok Önizleme</h3>
-              <p>Önizleme otomatik başlamaz. Butona basılınca sadece F0102TBLSTOKLAR kapsamındaki 20 stok kartı geçici olarak ekranda gösterilir.</p>
+              <h3>Gerçek Read-only Stok Hareket Önizleme</h3>
+              <p>Önizleme otomatik başlamaz. Butona basılınca sadece F0102D0001TBLSTOKHAREKETLERI kapsamındaki 20 stok hareketi geçici olarak ekranda gösterilir.</p>
             </div>
             <button type="button" onClick={handleReadOnlyStockPreview} disabled={readonlyPreviewState.status === "loading"}>
-              {readonlyPreviewState.status === "loading" ? "Önizleniyor..." : "Read-only 20 stok kartı önizle"}
+              {readonlyPreviewState.status === "loading" ? "Önizleniyor..." : "Read-only 20 stok hareketi önizle"}
             </button>
           </div>
           <p className={`vega-readonly-preview-message ${readonlyPreviewState.status}`}>
@@ -1011,14 +994,14 @@ export default function VegaImportPreview() {
           <section className="vega-import-table-panel">
             <div className="vega-import-table-heading">
               <div>
-                <h2>Read-only Stok Önizleme Sonucu</h2>
+                <h2>Read-only Stok Hareket Önizleme Sonucu</h2>
                 <p>Bu tablo geçici ekrandır; canlı stok verileri repoya, local dosyaya veya import kaydına yazılmaz.</p>
               </div>
               <span><ShieldCheck size={14} /> {readonlyPreviewState.items.length} satır · read-only</span>
             </div>
 
             <div className="vega-readonly-preview-filter">
-              <label htmlFor="vega-readonly-stock-search">Stok kodu veya ürün adı ara</label>
+              <label htmlFor="vega-readonly-stock-search">STOKNO, açıklama veya depo ara</label>
               <input
                 id="vega-readonly-stock-search"
                 type="search"
