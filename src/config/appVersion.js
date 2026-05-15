@@ -1,14 +1,19 @@
-export const APP_VERSION = "v9.6.0";
-export const APP_STAGE = "Electron UI Read-only Gösterim Başarısı";
+export const APP_VERSION = "v9.7.0";
+export const APP_STAGE = "Barkoddan Ürün Gösterme Read-only Pilotu";
 
 export const releaseHighlights = [
-  "Electron desktop modunda Vega read-only stok hareket paneline gerçek verinin geldiği kayıt altına alındı.",
-  "Son okuma özetinde 20 satır, 7 kolon, veri yazma yok ve import/senkron yok sonucu başarıyla doğrulandı.",
-  "dbo.F0102D0001TBLSTOKHAREKETLERI kapsamı, STOKNO/ACIKLAMA/DEPO/GIREN/CIKAN/KALAN/TARIH kolonları ve TOP 20 limiti korunur.",
-  "Bu sürüm barkod/ürün JOIN yapmaz; terminal pilotu için sonraki fazda sadece read-only barkod eşleştirme keşfi yapılacaktır.",
+  "Barkoddan ürün bulma read-only pilotu eklendi ve Electron UI içinde doğrulandı.",
+  "F0102TBLBIRIMLEREX.BARCODE ile F0102TBLSTOKLAR.IND ilişkisi üzerinden ürün eşleşmesi yapılır.",
+  "9452549221582 barkodu ile 2158 NOY NOY stok kodu ve ürün adı başarıyla görüntülendi.",
+  "Parametreli sorgu, TOP 20 limiti, sa engeli, veri yazma/import/export/sync kapalı güvenlik modeli korunur.",
 ];
 
 export const versionHistory = [
+  {
+    version: "v9.7.0",
+    title: "Barkoddan Ürün Gösterme Read-only Pilotu",
+    note: "Barkod girildiğinde F0102 barkod ve stok kartı tablolarından ürünü sadece görüntüleme amaçlı bulan ilk terminal pilot çekirdeğini kayıt altına alır.",
+  },
   {
     version: "v9.6.0",
     title: "Electron UI Read-only Gösterim Başarısı",
