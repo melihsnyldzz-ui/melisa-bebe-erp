@@ -7,6 +7,8 @@ contextBridge.exposeInMainWorld("electronAPI", {
     discoverStockMovementMetadata: () => ipcRenderer.invoke("vega-read-only:discover-stock-movement-metadata"),
     findProductByBarcode: (barcode) => ipcRenderer.invoke("vega-read-only:find-product-by-barcode", barcode),
     listStock: () => ipcRenderer.invoke("vega-read-only:list-stock"),
+    listStockMovementsByStockNo: (stockNo) => ipcRenderer.invoke("vega-read-only:list-stock-movements-by-stock-no", stockNo),
+    searchStockCards: (payload) => ipcRenderer.invoke("vega-read-only:search-stock-cards", payload),
   },
   erp: {
     getInitialData: () => ipcRenderer.invoke("erp:get-initial-data"),
