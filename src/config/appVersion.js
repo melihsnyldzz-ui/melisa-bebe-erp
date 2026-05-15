@@ -1,14 +1,19 @@
-export const APP_VERSION = "v9.4.0";
-export const APP_STAGE = "SA Kullanıcısı Fail-closed Beklet Kararı";
+export const APP_VERSION = "v9.5.0";
+export const APP_STAGE = "İlk Gerçek Vega Read-only Smoke Test Başarısı";
 
 export const releaseHighlights = [
-  "Local build ve web önizlemenin v9.3.0 olarak eşleştiği ilk güvenli kontrol sonucu işlendi.",
-  "Güvenlik kontrolü sa kullanıcısını gördüğünde SQL/Vega bağlantısının başlatılmaması doğru davranış olarak kaydedildi.",
-  "Stok verisi okunmadığı, satır sayısının 0 kaldığı ve barkod alanının kontrol edilmediği BEKLET kararı görünür hale getirildi.",
-  "Bir sonraki gerçek test için yalnızca şirket ortamında hazırlanmış read-only SQL kullanıcısı ile ilerlenmesi gerektiği vurgulandı.",
+  "Şirket bilgisayarında melisa_stock_ro kullanıcısı ile gerçek Vega read-only bağlantısının çalıştığı kayıt altına alındı.",
+  "dbo.F0102D0001TBLSTOKHAREKETLERI tablosundan TOP 20 sınırıyla gerçek stok hareketi okunduğu görünür hale getirildi.",
+  "STOKNO, ACIKLAMA, DEPO, GIREN, CIKAN, KALAN ve TARIH kolonları ilk güvenli stok hareket önizleme kapsamı olarak belirlendi.",
+  "sa kullanılmadan, .env.local içeriği yazdırılmadan ve veri yazma/import/export/sync yapılmadan ilerleme kuralı korunur.",
 ];
 
 export const versionHistory = [
+  {
+    version: "v9.5.0",
+    title: "İlk Gerçek Vega Read-only Smoke Test Başarısı",
+    note: "melisa_stock_ro ile F0102 stok hareket tablosundan TOP 20 gerçek kayıt okunabildiğini ve ERP'nin gerçek read-only veri hattına geçtiğini kayıt altına alır.",
+  },
   {
     version: "v9.4.0",
     title: "SA Kullanıcısı Fail-closed Beklet Kararı",
