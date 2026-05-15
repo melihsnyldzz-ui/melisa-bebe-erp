@@ -174,6 +174,23 @@ const defaultVisibleReadonlyStockColumns = [
   "TARIH",
 ];
 
+const readOnlyBarcodeProductStatusCards = [
+  { label: "Çalışma modu", value: "Read-only barkod arama" },
+  { label: "Barkod tablosu", value: "F0102TBLBIRIMLEREX" },
+  { label: "Stok kartı", value: "F0102TBLSTOKLAR" },
+  { label: "JOIN", value: "STOKNO = IND" },
+  { label: "Limit", value: "20 satır" },
+  { label: "Veri yazma", value: "Yok" },
+];
+
+const readOnlyBarcodeProductColumns = [
+  { key: "BARCODE", label: "BARCODE" },
+  { key: "STOKNO", label: "STOKNO" },
+  { key: "ACIKLAMA", label: "ACIKLAMA" },
+  { key: "STOKKODU", label: "STOKKODU" },
+  { key: "MALINCINSI", label: "MALINCINSI" },
+];
+
 const stockFieldValidationNotes = [
   { field: "STOKNO", meaning: "Stok hareketindeki stok kimliği adayı", status: "Doğrulanacak" },
   { field: "ACIKLAMA", meaning: "Hareket açıklaması; ürün adı/barkod eşleştirmesi değildir", status: "Sınırlı güven" },
@@ -696,6 +713,13 @@ export default function VegaImportPreview() {
     message: "Henüz önizleme çalıştırılmadı.",
     status: "idle",
   });
+  const [barcodeProductSearch, setBarcodeProductSearch] = useState("");
+  const [barcodeProductState, setBarcodeProductState] = useState({
+    errorClass: "",
+    items: [],
+    message: "Barkod girilmedi. Arama otomatik baslamaz.",
+    status: "idle",
+  });
   const [readonlyPreviewSearch, setReadonlyPreviewSearch] = useState("");
   const [visibleReadonlyStockColumns, setVisibleReadonlyStockColumns] = useState(defaultVisibleReadonlyStockColumns);
   const [openReadonlySupportPanels, setOpenReadonlySupportPanels] = useState({
@@ -806,6 +830,13 @@ export default function VegaImportPreview() {
         ? "Hata"
         : "Henüz çalışmadı";
 
+  const barcodeLookupResultLabel =
+    barcodeProductState.status === "success"
+      ? "Başarılı"
+      : barcodeProductState.status === "error"
+        ? "Hata"
+        : "Henüz çalışmadı";
+
   const toggleReadonlyPreviewColumn = (columnKey) => {
     setVisibleReadonlyStockColumns((current) =>
       current.includes(columnKey)
@@ -833,6 +864,64 @@ export default function VegaImportPreview() {
       ...current,
       [item]: !current[item],
     }));
+  };
+
+  const handleBarcodeProductLookup = async () => {
+    const barcode = barcodeProductSearch.trim();
+    if (!barcode) {
+      setBarcodeProductState({
+        errorClass: "BARCODE_EMPTY",
+        items: [],
+        message: "Barkod boş. Sorgu çalıştırılmadı.",
+        status: "error",
+      });
+      return;
+    }
+
+    if (barcode.length > 20) {
+      setBarcodeProductState({
+        errorClass: "BARCODE_TOO_LONG",
+        items: [],
+        message: "Barkod 20 karakterden uzun olamaz. Sorgu çalıştırılmadı.",
+        status: "error",
+      });
+      return;
+    }
+
+    const findProductByBarcode = window.electronAPI?.vegaReadOnly?.findProductByBarcode;
+    if (!findProductByBarcode) {
+      setBarcodeProductState({
+        errorClass: "DESKTOP_API_UNAVAILABLE",
+        items: [],
+        message: "Electron güvenli köprüsü bulunamadı. Barkod arama yalnızca desktop uygulamada çalışır.",
+        status: "error",
+      });
+      return;
+    }
+
+    setBarcodeProductState({
+      errorClass: "",
+      items: [],
+      message: "Read-only barkod ürün araması çalışıyor...",
+      status: "loading",
+    });
+
+    try {
+      const result = await findProductByBarcode(barcode);
+      setBarcodeProductState({
+        errorClass: result?.errorClass || "",
+        items: Array.isArray(result?.items) ? result.items : [],
+        message: result?.message || "Barkod araması tamamlandı.",
+        status: result?.status === "success" ? "success" : "error",
+      });
+    } catch {
+      setBarcodeProductState({
+        errorClass: "SQL_UNKNOWN_SAFE",
+        items: [],
+        message: "Barkod araması güvenli şekilde tamamlanamadı. Ham hata gizlendi.",
+        status: "error",
+      });
+    }
   };
 
   const handleReadOnlyStockPreview = async () => {
@@ -905,6 +994,119 @@ export default function VegaImportPreview() {
           <h3>Local Terminal Deneme Notu</h3>
           <p>Bu ekranda bağlantı başlatılmaz. Deneme yalnızca local terminalde npm run vega:readonly-stock-smoke komutuyla yapılır.</p>
         </section>
+      </section>
+
+      <section className="vega-technical-gate-center section-updated-highlight" id="vega-readonly-barcode-product">
+        <div className="vega-technical-gate-hero">
+          <p>Read-only barkod pilotu</p>
+          <h2>Barkoddan Ürün Bul</h2>
+          <span>
+            Barkod manuel girildiğinde F0102 barkod tablosu ile stok kartı read-only eşleştirilir. Sonuç dosyaya, local DB'ye veya Vega'ya yazılmaz.
+          </span>
+        </div>
+
+        <div className="vega-technical-gate-status-grid">
+          {readOnlyBarcodeProductStatusCards.map((card) => (
+            <article className="vega-import-summary-card" key={card.label}>
+              <span>{card.label}</span>
+              <strong>{card.value}</strong>
+            </article>
+          ))}
+        </div>
+
+        <p className="vega-readonly-preview-security-box">
+          Bu ekran sadece read-only ürün görüntüleme yapar. Kayıt, sayım, stok düşme veya senkron yapmaz.
+        </p>
+
+        <section className="vega-technical-gate-panel">
+          <div className="vega-readonly-preview-action">
+            <div>
+              <h3>Barkoddan Ürün Eşleşmesi</h3>
+              <p>Arama otomatik başlamaz. Barkod boş ise veya 20 karakteri aşarsa sorgu çalıştırılmaz.</p>
+            </div>
+            <button type="button" onClick={handleBarcodeProductLookup} disabled={barcodeProductState.status === "loading"}>
+              {barcodeProductState.status === "loading" ? "Aranıyor..." : "Barkoddan ürün bul"}
+            </button>
+          </div>
+          <div className="vega-readonly-preview-filter">
+            <label htmlFor="vega-readonly-barcode-search">Barkod</label>
+            <input
+              id="vega-readonly-barcode-search"
+              type="search"
+              value={barcodeProductSearch}
+              onChange={(event) => setBarcodeProductSearch(event.target.value)}
+              placeholder="Barkodu okutun veya manuel girin"
+              maxLength={20}
+            />
+            <p>Varsayılan test barkodu yoktur; kullanıcı barkodu manuel girer veya terminal okuyucu yazar.</p>
+          </div>
+          <p className={`vega-readonly-preview-message ${barcodeProductState.status}`}>
+            {barcodeProductState.message}
+            {barcodeProductState.errorClass ? ` Hata sınıfı: ${barcodeProductState.errorClass}` : ""}
+          </p>
+        </section>
+
+        <section className="vega-stock-last-read-summary">
+          <div>
+            <h3>Barkod Arama Özeti</h3>
+            <p>Bu özet yalnızca geçici ekran state'idir; kayıt, dosyaya çıktı veya senkron başlatmaz.</p>
+          </div>
+          <div className="vega-readonly-preview-result-grid">
+            <article className="vega-import-summary-card">
+              <span>Son arama sonucu</span>
+              <strong>{barcodeLookupResultLabel}</strong>
+            </article>
+            <article className="vega-import-summary-card">
+              <span>Gelen satır sayısı</span>
+              <strong>{barcodeProductState.items.length}</strong>
+            </article>
+            <article className="vega-import-summary-card">
+              <span>Limit</span>
+              <strong>20 satır</strong>
+            </article>
+            <article className="vega-import-summary-card">
+              <span>Veri yazma</span>
+              <strong>Yok</strong>
+            </article>
+            <article className="vega-import-summary-card">
+              <span>Bağlantı bilgisi gösterimi</span>
+              <strong>Yok</strong>
+            </article>
+          </div>
+        </section>
+
+        {barcodeProductState.items.length > 0 && (
+          <section className="vega-import-table-panel">
+            <div className="vega-import-table-heading">
+              <div>
+                <h2>Read-only Barkod Ürün Sonucu</h2>
+                <p>Bu tablo geçicidir; barkod ve stok kartı eşleşmesi sadece ekranda görüntülenir.</p>
+              </div>
+              <span><ShieldCheck size={14} /> {barcodeProductState.items.length} satır · read-only</span>
+            </div>
+
+            <div className="vega-import-table-wrap">
+              <table className="vega-import-table vega-readonly-barcode-table">
+                <thead>
+                  <tr>
+                    {readOnlyBarcodeProductColumns.map((column) => (
+                      <th key={column.key}>{column.label}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {barcodeProductState.items.map((row, rowIndex) => (
+                    <tr key={`${row.BARCODE ?? "barcode"}-${rowIndex}`}>
+                      {readOnlyBarcodeProductColumns.map((column) => (
+                        <td key={column.key}>{formatPreviewCellValue(row[column.key], column)}</td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        )}
       </section>
 
       <section className="vega-technical-gate-center section-updated-highlight" id="vega-readonly-stock-preview">

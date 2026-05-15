@@ -2,7 +2,7 @@ const path = require("node:path");
 const { app, BrowserWindow, ipcMain, Menu } = require("electron");
 const { exportDatabaseBackup, initializeDatabase } = require("./database/db.cjs");
 const { createRepositories } = require("./database/repositories.cjs");
-const { discoverVegaStockMovementMetadata, listVegaStockReadOnly } = require("./vegaReadOnlyService.cjs");
+const { discoverVegaStockMovementMetadata, findVegaProductByBarcodeReadOnly, listVegaStockReadOnly } = require("./vegaReadOnlyService.cjs");
 
 const isDev = !app.isPackaged;
 const devServerUrl = process.env.VITE_DEV_SERVER_URL || "http://127.0.0.1:5173";
@@ -121,6 +121,7 @@ function registerErpHandlers() {
   ipcMain.handle("erp:get-all-import-logs", () => repositories.getAllImportLogs());
   ipcMain.handle("vega-read-only:list-stock", () => listVegaStockReadOnly());
   ipcMain.handle("vega-read-only:discover-stock-movement-metadata", () => discoverVegaStockMovementMetadata());
+  ipcMain.handle("vega-read-only:find-product-by-barcode", (_event, barcode) => findVegaProductByBarcodeReadOnly(barcode));
   ipcMain.handle("erp:save-purchase-slip", (_event, payload) => repositories.savePurchaseSlip(payload));
   ipcMain.handle("erp:save-sales-slip", (_event, payload) => repositories.saveSalesSlip(payload));
   ipcMain.handle("erp:save-collection", (_event, payload) => repositories.saveCollection(payload));

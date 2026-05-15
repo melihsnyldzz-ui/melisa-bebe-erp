@@ -506,6 +506,10 @@
   background: #ffffff;
 }
 
+.vega-readonly-barcode-table {
+  min-width: 760px;
+}
+
 .vega-import-table th,
 .vega-import-table td {
   padding: 8px 9px;
