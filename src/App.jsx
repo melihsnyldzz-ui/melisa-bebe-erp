@@ -7,6 +7,7 @@ import DataExport from "./pages/DataExport.jsx";
 import DataImport from "./pages/DataImport.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Payments from "./pages/Payments.jsx";
+import ProductSearchCenter from "./pages/ProductSearchCenter.jsx";
 import Products from "./pages/Products.jsx";
 import PurchaseSlips from "./pages/PurchaseSlips.jsx";
 import Reports from "./pages/Reports.jsx";
@@ -29,6 +30,7 @@ export default function App() {
     () => ({
       dashboard: "dashboard.view",
       products: "products.view",
+      "product-search-center": "stockMovements.view",
       customers: "customers.view",
       suppliers: "suppliers.view",
       "purchase-slips": "purchaseSlips.view",
@@ -65,6 +67,7 @@ export default function App() {
 
   const isDashboard = activeModule === "dashboard";
   const isProducts = activeModule === "products";
+  const isProductSearchCenter = activeModule === "product-search-center";
   const isCustomers = activeModule === "customers";
   const isSuppliers = activeModule === "suppliers";
   const isPurchaseSlips = activeModule === "purchase-slips";
@@ -85,6 +88,7 @@ export default function App() {
     <AppLayout activeModule={activeModule} onModuleChange={setActiveModule}>
       {isDashboard && <Dashboard />}
       {isProducts && <Products />}
+      {isProductSearchCenter && <ProductSearchCenter />}
       {isCustomers && <Customers />}
       {isSuppliers && <Suppliers />}
       {isPurchaseSlips && <PurchaseSlips />}
@@ -102,6 +106,7 @@ export default function App() {
       {isSettings && <Settings />}
       {!isDashboard &&
         !isProducts &&
+        !isProductSearchCenter &&
         !isCustomers &&
         !isSuppliers &&
         !isPurchaseSlips &&
