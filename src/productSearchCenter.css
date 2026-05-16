@@ -1,0 +1,457 @@
+.product-search-center-page {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  color: #172033;
+}
+
+.product-search-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: center;
+  padding: 24px;
+  border: 1px solid rgba(190, 18, 60, 0.16);
+  border-radius: 24px;
+  background: linear-gradient(135deg, #fff7f8 0%, #ffffff 48%, #f8fafc 100%);
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+}
+
+.product-search-hero .eyebrow {
+  display: inline-flex;
+  width: fit-content;
+  margin-bottom: 8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #fee2e2;
+  color: #991b1b;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.product-search-hero h1 {
+  margin: 0;
+  color: #111827;
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1.05;
+}
+
+.product-search-hero p {
+  max-width: 780px;
+  margin: 10px 0 0;
+  color: #475569;
+  font-size: 16px;
+}
+
+.security-strip {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(120px, 1fr));
+  gap: 8px;
+}
+
+.security-strip span,
+.product-search-safety-note,
+.status-card,
+.mode-switch,
+.product-search-panel,
+.result-list-card,
+.selected-product-card,
+.sales-reply-card,
+.movement-card {
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+}
+
+.security-strip span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 8px 12px;
+  border-radius: 14px;
+  color: #166534;
+  font-size: 12px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.mode-switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 18px;
+}
+
+.mode-switch button,
+.product-search-panel button,
+.secondary-action,
+.sales-reply-card button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 0;
+  border-radius: 14px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+}
+
+.mode-switch button {
+  min-height: 46px;
+  padding: 0 18px;
+  color: #334155;
+  background: #f1f5f9;
+}
+
+.mode-switch button.active {
+  color: #ffffff;
+  background: #be123c;
+  box-shadow: 0 10px 25px rgba(190, 18, 60, 0.24);
+}
+
+.product-search-panel {
+  display: grid;
+  grid-template-columns: 180px minmax(240px, 1fr) 140px;
+  gap: 12px;
+  align-items: end;
+  padding: 16px;
+  border-radius: 22px;
+}
+
+.product-search-panel label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  color: #475569;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.product-search-panel input,
+.product-search-panel select,
+.sales-reply-card textarea {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 16px;
+  background: #f8fafc;
+  color: #111827;
+  font: inherit;
+  outline: none;
+}
+
+.product-search-panel input,
+.product-search-panel select {
+  min-height: 52px;
+  padding: 0 14px;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.product-search-panel input:focus,
+.product-search-panel select:focus,
+.sales-reply-card textarea:focus {
+  border-color: #be123c;
+  box-shadow: 0 0 0 4px rgba(190, 18, 60, 0.12);
+}
+
+.product-search-panel button,
+.sales-reply-card button,
+.secondary-action {
+  min-height: 52px;
+  padding: 0 18px;
+  color: #ffffff;
+  background: #111827;
+}
+
+.secondary-action {
+  width: 100%;
+  margin-top: 16px;
+  background: #be123c;
+}
+
+.product-search-panel button:hover,
+.secondary-action:hover,
+.sales-reply-card button:hover,
+.mode-switch button:hover {
+  transform: translateY(-1px);
+}
+
+.status-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  border-radius: 18px;
+}
+
+.status-card strong {
+  min-width: 130px;
+  color: #111827;
+  font-size: 15px;
+}
+
+.status-card span {
+  color: #475569;
+  font-weight: 700;
+}
+
+.status-bulundu {
+  border-color: rgba(22, 101, 52, 0.25);
+  background: #f0fdf4;
+}
+
+.status-hata,
+.status-geçersiz-arama,
+.status-gecersiz-arama {
+  border-color: rgba(190, 18, 60, 0.22);
+  background: #fff1f2;
+}
+
+.status-araniyor {
+  border-color: rgba(37, 99, 235, 0.22);
+  background: #eff6ff;
+}
+
+.product-search-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.95fr) minmax(320px, 1.15fr) minmax(280px, 0.9fr);
+  gap: 16px;
+}
+
+.result-list-card,
+.selected-product-card,
+.sales-reply-card,
+.movement-card {
+  border-radius: 24px;
+  padding: 18px;
+}
+
+.result-list-card h2,
+.selected-product-card h2,
+.sales-reply-card h2,
+.movement-card h2 {
+  margin: 0 0 14px;
+  color: #111827;
+  font-size: 20px;
+}
+
+.product-result-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 520px;
+  overflow: auto;
+  padding-right: 4px;
+}
+
+.product-result-card {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  background: #f8fafc;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.product-result-card strong {
+  color: #be123c;
+  font-size: 16px;
+}
+
+.product-result-card span {
+  color: #111827;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.product-result-card small {
+  color: #64748b;
+  font-weight: 800;
+}
+
+.product-result-card.selected {
+  border-color: #be123c;
+  background: #fff1f2;
+  box-shadow: inset 4px 0 0 #be123c;
+}
+
+.product-main-title {
+  display: grid;
+  gap: 8px;
+  padding: 18px;
+  border-radius: 20px;
+  background: #111827;
+  color: #ffffff;
+}
+
+.product-main-title span {
+  color: #fecdd3;
+  font-weight: 900;
+}
+
+.product-main-title strong {
+  font-size: clamp(22px, 3vw, 34px);
+  line-height: 1.08;
+}
+
+.product-detail-grid {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 10px 12px;
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 18px;
+  background: #f8fafc;
+}
+
+.product-detail-grid span {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+.product-detail-grid strong {
+  color: #111827;
+  font-weight: 900;
+}
+
+.sales-reply-card textarea {
+  min-height: 150px;
+  padding: 14px;
+  resize: vertical;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.sales-reply-card button {
+  width: 100%;
+  margin-top: 12px;
+  background: #166534;
+}
+
+.sales-reply-card button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.sales-reply-card small {
+  display: block;
+  margin-top: 10px;
+  color: #64748b;
+  font-weight: 800;
+}
+
+.movement-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.movement-card-header span {
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: #f1f5f9;
+  color: #334155;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.movement-table-wrap {
+  overflow-x: auto;
+}
+
+.movement-card table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 760px;
+}
+
+.movement-card th,
+.movement-card td {
+  padding: 12px 10px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+}
+
+.movement-card th {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.movement-card td {
+  color: #111827;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.product-search-safety-note {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  color: #166534;
+  font-weight: 800;
+  background: #f0fdf4;
+}
+
+.empty-state {
+  margin: 0;
+  padding: 18px;
+  border: 1px dashed #cbd5e1;
+  border-radius: 18px;
+  color: #64748b;
+  background: #f8fafc;
+  font-weight: 800;
+}
+
+@media (max-width: 1180px) {
+  .product-search-hero,
+  .product-search-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .security-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .product-search-hero,
+  .result-list-card,
+  .selected-product-card,
+  .sales-reply-card,
+  .movement-card {
+    border-radius: 18px;
+    padding: 14px;
+  }
+
+  .product-search-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .security-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .product-detail-grid {
+    grid-template-columns: 1fr;
+  }
+}
